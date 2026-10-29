@@ -38,6 +38,16 @@ export function createDatabaseConnection(dbPath: string = "./data/social_panel.d
       const migrationsFolder = path.resolve(import.meta.dirname, "../../../drizzle");
       migrate(db, { migrationsFolder });
     } catch {}
+    // Garante colunas do Marco 6 (OpenDesign Studio) em bancos pré-existentes
+    for (const alterSql of [
+      "ALTER TABLE post_slides ADD COLUMN template_id text DEFAULT 'modern-bold';",
+      "ALTER TABLE post_slides ADD COLUMN rendered_image_url text;",
+      "ALTER TABLE post_slides ADD COLUMN image_prompt text;",
+    ]) {
+      try {
+        sqlite.run(alterSql);
+      } catch {}
+    }
   }
 
   return { sqlite, db };

@@ -47,6 +47,9 @@ CREATE TABLE `post_slides` (
 	`body_text` text,
 	`cta_text` text,
 	`assigned_photo_id` text,
+	`template_id` text DEFAULT 'modern-bold',
+	`rendered_image_url` text,
+	`image_prompt` text,
 	FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`) ON UPDATE no action ON DELETE cascade,
 	FOREIGN KEY (`assigned_photo_id`) REFERENCES `photo_assets`(`id`) ON UPDATE no action ON DELETE set null
 );
