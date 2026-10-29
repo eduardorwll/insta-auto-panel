@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
 import { relations, sql } from "drizzle-orm";
 import { z } from "zod";
 
@@ -36,6 +36,21 @@ export const POST_STATUSES = [
 ] as const;
 export type PostStatus = (typeof POST_STATUSES)[number];
 export const postStatusSchema = z.enum(POST_STATUSES);
+
+/**
+ * Provedores de IA Generativa suportados pela arquitetura agnóstica
+ */
+export const AI_PROVIDERS = [
+  "gemini",
+  "openai",
+  "claude",
+  "groq",
+  "deepseek",
+  "ollama",
+  "openrouter",
+] as const;
+export type AIProviderName = (typeof AI_PROVIDERS)[number];
+export const aiProviderSchema = z.enum(AI_PROVIDERS);
 
 /**
  * Tabela de Empresas (Multi-Tenant)
@@ -122,6 +137,21 @@ export const post_slides = sqliteTable("post_slides", {
   assignedPhotoId: text("assigned_photo_id").references(() => photo_assets.id, {
     onDelete: "set null",
   }),
+});
+
+/**
+ * Tabela de Configurações de IA (Multi-Provedor)
+ * Permite escopo global ('global') ou sobrescrita específica por empresa ('company_id')
+ */
+export const ai_provider_settings = sqliteTable("ai_provider_settings", {
+  id: text("id").primaryKey(), // 'global' ou company_id
+  provider: text("provider").notNull(), // 'gemini', 'openai', 'claude', etc.
+  apiKey: text("api_key"),
+  modelName: text("model_name").notNull(),
+  baseUrl: text("base_url"),
+  temperature: real("temperature").default(0.7),
+  isActive: integer("is_active").default(1),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).default(sql`(unixepoch())`),
 });
 
 /**
@@ -228,4 +258,14 @@ export const postSlideInsertSchema = z.object({
   bodyText: z.string().optional().nullable(),
   ctaText: z.string().optional().nullable(),
   assignedPhotoId: z.string().optional().nullable(),
+});
+
+export const aiProviderSettingsInsertSchema = z.object({
+  id: z.string().min(1),
+  provider: aiProviderSchema,
+  apiKey: z.string().optional().nullable(),
+  modelName: z.string().min(1, "Nome do modelo é obrigatório"),
+  baseUrl: z.string().url().optional().nullable().or(z.literal("")),
+  temperature: z.number().min(0.0).max(1.0).default(0.7),
+  isActive: z.number().int().min(0).max(1).default(1),
 });
