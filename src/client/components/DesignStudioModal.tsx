@@ -181,7 +181,8 @@ export function DesignStudioModal({
     );
     setActiveSlideIndex(0);
     setStatusMessage(null);
-  }, [postId, postTheme, company.niche]);
+    setRenderedUrls([]);
+  }, [postId]);
 
   const currentSlide: StudioSlideItem = slides[activeSlideIndex] || {
     slideNumber: activeSlideIndex + 1,
