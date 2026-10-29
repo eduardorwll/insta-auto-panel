@@ -4,6 +4,7 @@ import { CompanySwitcher } from "@/client/components/CompanySwitcher";
 import { CompanyModal } from "@/client/components/CompanyModal";
 import { PhotoBank } from "@/client/components/PhotoBank";
 import { WeekPlanner } from "@/client/components/WeekPlanner";
+import { AISettingsModal } from "@/client/components/AISettingsModal";
 import { Button } from "@/client/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/client/components/ui/card";
 import { Badge } from "@/client/components/ui/badge";
@@ -18,11 +19,14 @@ import {
   Palette,
   Layers,
   PlusCircle,
+  Settings,
+  Cpu,
 } from "lucide-react";
 
 function DashboardContent() {
   const { activeCompany, isLoading } = useCompany();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAIModalOpen, setIsAIModalOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -55,6 +59,16 @@ function DashboardContent() {
         </div>
 
         <div className="flex items-center gap-3">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsAIModalOpen(true)}
+            className="gap-2 border-indigo-500/30 bg-indigo-950/20 text-indigo-300 hover:bg-indigo-950/40 hover:text-white"
+          >
+            <Bot className="h-4 w-4 text-indigo-400" />
+            <span>Configurar IA</span>
+          </Button>
+
           <Badge variant="outline" className="text-xs border-slate-700 text-slate-400 gap-1.5 hidden sm:flex">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             Bun + SQLite WAL
@@ -187,15 +201,34 @@ function DashboardContent() {
               </TabsContent>
 
               <TabsContent value="ai" className="mt-4">
-                <Card className="border-slate-800 bg-slate-900/40 p-8 text-center space-y-2">
-                  <Bot className="h-8 w-8 text-emerald-400 mx-auto opacity-80" />
-                  <CardTitle className="text-lg">IA Generativa Agnóstica</CardTitle>
-                  <CardDescription>
-                    Configuração multi-provedor (Gemini, OpenAI, Claude, Groq, Ollama) com saídas estruturadas adaptativas (Marco 4).
-                  </CardDescription>
+                <Card className="border-slate-800 bg-slate-900/40 p-8 text-center space-y-4">
+                  <div className="h-12 w-12 rounded-2xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mx-auto shadow-inner">
+                    <Bot className="h-6 w-6" />
+                  </div>
+                  <div className="space-y-1">
+                    <CardTitle className="text-xl text-white">IA Generativa Agnóstica com Adapter Pattern</CardTitle>
+                    <CardDescription className="max-w-xl mx-auto text-sm text-slate-400">
+                      Integração transparente com ML Studio API (LM Studio local/nuvem), Google Gemini, OpenAI, Claude, Groq e Ollama com saídas JSON estruturadas para carrosséis dinâmicos de 3 a 10 lâminas.
+                    </CardDescription>
+                  </div>
+
+                  <div className="flex items-center justify-center gap-2 pt-2">
+                    <Button
+                      onClick={() => setIsAIModalOpen(true)}
+                      className="gap-2 bg-indigo-600 hover:bg-indigo-500 text-white"
+                    >
+                      <Sparkles className="h-4 w-4" />
+                      <span>Gerenciar Provedores & Modelos</span>
+                    </Button>
+                  </div>
                 </Card>
               </TabsContent>
             </Tabs>
+
+            <AISettingsModal
+              isOpen={isAIModalOpen}
+              onClose={() => setIsAIModalOpen(false)}
+            />
           </>
         )}
       </main>

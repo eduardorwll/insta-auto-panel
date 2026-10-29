@@ -18,6 +18,10 @@ import {
   CheckCircle,
   Image as ImageIcon,
   Sparkles,
+  Copy,
+  Check,
+  AlertCircle,
+  RefreshCw,
 } from "lucide-react";
 
 const EDITORIAL_CATEGORIES = [
@@ -58,6 +62,9 @@ export function WeekPlanner() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [isGeneratingAI, setIsGeneratingAI] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+  const [copiedCaption, setCopiedCaption] = useState(false);
 
   // Carregar cronograma da semana
   const fetchSchedule = async () => {
@@ -192,6 +199,59 @@ export function WeekPlanner() {
     }
   };
 
+  // Gerar post e lâminas com IA Generativa Agnóstica
+  const handleGenerateWithAI = async () => {
+    if (!activePost) return;
+    setIsGeneratingAI(true);
+    setAiError(null);
+
+    try {
+      // Salvar primeiro caso o tema tenha sido recém-alterado
+      await fetch(`/api/posts/${activePost.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          theme: activePost.theme,
+          category: activePost.category,
+          slideCount: activePost.slideCount,
+        }),
+      });
+
+      const res = await fetch("/api/ai/generate-post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ postId: activePost.id }),
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || "Falha ao gerar post com IA");
+      }
+
+      const updatedPost: Post = json.data;
+      setPosts((prev) =>
+        prev.map((p) => (p.id === updatedPost.id ? updatedPost : p))
+      );
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Erro desconhecido na geração";
+      setAiError(msg);
+    } finally {
+      setIsGeneratingAI(false);
+    }
+  };
+
+  // Copiar legenda para área de transferência
+  const handleCopyCaption = async () => {
+    if (!activePost?.caption) return;
+    try {
+      await navigator.clipboard.writeText(activePost.caption);
+      setCopiedCaption(true);
+      setTimeout(() => setCopiedCaption(false), 2000);
+    } catch (err) {
+      console.error("Erro ao copiar legenda:", err);
+    }
+  };
+
   // Buscar foto associada ao slide ativo ou capa
   const activeSlide = activePost?.slides.find((s) => s.slideNumber === activeSlideNumber);
   const assignedPhoto = photos.find(
@@ -306,23 +366,52 @@ export function WeekPlanner() {
                     </CardDescription>
                   </div>
 
-                  <Button onClick={handleSave} disabled={isSaving} className="gap-2">
-                    {saveSuccess ? (
-                      <>
-                        <CheckCircle className="h-4 w-4 text-emerald-400" />
-                        <span>Salvo!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Save className="h-4 w-4" />
-                        <span>{isSaving ? "Salvando..." : "Salvar Post"}</span>
-                      </>
-                    )}
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleGenerateWithAI}
+                      disabled={isGeneratingAI || !activePost.theme}
+                      className="gap-2 border-indigo-500/40 bg-indigo-950/30 text-indigo-300 hover:bg-indigo-900/50 hover:text-white"
+                      title={!activePost.theme ? "Defina um tema primeiro" : "Gerar slides e legenda com IA"}
+                    >
+                      {isGeneratingAI ? (
+                        <>
+                          <RefreshCw className="h-4 w-4 animate-spin text-indigo-400" />
+                          <span>Gerando...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="h-4 w-4 text-indigo-400" />
+                          <span>Gerar com IA</span>
+                        </>
+                      )}
+                    </Button>
+
+                    <Button onClick={handleSave} disabled={isSaving} className="gap-2">
+                      {saveSuccess ? (
+                        <>
+                          <CheckCircle className="h-4 w-4 text-emerald-400" />
+                          <span>Salvo!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Save className="h-4 w-4" />
+                          <span>{isSaving ? "Salvando..." : "Salvar Post"}</span>
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </div>
               </CardHeader>
 
               <CardContent className="space-y-6 pt-5">
+                {aiError && (
+                  <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-800 text-xs text-rose-300 flex items-center gap-2">
+                    <AlertCircle className="h-4 w-4 shrink-0" />
+                    <span>{aiError}</span>
+                  </div>
+                )}
                 {/* 1. Categoria & Tema */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
@@ -515,6 +604,51 @@ export function WeekPlanner() {
                     </div>
                   )}
                 </div>
+
+                {/* 5. Legenda do Post (Gerada por IA com botão Copiar) */}
+                {activePost.caption && (
+                  <div className="space-y-2.5 pt-4 border-t border-slate-800">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Label htmlFor="post-caption" className="text-xs font-semibold text-slate-200">
+                          Legenda Estruturada do Instagram
+                        </Label>
+                        <Badge variant="outline" className="text-[10px] text-indigo-400 border-indigo-900/50">
+                          {activePost.status === "ai_generated" ? "Gerada com IA" : "Legenda Manual"}
+                        </Badge>
+                      </div>
+
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleCopyCaption}
+                        className="h-7 text-xs gap-1.5 text-slate-300 hover:text-white hover:bg-slate-800 cursor-pointer"
+                      >
+                        {copiedCaption ? (
+                          <>
+                            <Check className="h-3.5 w-3.5 text-emerald-400" />
+                            <span className="text-emerald-400">Copiada!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="h-3.5 w-3.5" />
+                            <span>Copiar Legenda</span>
+                          </>
+                        )}
+                      </Button>
+                    </div>
+
+                    <textarea
+                      id="post-caption"
+                      rows={5}
+                      value={activePost.caption}
+                      onChange={(e) => handleUpdateActivePost("caption", e.target.value)}
+                      placeholder="Legenda para publicação com hashtags e CTA..."
+                      className="flex w-full rounded-md border border-slate-700 bg-slate-900/80 px-3 py-2 text-xs font-mono text-slate-200 shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-indigo-500"
+                    />
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>

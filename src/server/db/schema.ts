@@ -48,6 +48,8 @@ export const AI_PROVIDERS = [
   "deepseek",
   "ollama",
   "openrouter",
+  "mlstudio",
+  "lmstudio",
 ] as const;
 export type AIProviderName = (typeof AI_PROVIDERS)[number];
 export const aiProviderSchema = z.enum(AI_PROVIDERS);
