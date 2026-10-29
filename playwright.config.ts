@@ -14,7 +14,7 @@ export default defineConfig({
   webServer: {
     command: "bun run src/server/index.ts",
     url: "http://localhost:3000/api/health",
-    reuseExistingServer: false,
+    reuseExistingServer: true,
     timeout: 10000,
   },
   projects: [

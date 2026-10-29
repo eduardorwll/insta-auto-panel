@@ -62,7 +62,10 @@ test.describe("M2 E2E: Navegação, Company Switcher e Cadastro de Empresa", () 
       await expect(page.getByRole("heading", { name: "Demo Corp" })).toBeVisible();
     }
 
-    // 10. Validação mandatória: console limpo com ZERO erros de execução
+    // 10. Limpeza da empresa temporária do teste para evitar acúmulo no banco
+    await page.request.delete(`/api/companies/${testSlug}`);
+
+    // 11. Validação mandatória: console limpo com ZERO erros de execução
     expect(consoleErrors).toEqual([]);
   });
 });
