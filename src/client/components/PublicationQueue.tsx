@@ -74,7 +74,8 @@ export function PublicationQueue() {
       const json = await res.json();
       if (json.success && json.data) {
         setPosts(json.data.posts);
-        setScheduleId(json.data.id);
+        const schedId = json.data.schedule?.id || json.data.posts?.[0]?.scheduleId || "";
+        setScheduleId(schedId);
       }
     } catch (err) {
       console.error("Erro ao carregar cronograma:", err);
@@ -105,29 +106,18 @@ export function PublicationQueue() {
 
   // Exportar Canva Bulk Create CSV
   const handleExportCanva = async () => {
-    if (!activeCompany || !scheduleId) return;
+    const targetSchedId = scheduleId || posts[0]?.scheduleId || `sched_${activeCompany?.id}_${weekStartDate.replace(/-/g, "")}`;
+    if (!activeCompany || !targetSchedId) return;
     setIsExportingCanva(true);
     setMessage(null);
 
     try {
-      const res = await fetch(
-        `/api/export/canva?scheduleId=${scheduleId}&companyId=${activeCompany.id}`
-      );
-
-      if (!res.ok) {
-        const errJson = await res.json().catch(() => ({}));
-        throw new Error(errJson.error || "Erro ao gerar arquivo CSV");
-      }
-
-      // Download no navegador
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
+      const downloadUrl = `/api/export/canva?scheduleId=${targetSchedId}&companyId=${activeCompany.id}`;
       const a = document.createElement("a");
-      a.href = url;
-      a.download = `canva_bulk_create_${activeCompany.id}_${weekStartDate}.csv`;
+      a.href = downloadUrl;
+      a.setAttribute("download", `canva_bulk_create_${activeCompany.id}_${weekStartDate}.csv`);
       document.body.appendChild(a);
       a.click();
-      window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
 
       setMessage({ text: "Arquivo CSV para Canva Bulk Create gerado e baixado com sucesso!", type: "success" });
@@ -141,7 +131,8 @@ export function PublicationQueue() {
 
   // Enfileirar semana completa no AutoSocial
   const handleEnqueueAll = async () => {
-    if (!scheduleId) return;
+    const targetSchedId = scheduleId || posts[0]?.scheduleId || `sched_${activeCompany?.id}_${weekStartDate.replace(/-/g, "")}`;
+    if (!targetSchedId) return;
     setIsEnqueueingAll(true);
     setMessage(null);
 
@@ -149,7 +140,7 @@ export function PublicationQueue() {
       const res = await fetch("/api/export/autosocial/queue", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ scheduleId }),
+        body: JSON.stringify({ scheduleId: targetSchedId }),
       });
 
       const json = await res.json();
