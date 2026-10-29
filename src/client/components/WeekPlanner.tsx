@@ -22,6 +22,8 @@ import {
   Check,
   AlertCircle,
   RefreshCw,
+  Send,
+  FileSpreadsheet,
 } from "lucide-react";
 
 const EDITORIAL_CATEGORIES = [
@@ -65,6 +67,8 @@ export function WeekPlanner() {
   const [isGeneratingAI, setIsGeneratingAI] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
   const [copiedCaption, setCopiedCaption] = useState(false);
+  const [isEnqueuingPost, setIsEnqueuingPost] = useState(false);
+  const [enqueueSuccess, setEnqueueSuccess] = useState(false);
 
   // Carregar cronograma da semana
   const fetchSchedule = async () => {
@@ -252,6 +256,40 @@ export function WeekPlanner() {
     }
   };
 
+  // Enfileirar post ativo no AutoSocial
+  const handleEnqueueActivePost = async () => {
+    if (!activePost) return;
+    setIsEnqueuingPost(true);
+    setEnqueueSuccess(false);
+
+    try {
+      // Salva post primeiro para persistir textos atuais
+      await handleSave();
+
+      const res = await fetch("/api/export/autosocial/queue", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ postId: activePost.id }),
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || "Erro ao enfileirar no AutoSocial");
+      }
+
+      setEnqueueSuccess(true);
+      setPosts((prev) =>
+        prev.map((p) => (p.id === activePost.id ? { ...p, status: "queued" } : p))
+      );
+      setTimeout(() => setEnqueueSuccess(false), 3000);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Erro no enfileiramento";
+      setAiError(msg);
+    } finally {
+      setIsEnqueuingPost(false);
+    }
+  };
+
   // Buscar foto associada ao slide ativo ou capa
   const activeSlide = activePost?.slides.find((s) => s.slideNumber === activeSlideNumber);
   const assignedPhoto = photos.find(
@@ -398,6 +436,32 @@ export function WeekPlanner() {
                         <>
                           <Save className="h-4 w-4" />
                           <span>{isSaving ? "Salvando..." : "Salvar Post"}</span>
+                        </>
+                      )}
+                    </Button>
+
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleEnqueueActivePost}
+                      disabled={isEnqueuingPost}
+                      className="gap-2 border-amber-500/40 bg-amber-950/20 text-amber-300 hover:bg-amber-950/40 hover:text-white"
+                      title="Enviar post para fila do AutoSocial"
+                    >
+                      {isEnqueuingPost ? (
+                        <>
+                          <RefreshCw className="h-4 w-4 animate-spin text-amber-400" />
+                          <span>Enfileirando...</span>
+                        </>
+                      ) : enqueueSuccess || activePost.status === "queued" ? (
+                        <>
+                          <CheckCircle className="h-4 w-4 text-emerald-400" />
+                          <span>Enfileirado!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="h-4 w-4 text-amber-400" />
+                          <span>AutoSocial</span>
                         </>
                       )}
                     </Button>
