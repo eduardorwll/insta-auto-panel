@@ -9,7 +9,7 @@
       "url": "git@github.com:eduardorwll/insta-auto-panel.git",
       "provider": "github",
       "link_mode": "local-only",
-      "revision": "785459e83e2c5cd631be4a8672ae970f3ffd7a1c"
+      "revision": "3f1583e0eb9f9860c49031eaa5890e959e6ee37b"
     }
   },
   "components": [
@@ -42,7 +42,7 @@
       "pos": [560, 220],
       "size": [155, 64],
       "sources": [
-        { "path": "src/server/index.ts", "line": 8, "end_line": 115 },
+        { "path": "src/server/index.ts", "line": 8, "end_line": 117 },
         { "path": "src/server/routes/settings.ts", "line": 1, "end_line": 260 },
         { "path": "src/server/routes/design.ts", "line": 23, "end_line": 215 }
       ]

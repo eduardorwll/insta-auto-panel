@@ -16,8 +16,12 @@
   "14": "@playwright/test",
   "15": "prowl",
   "16": "main.tsx",
+  "17": "INDEX.md",
+  "18": "Covered Files & Symbols",
   "19": "@types/react-dom@^19.3.0",
   "20": "vite",
   "21": "vite-env.d.ts",
+  "22": "Covered Files & Symbols",
+  "23": "`src/server/routes/settings.ts` (lines 1-460)",
   "28": "design.ts"
 }

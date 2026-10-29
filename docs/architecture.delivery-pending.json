@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 1,
-  "command": "deliver",
-  "status": "pending",
-  "receiptId": "994cddc5-e557-44cf-b36c-504381780fb8",
-  "input": "/home/eduardorwll/Sandbox/src/insta-auto-panel/.archify/architecture/candidate.json",
-  "output": "/home/eduardorwll/Sandbox/src/insta-auto-panel/docs/architecture.html"
-}
