@@ -39,7 +39,18 @@ export const server = Bun.serve({
     const exportResponse = await handleExportRoutes(req, url);
     if (exportResponse) return exportResponse;
 
-    // 7. Servir uploads de fotos (/uploads/*)
+    // 7. Servir diagrama único de arquitetura Archify (/architecture)
+    if (url.pathname === "/architecture" || url.pathname === "/architecture.html") {
+      const archFile = Bun.file(path.resolve(import.meta.dirname, "../../docs/architecture.html"));
+      if (await archFile.exists()) {
+        return new Response(archFile, {
+          headers: { "Content-Type": "text/html; charset=utf-8" },
+        });
+      }
+      return new Response("Diagrama de arquitetura ainda não gerado (rode bun run archify)", { status: 404 });
+    }
+
+    // 8. Servir uploads de fotos (/uploads/*)
     if (url.pathname.startsWith("/uploads/")) {
       const uploadFilename = url.pathname.replace("/uploads/", "");
       const uploadsDir = path.resolve(import.meta.dirname, "../../data/uploads");

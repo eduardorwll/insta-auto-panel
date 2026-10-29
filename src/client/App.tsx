@@ -61,6 +61,17 @@ function DashboardContent() {
         </div>
 
         <div className="flex items-center gap-3">
+          <a
+            href="/architecture"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md border border-slate-800 bg-slate-900/80 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
+            title="Abrir Diagrama Único de Arquitetura (Archify)"
+          >
+            <Cpu className="h-3.5 w-3.5 text-amber-400" />
+            <span className="hidden sm:inline">Arquitetura</span>
+          </a>
+
           <Button
             variant="outline"
             size="sm"

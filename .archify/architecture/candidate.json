@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Social Panel PRO — System Architecture",
+    "output": "docs/architecture.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "git@github.com:eduardorwll/insta-auto-panel.git",
+      "provider": "github",
+      "link_mode": "local-only",
+      "revision": "0ad29a07fa3476b318ca641f9b0caef5e7b1ae21"
+    }
+  },
+  "components": [
+    {
+      "id": "operator",
+      "type": "external",
+      "label": "Content Operator",
+      "sublabel": "Browser UI",
+      "pos": [40, 220],
+      "size": [140, 64]
+    },
+    {
+      "id": "spa",
+      "type": "frontend",
+      "label": "React 19 SPA",
+      "sublabel": "Planner, PhotoBank & Queue",
+      "pos": [290, 220],
+      "size": [165, 64],
+      "sources": [
+        { "path": "src/client/App.tsx", "line": 27, "end_line": 245 },
+        { "path": "src/client/components/WeekPlanner.tsx", "line": 58, "end_line": 292 },
+        { "path": "src/client/components/PublicationQueue.tsx", "line": 50, "end_line": 215 }
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "Bun HTTP Server",
+      "sublabel": "REST Router :3000",
+      "pos": [560, 220],
+      "size": [155, 64],
+      "sources": [
+        { "path": "src/server/index.ts", "line": 8, "end_line": 75 },
+        { "path": "src/server/routes/companies.ts", "line": 8, "end_line": 89 },
+        { "path": "src/server/routes/schedules.ts", "line": 22, "end_line": 125 }
+      ]
+    },
+    {
+      "id": "sqlite",
+      "type": "database",
+      "label": "SQLite ACID Store",
+      "sublabel": "Drizzle ORM + WAL",
+      "pos": [820, 220],
+      "size": [155, 64],
+      "sources": [
+        { "path": "src/server/db/client.ts", "line": 1, "end_line": 75 },
+        { "path": "src/server/db/schema.ts", "line": 60, "end_line": 195 }
+      ]
+    },
+    {
+      "id": "ai_engine",
+      "type": "backend",
+      "label": "AI Adapter Factory",
+      "sublabel": "Zod Carousel Validator",
+      "pos": [560, 60],
+      "size": [155, 64],
+      "sources": [
+        { "path": "src/server/routes/ai.ts", "line": 14, "end_line": 191 },
+        { "path": "src/server/services/ai/factory.ts", "line": 1, "end_line": 71 },
+        { "path": "src/server/services/ai/provider.ts", "line": 1, "end_line": 130 }
+      ]
+    },
+    {
+      "id": "llm_providers",
+      "type": "cloud",
+      "label": "LLM Providers",
+      "sublabel": "ML Studio, Gemini & OpenAI",
+      "pos": [1045, 60],
+      "size": [165, 64],
+      "sources": [
+        { "path": "src/server/services/ai/mlstudio.ts", "line": 1, "end_line": 96 },
+        { "path": "src/server/services/ai/gemini.ts", "line": 1, "end_line": 82 },
+        { "path": "src/server/services/ai/openai.ts", "line": 1, "end_line": 99 }
+      ]
+    },
+    {
+      "id": "photo_uploads",
+      "type": "database",
+      "label": "Photo Asset Store",
+      "sublabel": "data/uploads/ files",
+      "pos": [290, 380],
+      "size": [165, 64],
+      "sources": [
+        { "path": "src/server/routes/photos.ts", "line": 14, "end_line": 118 }
+      ]
+    },
+    {
+      "id": "export_engine",
+      "type": "backend",
+      "label": "Export & Queue Engine",
+      "sublabel": "Canva CSV & AutoSocial",
+      "pos": [560, 380],
+      "size": [155, 64],
+      "sources": [
+        { "path": "src/server/routes/export.ts", "line": 8, "end_line": 91 },
+        { "path": "src/server/services/export/canva.ts", "line": 20, "end_line": 121 }
+      ]
+    },
+    {
+      "id": "autosocial_queue",
+      "type": "messagebus",
+      "label": "AutoSocial Queue",
+      "sublabel": "pending/ .description + media",
+      "pos": [820, 380],
+      "size": [155, 64],
+      "sources": [
+        { "path": "src/server/services/export/autosocial.ts", "line": 39, "end_line": 144 }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Social Panel PRO Local Runtime (Bun + SQLite WAL)",
+      "wraps": [
+        "spa",
+        "api",
+        "sqlite",
+        "ai_engine",
+        "photo_uploads",
+        "export_engine",
+        "autosocial_queue"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "operator-to-spa",
+      "from": "operator",
+      "to": "spa",
+      "label": "HTTP :3000",
+      "variant": "emphasis"
+    },
+    {
+      "id": "spa-to-api",
+      "from": "spa",
+      "to": "api",
+      "label": "REST /api/*",
+      "variant": "emphasis"
+    },
+    {
+      "id": "api-to-sqlite",
+      "from": "api",
+      "to": "sqlite",
+      "label": "SQL / WAL"
+    },
+    {
+      "id": "api-to-ai",
+      "from": "api",
+      "to": "ai_engine",
+      "label": "generate"
+    },
+    {
+      "id": "ai-to-llm",
+      "from": "ai_engine",
+      "to": "llm_providers",
+      "label": "HTTPS /v1/chat",
+      "variant": "dashed"
+    },
+    {
+      "id": "api-to-export",
+      "from": "api",
+      "to": "export_engine",
+      "label": "export / queue"
+    },
+    {
+      "id": "export-to-photos",
+      "from": "export_engine",
+      "to": "photo_uploads",
+      "label": "read media"
+    },
+    {
+      "id": "export-to-autosocial",
+      "from": "export_engine",
+      "to": "autosocial_queue",
+      "label": "sidecar files",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Multi-Tenant & Editorial",
+      "items": [
+        "Company switcher isolates Brand Kit colors, WhatsApp links, and photo banks",
+        "Dynamic carousel planner synchronizes 3 to 10 slides with live 4:5 Instagram preview"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Agnostic AI Engine",
+      "items": [
+        "Adapter Pattern supports ML Studio / LM Studio local APIs, Gemini, OpenAI, Claude, Groq, and Ollama",
+        "Strict Zod validation guarantees structured slide titles, body copy, CTAs, and captions"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Export & Autonomous Queue",
+      "items": [
+        "RFC 4180 CSV export with UTF-8 BOM for Canva Pro Bulk Create",
+        "Filesystem queue writes .description sidecars and media into queue/<company>/instagram/pending/"
+      ]
+    }
+  ]
+}
