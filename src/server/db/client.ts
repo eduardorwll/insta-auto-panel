@@ -1,5 +1,6 @@
 import { Database } from "bun:sqlite";
 import { drizzle } from "drizzle-orm/bun-sqlite";
+import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import * as schema from "./schema";
 import path from "path";
 import { mkdirSync } from "fs";
@@ -14,6 +15,7 @@ export interface DatabaseConnection {
  * - Modo WAL (Write-Ahead Logging) para concorrência leitura/escrita
  * - Foreign Keys habilitadas para integridade referencial
  * - Synchronous NORMAL para equilíbrio ótimo de persistência e performance
+ * - Execução automática de migrations pendentes
  */
 export function createDatabaseConnection(dbPath: string = "./data/social_panel.db"): DatabaseConnection {
   if (dbPath !== ":memory:") {
@@ -29,6 +31,15 @@ export function createDatabaseConnection(dbPath: string = "./data/social_panel.d
   sqlite.run("PRAGMA synchronous = NORMAL;");
 
   const db = drizzle(sqlite, { schema });
+
+  // Auto-aplicar migrations se for arquivo em disco
+  if (dbPath !== ":memory:") {
+    try {
+      const migrationsFolder = path.resolve(import.meta.dirname, "../../../drizzle");
+      migrate(db, { migrationsFolder });
+    } catch {}
+  }
+
   return { sqlite, db };
 }
 
