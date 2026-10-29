@@ -1,6 +1,7 @@
 import { handleCompaniesRoutes } from "./routes/companies";
 import { handlePhotosRoutes } from "./routes/photos";
 import { handleSchedulesRoutes } from "./routes/schedules";
+import { handleAIRoutes } from "./routes/ai";
 import path from "path";
 
 export const server = Bun.serve({
@@ -29,7 +30,11 @@ export const server = Bun.serve({
     const schedulesResponse = await handleSchedulesRoutes(req, url);
     if (schedulesResponse) return schedulesResponse;
 
-    // 5. Servir uploads de fotos (/uploads/*)
+    // 5. Rotas de IA Generativa Agnóstica (/api/ai)
+    const aiResponse = await handleAIRoutes(req, url);
+    if (aiResponse) return aiResponse;
+
+    // 6. Servir uploads de fotos (/uploads/*)
     if (url.pathname.startsWith("/uploads/")) {
       const uploadFilename = url.pathname.replace("/uploads/", "");
       const uploadsDir = path.resolve(import.meta.dirname, "../../data/uploads");
