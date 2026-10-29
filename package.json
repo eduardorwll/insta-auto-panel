@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "server": "bun run src/server/index.ts",
+    "start": "bun run server",
     "test": "bun test tests/server",
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
