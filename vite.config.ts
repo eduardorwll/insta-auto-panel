@@ -2,9 +2,33 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
+import fs from "fs";
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    {
+      name: "archify-static-diagram",
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          const reqUrl = req.url?.split("?")[0];
+          if (reqUrl === "/architecture" || reqUrl === "/architecture.html") {
+            const archPath = path.resolve(
+              import.meta.dirname,
+              "./docs/architecture.html"
+            );
+            if (fs.existsSync(archPath)) {
+              res.setHeader("Content-Type", "text/html; charset=utf-8");
+              res.end(fs.readFileSync(archPath, "utf-8"));
+              return;
+            }
+          }
+          next();
+        });
+      },
+    },
+  ],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "./src"),

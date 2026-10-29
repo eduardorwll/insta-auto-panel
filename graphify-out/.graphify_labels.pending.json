@@ -2,10 +2,10 @@
   "0": "cn",
   "1": "schema.ts",
   "2": "factory.ts",
-  "3": "Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram",
-  "4": "Covered Files & Symbols",
+  "3": "Covered Files & Symbols",
+  "4": "Plano de Engenharia e Fluxo de Desenvolvimento Autônomo com Vite",
   "5": "Covered Files & Symbols",
-  "6": "Plano de Engenharia e Fluxo de Desenvolvimento Autônomo com Vite",
+  "6": "Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram",
   "7": "scripts",
   "8": "compilerOptions",
   "9": "devDependencies",
@@ -17,6 +17,6 @@
   "15": "vite.config.ts",
   "16": "main.tsx",
   "17": "prowl",
-  "27": "vite-env.d.ts",
+  "18": "vite-env.d.ts",
   "28": "image-providers.test.ts"
 }

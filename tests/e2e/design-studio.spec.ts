@@ -71,9 +71,26 @@ test.describe("M6 E2E: Studio Visual Autônomo Sem Canva (OpenDesign 4:5 + Varia
     // Verificar links PNG gerados
     await expect(dialog.getByText("Lâmina 1 (.PNG)")).toBeVisible();
 
-    // 8. Fechar modal
+    // 8. Fechar modal do Studio Visual
     await dialog.getByRole("button", { name: /Fechar Studio Visual/i }).click();
     await expect(dialog).not.toBeVisible();
+
+    // 9. Clicar no botão "Arquitetura" na Topbar e validar abertura do Diagrama Único Archify
+    const archBtn = page.getByRole("button", { name: /Arquitetura/i });
+    await expect(archBtn).toBeVisible();
+    await archBtn.click();
+
+    const archDialog = page.getByRole("dialog", {
+      name: /Diagrama Único de Arquitetura Archify/i,
+    });
+    await expect(archDialog).toBeVisible();
+    await expect(
+      archDialog.locator('iframe[src="/architecture.html"]')
+    ).toBeVisible();
+    await archDialog
+      .getByRole("button", { name: /Fechar Diagrama de Arquitetura/i })
+      .click();
+    await expect(archDialog).not.toBeVisible();
 
     expect(consoleErrors).toEqual([]);
   });

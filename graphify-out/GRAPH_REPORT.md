@@ -1,7 +1,7 @@
 # Graph Report - insta-auto-panel  (2026-10-29)
 
 ## Corpus Check
-- 92 files · ~119,816 words
+- 92 files · ~121,030 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 8 file(s) not represented in the graph (top: (none) 3, .toml 3, .lock 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `fbf9d826`
+- Built from commit: `7ab1f4a2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,10 +19,10 @@
 - cn
 - schema.ts
 - factory.ts
-- Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram
-- Covered Files & Symbols
 - Covered Files & Symbols
 - Plano de Engenharia e Fluxo de Desenvolvimento Autônomo com Vite
+- Covered Files & Symbols
+- Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram
 - scripts
 - compilerOptions
 - devDependencies
@@ -43,22 +43,22 @@
 4. `react` - 21 edges
 5. `Covered Files & Symbols` - 21 edges
 6. `scripts` - 20 edges
-7. `DashboardContent()` - 19 edges
-8. `WeekPlanner()` - 19 edges
+7. `WeekPlanner()` - 19 edges
+8. `DashboardContent()` - 19 edges
 9. `Button` - 19 edges
 10. `db` - 18 edges
 
 ## Surprising Connections (you probably didn't know these)
+- ``src/client/components/WeekPlanner.tsx` (lines 1-779)` --references--> `WeekPlanner()`  [INFERRED]
+  graft/client-ui.md → src/client/components/WeekPlanner.tsx
+- ``src/server/routes/design.ts` (lines 1-218)` --references--> `handleDesignRoutes()`  [INFERRED]
+  graft/server-routes.md → src/server/routes/design.ts
 - ``src/client/App.tsx` (lines 1-267)` --references--> `DashboardContent()`  [INFERRED]
   graft/client-ui.md → src/client/App.tsx
 - ``src/client/components/CompanySwitcher.tsx` (lines 1-120)` --references--> `CompanySwitcher()`  [INFERRED]
   graft/client-ui.md → src/client/components/CompanySwitcher.tsx
 - ``src/client/components/PhotoBank.tsx` (lines 1-285)` --references--> `PhotoBank()`  [INFERRED]
   graft/client-ui.md → src/client/components/PhotoBank.tsx
-- ``src/client/components/PublicationQueue.tsx` (lines 1-433)` --references--> `PublicationQueue()`  [INFERRED]
-  graft/client-ui.md → src/client/components/PublicationQueue.tsx
-- ``src/client/components/WeekPlanner.tsx` (lines 1-779)` --references--> `WeekPlanner()`  [INFERRED]
-  graft/client-ui.md → src/client/components/WeekPlanner.tsx
 
 ## Import Cycles
 - None detected.
@@ -77,21 +77,21 @@ Nodes (62): `src/server/db/client.ts` (lines 1-86), `src/server/services/export/
 Cohesion: 0.10
 Nodes (23): Covered Files & Symbols, `src/server/services/ai/claude.ts` (lines 1-105), `src/server/services/ai/factory.ts` (lines 1-76), `src/server/services/ai/gemini.ts` (lines 1-85), `src/server/services/ai/mlstudio.ts` (lines 1-99), `src/server/services/ai/openai.ts` (lines 1-102), `src/server/services/ai/provider.ts` (lines 1-131), AIProviderName (+15 more)
 
-### Community 3 - "Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram"
-Cohesion: 0.07
-Nodes (27): 1. Visão Geral e Filosofia do Sistema, 2. O Que Está Explicitamente DESCARTADO, 3.1. Arquitetura de Sessões Persistentes (`.profiles/`), 3.2. Máquina de Filas em Filesystem (`queue/`), 3.3. O Padrão Sidecar (`.description`), 3.4. Mecanismos de Disparo e Agendamento, 3. Pesquisa Profunda: `Katzca/AutoSocial` como Backbone de Automação, 4.1. Stack Tecnológica (+19 more)
-
-### Community 4 - "Covered Files & Symbols"
+### Community 3 - "Covered Files & Symbols"
 Cohesion: 0.05
 Nodes (43): Covered Files & Symbols, `src/client/App.tsx` (lines 1-267), `src/client/components/AISettingsModal.tsx` (lines 1-437), `src/client/components/CompanySwitcher.tsx` (lines 1-120), `src/client/components/PhotoBank.tsx` (lines 1-285), `src/client/components/PublicationQueue.tsx` (lines 1-433), `src/client/components/SlidePreview.tsx` (lines 1-160), `src/client/components/ui/badge.tsx` (lines 1-32) (+35 more)
+
+### Community 4 - "Plano de Engenharia e Fluxo de Desenvolvimento Autônomo com Vite"
+Cohesion: 0.05
+Nodes (41): 1. Arquitetura e Stack Obrigatória, 2.1. Regra de Commits Atômicos Obrigatórios, 2.2. Regra de Multi-Branches com Subagentes (Git Worktrees), 2.3. Regra de Auto-Teste Web (Playwright Headless & Console Limpo), 2.4. Regra de Checkpoints Humanos Obrigatórios (HITL — Human-in-the-Loop), 2. Regras Operacionais Mandatórias do Repositório, 3. Herança das Regras do Sandbox (`~/Sandbox/.agents/rules/`), Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente (+33 more)
 
 ### Community 5 - "Covered Files & Symbols"
 Cohesion: 0.05
 Nodes (35): React 19 + Tailwind v4 + shadcn/ui Frontend Portal, Graft Knowledge Graph Index (`insta-auto-panel`), Subsystem Nodes, Covered Files & Symbols, HTTP REST API Routes (Bun.serve Endpoints), `src/server/index.ts` (lines 1-113), `src/server/routes/ai.ts` (lines 1-195), `src/server/routes/companies.ts` (lines 1-90) (+27 more)
 
-### Community 6 - "Plano de Engenharia e Fluxo de Desenvolvimento Autônomo com Vite"
-Cohesion: 0.05
-Nodes (41): 1. Arquitetura e Stack Obrigatória, 2.1. Regra de Commits Atômicos Obrigatórios, 2.2. Regra de Multi-Branches com Subagentes (Git Worktrees), 2.3. Regra de Auto-Teste Web (Playwright Headless & Console Limpo), 2.4. Regra de Checkpoints Humanos Obrigatórios (HITL — Human-in-the-Loop), 2. Regras Operacionais Mandatórias do Repositório, 3. Herança das Regras do Sandbox (`~/Sandbox/.agents/rules/`), Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente (+33 more)
+### Community 6 - "Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram"
+Cohesion: 0.07
+Nodes (27): 1. Visão Geral e Filosofia do Sistema, 2. O Que Está Explicitamente DESCARTADO, 3.1. Arquitetura de Sessões Persistentes (`.profiles/`), 3.2. Máquina de Filas em Filesystem (`queue/`), 3.3. O Padrão Sidecar (`.description`), 3.4. Mecanismos de Disparo e Agendamento, 3. Pesquisa Profunda: `Katzca/AutoSocial` como Backbone de Automação, 4.1. Stack Tecnológica (+19 more)
 
 ### Community 7 - "scripts"
 Cohesion: 0.10
@@ -147,11 +147,11 @@ _Questions this graph is uniquely positioned to answer:_
   _3 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `cn` be split into smaller, more focused modules?**
   _Cohesion score 0.07898989898989899 - nodes in this community are weakly interconnected._
-- **Why does `Badge()` connect `cn` to `Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram`, `Covered Files & Symbols`?**
+- **Why does `Badge()` connect `cn` to `Covered Files & Symbols`, `Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram`?**
   _High betweenness centrality (0.094) - this node is a cross-community bridge._
 - **Should `schema.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.07501194457716197 - nodes in this community are weakly interconnected._
 - **Should `factory.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.0996078431372549 - nodes in this community are weakly interconnected._
-- **Should `Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram` be split into smaller, more focused modules?**
-  _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._
+- **Should `Covered Files & Symbols` be split into smaller, more focused modules?**
+  _Cohesion score 0.05180388529139685 - nodes in this community are weakly interconnected._

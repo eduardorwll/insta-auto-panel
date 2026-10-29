@@ -23,12 +23,14 @@ import {
   Settings,
   Cpu,
   Send,
+  X,
 } from "lucide-react";
 
 function DashboardContent() {
   const { activeCompany, isLoading } = useCompany();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
+  const [isArchModalOpen, setIsArchModalOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -61,16 +63,17 @@ function DashboardContent() {
         </div>
 
         <div className="flex items-center gap-3">
-          <a
-            href="/architecture"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md border border-slate-800 bg-slate-900/80 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => setIsArchModalOpen(true)}
+            className="gap-1.5 border-slate-800 bg-slate-900/80 text-slate-300 hover:bg-slate-800 hover:text-white"
             title="Abrir Diagrama Único de Arquitetura (Archify)"
           >
             <Cpu className="h-3.5 w-3.5 text-amber-400" />
             <span className="hidden sm:inline">Arquitetura</span>
-          </a>
+          </Button>
 
           <Button
             variant="outline"
@@ -251,6 +254,53 @@ function DashboardContent() {
               onClose={() => setIsAIModalOpen(false)}
             />
           </>
+        )}
+
+        {isArchModalOpen && (
+          <div
+            data-ui="archify-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Diagrama Único de Arquitetura Archify"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 p-4"
+          >
+            <div className="craft-modal-enter w-full max-w-7xl h-[88vh] flex flex-col rounded-2xl bg-slate-900 text-slate-100 overflow-hidden">
+              <div className="flex items-center justify-between px-5 py-3 bg-slate-950">
+                <div className="flex items-center gap-2.5">
+                  <Cpu className="h-4 w-4 text-amber-400" />
+                  <span className="text-sm font-semibold text-white">
+                    Diagrama Único de Arquitetura Interativo (Archify — M1 a M6)
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <a
+                    href="/architecture.html"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-md bg-slate-800 text-slate-200 hover:bg-slate-700"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" />
+                    <span>Abrir em Nova Guia</span>
+                  </a>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsArchModalOpen(false)}
+                    aria-label="Fechar Diagrama de Arquitetura"
+                    className="text-slate-400 hover:text-white"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+              <iframe
+                src="/architecture.html"
+                title="Diagrama de Arquitetura Social Panel PRO"
+                className="w-full flex-1 border-0 bg-slate-950"
+              />
+            </div>
+          </div>
         )}
       </main>
     </div>

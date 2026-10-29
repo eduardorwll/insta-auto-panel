@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1793302567.978201,
-    "seen": 1793302585.2407503,
-    "ast_hash": "3c867098e682c7cbf24dbd1648e5ac5b",
+    "mtime": 1793304900.4802299,
+    "seen": 1793304979.3375797,
+    "ast_hash": "a189e04702533b159e9404d62dc2d5d7",
     "semantic_hash": ""
   },
   "playwright.config.ts": {
@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "src/client/App.tsx": {
-    "mtime": 1793298944.9585886,
-    "seen": 1793298955.0259583,
-    "ast_hash": "0c94435e36bfed244a6e19042d94ec78",
+    "mtime": 1793304888.0996897,
+    "seen": 1793304979.337629,
+    "ast_hash": "2a5288d1ec1c31ea725409ba3f396c2d",
     "semantic_hash": ""
   },
   "src/client/components/AISettingsModal.tsx": {
@@ -390,9 +390,9 @@
     "semantic_hash": ""
   },
   "vite.config.ts": {
-    "mtime": 1793304513.3331625,
-    "seen": 1793304514.560873,
-    "ast_hash": "801acb905c17554ecb578ba05f0283f0",
+    "mtime": 1793304824.6969259,
+    "seen": 1793304979.338801,
+    "ast_hash": "8121c3ef6aa3c0f2cd03c44a84ad0624",
     "semantic_hash": ""
   },
   "AGENTS.md": {
@@ -468,39 +468,39 @@
     "semantic_hash": ""
   },
   "graft/INDEX.md": {
-    "mtime": 1793304662.1418576,
-    "seen": 1793304663.310812,
+    "mtime": 1793304978.1956232,
+    "seen": 1793304979.338901,
     "ast_hash": "4fe1ea76619ec84df941f344fe7c6a3b",
     "semantic_hash": ""
   },
   "graft/client-ui.md": {
-    "mtime": 1793304662.1408575,
-    "seen": 1793304663.3108132,
-    "ast_hash": "b40de52ff62fa975edbdfc810f8db5a2",
+    "mtime": 1793304978.1956232,
+    "seen": 1793304979.338902,
+    "ast_hash": "c1ff06b1cfbd8a4e9969084196cc5104",
     "semantic_hash": ""
   },
   "graft/server-db.md": {
-    "mtime": 1793304662.1368573,
-    "seen": 1793304663.3108141,
+    "mtime": 1793304978.192623,
+    "seen": 1793304979.3389032,
     "ast_hash": "b541069596e7b0c89cfdb90f1030f159",
     "semantic_hash": ""
   },
   "graft/server-routes.md": {
-    "mtime": 1793304662.1378574,
-    "seen": 1793304663.3108149,
+    "mtime": 1793304978.192623,
+    "seen": 1793304979.3389044,
     "ast_hash": "ab278dec863c93f9ed26d545bae1b5cb",
     "semantic_hash": ""
   },
   "graft/server-services.md": {
-    "mtime": 1793304662.1388574,
-    "seen": 1793304663.310816,
+    "mtime": 1793304978.193623,
+    "seen": 1793304979.338905,
     "ast_hash": "70f5d0ae721dbfb7fd640ffa38ab1a74",
     "semantic_hash": ""
   },
   "graft/tests-suite.md": {
-    "mtime": 1793304662.1418576,
-    "seen": 1793304663.3108168,
-    "ast_hash": "d456b7122d0cd33b50b77155629fccd8",
+    "mtime": 1793304978.1956232,
+    "seen": 1793304979.3389063,
+    "ast_hash": "915dfed728b1e429468c491b062cc8a4",
     "semantic_hash": ""
   },
   "src/server/services/ai/claude.ts": {
@@ -511,7 +511,7 @@
   },
   "drizzle/0000_loud_stature.sql": {
     "mtime": 1793303644.8764498,
-    "seen": 1793304514.5607948,
+    "seen": 1793304664.4821315,
     "ast_hash": "",
     "semantic_hash": ""
   },
@@ -822,9 +822,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/design-studio.spec.ts": {
-    "mtime": 1793304513.3331625,
-    "seen": 1793304514.5608537,
-    "ast_hash": "94703a4f46048aca36d86f77b5928d22",
+    "mtime": 1793304945.9192133,
+    "seen": 1793304979.3385017,
+    "ast_hash": "03783e08806e74d1cc3ce7ff1e41a208",
     "semantic_hash": ""
   },
   "data/renders/studio_co_1793304135006/post_sched_studio_co_1793304135006_20261026_segunda/slide_01.png": {
@@ -992,6 +992,108 @@
   "data/renders/studio_co_1793304661309/studio_post_1793304661309/slide_03.svg": {
     "mtime": 1793304661.3128216,
     "seen": 1793304663.3117235,
+    "ast_hash": "5a9bb476a92e0f04928e84227d7d4df5",
+    "semantic_hash": ""
+  },
+  "public/architecture.html": {
+    "mtime": 1793304958.9337816,
+    "seen": 1793304979.338938,
+    "ast_hash": "82e18383498d1b1a9771cc1441298c04",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304661309/post_sched_studio_co_1793304661309_20261026_segunda/slide_01.png": {
+    "mtime": 1793304961.826908,
+    "seen": 1793304979.3404348,
+    "ast_hash": "9bfce22909ad6758f7cfe1504c879a78",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304661309/post_sched_studio_co_1793304661309_20261026_segunda/slide_01.svg": {
+    "mtime": 1793304961.826908,
+    "seen": 1793304979.3404377,
+    "ast_hash": "c360b2580b6be30711bbb1863405442f",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304661309/post_sched_studio_co_1793304661309_20261026_segunda/slide_02.png": {
+    "mtime": 1793304961.8289082,
+    "seen": 1793304979.34044,
+    "ast_hash": "97e0fab1d40b09bc3499fd7a48c5223f",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304661309/post_sched_studio_co_1793304661309_20261026_segunda/slide_02.svg": {
+    "mtime": 1793304961.8289082,
+    "seen": 1793304979.340442,
+    "ast_hash": "4ca21df5908c33a648f83d8b79b22b6d",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304661309/post_sched_studio_co_1793304661309_20261026_segunda/slide_03.png": {
+    "mtime": 1793304961.8299081,
+    "seen": 1793304979.3404474,
+    "ast_hash": "ba906a884ab43b10d66e0bc4104fdb9d",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304661309/post_sched_studio_co_1793304661309_20261026_segunda/slide_03.svg": {
+    "mtime": 1793304961.8299081,
+    "seen": 1793304979.3404498,
+    "ast_hash": "16e11ea8cf4b22dc3f93e172d2d722fc",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304661309/post_sched_studio_co_1793304661309_20261026_segunda/slide_04.png": {
+    "mtime": 1793304961.8319082,
+    "seen": 1793304979.3404515,
+    "ast_hash": "ea888bd1da9923994af46774c36848ec",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304661309/post_sched_studio_co_1793304661309_20261026_segunda/slide_04.svg": {
+    "mtime": 1793304961.833195,
+    "seen": 1793304979.3404534,
+    "ast_hash": "08073c24b64acca9fcbadfe6fbe32709",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304661309/post_sched_studio_co_1793304661309_20261026_segunda/slide_05.png": {
+    "mtime": 1793304961.8347087,
+    "seen": 1793304979.3404548,
+    "ast_hash": "e2df6d2c4a8f0298bd3e0e5a56b3f6e5",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304661309/post_sched_studio_co_1793304661309_20261026_segunda/slide_05.svg": {
+    "mtime": 1793304961.8347087,
+    "seen": 1793304979.3404565,
+    "ast_hash": "f8c9cdc43aa1d24328c4c7d8c9032482",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304977393/studio_post_1793304977393/slide_01.png": {
+    "mtime": 1793304977.3955882,
+    "seen": 1793304979.340633,
+    "ast_hash": "c58a8a30a45509d337ef4389fd02d89f",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304977393/studio_post_1793304977393/slide_01.svg": {
+    "mtime": 1793304977.3955882,
+    "seen": 1793304979.3406346,
+    "ast_hash": "d08c0eee9c65ec06e8a8e164cff19737",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304977393/studio_post_1793304977393/slide_02.png": {
+    "mtime": 1793304977.396588,
+    "seen": 1793304979.3406365,
+    "ast_hash": "05ea7194834e18d90f70c3cb82a76f29",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304977393/studio_post_1793304977393/slide_02.svg": {
+    "mtime": 1793304977.396588,
+    "seen": 1793304979.340638,
+    "ast_hash": "6062f25d3ed01df4a4b46288f80abc5a",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304977393/studio_post_1793304977393/slide_03.png": {
+    "mtime": 1793304977.3975883,
+    "seen": 1793304979.34064,
+    "ast_hash": "cac1ae26dea74d91c0f8ae965827bebc",
+    "semantic_hash": ""
+  },
+  "data/renders/studio_co_1793304977393/studio_post_1793304977393/slide_03.svg": {
+    "mtime": 1793304977.3981225,
+    "seen": 1793304979.3406417,
     "ast_hash": "5a9bb476a92e0f04928e84227d7d4df5",
     "semantic_hash": ""
   }
