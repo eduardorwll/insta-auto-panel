@@ -510,9 +510,9 @@
     "semantic_hash": ""
   },
   "drizzle/0000_loud_stature.sql": {
-    "mtime": 1793303644.8764498,
-    "seen": 1793304980.4360569,
-    "ast_hash": "",
+    "mtime": 1793305561.4691882,
+    "seen": 1793307105.82647,
+    "ast_hash": "b8b4e2abcbb7056ab501752d2972b4ab",
     "semantic_hash": ""
   },
   ".delegate/config.json": {
