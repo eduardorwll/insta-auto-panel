@@ -1,17 +1,17 @@
 # Graph Report - insta-auto-panel  (2026-10-29)
 
 ## Corpus Check
-- 101 files · ~193,894 words
+- 103 files · ~194,740 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 9 file(s) not represented in the graph (top: (none) 4, .toml 3, .lock 1)
 
 ## Summary
-- 643 nodes · 1590 edges · 30 communities (24 shown, 6 thin omitted)
-- Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 116 edges (avg confidence: 0.95)
+- 653 nodes · 1606 edges · 36 communities (25 shown, 11 thin omitted)
+- Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 121 edges (avg confidence: 0.95)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `810e1275`
+- Built from commit: `3b8f9a4b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -21,44 +21,50 @@
 - factory.ts
 - Covered Files & Symbols
 - Plano de Engenharia e Fluxo de Desenvolvimento Autônomo com Vite
-- Covered Files & Symbols
 - scripts
 - dependencies
 - compilerOptions
 - devDependencies
+- Covered Files & Symbols
+- Covered Files & Symbols
 - Social Panel PRO (insta-auto-panel)
-- INDEX.md
 - graft.ts
+- schedule.ts
 - package.json
 - Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram
-- Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente
 - main.tsx
-- Covered Files & Symbols
+- Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente
 - Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente
 - @playwright/test
+- SidebarNavigation.tsx
 - 6. Camada de Inteligência Artificial Generativa Agnóstica (Multi-Provedor)
-- `src/server/routes/settings.ts` (lines 1-460)
 - 3. Pesquisa Profunda: `Katzca/AutoSocial` como Backbone de Automação
 - 5. Módulos Funcionais e Modelo de Dados
+- `src/client/components/SettingsHub.tsx` (lines 1-847)
+- AutoSocialQueueStatus
 - prowl
-- @types/react-dom@^19.3.0
-- vite
 - image-providers.test.ts
+- `src/client/components/AISettingsModal.tsx` (lines 1-468)
+- `src/client/components/DesignStudioTab.tsx` (lines 1-716)
+- `src/client/components/ui/button.tsx` (lines 1-53)
+- `src/client/components/ui/input.tsx` (lines 1-24)
+- postcss@^8.5.32
+- tailwindcss@^4.3.3
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 37 edges
-2. `Covered Files & Symbols` - 30 edges
+2. `Covered Files & Symbols` - 31 edges
 3. `drizzle-orm` - 28 edges
-4. `Button` - 25 edges
-5. `react` - 24 edges
-6. `Covered Files & Symbols` - 24 edges
+4. `Covered Files & Symbols` - 25 edges
+5. `react` - 25 edges
+6. `Button` - 25 edges
 7. `useCompany()` - 22 edges
 8. `db` - 22 edges
 9. `companies` - 22 edges
 10. `scripts` - 21 edges
 
 ## Surprising Connections (you probably didn't know these)
-- ``src/client/App.tsx` (lines 1-338)` --references--> `DashboardContent()`  [INFERRED]
+- ``src/client/App.tsx` (lines 1-337)` --references--> `DashboardContent()`  [INFERRED]
   graft/client-ui.md → src/client/App.tsx
 - ``src/client/components/CompanySwitcher.tsx` (lines 1-134)` --references--> `CompanySwitcher()`  [INFERRED]
   graft/client-ui.md → src/client/components/CompanySwitcher.tsx
@@ -72,11 +78,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (30 total, 6 thin omitted)
+## Communities (36 total, 11 thin omitted)
 
 ### Community 0 - "App.tsx"
-Cohesion: 0.06
-Nodes (102): `src/client/components/AISettingsModal.tsx` (lines 1-468), `src/client/components/CompanyModal.tsx` (lines 1-348), `src/client/components/DesignStudioModal.tsx` (lines 1-657), `src/client/components/SlidePreview.tsx` (lines 1-157), `src/client/components/ui/dialog.tsx` (lines 1-96), `src/client/context/CompanyContext.tsx` (lines 1-141), `src/client/types/ai.ts` (lines 1-27), `src/client/types/company.ts` (lines 1-19) (+94 more)
+Cohesion: 0.07
+Nodes (95): `src/client/components/CompanyModal.tsx` (lines 1-348), `src/client/components/DesignStudioModal.tsx` (lines 1-657), `src/client/components/SlidePreview.tsx` (lines 1-157), `src/client/components/ui/dialog.tsx` (lines 1-96), `src/client/context/CompanyContext.tsx` (lines 1-141), `src/client/types/ai.ts` (lines 1-27), `src/client/types/company.ts` (lines 1-19), 4.3. Modos de Superfície e Polimento Sistêmico (`pbakaus/impeccable` v4.8.0) (+87 more)
 
 ### Community 1 - "schema.ts"
 Cohesion: 0.07
@@ -87,76 +93,76 @@ Cohesion: 0.10
 Nodes (23): Covered Files & Symbols, `src/server/services/ai/claude.ts` (lines 1-105), `src/server/services/ai/factory.ts` (lines 1-76), `src/server/services/ai/gemini.ts` (lines 1-85), `src/server/services/ai/mlstudio.ts` (lines 1-99), `src/server/services/ai/openai.ts` (lines 1-102), `src/server/services/ai/provider.ts` (lines 1-131), AIProviderName (+15 more)
 
 ### Community 3 - "Covered Files & Symbols"
-Cohesion: 0.07
-Nodes (29): Covered Files & Symbols, `src/client/App.tsx` (lines 1-338), `src/client/components/CanvaExportTab.tsx` (lines 1-321), `src/client/components/CompanySwitcher.tsx` (lines 1-134), `src/client/components/DesignStudioTab.tsx` (lines 1-714), `src/client/components/PhotoBank.tsx` (lines 1-295), `src/client/components/PublicationQueue.tsx` (lines 1-456), `src/client/components/SettingsHub.tsx` (lines 1-844) (+21 more)
+Cohesion: 0.06
+Nodes (31): React 19 + Tailwind v4 + shadcn/ui Frontend Portal, Graft Knowledge Graph Index (`insta-auto-panel`), Subsystem Nodes, Database Layer (SQLite WAL + Drizzle Schema & Migrations), Domain Services & AI Provider Adapters, Automated Test Suite (Bun Unit/Integration + Playwright E2E), Covered Files & Symbols, `tests/e2e/ai-generation.spec.ts` (lines 1-186) (+23 more)
 
 ### Community 4 - "Plano de Engenharia e Fluxo de Desenvolvimento Autônomo com Vite"
 Cohesion: 0.07
-Nodes (29): 1. Visão Geral do Protocolo de Desenvolvimento, 2. Inventário e Aplicação das Skills Disponíveis em `~/Sandbox`, 3.1. Por Que Usar Git Worktrees / Workspace 'share' no AGY?, 3.2. Topologia de Branches do Projeto, 3.3. Regra de Ouro: Commits Atômicos Obrigatórios por Task Concluída, 3. Governança Multi-Branch com Git Worktrees e Commits Obrigatórios via AGY, 4.1. Direção de Arte & Inspeção Anti-Slop (`Leonxlnx/taste-skill` — `design-taste-frontend`), 4.2. Design Engineering, Micro-Interações e Stress-Testing (`emilkowalski/skills`) (+21 more)
+Nodes (28): 1. Visão Geral do Protocolo de Desenvolvimento, 2. Inventário e Aplicação das Skills Disponíveis em `~/Sandbox`, 3.1. Por Que Usar Git Worktrees / Workspace 'share' no AGY?, 3.2. Topologia de Branches do Projeto, 3.3. Regra de Ouro: Commits Atômicos Obrigatórios por Task Concluída, 3. Governança Multi-Branch com Git Worktrees e Commits Obrigatórios via AGY, 4.1. Direção de Arte & Inspeção Anti-Slop (`Leonxlnx/taste-skill` — `design-taste-frontend`), 4.2. Design Engineering, Micro-Interações e Stress-Testing (`emilkowalski/skills`) (+20 more)
 
-### Community 5 - "Covered Files & Symbols"
-Cohesion: 0.08
-Nodes (24): Covered Files & Symbols, `tests/e2e/ai-generation.spec.ts` (lines 1-186), `tests/e2e/companies.spec.ts` (lines 1-101), `tests/e2e/design-studio.spec.ts` (lines 1-98), `tests/e2e/export-autosocial.spec.ts` (lines 1-88), `tests/e2e/planner-photos.spec.ts` (lines 1-87), `tests/e2e/settings-hub.spec.ts` (lines 1-104), `tests/server/ai-adapters.test.ts` (lines 1-116) (+16 more)
-
-### Community 6 - "scripts"
+### Community 5 - "scripts"
 Cohesion: 0.10
 Nodes (21): scripts, archify, build, caveman, db:generate, db:migrate, db:sanitize, db:seed (+13 more)
 
-### Community 7 - "dependencies"
+### Community 6 - "dependencies"
 Cohesion: 0.11
-Nodes (18): dependencies, class-variance-authority@^0.7.1, clsx@^2.1.1, drizzle-orm@^0.45.4, lucide-react@^1.64.0, @radix-ui/react-dialog@^1.3.1, @radix-ui/react-dropdown-menu@^2.2.1, @radix-ui/react-label@^2.1.17 (+10 more)
+Nodes (18): dependencies, class-variance-authority@^0.7.1, drizzle-orm@^0.45.4, lucide-react@^1.64.0, @radix-ui/react-dialog@^1.3.1, @radix-ui/react-dropdown-menu@^2.2.1, @radix-ui/react-label@^2.1.17, @radix-ui/react-slot@^1.5.0 (+10 more)
 
-### Community 8 - "compilerOptions"
+### Community 7 - "compilerOptions"
 Cohesion: 0.11
 Nodes (17): compilerOptions, allowJs, jsx, lib, module, moduleDetection, moduleResolution, noEmit (+9 more)
 
-### Community 9 - "devDependencies"
+### Community 8 - "devDependencies"
 Cohesion: 0.12
-Nodes (15): devDependencies, autoprefixer@^10.6.2, drizzle-kit@^0.31.11, postcss@^8.5.32, @tailwindcss/vite@^4.3.3, @types/bun@^1.4.4, typescript@^7.0.2, @vitejs/plugin-react@^6.1.2 (+7 more)
+Nodes (16): devDependencies, autoprefixer@^10.6.2, drizzle-kit@^0.31.11, @playwright/test@^1.64.1, @types/bun@^1.4.4, @types/react@^19.3.0, @types/react-dom@^19.3.0, typescript@^7.0.2 (+8 more)
 
-### Community 10 - "Social Panel PRO (insta-auto-panel)"
+### Community 9 - "Covered Files & Symbols"
+Cohesion: 0.12
+Nodes (17): Covered Files & Symbols, `src/client/App.tsx` (lines 1-337), `src/client/components/CanvaExportTab.tsx` (lines 1-321), `src/client/components/CompanySwitcher.tsx` (lines 1-134), `src/client/components/PhotoBank.tsx` (lines 1-295), `src/client/components/PublicationQueue.tsx` (lines 1-456), `src/client/components/ui/badge.tsx` (lines 1-33), `src/client/components/ui/card.tsx` (lines 1-51) (+9 more)
+
+### Community 10 - "Covered Files & Symbols"
+Cohesion: 0.15
+Nodes (14): Covered Files & Symbols, HTTP REST API Routes (Bun.serve Endpoints), `src/server/index.ts` (lines 1-118), `src/server/routes/ai.ts` (lines 1-195), `src/server/routes/companies.ts` (lines 1-90), `src/server/routes/design.ts` (lines 1-218), `src/server/routes/export.ts` (lines 1-92), `src/server/routes/photos.ts` (lines 1-120) (+6 more)
+
+### Community 11 - "Social Panel PRO (insta-auto-panel)"
 Cohesion: 0.13
 Nodes (14): 1. Clonar o Repositório e Instalar Dependências, 1. Testes Unitários e de Integração (Bun Test), 2. Checagem Estática de Tipos (TypeScript), 2. Executar o Servidor de Desenvolvimento, 3. Build de Produção, 3. Testes Ponta a Ponta E2E (Playwright), 🚀 Arquitetura & Stack Tecnológica, 📁 Estrutura de Diretórios (+6 more)
-
-### Community 11 - "INDEX.md"
-Cohesion: 0.18
-Nodes (6): React 19 + Tailwind v4 + shadcn/ui Frontend Portal, Graft Knowledge Graph Index (`insta-auto-panel`), Subsystem Nodes, Database Layer (SQLite WAL + Drizzle Schema & Migrations), Domain Services & AI Provider Adapters, Automated Test Suite (Bun Unit/Integration + Playwright E2E)
 
 ### Community 12 - "graft.ts"
 Cohesion: 0.10
 Nodes (16): cavemanCompressMarkdown(), compressProseLine(), loadTelemetry(), recordTelemetry(), REPO_ROOT, TELEMETRY_PATH, TelemetryEntry, TelemetryStore (+8 more)
 
-### Community 13 - "package.json"
-Cohesion: 0.18
-Nodes (10): tailwind-merge@^3.7.0, tailwindcss@^4.3.3, @types/react@^19.3.0, name, private, type, version, tailwind-merge (+2 more)
+### Community 13 - "schedule.ts"
+Cohesion: 0.25
+Nodes (9): `src/client/types/photo.ts` (lines 1-14), `src/client/types/schedule.ts` (lines 1-36), `src/server/db/schema.ts` (lines 1-328), PhotoAsset, PhotoCategory, PostSlide, WeeklySchedule, DayOfWeek (+1 more)
 
-### Community 14 - "Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram"
+### Community 14 - "package.json"
+Cohesion: 0.18
+Nodes (10): clsx@^2.1.1, @tailwindcss/vite@^4.3.3, vite@^8.3.5, name, private, type, version, clsx (+2 more)
+
+### Community 15 - "Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram"
 Cohesion: 0.18
 Nodes (11): 1. Visão Geral e Filosofia do Sistema, 2. O Que Está Explicitamente DESCARTADO, 4.1. Stack Tecnológica, 4.2. Banco de Dados Confiável: SQLite Nativo com Drizzle ORM, 4. O Novo Painel de Gestão: Arquitetura Técnica, 7. Schema Relacional do Banco de Dados Confiável (SQLite / Drizzle), 8. Arquitetura de Pastas Proposta para o Novo Projeto, 9. Próximos Passos de Decisão para Fechamento do Planejamento (+3 more)
-
-### Community 15 - "Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente"
-Cohesion: 0.20
-Nodes (10): 1. Arquitetura e Stack Obrigatória, 2.1. Regra de Commits Atômicos Obrigatórios, 2.2. Regra de Multi-Branches com Subagentes (Git Worktrees), 2.3. Regra de Auto-Teste Web (Playwright Headless & Console Limpo), 2.4. Regra de Checkpoints Humanos Obrigatórios (HITL — Human-in-the-Loop), 2. Regras Operacionais Mandatórias do Repositório, 3. Herança das Regras do Sandbox (`~/Sandbox/.agents/rules/`), Prowl project context (+2 more)
 
 ### Community 16 - "main.tsx"
 Cohesion: 0.40
 Nodes (3): react-dom@^19.3.1, react-dom, rootElement
 
-### Community 17 - "Covered Files & Symbols"
+### Community 17 - "Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente"
 Cohesion: 0.20
-Nodes (9): Covered Files & Symbols, HTTP REST API Routes (Bun.serve Endpoints), `src/server/index.ts` (lines 1-118), `src/server/routes/ai.ts` (lines 1-195), `src/server/routes/companies.ts` (lines 1-90), `src/server/routes/design.ts` (lines 1-218), `src/server/routes/export.ts` (lines 1-92), `src/server/routes/photos.ts` (lines 1-120) (+1 more)
+Nodes (10): 1. Arquitetura e Stack Obrigatória, 2.1. Regra de Commits Atômicos Obrigatórios, 2.2. Regra de Multi-Branches com Subagentes (Git Worktrees), 2.3. Regra de Auto-Teste Web (Playwright Headless & Console Limpo), 2.4. Regra de Checkpoints Humanos Obrigatórios (HITL — Human-in-the-Loop), 2. Regras Operacionais Mandatórias do Repositório, 3. Herança das Regras do Sandbox (`~/Sandbox/.agents/rules/`), Prowl project context (+2 more)
 
 ### Community 18 - "Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente"
 Cohesion: 0.20
 Nodes (10): 1. Arquitetura e Stack Obrigatória, 2.1. Regra de Commits Atômicos Obrigatórios, 2.2. Regra de Multi-Branches com Subagentes (Git Worktrees), 2.3. Regra de Auto-Teste Web (Playwright Headless & Console Limpo), 2.4. Regra de Checkpoints Humanos Obrigatórios (HITL — Human-in-the-Loop), 2. Regras Operacionais Mandatórias do Repositório, 3. Herança das Regras do Sandbox (`~/Sandbox/.agents/rules/`), Prowl project context (+2 more)
 
-### Community 20 - "6. Camada de Inteligência Artificial Generativa Agnóstica (Multi-Provedor)"
+### Community 20 - "SidebarNavigation.tsx"
+Cohesion: 0.39
+Nodes (7): `src/client/components/SidebarNavigation.tsx` (lines 1-241), NAV_GROUPS, NavGroup, NavItem, NavTabId, SidebarNavigation(), SidebarNavigationProps
+
+### Community 21 - "6. Camada de Inteligência Artificial Generativa Agnóstica (Multi-Provedor)"
 Cohesion: 0.33
 Nodes (6): 6.1. Gestão de Provedores na Interface do Painel, 6.2. Padrão Arquitetural: Adapter Pattern em TypeScript, 6.3. Garantia de Formato: Saídas Estruturadas (Structured Outputs) e Validação Zod, 6.4. Escopo de Chaves: Global vs. Específica por Empresa, 6.5. O Papel do Canva Pro (Criação Visual de Alto Padrão), 6. Camada de Inteligência Artificial Generativa Agnóstica (Multi-Provedor)
-
-### Community 21 - "`src/server/routes/settings.ts` (lines 1-460)"
-Cohesion: 0.60
-Nodes (5): `src/server/routes/settings.ts` (lines 1-460), CookieEntry, ensureCompanySettingsRow(), handleSettingsRoutes(), parseInstagramCookiesInput()
 
 ### Community 22 - "3. Pesquisa Profunda: `Katzca/AutoSocial` como Backbone de Automação"
 Cohesion: 0.40
@@ -166,29 +172,33 @@ Nodes (5): 3.1. Arquitetura de Sessões Persistentes (`.profiles/`), 3.2. Máqui
 Cohesion: 0.40
 Nodes (5): 5.1. Módulo 1: Gestão de Múltiplas Contas / Empresas (Multi-Tenant), 5.2. Módulo 2: Banco de Fotos Base Isolado por Empresa, 5.3.1. Regra de Negócio: Número de Slides como Variável Dinâmica (3 a 10), 5.3. Módulo 3: Selecionador Semanal de Assuntos (Segunda a Domingo), 5. Módulos Funcionais e Modelo de Dados
 
+### Community 25 - "`src/client/components/SettingsHub.tsx` (lines 1-847)"
+Cohesion: 0.67
+Nodes (3): `src/client/components/SettingsHub.tsx` (lines 1-847), CompanySettingsData, SettingsHubProps
+
 ### Community 28 - "image-providers.test.ts"
-Cohesion: 0.09
-Nodes (31): `src/server/db/schema.ts` (lines 1-328), `src/server/services/design/image-provider.ts` (lines 1-317), `src/server/services/design/template-engine.ts` (lines 1-322), DayOfWeek, DESIGN_TEMPLATES, DesignTemplateId, IMAGE_PROVIDERS, ImageProviderName (+23 more)
+Cohesion: 0.10
+Nodes (29): `src/server/services/design/image-provider.ts` (lines 1-317), `src/server/services/design/template-engine.ts` (lines 1-322), DESIGN_TEMPLATES, DesignTemplateId, IMAGE_PROVIDERS, ImageProviderName, handleDesignRoutes(), buildEditorialBackdropDataUri() (+21 more)
 
 ## Knowledge Gaps
 - **3 isolated node(s):** `prowl`, `RFC-4180`, `RFC-4180`
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 225 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 228 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `drizzle-orm` connect `schema.ts` to `factory.ts`, `package.json`, `dependencies`?**
-  _High betweenness centrality (0.119) - this node is a cross-community bridge._
+  _High betweenness centrality (0.121) - this node is a cross-community bridge._
 - **What connects `prowl`, `RFC-4180`, `RFC-4180` to the rest of the system?**
   _3 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `App.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.06118436271108027 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0666400106624017 - nodes in this community are weakly interconnected._
 - **Why does `Plano de Engenharia e Fluxo de Desenvolvimento Autônomo com Vite` connect `Plano de Engenharia e Fluxo de Desenvolvimento Autônomo com Vite` to `CLAUDE.md`?**
-  _High betweenness centrality (0.098) - this node is a cross-community bridge._
+  _High betweenness centrality (0.096) - this node is a cross-community bridge._
 - **Should `schema.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.06702605570530099 - nodes in this community are weakly interconnected._
 - **Why does `Badge()` connect `App.tsx` to `Covered Files & Symbols`, `Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram`?**
-  _High betweenness centrality (0.092) - this node is a cross-community bridge._
+  _High betweenness centrality (0.091) - this node is a cross-community bridge._
 - **Should `factory.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.0996078431372549 - nodes in this community are weakly interconnected._

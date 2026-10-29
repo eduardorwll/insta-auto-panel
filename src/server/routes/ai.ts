@@ -18,6 +18,16 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
   if (req.method === "GET" && pathname === "/api/ai/settings") {
     const companyId = url.searchParams.get("companyId");
 
+    const sanitizeSetting = (setting: typeof globalSetting) => {
+      if (!setting) return null;
+      const { apiKey, ...safe } = setting;
+      return {
+        ...safe,
+        apiKey: apiKey ? `${apiKey.slice(0, 4)}...${apiKey.slice(-4)}` : null,
+        hasApiKey: Boolean(apiKey),
+      };
+    };
+
     if (companyId) {
       const [companySetting] = await db
         .select()
@@ -25,7 +35,7 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
         .where(eq(ai_provider_settings.id, companyId));
 
       if (companySetting) {
-        return Response.json({ success: true, data: companySetting, isCustom: true });
+        return Response.json({ success: true, data: sanitizeSetting(companySetting), isCustom: true });
       }
     }
 
@@ -36,7 +46,7 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
       .where(eq(ai_provider_settings.id, "global"));
 
     if (globalSetting) {
-      return Response.json({ success: true, data: globalSetting, isCustom: false });
+      return Response.json({ success: true, data: sanitizeSetting(globalSetting), isCustom: false });
     }
 
     return Response.json({
@@ -64,7 +74,11 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
         .where(eq(ai_provider_settings.id, parsed.id));
 
       if (existing) {
-        await db.update(ai_provider_settings).set(parsed).where(eq(ai_provider_settings.id, parsed.id));
+        const updateData = { ...parsed };
+        if (parsed.apiKey?.includes("...") && existing.apiKey) {
+          updateData.apiKey = existing.apiKey;
+        }
+        await db.update(ai_provider_settings).set(updateData).where(eq(ai_provider_settings.id, parsed.id));
       } else {
         await db.insert(ai_provider_settings).values(parsed);
       }
@@ -74,7 +88,19 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
         .from(ai_provider_settings)
         .where(eq(ai_provider_settings.id, parsed.id));
 
-      return Response.json({ success: true, data: saved });
+      if (!saved) {
+        return Response.json({ success: false, error: "Erro ao recuperar configuração salva" }, { status: 500 });
+      }
+
+      const { apiKey, ...safeSaved } = saved;
+      return Response.json({
+        success: true,
+        data: {
+          ...safeSaved,
+          apiKey: apiKey ? `${apiKey.slice(0, 4)}...${apiKey.slice(-4)}` : null,
+          hasApiKey: Boolean(apiKey),
+        },
+      });
     } catch (err: unknown) {
       if (err instanceof z.ZodError) {
         return Response.json({ success: false, error: "Dados inválidos", details: err.format() }, { status: 400 });

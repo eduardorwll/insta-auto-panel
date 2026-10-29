@@ -42,6 +42,20 @@ export async function handlePhotosRoutes(req: Request, url: URL): Promise<Respon
       if (!file || !(file instanceof Blob)) {
         return Response.json({ success: false, error: "Arquivo de imagem obrigatório" }, { status: 400 });
       }
+
+      // Validação estrita de extensão e MIME type contra uploads maliciosos (OWASP A04)
+      const ALLOWED_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp"]);
+      const ALLOWED_MIME_TYPES = new Set(["image/png", "image/jpeg", "image/webp"]);
+
+      const originalName = file instanceof File ? file.name : "upload.png";
+      const ext = path.extname(originalName).toLowerCase() || ".png";
+      if (!ALLOWED_EXTENSIONS.has(ext) || (file.type && !ALLOWED_MIME_TYPES.has(file.type))) {
+        return Response.json(
+          { success: false, error: "Formato de arquivo não permitido. Use apenas PNG, JPG ou WebP." },
+          { status: 400 }
+        );
+      }
+
       if (!companyId) {
         return Response.json({ success: false, error: "companyId é obrigatório" }, { status: 400 });
       }
@@ -57,9 +71,6 @@ export async function handlePhotosRoutes(req: Request, url: URL): Promise<Respon
       if (!catParsed.success) {
         return Response.json({ success: false, error: "Categoria de foto inválida" }, { status: 400 });
       }
-
-      const originalName = file instanceof File ? file.name : "upload.png";
-      const ext = path.extname(originalName) || ".png";
       const cleanOriginal = path.basename(originalName, ext).replace(/[^a-zA-Z0-9_-]/g, "_");
       const photoId = `photo_${companyId}_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
       const filename = `${photoId}_${cleanOriginal}${ext}`;

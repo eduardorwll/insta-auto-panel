@@ -24,6 +24,7 @@ covers:
   - tests/server/photos-api.test.ts:1-109
   - tests/server/schedules-api.test.ts:1-127
   - tests/server/schedules-posts-slides.test.ts:1-218
+  - tests/server/security-hardening.test.ts:1-85
   - tests/server/settings-api.test.ts:1-161
   - tests/server/zero-leakage.test.ts:1-47
 ---
@@ -77,6 +78,8 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 ### `tests/server/schedules-api.test.ts` (lines 1-127)
 
 ### `tests/server/schedules-posts-slides.test.ts` (lines 1-218)
+
+### `tests/server/security-hardening.test.ts` (lines 1-85)
 
 ### `tests/server/settings-api.test.ts` (lines 1-161)
 

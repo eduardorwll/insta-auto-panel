@@ -204,15 +204,15 @@
     "semantic_hash": ""
   },
   "src/server/index.ts": {
-    "mtime": 1793307133.0589066,
-    "seen": 1793307134.9421985,
-    "ast_hash": "71bcfaba3be71bb33c56d36903b71a7a",
+    "mtime": 1793315740.3753157,
+    "seen": 1793315946.9047983,
+    "ast_hash": "8da2dc223b96ebf68270cc9289a36b67",
     "semantic_hash": ""
   },
   "src/server/routes/ai.ts": {
-    "mtime": 1793296574.4566274,
-    "seen": 1793298581.342637,
-    "ast_hash": "4aab68ac016b9d8a5dccde1abaa476d5",
+    "mtime": 1793315934.4048028,
+    "seen": 1793315946.9047992,
+    "ast_hash": "3edc5e065994f879ea2952fdbca5c585",
     "semantic_hash": ""
   },
   "src/server/routes/companies.ts": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "src/server/routes/photos.ts": {
-    "mtime": 1793295553.1356535,
-    "seen": 1793298581.3426394,
-    "ast_hash": "6f76b3c616ace9215165274e73f8cf48",
+    "mtime": 1793315829.0141916,
+    "seen": 1793315946.9048574,
+    "ast_hash": "b00f5006fcc550ef554170beb3de37c1",
     "semantic_hash": ""
   },
   "src/server/routes/schedules.ts": {
@@ -468,39 +468,39 @@
     "semantic_hash": ""
   },
   "graft/INDEX.md": {
-    "mtime": 1793315009.1415024,
-    "seen": 1793315010.595304,
-    "ast_hash": "39ee69e4774c8d3c80605aec5207d4d7",
+    "mtime": 1793315945.2462773,
+    "seen": 1793315946.9055934,
+    "ast_hash": "c6fbcab0a10bad5238acf3cebe5a7c9f",
     "semantic_hash": ""
   },
   "graft/client-ui.md": {
-    "mtime": 1793315009.1415024,
-    "seen": 1793315010.595305,
+    "mtime": 1793315945.2452774,
+    "seen": 1793315946.9055946,
     "ast_hash": "897e08b0c85b7c7ffc044bcf6ec8edd8",
     "semantic_hash": ""
   },
   "graft/server-db.md": {
-    "mtime": 1793315009.1365023,
-    "seen": 1793315010.595306,
+    "mtime": 1793315945.2412772,
+    "seen": 1793315946.9055955,
     "ast_hash": "bc60582b499f63d5d617c59951538634",
     "semantic_hash": ""
   },
   "graft/server-routes.md": {
-    "mtime": 1793315009.1375022,
-    "seen": 1793315010.595307,
-    "ast_hash": "2a1edd78a8e0d22d055de38697115a13",
+    "mtime": 1793315945.2412772,
+    "seen": 1793315946.9055967,
+    "ast_hash": "cf6645306a717c8f755080a1ae60f3fb",
     "semantic_hash": ""
   },
   "graft/server-services.md": {
-    "mtime": 1793315009.1385024,
-    "seen": 1793315010.595308,
+    "mtime": 1793315945.2422771,
+    "seen": 1793315946.9055977,
     "ast_hash": "70f5d0ae721dbfb7fd640ffa38ab1a74",
     "semantic_hash": ""
   },
   "graft/tests-suite.md": {
-    "mtime": 1793315009.1415024,
-    "seen": 1793315010.595309,
-    "ast_hash": "e39a872ea7f6aaa30357fd51cb010749",
+    "mtime": 1793315945.2462773,
+    "seen": 1793315946.9055986,
+    "ast_hash": "f407cea92cf6578d8bef46b70e30feec",
     "semantic_hash": ""
   },
   "src/server/services/ai/claude.ts": {
@@ -511,7 +511,7 @@
   },
   "drizzle/0000_loud_stature.sql": {
     "mtime": 1793307133.0513723,
-    "seen": 1793310104.0498512,
+    "seen": 1793315047.5724304,
     "ast_hash": "",
     "semantic_hash": ""
   },
@@ -654,9 +654,9 @@
     "semantic_hash": ""
   },
   ".taste-skill/inspect/report.json": {
-    "mtime": 1793314949.3585708,
-    "seen": 1793315010.5938828,
-    "ast_hash": "fd22dd0c4b96e4479d29a981d6f17797",
+    "mtime": 1793315171.617582,
+    "seen": 1793315946.9037962,
+    "ast_hash": "674f4a79165301b671e9d74a3f7c9956",
     "semantic_hash": ""
   },
   "src/client/components/SettingsHub.tsx": {
@@ -666,9 +666,9 @@
     "semantic_hash": ""
   },
   "src/server/routes/settings.ts": {
-    "mtime": 1793307133.0589066,
-    "seen": 1793307134.9422867,
-    "ast_hash": "9ba2383720844d9e2188e8b9d1cae0df",
+    "mtime": 1793315606.0874486,
+    "seen": 1793315946.904888,
+    "ast_hash": "1ab3e2364a3575c49b528ed71e161c2b",
     "semantic_hash": ""
   },
   "tests/e2e/settings-hub.spec.ts": {
@@ -684,44 +684,44 @@
     "semantic_hash": ""
   },
   ".taste-skill/inspect/desktop-fold.jpg": {
-    "mtime": 1793314938.9684763,
-    "seen": 1793315010.5953667,
+    "mtime": 1793315161.2090824,
+    "seen": 1793315946.905658,
     "ast_hash": "0ba9d3ffbb49565c7c7740fe615627ff",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/desktop-page-01.jpg": {
-    "mtime": 1793314940.1965292,
-    "seen": 1793315010.5953677,
+    "mtime": 1793315162.4371357,
+    "seen": 1793315946.9056592,
     "ast_hash": "6544c0d08a8e843f465e01944424a0d2",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/mobile-fold.jpg": {
-    "mtime": 1793314946.3737953,
-    "seen": 1793315010.5953686,
+    "mtime": 1793315168.6324043,
+    "seen": 1793315946.9056604,
     "ast_hash": "4e9ab44c9accf2ddcd3c96ad4663a121",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/mobile-page-01.jpg": {
-    "mtime": 1793314949.0509107,
-    "seen": 1793315010.5953698,
+    "mtime": 1793315171.3095205,
+    "seen": 1793315946.9056613,
     "ast_hash": "76f83ee567950958dc0d533287c06fef",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/settings-hub-e2e.jpg": {
-    "mtime": 1793314914.2874138,
-    "seen": 1793315010.595371,
-    "ast_hash": "d92560e945a50e7a00df802e54ce82fe",
+    "mtime": 1793315899.8972926,
+    "seen": 1793315946.9056625,
+    "ast_hash": "6cf24efc79b7bcbe6bf4298adf23c5a5",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/tablet-fold.jpg": {
-    "mtime": 1793314942.3126204,
-    "seen": 1793315010.595372,
+    "mtime": 1793315164.570228,
+    "seen": 1793315946.9056637,
     "ast_hash": "2115fbe9fe40b1076b804b8c520f82a9",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/tablet-page-01.jpg": {
-    "mtime": 1793314944.2477038,
-    "seen": 1793315010.595373,
+    "mtime": 1793315166.504312,
+    "seen": 1793315946.9056644,
     "ast_hash": "1ff0fe920d6c37ea8f1205c20e5165fe",
     "semantic_hash": ""
   },
@@ -759,6 +759,12 @@
     "mtime": 1793314901.2778542,
     "seen": 1793315010.5949175,
     "ast_hash": "b56976c253c4e377659a34f0caf5236a",
+    "semantic_hash": ""
+  },
+  "tests/server/security-hardening.test.ts": {
+    "mtime": 1793315853.2192504,
+    "seen": 1793315946.9054353,
+    "ast_hash": "391853936f84398344003786441f2357",
     "semantic_hash": ""
   }
 }

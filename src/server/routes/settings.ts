@@ -200,10 +200,17 @@ export async function handleSettingsRoutes(
       `../../../data/autosocial/.profiles/${companyId}/instagram`
     );
 
+    const {
+      instagramSessionId,
+      instagramCookiesJson,
+      imageProviderApiKey,
+      ...safeRow
+    } = row;
+
     return Response.json({
       success: true,
       data: {
-        ...row,
+        ...safeRow,
         hasSessionCookie: Boolean(row.instagramSessionId),
         instagramSessionIdMasked: row.instagramSessionId
           ? `${row.instagramSessionId.slice(0, 6)}...${row.instagramSessionId.slice(-4)}`
