@@ -216,7 +216,7 @@ export const companyInsertSchema = z.object({
   accentColor: z.string().regex(/^#[0-9A-Fa-f]{6}$/).default("#10B981"),
   whatsappNumber: z.string().optional().nullable(),
   whatsappDefaultMessage: z.string().optional().nullable(),
-  websiteUrl: z.string().url().optional().nullable(),
+  websiteUrl: z.string().url().optional().nullable().or(z.literal("")),
   canvaTemplateId: z.string().optional().nullable(),
 });
 

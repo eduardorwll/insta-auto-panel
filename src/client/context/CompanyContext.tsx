@@ -59,10 +59,17 @@ export function CompanyProvider({ children }: { children: ReactNode }) {
 
   const createCompany = async (data: CompanyFormData) => {
     try {
+      const sanitized = {
+        ...data,
+        websiteUrl: data.websiteUrl?.trim() || null,
+        whatsappNumber: data.whatsappNumber?.trim() || null,
+        whatsappDefaultMessage: data.whatsappDefaultMessage?.trim() || null,
+        canvaTemplateId: data.canvaTemplateId?.trim() || null,
+      };
       const res = await fetch("/api/companies", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(sanitized),
       });
       const json = await res.json();
       if (!res.ok || !json.success) {
@@ -79,10 +86,18 @@ export function CompanyProvider({ children }: { children: ReactNode }) {
 
   const updateCompany = async (id: string, data: Partial<CompanyFormData>) => {
     try {
+      const sanitized = {
+        ...data,
+        websiteUrl: data.websiteUrl !== undefined ? data.websiteUrl?.trim() || null : undefined,
+        whatsappNumber: data.whatsappNumber !== undefined ? data.whatsappNumber?.trim() || null : undefined,
+        whatsappDefaultMessage:
+          data.whatsappDefaultMessage !== undefined ? data.whatsappDefaultMessage?.trim() || null : undefined,
+        canvaTemplateId: data.canvaTemplateId !== undefined ? data.canvaTemplateId?.trim() || null : undefined,
+      };
       const res = await fetch(`/api/companies/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(sanitized),
       });
       const json = await res.json();
       if (!res.ok || !json.success) {
