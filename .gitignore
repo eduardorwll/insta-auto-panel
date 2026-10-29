@@ -76,6 +76,8 @@ Thumbs.db
 .prowl/logs/
 .prowl/editor/
 .prowl/setup-applies.json
+.prowl/*.caveman.md
+.prowl/token-telemetry.json
 .prowl-setup.lock
 # /prowl-agent: derived state
 

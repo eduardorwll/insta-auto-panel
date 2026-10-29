@@ -13,6 +13,7 @@
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import { recordTelemetry } from "./caveman";
 
 const REPO_ROOT = path.resolve(import.meta.dirname, "..");
 const GRAFT_DIR = path.join(REPO_ROOT, "graft");
@@ -225,6 +226,7 @@ if (cmd === "map") {
   const out = runProwl(["overview"]);
   const outTokens = estimateTokens(out);
   const saved = Math.max(500, repoBaselineTokens - outTokens);
+  recordTelemetry("graft", "map", saved);
   console.log(`[graft] tokens saved ≈ ${saved.toLocaleString("en-US")}`);
   console.log(out.trim());
   process.exit(0);
@@ -243,6 +245,7 @@ if (cmd === "skeleton") {
   const out = runProwl(["outline", targetFile]);
   const outTokens = estimateTokens(out);
   const saved = Math.max(150, fileTokens - outTokens);
+  recordTelemetry("graft", `skeleton:${targetFile}`, saved);
   console.log(`[graft] tokens saved ≈ ${saved.toLocaleString("en-US")}`);
   console.log(out.trim());
   process.exit(0);
@@ -259,6 +262,7 @@ if (cmd === "callers") {
   const combined = `${findOut.trim()}\n\n${refsOut.trim()}`.trim();
   const outTokens = estimateTokens(combined);
   const saved = Math.max(800, Math.round(repoBaselineTokens * 0.35) - outTokens);
+  recordTelemetry("graft", `callers:${sym}`, saved);
   console.log(`[graft] tokens saved ≈ ${saved.toLocaleString("en-US")}`);
   console.log(combined);
   process.exit(0);
@@ -273,6 +277,7 @@ if (cmd === "grep") {
   const out = runProwl(["search", pattern]);
   const outTokens = estimateTokens(out);
   const saved = Math.max(600, Math.round(repoBaselineTokens * 0.4) - outTokens);
+  recordTelemetry("graft", `grep:${pattern}`, saved);
   console.log(`[graft] tokens saved ≈ ${saved.toLocaleString("en-US")}`);
   console.log(out.trim());
   process.exit(0);
@@ -291,6 +296,7 @@ if (cmd === "ask") {
   const capped = [lines[0], ...lines.slice(1, limit + 1)].join("\n");
   const outTokens = estimateTokens(capped);
   const saved = Math.max(1000, Math.round(repoBaselineTokens * 0.5) - outTokens);
+  recordTelemetry("graft", `ask:${query}`, saved);
   console.log(`[graft] tokens saved ≈ ${saved.toLocaleString("en-US")}`);
   console.log(capped);
   process.exit(0);

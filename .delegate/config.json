@@ -1,0 +1,37 @@
+{
+  "version": "delegate-fleet.v1",
+  "lanes": {
+    "fast": {
+      "implementer": "agy",
+      "model": "gemini-3.8-flash-low",
+      "effort": "low",
+      "readOnly": true,
+      "timeout": "10m"
+    },
+    "tests": {
+      "implementer": "agy",
+      "model": "gemini-3.8-flash-medium",
+      "effort": "medium",
+      "timeout": "15m"
+    },
+    "feature": {
+      "implementer": "agy",
+      "model": "gemini-3.8-flash-high",
+      "effort": "medium",
+      "timeout": "20m"
+    },
+    "ui": {
+      "implementer": "agy",
+      "model": "gemini-4-argon-medium",
+      "effort": "medium",
+      "timeout": "20m"
+    },
+    "review": {
+      "implementer": "agy",
+      "model": "gpt-oss-120b-medium",
+      "effort": "medium",
+      "readOnly": true,
+      "timeout": "15m"
+    }
+  }
+}

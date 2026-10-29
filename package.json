@@ -18,6 +18,9 @@
     "db:studio": "drizzle-kit studio",
     "graft": "bun run scripts/graft.ts",
     "graphify": "uvx --from graphifyy graphify",
+    "caveman": "bun run scripts/caveman.ts",
+    "delegate:lanes": "node /home/eduardorwll/Sandbox/.agents/skills/delegate-setup/scripts/config.mjs load --cwd .",
+    "tokens:report": "bun run scripts/caveman.ts stats",
     "archify": "node /home/eduardorwll/Sandbox/.agents/skills/archify/bin/archify.mjs finalize architecture .archify/architecture/candidate.json docs/architecture.html --repo-root . --quality showcase",
     "verify:cycle": "bun test && bun run typecheck && bun run build && bun run graft build && bun run graft check && uvx --from graphifyy graphify update . --no-cluster"
   },

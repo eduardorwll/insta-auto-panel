@@ -59,4 +59,10 @@ Todos os agentes operando neste repositório estão simultaneamente submetidos a
 - **Confinamento Estrito (`boundaries.md`):** Nenhuma leitura de segredos do host (`~/.ssh`, `~/.gnupg`) nem escrita fora de `/home/eduardorwll/Sandbox/` (ou `/tmp/`).
 - **Prática TDD (`tdd.md`):** Ciclo obrigatório **Red -> Green -> Refactor**. Testes unitários sempre precedem a implementação de regras de negócio, schemas e serviços.
 - **Planejamento Mandatório (`planning.md`) & Explicação Técnica (`explanation.md`):** Nenhuma modificação estrutural sem plano prévio, mapeamento de *blast radius* e justificativa técnica (*Why-First*).
-- **Inteligência em Grafos (`graph-intelligence.md`):** Uso prioritário de `graphify` (contexto macro) e `graft` (contexto micro: `graft skeleton`, `graft callers`, `graft ask`) em vez de buscas cegas em código-fonte.
+- **Inteligência em Grafos & Os 4 Token Savers Mandatórios (`graph-intelligence.md`):**
+  1. **`graphify` (Macro AST):** `bun run graphify query "<pergunta>"`, `bun run graphify path "<A>" "<B>"`, `bun run graphify update .` (e hooks Git automáticos).
+  2. **`graft` + `prowl` (Micro Context):** `bun run graft skeleton <arquivo>`, `bun run graft callers <símbolo> --depth all`, `bun run graft ask "<pergunta>" --source`.
+  3. **`caveman` (Compressão de Entrada & `cavecrew`):** `bun run caveman compress <arquivo>` e `bun run caveman shrink-log` estritamente para **entrada** (*briefs*, logs, JSONs extensos e retornos de subagentes em formato `cavecrew`), mantendo a **saída para o usuário no Relatório Padrão completo**.
+  4. **`delegate-skills` (`delegate-fleet.v1` em `.delegate/config.json`):** Orquestração multi-lane via `agy-delegate` (`fast` -> `gemini-3.8-flash-low`, `tests` -> `gemini-3.8-flash-medium`, `feature` -> `gemini-3.8-flash-high`, `ui` -> `gemini-4-argon-medium`, `review` -> `gpt-oss-120b-medium`).
+  5. **Telemetria Obrigatória de Fim de Tarefa (`bun run tokens:report`):** Todo relatório final de tarefa ou milestone deve reportar os tokens economizados por todos os motores (`🌱 graft`, `🕸️ graphify`, `🪨 caveman (input)`, `🤝 delegate-skills`).
+- **Diagrama Único de Arquitetura (`Archify`):** Mantido em `docs/architecture.html` (especificação em `.archify/architecture/candidate.json`), atualizado a cada milestone via `bun run archify` e servido em `/architecture`.

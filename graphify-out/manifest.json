@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1793301723.5340636,
-    "seen": 1793301752.6582367,
-    "ast_hash": "d864b519acd547dfb8cd39d955b28646",
+    "mtime": 1793302567.978201,
+    "seen": 1793302585.2407503,
+    "ast_hash": "3c867098e682c7cbf24dbd1648e5ac5b",
     "semantic_hash": ""
   },
   "playwright.config.ts": {
@@ -396,21 +396,21 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1793292302.968615,
-    "seen": 1793298581.342666,
-    "ast_hash": "d1f198af1b122141ad281a0986ccd29a",
+    "mtime": 1793302496.342049,
+    "seen": 1793302585.2418203,
+    "ast_hash": "83d21ef1fb5e36d810b3f384eca9d98f",
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1793292302.968615,
-    "seen": 1793298581.3426669,
-    "ast_hash": "d1f198af1b122141ad281a0986ccd29a",
+    "mtime": 1793302496.342049,
+    "seen": 1793302585.2418215,
+    "ast_hash": "83d21ef1fb5e36d810b3f384eca9d98f",
     "semantic_hash": ""
   },
   "GEMINI.md": {
-    "mtime": 1793292302.968615,
-    "seen": 1793298581.3426678,
-    "ast_hash": "d1f198af1b122141ad281a0986ccd29a",
+    "mtime": 1793302496.342049,
+    "seen": 1793302585.2418225,
+    "ast_hash": "83d21ef1fb5e36d810b3f384eca9d98f",
     "semantic_hash": ""
   },
   "README.md": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "plano-fluxo-desenvolvimento-e-testes-vite.md": {
-    "mtime": 1793292018.5851057,
-    "seen": 1793298581.3426707,
-    "ast_hash": "a5e43db1becf8ee4b1a311ff6970dec8",
+    "mtime": 1793302553.4735625,
+    "seen": 1793302585.241874,
+    "ast_hash": "c2097bce3ea61d2a8989a0ec97532f05",
     "semantic_hash": ""
   },
   "requisitos-planejamento-automacao-instagram.md": {
@@ -462,44 +462,44 @@
     "semantic_hash": ""
   },
   "scripts/graft.ts": {
-    "mtime": 1793301695.4728136,
-    "seen": 1793301752.6582537,
-    "ast_hash": "6bd63bffc82c0db58918565121710d94",
+    "mtime": 1793302319.5662863,
+    "seen": 1793302585.2407682,
+    "ast_hash": "5c65e14161a8d4a2e27a4b7f2b2dfb48",
     "semantic_hash": ""
   },
   "graft/INDEX.md": {
-    "mtime": 1793301966.5048819,
-    "seen": 1793301967.5045848,
+    "mtime": 1793302647.557706,
+    "seen": 1793302648.5559626,
     "ast_hash": "24d57fcdfee675618ddee283f33fdddc",
     "semantic_hash": ""
   },
   "graft/client-ui.md": {
-    "mtime": 1793301966.5048819,
-    "seen": 1793301967.5045857,
+    "mtime": 1793302647.557706,
+    "seen": 1793302648.555964,
     "ast_hash": "0357cf9ceeb15ea47741382436e2b0f0",
     "semantic_hash": ""
   },
   "graft/server-db.md": {
-    "mtime": 1793301966.5018816,
-    "seen": 1793301967.504587,
+    "mtime": 1793302647.554706,
+    "seen": 1793302648.5559652,
     "ast_hash": "dab01c98444178a352acfeeee3f80108",
     "semantic_hash": ""
   },
   "graft/server-routes.md": {
-    "mtime": 1793301966.5028818,
-    "seen": 1793301967.504588,
+    "mtime": 1793302647.554706,
+    "seen": 1793302648.5559661,
     "ast_hash": "e32b98e8fff2b92958c639c667d63bd2",
     "semantic_hash": ""
   },
   "graft/server-services.md": {
-    "mtime": 1793301966.5028818,
-    "seen": 1793301967.504589,
+    "mtime": 1793302647.555706,
+    "seen": 1793302648.5559673,
     "ast_hash": "3fd1ae9461ed2e7b769be878f376bf21",
     "semantic_hash": ""
   },
   "graft/tests-suite.md": {
-    "mtime": 1793301966.5048819,
-    "seen": 1793301967.5045898,
+    "mtime": 1793302647.557706,
+    "seen": 1793302648.5559683,
     "ast_hash": "7a6aa972b94c52862ad134499c38172f",
     "semantic_hash": ""
   },
@@ -512,7 +512,19 @@
   "drizzle/0000_loud_stature.sql": {
     "mtime": 1793293038.7380862,
     "seen": 1793302009.4621105,
-    "ast_hash": "3cd089c9a16fbfc59483d6929e80afc4",
+    "ast_hash": "",
+    "semantic_hash": ""
+  },
+  ".delegate/config.json": {
+    "mtime": 1793302338.5850723,
+    "seen": 1793302585.2406697,
+    "ast_hash": "52f714e22a75eb685285ef10034b168d",
+    "semantic_hash": ""
+  },
+  "scripts/caveman.ts": {
+    "mtime": 1793302604.129793,
+    "seen": 1793302648.554762,
+    "ast_hash": "1ad92f2d6d15a50f54c6120867a17fb7",
     "semantic_hash": ""
   }
 }
