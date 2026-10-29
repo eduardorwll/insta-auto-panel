@@ -6,7 +6,7 @@ import { handleExportRoutes } from "./routes/export";
 import path from "path";
 
 export const server = Bun.serve({
-  port: Number(process.env.PORT) || 3000,
+  port: process.env.NODE_ENV === "test" ? 0 : Number(process.env.PORT) || 3000,
   async fetch(req) {
     const url = new URL(req.url);
 
