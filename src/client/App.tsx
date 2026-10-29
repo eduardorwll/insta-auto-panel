@@ -3,6 +3,7 @@ import { CompanyProvider, useCompany } from "@/client/context/CompanyContext";
 import { CompanySwitcher } from "@/client/components/CompanySwitcher";
 import { CompanyModal } from "@/client/components/CompanyModal";
 import { PhotoBank } from "@/client/components/PhotoBank";
+import { WeekPlanner } from "@/client/components/WeekPlanner";
 import { Button } from "@/client/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/client/components/ui/card";
 import { Badge } from "@/client/components/ui/badge";
@@ -178,13 +179,7 @@ function DashboardContent() {
               </TabsList>
 
               <TabsContent value="calendar" className="mt-4">
-                <Card className="border-slate-800 bg-slate-900/40 p-8 text-center space-y-2">
-                  <Calendar className="h-8 w-8 text-indigo-400 mx-auto opacity-80" />
-                  <CardTitle className="text-lg">Planejador Semanal de Posts</CardTitle>
-                  <CardDescription>
-                    Seletor dinâmico de lâminas (3 a 10 slides), categorização editorial e geração autônoma de conteúdo (Marco 3).
-                  </CardDescription>
-                </Card>
+                <WeekPlanner />
               </TabsContent>
 
               <TabsContent value="photos" className="mt-4">
