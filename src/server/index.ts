@@ -4,6 +4,7 @@ import { handleSchedulesRoutes } from "./routes/schedules";
 import { handleAIRoutes } from "./routes/ai";
 import { handleExportRoutes } from "./routes/export";
 import { handleDesignRoutes } from "./routes/design";
+import { handleSettingsRoutes } from "./routes/settings";
 import path from "path";
 
 export const server = Bun.serve({
@@ -43,6 +44,10 @@ export const server = Bun.serve({
     // 6.5. Rotas do Studio Visual OpenDesign Sem Canva (/api/design)
     const designResponse = await handleDesignRoutes(req, url);
     if (designResponse) return designResponse;
+
+    // 6.6. Rotas do Hub de Configurações & Sessão Instagram por Empresa (/api/settings)
+    const settingsResponse = await handleSettingsRoutes(req, url);
+    if (settingsResponse) return settingsResponse;
 
     // 7. Servir diagrama único de arquitetura Archify (/architecture)
     if (url.pathname === "/architecture" || url.pathname === "/architecture.html") {

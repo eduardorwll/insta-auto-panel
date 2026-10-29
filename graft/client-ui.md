@@ -2,39 +2,55 @@
 node: client-ui
 title: "React 19 + Tailwind v4 + shadcn/ui Frontend Portal"
 covers:
-  - src/client/App.tsx:1-267
-  - src/client/App.tsx:28-258 # function DashboardContent
-  - src/client/components/AISettingsModal.tsx:1-437
-  - src/client/components/AISettingsModal.tsx:27-30 # interface AISettingsModalProps
-  - src/client/components/AISettingsModal.tsx:32-32 # const PROVIDER_OPTIONS
-  - src/client/components/AISettingsModal.tsx:73-436 # function AISettingsModal
-  - src/client/components/CompanyModal.tsx:1-346
+  - src/client/App.tsx:1-301
+  - src/client/App.tsx:30-292 # function DashboardContent
+  - src/client/components/AISettingsModal.tsx:1-468
+  - src/client/components/AISettingsModal.tsx:26-29 # interface AISettingsModalProps
+  - src/client/components/AISettingsModal.tsx:31-36 # const PROVIDER_OPTIONS
+  - src/client/components/AISettingsModal.tsx:77-467 # function AISettingsModal
+  - src/client/components/CompanyModal.tsx:1-348
   - src/client/components/CompanyModal.tsx:16-20 # interface CompanyModalProps
   - src/client/components/CompanyModal.tsx:22-36 # const defaultForm
-  - src/client/components/CompanyModal.tsx:38-345 # function CompanyModal
-  - src/client/components/CompanySwitcher.tsx:1-120
-  - src/client/components/CompanySwitcher.tsx:16-119 # function CompanySwitcher
-  - src/client/components/PhotoBank.tsx:1-285
+  - src/client/components/CompanyModal.tsx:38-347 # function CompanyModal
+  - src/client/components/CompanySwitcher.tsx:1-134
+  - src/client/components/CompanySwitcher.tsx:16-133 # function CompanySwitcher
+  - src/client/components/DesignStudioModal.tsx:1-657
+  - src/client/components/DesignStudioModal.tsx:19-23 # type StudioTemplateId
+  - src/client/components/DesignStudioModal.tsx:25-31 # type StudioImageProvider
+  - src/client/components/DesignStudioModal.tsx:33-39 # interface StudioSlideItem
+  - src/client/components/DesignStudioModal.tsx:41-49 # interface DesignStudioModalProps
+  - src/client/components/DesignStudioModal.tsx:51-55 # const TEMPLATE_OPTIONS
+  - src/client/components/DesignStudioModal.tsx:78-82 # const IMAGE_PROVIDER_OPTIONS
+  - src/client/components/DesignStudioModal.tsx:115-149 # function wrapCanvasLines
+  - src/client/components/DesignStudioModal.tsx:151-656 # function DesignStudioModal
+  - src/client/components/PhotoBank.tsx:1-295
   - src/client/components/PhotoBank.tsx:11-11 # const CATEGORIES
-  - src/client/components/PhotoBank.tsx:13-284 # function PhotoBank
-  - src/client/components/PublicationQueue.tsx:1-433
-  - src/client/components/PublicationQueue.tsx:22-30 # const DAY_LABELS
-  - src/client/components/PublicationQueue.tsx:32-32 # const DEFAULT_STATUS
-  - src/client/components/PublicationQueue.tsx:34-40 # const STATUS_CONFIG
-  - src/client/components/PublicationQueue.tsx:42-48 # function getMonday
-  - src/client/components/PublicationQueue.tsx:50-432 # function PublicationQueue
-  - src/client/components/SlidePreview.tsx:1-160
+  - src/client/components/PhotoBank.tsx:13-294 # function PhotoBank
+  - src/client/components/PublicationQueue.tsx:1-456
+  - src/client/components/PublicationQueue.tsx:20-28 # const DAY_LABELS
+  - src/client/components/PublicationQueue.tsx:30-30 # const DEFAULT_STATUS
+  - src/client/components/PublicationQueue.tsx:32-38 # const STATUS_CONFIG
+  - src/client/components/PublicationQueue.tsx:40-46 # function getMonday
+  - src/client/components/PublicationQueue.tsx:48-455 # function PublicationQueue
+  - src/client/components/SettingsHub.tsx:1-843
+  - src/client/components/SettingsHub.tsx:25-27 # interface SettingsHubProps
+  - src/client/components/SettingsHub.tsx:29-45 # interface CompanySettingsData
+  - src/client/components/SettingsHub.tsx:47-52 # const LLM_PROVIDER_OPTIONS
+  - src/client/components/SettingsHub.tsx:93-97 # const IMAGE_PROVIDER_OPTIONS
+  - src/client/components/SettingsHub.tsx:120-121 # const TEMPLATE_OPTIONS
+  - src/client/components/SettingsHub.tsx:127-842 # function SettingsHub
+  - src/client/components/SlidePreview.tsx:1-156
   - src/client/components/SlidePreview.tsx:6-18 # interface SlidePreviewProps
-  - src/client/components/SlidePreview.tsx:20-159 # function SlidePreview
-  - src/client/components/WeekPlanner.tsx:1-750
+  - src/client/components/SlidePreview.tsx:20-155 # function SlidePreview
+  - src/client/components/WeekPlanner.tsx:1-826
   - src/client/components/WeekPlanner.tsx:29-36 # const EDITORIAL_CATEGORIES
   - src/client/components/WeekPlanner.tsx:38-46 # const DAY_LABELS
   - src/client/components/WeekPlanner.tsx:49-55 # function getMonday
-  - src/client/components/WeekPlanner.tsx:57-749 # function WeekPlanner
-  - src/client/components/ui/badge.tsx:1-32
-  - src/client/components/ui/badge.tsx:5-20 # const badgeVariants
-  - src/client/components/ui/badge.tsx:23-25 # interface BadgeProps
-  - src/client/components/ui/badge.tsx:27-29 # function Badge
+  - src/client/components/WeekPlanner.tsx:57-825 # function WeekPlanner
+  - src/client/components/ui/badge.tsx:1-33
+  - src/client/components/ui/badge.tsx:5-21 # const badgeVariants
+  - src/client/components/ui/badge.tsx:24-26 # interface BadgeProps
+  - src/client/components/ui/badge.tsx:28-30 # function Badge
   - src/client/components/ui/button.tsx:1-53
   - src/client/components/ui/button.tsx:6-29 # const buttonVariants
   - src/client/components/ui/button.tsx:32-36 # interface ButtonProps
@@ -117,47 +133,65 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 
 ## Covered Files & Symbols
 
-### `src/client/App.tsx` (lines 1-267)
-- `DashboardContent` (function) → `src/client/App.tsx:28-258`
+### `src/client/App.tsx` (lines 1-301)
+- `DashboardContent` (function) → `src/client/App.tsx:30-292`
 
-### `src/client/components/AISettingsModal.tsx` (lines 1-437)
-- `AISettingsModalProps` (interface) → `src/client/components/AISettingsModal.tsx:27-30`
-- `PROVIDER_OPTIONS` (const) → `src/client/components/AISettingsModal.tsx:32-32`
-- `AISettingsModal` (function) → `src/client/components/AISettingsModal.tsx:73-436`
+### `src/client/components/AISettingsModal.tsx` (lines 1-468)
+- `AISettingsModalProps` (interface) → `src/client/components/AISettingsModal.tsx:26-29`
+- `PROVIDER_OPTIONS` (const) → `src/client/components/AISettingsModal.tsx:31-36`
+- `AISettingsModal` (function) → `src/client/components/AISettingsModal.tsx:77-467`
 
-### `src/client/components/CompanyModal.tsx` (lines 1-346)
+### `src/client/components/CompanyModal.tsx` (lines 1-348)
 - `CompanyModalProps` (interface) → `src/client/components/CompanyModal.tsx:16-20`
 - `defaultForm` (const) → `src/client/components/CompanyModal.tsx:22-36`
-- `CompanyModal` (function) → `src/client/components/CompanyModal.tsx:38-345`
+- `CompanyModal` (function) → `src/client/components/CompanyModal.tsx:38-347`
 
-### `src/client/components/CompanySwitcher.tsx` (lines 1-120)
-- `CompanySwitcher` (function) → `src/client/components/CompanySwitcher.tsx:16-119`
+### `src/client/components/CompanySwitcher.tsx` (lines 1-134)
+- `CompanySwitcher` (function) → `src/client/components/CompanySwitcher.tsx:16-133`
 
-### `src/client/components/PhotoBank.tsx` (lines 1-285)
+### `src/client/components/DesignStudioModal.tsx` (lines 1-657)
+- `StudioTemplateId` (type) → `src/client/components/DesignStudioModal.tsx:19-23`
+- `StudioImageProvider` (type) → `src/client/components/DesignStudioModal.tsx:25-31`
+- `StudioSlideItem` (interface) → `src/client/components/DesignStudioModal.tsx:33-39`
+- `DesignStudioModalProps` (interface) → `src/client/components/DesignStudioModal.tsx:41-49`
+- `TEMPLATE_OPTIONS` (const) → `src/client/components/DesignStudioModal.tsx:51-55`
+- `IMAGE_PROVIDER_OPTIONS` (const) → `src/client/components/DesignStudioModal.tsx:78-82`
+- `wrapCanvasLines` (function) → `src/client/components/DesignStudioModal.tsx:115-149`
+- `DesignStudioModal` (function) → `src/client/components/DesignStudioModal.tsx:151-656`
+
+### `src/client/components/PhotoBank.tsx` (lines 1-295)
 - `CATEGORIES` (const) → `src/client/components/PhotoBank.tsx:11-11`
-- `PhotoBank` (function) → `src/client/components/PhotoBank.tsx:13-284`
+- `PhotoBank` (function) → `src/client/components/PhotoBank.tsx:13-294`
 
-### `src/client/components/PublicationQueue.tsx` (lines 1-433)
-- `DAY_LABELS` (const) → `src/client/components/PublicationQueue.tsx:22-30`
-- `DEFAULT_STATUS` (const) → `src/client/components/PublicationQueue.tsx:32-32`
-- `STATUS_CONFIG` (const) → `src/client/components/PublicationQueue.tsx:34-40`
-- `getMonday` (function) → `src/client/components/PublicationQueue.tsx:42-48`
-- `PublicationQueue` (function) → `src/client/components/PublicationQueue.tsx:50-432`
+### `src/client/components/PublicationQueue.tsx` (lines 1-456)
+- `DAY_LABELS` (const) → `src/client/components/PublicationQueue.tsx:20-28`
+- `DEFAULT_STATUS` (const) → `src/client/components/PublicationQueue.tsx:30-30`
+- `STATUS_CONFIG` (const) → `src/client/components/PublicationQueue.tsx:32-38`
+- `getMonday` (function) → `src/client/components/PublicationQueue.tsx:40-46`
+- `PublicationQueue` (function) → `src/client/components/PublicationQueue.tsx:48-455`
 
-### `src/client/components/SlidePreview.tsx` (lines 1-160)
+### `src/client/components/SettingsHub.tsx` (lines 1-843)
+- `SettingsHubProps` (interface) → `src/client/components/SettingsHub.tsx:25-27`
+- `CompanySettingsData` (interface) → `src/client/components/SettingsHub.tsx:29-45`
+- `LLM_PROVIDER_OPTIONS` (const) → `src/client/components/SettingsHub.tsx:47-52`
+- `IMAGE_PROVIDER_OPTIONS` (const) → `src/client/components/SettingsHub.tsx:93-97`
+- `TEMPLATE_OPTIONS` (const) → `src/client/components/SettingsHub.tsx:120-121`
+- `SettingsHub` (function) → `src/client/components/SettingsHub.tsx:127-842`
+
+### `src/client/components/SlidePreview.tsx` (lines 1-156)
 - `SlidePreviewProps` (interface) → `src/client/components/SlidePreview.tsx:6-18`
-- `SlidePreview` (function) → `src/client/components/SlidePreview.tsx:20-159`
+- `SlidePreview` (function) → `src/client/components/SlidePreview.tsx:20-155`
 
-### `src/client/components/WeekPlanner.tsx` (lines 1-750)
+### `src/client/components/WeekPlanner.tsx` (lines 1-826)
 - `EDITORIAL_CATEGORIES` (const) → `src/client/components/WeekPlanner.tsx:29-36`
 - `DAY_LABELS` (const) → `src/client/components/WeekPlanner.tsx:38-46`
 - `getMonday` (function) → `src/client/components/WeekPlanner.tsx:49-55`
-- `WeekPlanner` (function) → `src/client/components/WeekPlanner.tsx:57-749`
+- `WeekPlanner` (function) → `src/client/components/WeekPlanner.tsx:57-825`
 
-### `src/client/components/ui/badge.tsx` (lines 1-32)
-- `badgeVariants` (const) → `src/client/components/ui/badge.tsx:5-20`
-- `BadgeProps` (interface) → `src/client/components/ui/badge.tsx:23-25`
-- `Badge` (function) → `src/client/components/ui/badge.tsx:27-29`
+### `src/client/components/ui/badge.tsx` (lines 1-33)
+- `badgeVariants` (const) → `src/client/components/ui/badge.tsx:5-21`
+- `BadgeProps` (interface) → `src/client/components/ui/badge.tsx:24-26`
+- `Badge` (function) → `src/client/components/ui/badge.tsx:28-30`
 
 ### `src/client/components/ui/button.tsx` (lines 1-53)
 - `buttonVariants` (const) → `src/client/components/ui/button.tsx:6-29`

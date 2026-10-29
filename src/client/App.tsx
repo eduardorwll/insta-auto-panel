@@ -6,8 +6,9 @@ import { PhotoBank } from "@/client/components/PhotoBank";
 import { WeekPlanner } from "@/client/components/WeekPlanner";
 import { AISettingsModal } from "@/client/components/AISettingsModal";
 import { PublicationQueue } from "@/client/components/PublicationQueue";
+import { SettingsHub } from "@/client/components/SettingsHub";
 import { Button } from "@/client/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/client/components/ui/card";
+import { Card, CardContent } from "@/client/components/ui/card";
 import { Badge } from "@/client/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/client/components/ui/tabs";
 import {
@@ -35,23 +36,26 @@ function DashboardContent() {
   if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500"></div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
-      {/* Topbar Fixa */}
-      <header className="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/80 backdrop-blur-md px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-6">
+      {/* Topbar Fixa (Operate Mode — Superfície Tonal Plana) */}
+      <header className="sticky top-0 z-40 border-b border-slate-800 bg-slate-950 px-6 py-3 flex items-center justify-between gap-4 flex-wrap">
+        <div className="flex items-center gap-5 flex-wrap">
           <div className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-amber-500 via-rose-500 to-indigo-600 flex items-center justify-center shadow-md">
+            <div className="h-8 w-8 rounded-lg bg-teal-600 flex items-center justify-center">
               <Sparkles className="h-4 w-4 text-white" />
             </div>
             <div>
               <h1 className="text-base font-bold tracking-tight text-white flex items-center gap-2">
-                Social Panel <span className="text-xs bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 px-1.5 py-0.5 rounded font-mono">PRO</span>
+                Social Panel{" "}
+                <span className="text-xs bg-teal-950 text-teal-300 border border-teal-800 px-1.5 py-0.5 rounded font-mono">
+                  PRO
+                </span>
               </h1>
             </div>
           </div>
@@ -62,13 +66,13 @@ function DashboardContent() {
           <CompanySwitcher />
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 flex-wrap">
           <Button
             type="button"
             variant="outline"
             size="sm"
             onClick={() => setIsArchModalOpen(true)}
-            className="gap-1.5 border-slate-800 bg-slate-900/80 text-slate-300 hover:bg-slate-800 hover:text-white"
+            className="gap-1.5 border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white"
             title="Abrir Diagrama Único de Arquitetura (Archify)"
           >
             <Cpu className="h-3.5 w-3.5 text-amber-400" />
@@ -79,14 +83,14 @@ function DashboardContent() {
             variant="outline"
             size="sm"
             onClick={() => setIsAIModalOpen(true)}
-            className="gap-2 border-indigo-500/30 bg-indigo-950/20 text-indigo-300 hover:bg-indigo-950/40 hover:text-white"
+            className="gap-2 border-teal-800 bg-teal-950/40 text-teal-200 hover:bg-teal-900/50 hover:text-white"
           >
-            <Bot className="h-4 w-4 text-indigo-400" />
+            <Bot className="h-4 w-4 text-teal-400" />
             <span>Configurar IA</span>
           </Button>
 
-          <Badge variant="outline" className="text-xs border-slate-700 text-slate-400 gap-1.5 hidden sm:flex">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <Badge variant="outline" className="text-xs border-slate-700 text-slate-300 gap-1.5 hidden sm:flex">
+            <span className="h-2 w-2 rounded-full bg-emerald-500" />
             Bun + SQLite WAL
           </Badge>
         </div>
@@ -97,7 +101,7 @@ function DashboardContent() {
         {!activeCompany ? (
           <div className="flex flex-col items-center justify-center py-20 text-center space-y-4">
             <div className="p-4 rounded-full bg-slate-900 border border-slate-800 text-slate-400">
-              <Layers className="h-10 w-10 text-indigo-400" />
+              <Layers className="h-10 w-10 text-teal-400" />
             </div>
             <div className="max-w-md space-y-2">
               <h2 className="text-xl font-semibold text-white">Nenhuma Empresa Selecionada</h2>
@@ -114,49 +118,49 @@ function DashboardContent() {
         ) : (
           <>
             {/* Resumo da Empresa Ativa & Brand Kit */}
-            <Card className="border-slate-800 bg-slate-900/60 backdrop-blur">
+            <Card className="border-slate-800 bg-slate-900">
               <CardContent className="p-6">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-3 flex-wrap">
                       <h2 className="text-2xl font-bold text-white tracking-tight">{activeCompany.name}</h2>
-                      <Badge variant="secondary" className="font-mono text-indigo-400 border border-indigo-900/50">
+                      <Badge variant="secondary" className="font-mono text-teal-300 border border-teal-900">
                         {activeCompany.instagramHandle}
                       </Badge>
-                      <Badge variant="outline" className="text-xs text-slate-400 border-slate-700">
+                      <Badge variant="outline" className="text-xs text-slate-300 border-slate-700">
                         {activeCompany.niche}
                       </Badge>
                     </div>
                     <p className="text-sm text-slate-400 max-w-2xl">
-                      <span className="text-slate-300 font-medium">Tom de Voz:</span> {activeCompany.toneOfVoice}
+                      <span className="text-slate-200 font-medium">Tom de Voz:</span> {activeCompany.toneOfVoice}
                     </p>
                   </div>
 
                   {/* Visual Brand Kit Swatches */}
-                  <div className="flex items-center gap-4 bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
-                    <div className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                      <Palette className="h-3.5 w-3.5 text-indigo-400" />
+                  <div className="flex items-center gap-4 bg-slate-950 p-3 rounded-lg border border-slate-800">
+                    <div className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+                      <Palette className="h-3.5 w-3.5 text-teal-400" />
                       <span>Brand Kit:</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div
                         title={`Primária: ${activeCompany.primaryColor}`}
-                        className="h-6 w-6 rounded-md shadow border border-white/10"
-                        style={{ backgroundColor: activeCompany.primaryColor || "#6366F1" }}
+                        className="h-6 w-6 rounded-md border border-white/15"
+                        style={{ backgroundColor: activeCompany.primaryColor || "#0D9488" }}
                       />
                       <div
                         title={`Secundária: ${activeCompany.secondaryColor}`}
-                        className="h-6 w-6 rounded-md shadow border border-white/10"
+                        className="h-6 w-6 rounded-md border border-white/15"
                         style={{ backgroundColor: activeCompany.secondaryColor || "#EC4899" }}
                       />
                       <div
                         title={`Fundo: ${activeCompany.backgroundColor}`}
-                        className="h-6 w-6 rounded-md shadow border border-white/10"
+                        className="h-6 w-6 rounded-md border border-white/15"
                         style={{ backgroundColor: activeCompany.backgroundColor || "#0F172A" }}
                       />
                       <div
                         title={`Destaque: ${activeCompany.accentColor}`}
-                        className="h-6 w-6 rounded-md shadow border border-white/10"
+                        className="h-6 w-6 rounded-md border border-white/15"
                         style={{ backgroundColor: activeCompany.accentColor || "#10B981" }}
                       />
                     </div>
@@ -164,9 +168,9 @@ function DashboardContent() {
                 </div>
 
                 {/* Badges de Links & Conversão */}
-                <div className="mt-4 pt-4 border-t border-slate-800/60 flex items-center gap-4 text-xs text-slate-400 flex-wrap">
+                <div className="mt-4 pt-4 border-t border-slate-800 flex items-center gap-4 text-xs text-slate-400 flex-wrap">
                   {activeCompany.whatsappNumber && (
-                    <span className="flex items-center gap-1.5 text-emerald-400">
+                    <span className="flex items-center gap-1.5 text-emerald-400 tabular-nums">
                       <MessageCircle className="h-3.5 w-3.5" />
                       {activeCompany.whatsappNumber}
                     </span>
@@ -176,14 +180,14 @@ function DashboardContent() {
                       href={activeCompany.websiteUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center gap-1 hover:text-indigo-400 transition-colors"
+                      className="flex items-center gap-1 hover:text-teal-400 transition-colors"
                     >
                       <ExternalLink className="h-3.5 w-3.5" />
                       Bio/Site
                     </a>
                   )}
                   {activeCompany.canvaTemplateId && (
-                    <span className="flex items-center gap-1 font-mono text-slate-500">
+                    <span className="flex items-center gap-1 font-mono text-slate-400">
                       Canva ID: {activeCompany.canvaTemplateId}
                     </span>
                   )}
@@ -191,23 +195,23 @@ function DashboardContent() {
               </CardContent>
             </Card>
 
-            {/* Módulos do Sistema (Navegação em Abas) */}
+            {/* Módulos do Sistema (Navegação em Abas — Operate Mode) */}
             <Tabs defaultValue="calendar" className="w-full">
-              <TabsList className="grid grid-cols-2 sm:grid-cols-4 max-w-xl">
-                <TabsTrigger value="calendar" className="gap-2">
-                  <Calendar className="h-4 w-4" />
+              <TabsList className="grid grid-cols-1 sm:grid-cols-4 max-w-3xl w-full">
+                <TabsTrigger value="calendar" className="gap-2 w-full">
+                  <Calendar className="h-4 w-4 shrink-0" />
                   <span>Calendário</span>
                 </TabsTrigger>
-                <TabsTrigger value="photos" className="gap-2">
-                  <ImageIcon className="h-4 w-4" />
+                <TabsTrigger value="photos" className="gap-2 w-full">
+                  <ImageIcon className="h-4 w-4 shrink-0" />
                   <span>Fotos Base</span>
                 </TabsTrigger>
-                <TabsTrigger value="ai" className="gap-2">
-                  <Bot className="h-4 w-4" />
-                  <span>Módulo IA</span>
+                <TabsTrigger value="ai" className="gap-2 w-full">
+                  <Settings className="h-4 w-4 shrink-0" />
+                  <span>Configurações & Módulo IA</span>
                 </TabsTrigger>
-                <TabsTrigger value="queue" className="gap-2">
-                  <Send className="h-4 w-4" />
+                <TabsTrigger value="queue" className="gap-2 w-full">
+                  <Send className="h-4 w-4 shrink-0" />
                   <span>Publicação & Fila</span>
                 </TabsTrigger>
               </TabsList>
@@ -221,27 +225,7 @@ function DashboardContent() {
               </TabsContent>
 
               <TabsContent value="ai" className="mt-4">
-                <Card className="border-slate-800 bg-slate-900/40 p-8 text-center space-y-4">
-                  <div className="h-12 w-12 rounded-2xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mx-auto shadow-inner">
-                    <Bot className="h-6 w-6" />
-                  </div>
-                  <div className="space-y-1">
-                    <CardTitle className="text-xl text-white">IA Generativa Agnóstica com Adapter Pattern</CardTitle>
-                    <CardDescription className="max-w-xl mx-auto text-sm text-slate-400">
-                      Integração transparente com ML Studio API (LM Studio local/nuvem), Google Gemini, OpenAI, Claude, Groq e Ollama com saídas JSON estruturadas para carrosséis dinâmicos de 3 a 10 lâminas.
-                    </CardDescription>
-                  </div>
-
-                  <div className="flex items-center justify-center gap-2 pt-2">
-                    <Button
-                      onClick={() => setIsAIModalOpen(true)}
-                      className="gap-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                    >
-                      <Sparkles className="h-4 w-4" />
-                      <span>Gerenciar Provedores & Modelos</span>
-                    </Button>
-                  </div>
-                </Card>
+                <SettingsHub onOpenLegacyAIModal={() => setIsAIModalOpen(true)} />
               </TabsContent>
 
               <TabsContent value="queue" className="mt-4">
@@ -264,12 +248,12 @@ function DashboardContent() {
             aria-label="Diagrama Único de Arquitetura Archify"
             className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 p-4"
           >
-            <div className="craft-modal-enter w-full max-w-7xl h-[88vh] flex flex-col rounded-2xl bg-slate-900 text-slate-100 overflow-hidden">
-              <div className="flex items-center justify-between px-5 py-3 bg-slate-950">
+            <div className="craft-modal-enter w-full max-w-7xl h-[88vh] flex flex-col rounded-2xl bg-slate-900 text-slate-100 overflow-hidden border border-slate-800">
+              <div className="flex items-center justify-between px-5 py-3 bg-slate-950 border-b border-slate-800">
                 <div className="flex items-center gap-2.5">
                   <Cpu className="h-4 w-4 text-amber-400" />
                   <span className="text-sm font-semibold text-white">
-                    Diagrama Único de Arquitetura Interativo (Archify — M1 a M6)
+                    Diagrama Único de Arquitetura Interativo (Archify — M1 a M7)
                   </span>
                 </div>
                 <div className="flex items-center gap-2">

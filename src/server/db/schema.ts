@@ -303,3 +303,25 @@ export const aiProviderSettingsInsertSchema = z.object({
   temperature: z.number().min(0.0).max(1.0).default(0.7),
   isActive: z.number().int().min(0).max(1).default(1),
 });
+
+/**
+ * Tabela de Configurações de Empresa & Sessão Instagram (Marco 7 — Settings Hub & AutoSocial Cookies)
+ */
+export const company_settings = sqliteTable("company_settings", {
+  companyId: text("company_id")
+    .primaryKey()
+    .references(() => companies.id, { onDelete: "cascade" }),
+  instagramSessionId: text("instagram_session_id"),
+  instagramCsrfToken: text("instagram_csrf_token"),
+  instagramDsUserId: text("instagram_ds_user_id"),
+  instagramCookiesJson: text("instagram_cookies_json"),
+  instagramSessionStatus: text("instagram_session_status").default("unconfigured"), // 'unconfigured' | 'active' | 'expired'
+  instagramLastVerifiedAt: integer("instagram_last_verified_at", { mode: "timestamp" }),
+  preferredImageProvider: text("preferred_image_provider").default("pollinations"),
+  imageProviderApiKey: text("image_provider_api_key"),
+  imageProviderBaseUrl: text("image_provider_base_url").default("http://localhost:8188"),
+  autosocialQueuePath: text("autosocial_queue_path").default("data/autosocial/queue"),
+  defaultTemplateId: text("default_template_id").default("modern-bold"),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).default(sql`(unixepoch())`),
+});
+

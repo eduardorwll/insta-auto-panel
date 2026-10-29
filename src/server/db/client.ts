@@ -38,11 +38,27 @@ export function createDatabaseConnection(dbPath: string = "./data/social_panel.d
       const migrationsFolder = path.resolve(import.meta.dirname, "../../../drizzle");
       migrate(db, { migrationsFolder });
     } catch {}
-    // Garante colunas do Marco 6 (OpenDesign Studio) em bancos pré-existentes
+    // Garante colunas do Marco 6 (OpenDesign Studio) e tabela do Marco 7 (company_settings) em bancos pré-existentes
     for (const alterSql of [
       "ALTER TABLE post_slides ADD COLUMN template_id text DEFAULT 'modern-bold';",
       "ALTER TABLE post_slides ADD COLUMN rendered_image_url text;",
       "ALTER TABLE post_slides ADD COLUMN image_prompt text;",
+      `CREATE TABLE IF NOT EXISTS company_settings (
+        company_id text PRIMARY KEY NOT NULL,
+        instagram_session_id text,
+        instagram_csrf_token text,
+        instagram_ds_user_id text,
+        instagram_cookies_json text,
+        instagram_session_status text DEFAULT 'unconfigured',
+        instagram_last_verified_at integer,
+        preferred_image_provider text DEFAULT 'pollinations',
+        image_provider_api_key text,
+        image_provider_base_url text DEFAULT 'http://localhost:8188',
+        autosocial_queue_path text DEFAULT 'data/autosocial/queue',
+        default_template_id text DEFAULT 'modern-bold',
+        updated_at integer DEFAULT (unixepoch()),
+        FOREIGN KEY (company_id) REFERENCES companies(id) ON UPDATE no action ON DELETE cascade
+      );`,
     ]) {
       try {
         sqlite.run(alterSql);

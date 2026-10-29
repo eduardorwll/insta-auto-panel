@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+  <defs>
+    <linearGradient id="accentBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#6366F1"/>
+    </linearGradient>
+    <radialGradient id="ambientGlow" cx="85%" cy="15%" r="60%">
+      <stop offset="0%" stop-color="#0EA5E9" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#0EA5E9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Base Surface -->
+  <rect width="1080" height="1350" fill="#0F172A"/>
+  <rect width="1080" height="1350" fill="url(#ambientGlow)"/>
+  
+
+  <!-- Top Editorial Header (Impeccable Persuade Hierarchy) -->
+  <rect x="96" y="76" width="888" height="4" fill="url(#accentBar)" rx="2"/>
+  <text x="96" y="128" fill="#F8FAFC" font-family="Inter, system-ui, sans-serif" font-size="26" font-weight="700" letter-spacing="0.5">
+    Studio Dental Prime
+  </text>
+  <text x="984" y="128" text-anchor="end" fill="#0EA5E9" font-family="JetBrains Mono, monospace" font-size="24" font-weight="700" style="font-variant-numeric: tabular-nums;">
+    03 / 03
+  </text>
+
+  <!-- Accent Index Pill -->
+  <rect x="96" y="294" width="170" height="44" rx="22" fill="#0EA5E9" fill-opacity="0.16" stroke="#0EA5E9" stroke-width="1.5"/>
+  <text x="181" y="323" text-anchor="middle" fill="#E0E7FF" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="600" letter-spacing="1.2">
+    SLIDE 3
+  </text>
+
+  <!-- Focal Headline -->
+  <text x="96" y="390" fill="#F8FAFC" font-family="Inter, system-ui, sans-serif" font-size="62" font-weight="800" letter-spacing="-1.2">
+    <tspan x="96" dy="0">Slide 3: Planejamento</tspan><tspan x="96" dy="74">Digital</tspan>
+  </text>
+
+  <!-- Body Copy -->
+  <text x="96" y="618" fill="#CBD5E1" font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="400">
+    <tspan x="96" dy="0">Detalhamento clínico da etapa 3 com</tspan><tspan x="96" dy="48">previsibilidade estética.</tspan>
+  </text>
+
+  <!-- Bottom CTA & Handle Bar -->
+  <rect x="96" y="1120" width="888" height="84" rx="18" fill="#0EA5E9"/>
+  <text x="540" y="1172" text-anchor="middle" fill="#FFFFFF" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700">
+    Toque no link da bio e agende
+  </text>
+
+  <text x="96" y="1272" fill="#CBD5E1" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600">
+    @studiodentalprime
+  </text>
+  <circle cx="968" cy="1264" r="14" fill="#10B981"/>
+</svg>

@@ -10,7 +10,6 @@ import {
 import { Button } from "@/client/components/ui/button";
 import { Input } from "@/client/components/ui/input";
 import { Label } from "@/client/components/ui/label";
-import { Badge } from "@/client/components/ui/badge";
 import { useCompany } from "@/client/context/CompanyContext";
 import type { AISettingsFormData, ConnectionTestResult, AIProvider } from "@/client/types/ai";
 import {
@@ -29,7 +28,12 @@ interface AISettingsModalProps {
   onClose: () => void;
 }
 
-const PROVIDER_OPTIONS: { value: AIProvider; label: string; defaultModel: string; defaultBaseUrl?: string }[] = [
+const PROVIDER_OPTIONS: {
+  value: AIProvider;
+  label: string;
+  defaultModel: string;
+  defaultBaseUrl?: string;
+}[] = [
   {
     value: "mlstudio",
     label: "ML Studio API (LM Studio / Local / Azure)",
@@ -96,7 +100,8 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
     setErrorMessage(null);
     setTestResult(null);
 
-    const queryParam = targetScope === "company" && activeCompany ? `?companyId=${activeCompany.id}` : "";
+    const queryParam =
+      targetScope === "company" && activeCompany ? `?companyId=${activeCompany.id}` : "";
 
     try {
       const res = await fetch(`/api/ai/settings${queryParam}`);
@@ -108,7 +113,8 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
           provider: data.provider || "mlstudio",
           apiKey: data.apiKey || "",
           modelName: data.modelName || "llama-3.1-8b-instruct",
-          baseUrl: data.baseUrl || (data.provider === "mlstudio" ? "http://localhost:1234/v1" : ""),
+          baseUrl:
+            data.baseUrl || (data.provider === "mlstudio" ? "http://localhost:1234/v1" : ""),
           temperature: typeof data.temperature === "number" ? data.temperature : 0.7,
           isActive: data.isActive ?? 1,
         });
@@ -208,7 +214,7 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto border-slate-800 bg-slate-950 text-slate-100 p-6">
         <DialogHeader>
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+            <div className="h-8 w-8 rounded-lg bg-teal-950 border border-teal-800 flex items-center justify-center text-teal-400">
               <Bot className="h-4 w-4" />
             </div>
             <div>
@@ -224,16 +230,16 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
 
         {isLoading ? (
           <div className="py-12 flex flex-col items-center justify-center gap-2 text-slate-400">
-            <RefreshCw className="h-6 w-6 animate-spin text-indigo-500" />
+            <RefreshCw className="h-6 w-6 animate-spin text-teal-500" />
             <span className="text-xs">Carregando parâmetros de IA...</span>
           </div>
         ) : (
           <form onSubmit={handleSave} className="space-y-5 pt-2">
             {/* Seletor de Escopo */}
-            <div className="bg-slate-900/60 p-3 rounded-lg border border-slate-800 flex items-center justify-between">
+            <div className="bg-slate-900 p-3 rounded-lg border border-slate-800 flex items-center justify-between">
               <div>
                 <Label className="text-xs font-semibold text-white">Escopo da Configuração</Label>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-xs text-slate-400">
                   {scope === "global"
                     ? "Configuração padrão para todas as empresas sem override próprio."
                     : `Configuração específica e isolada para ${activeCompany?.name || "a empresa atual"}.`}
@@ -245,7 +251,9 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
                   type="button"
                   onClick={() => handleScopeChange("global")}
                   className={`px-3 py-1 rounded text-xs font-medium transition-colors cursor-pointer ${
-                    scope === "global" ? "bg-indigo-600 text-white shadow" : "text-slate-400 hover:text-white"
+                    scope === "global"
+                      ? "bg-teal-600 text-white"
+                      : "text-slate-400 hover:text-white"
                   }`}
                 >
                   Global
@@ -255,7 +263,9 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
                   disabled={!activeCompany}
                   onClick={() => handleScopeChange("company")}
                   className={`px-3 py-1 rounded text-xs font-medium transition-colors cursor-pointer ${
-                    scope === "company" ? "bg-indigo-600 text-white shadow" : "text-slate-400 hover:text-white"
+                    scope === "company"
+                      ? "bg-teal-600 text-white"
+                      : "text-slate-400 hover:text-white"
                   }`}
                 >
                   Esta Empresa
@@ -265,15 +275,18 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
 
             {/* Provedor de IA */}
             <div className="space-y-1.5">
-              <Label htmlFor="ai-provider" className="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
-                <Cpu className="h-3.5 w-3.5 text-indigo-400" />
+              <Label
+                htmlFor="ai-provider"
+                className="text-xs font-semibold text-slate-200 flex items-center gap-1.5"
+              >
+                <Cpu className="h-3.5 w-3.5 text-teal-400" />
                 Provedor de Inteligência Artificial
               </Label>
               <select
                 id="ai-provider"
                 value={formData.provider}
                 onChange={(e) => handleProviderChange(e.target.value as AIProvider)}
-                className="flex h-10 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-1 text-sm text-slate-100 shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-indigo-500"
+                className="flex h-10 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-1 text-sm text-slate-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-500"
               >
                 {PROVIDER_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -299,7 +312,10 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="ai-baseurl" className="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
+                <Label
+                  htmlFor="ai-baseurl"
+                  className="text-xs font-semibold text-slate-200 flex items-center gap-1.5"
+                >
                   <Server className="h-3.5 w-3.5 text-slate-400" />
                   Base URL (Endpoint REST / Local)
                 </Label>
@@ -319,7 +335,10 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
             {/* API Key & Temperatura */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="ai-apikey" className="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
+                <Label
+                  htmlFor="ai-apikey"
+                  className="text-xs font-semibold text-slate-200 flex items-center gap-1.5"
+                >
                   <Key className="h-3.5 w-3.5 text-amber-400" />
                   API Key
                 </Label>
@@ -328,7 +347,11 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
                   type="password"
                   value={formData.apiKey || ""}
                   onChange={(e) => setFormData({ ...formData, apiKey: e.target.value })}
-                  placeholder={formData.provider === "mlstudio" ? "Não obrigatória para LM Studio local" : "sk-..."}
+                  placeholder={
+                    formData.provider === "mlstudio"
+                      ? "Não obrigatória para LM Studio local"
+                      : "sk-..."
+                  }
                 />
               </div>
 
@@ -337,7 +360,9 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
                   <Label htmlFor="ai-temp" className="text-xs font-semibold text-slate-200">
                     Temperatura Criativa
                   </Label>
-                  <span className="text-xs font-mono text-indigo-400">{formData.temperature}</span>
+                  <span className="text-xs font-mono text-teal-400 tabular-nums">
+                    {formData.temperature}
+                  </span>
                 </div>
                 <input
                   id="ai-temp"
@@ -346,8 +371,10 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
                   max="1"
                   step="0.05"
                   value={formData.temperature}
-                  onChange={(e) => setFormData({ ...formData, temperature: parseFloat(e.target.value) })}
-                  className="w-full accent-indigo-500 cursor-pointer"
+                  onChange={(e) =>
+                    setFormData({ ...formData, temperature: parseFloat(e.target.value) })
+                  }
+                  className="w-full accent-teal-500 cursor-pointer"
                 />
               </div>
             </div>
@@ -357,8 +384,8 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
               <div
                 className={`p-3 rounded-lg border text-xs flex items-start gap-2.5 ${
                   testResult.success
-                    ? "bg-emerald-950/40 border-emerald-800 text-emerald-300"
-                    : "bg-rose-950/40 border-rose-800 text-rose-300"
+                    ? "bg-emerald-950/40 border-emerald-800 text-emerald-200"
+                    : "bg-rose-950/40 border-rose-800 text-rose-200"
                 }`}
               >
                 {testResult.success ? (
@@ -367,14 +394,18 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
                   <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-rose-400" />
                 )}
                 <div className="space-y-0.5">
-                  <p className="font-semibold">{testResult.success ? "Conexão Estabelecida com Sucesso!" : "Falha na Conexão"}</p>
+                  <p className="font-semibold">
+                    {testResult.success
+                      ? "Conexão Estabelecida com Sucesso!"
+                      : "Falha na Conexão"}
+                  </p>
                   <p className="opacity-90">{testResult.message}</p>
                 </div>
               </div>
             )}
 
             {errorMessage && (
-              <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-800 text-xs text-rose-300 flex items-center gap-2">
+              <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-800 text-xs text-rose-200 flex items-center gap-2">
                 <AlertCircle className="h-4 w-4 shrink-0" />
                 <span>{errorMessage}</span>
               </div>
@@ -396,7 +427,7 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
                     </>
                   ) : (
                     <>
-                      <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
+                      <Sparkles className="h-3.5 w-3.5 text-teal-400" />
                       <span>Testar Conexão</span>
                     </>
                   )}
@@ -414,11 +445,11 @@ export function AISettingsModal({ isOpen, onClose }: AISettingsModalProps) {
                   <Button
                     type="submit"
                     disabled={isSaving}
-                    className="gap-2 bg-indigo-600 hover:bg-indigo-500 text-white"
+                    className="gap-2 bg-teal-600 hover:bg-teal-500 text-white"
                   >
                     {saveSuccess ? (
                       <>
-                        <CheckCircle className="h-4 w-4 text-emerald-400" />
+                        <CheckCircle className="h-4 w-4 text-emerald-300" />
                         <span>Salvo!</span>
                       </>
                     ) : (

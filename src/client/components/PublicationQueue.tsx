@@ -13,10 +13,8 @@ import {
   Clock,
   AlertTriangle,
   FolderSync,
-  Layers,
   Calendar,
-  Sparkles,
-  ExternalLink,
+  FolderOpen,
 } from "lucide-react";
 
 const DAY_LABELS: Record<string, string> = {
@@ -33,10 +31,10 @@ const DEFAULT_STATUS = { label: "Rascunho", color: "bg-slate-800 text-slate-300 
 
 const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   draft: DEFAULT_STATUS,
-  ai_generated: { label: "Gerado com IA", color: "bg-indigo-950/60 text-indigo-400 border-indigo-800" },
-  ready_canva: { label: "Pronto Canva", color: "bg-purple-950/60 text-purple-400 border-purple-800" },
-  queued: { label: "Enfileirado AutoSocial", color: "bg-amber-950/60 text-amber-400 border-amber-800" },
-  posted: { label: "Publicado no Instagram", color: "bg-emerald-950/60 text-emerald-400 border-emerald-800" },
+  ai_generated: { label: "Gerado com IA", color: "bg-teal-950/60 text-teal-300 border-teal-800" },
+  ready_canva: { label: "Pronto Studio / Canva", color: "bg-sky-950/60 text-sky-300 border-sky-800" },
+  queued: { label: "Enfileirado AutoSocial", color: "bg-amber-950/60 text-amber-300 border-amber-800" },
+  posted: { label: "Publicado no Instagram", color: "bg-emerald-950/60 text-emerald-300 border-emerald-800" },
 };
 
 function getMonday(d = new Date()): string {
@@ -106,7 +104,10 @@ export function PublicationQueue() {
 
   // Exportar Canva Bulk Create CSV
   const handleExportCanva = async () => {
-    const targetSchedId = scheduleId || posts[0]?.scheduleId || `sched_${activeCompany?.id}_${weekStartDate.replace(/-/g, "")}`;
+    const targetSchedId =
+      scheduleId ||
+      posts[0]?.scheduleId ||
+      `sched_${activeCompany?.id}_${weekStartDate.replace(/-/g, "")}`;
     if (!activeCompany || !targetSchedId) return;
     setIsExportingCanva(true);
     setMessage(null);
@@ -120,7 +121,10 @@ export function PublicationQueue() {
       a.click();
       document.body.removeChild(a);
 
-      setMessage({ text: "Arquivo CSV para Canva Bulk Create gerado e baixado com sucesso!", type: "success" });
+      setMessage({
+        text: "Arquivo CSV para Canva Bulk Create gerado e baixado com sucesso!",
+        type: "success",
+      });
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Falha na exportação para o Canva";
       setMessage({ text: msg, type: "error" });
@@ -131,7 +135,10 @@ export function PublicationQueue() {
 
   // Enfileirar semana completa no AutoSocial
   const handleEnqueueAll = async () => {
-    const targetSchedId = scheduleId || posts[0]?.scheduleId || `sched_${activeCompany?.id}_${weekStartDate.replace(/-/g, "")}`;
+    const targetSchedId =
+      scheduleId ||
+      posts[0]?.scheduleId ||
+      `sched_${activeCompany?.id}_${weekStartDate.replace(/-/g, "")}`;
     if (!targetSchedId) return;
     setIsEnqueueingAll(true);
     setMessage(null);
@@ -179,7 +186,10 @@ export function PublicationQueue() {
         throw new Error(json.error || "Falha ao enfileirar post");
       }
 
-      setMessage({ text: "Post enfileirado com sucesso na pasta pending/ do AutoSocial!", type: "success" });
+      setMessage({
+        text: "Post enfileirado com sucesso na pasta pending/ do AutoSocial!",
+        type: "success",
+      });
       fetchSchedule();
       fetchQueueStatus();
     } catch (err: unknown) {
@@ -201,8 +211,8 @@ export function PublicationQueue() {
         <div
           className={`p-4 rounded-xl border text-sm flex items-center justify-between ${
             message.type === "success"
-              ? "bg-emerald-950/40 border-emerald-800 text-emerald-300"
-              : "bg-rose-950/40 border-rose-800 text-rose-300"
+              ? "bg-emerald-950/40 border-emerald-800 text-emerald-200"
+              : "bg-rose-950/40 border-rose-800 text-rose-200"
           }`}
         >
           <div className="flex items-center gap-2">
@@ -225,16 +235,16 @@ export function PublicationQueue() {
       )}
 
       {/* Grid de Ações Principais e Status do AutoSocial */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
         {/* Card Canva Pro */}
-        <Card className="border-slate-800 bg-slate-900/60 p-5 space-y-4 flex flex-col justify-between">
+        <Card className="border-slate-800 bg-slate-900 p-5 space-y-4 flex flex-col justify-between">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-purple-400 flex items-center gap-1.5">
+              <span className="text-xs font-semibold text-sky-400 flex items-center gap-1.5">
                 <FileSpreadsheet className="h-4 w-4" />
                 Canva Pro (Bulk Create)
               </span>
-              <Badge variant="outline" className="text-[10px] text-purple-400 border-purple-800/50">
+              <Badge variant="outline" className="text-xs text-sky-300 border-sky-800">
                 UTF-8 BOM
               </Badge>
             </div>
@@ -247,7 +257,7 @@ export function PublicationQueue() {
           <Button
             onClick={handleExportCanva}
             disabled={isExportingCanva}
-            className="w-full gap-2 bg-purple-600 hover:bg-purple-500 text-white"
+            className="w-full gap-2 bg-sky-600 hover:bg-sky-500 text-white"
           >
             {isExportingCanva ? (
               <>
@@ -264,10 +274,10 @@ export function PublicationQueue() {
         </Card>
 
         {/* Card Fila AutoSocial Status */}
-        <Card className="border-slate-800 bg-slate-900/60 p-5 space-y-4 flex flex-col justify-between">
+        <Card className="border-slate-800 bg-slate-900 p-5 space-y-4 flex flex-col justify-between">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+              <span className="text-xs font-semibold text-amber-400 flex items-center gap-1.5">
                 <FolderSync className="h-4 w-4" />
                 Fila AutoSocial
               </span>
@@ -284,41 +294,51 @@ export function PublicationQueue() {
             </div>
 
             <h3 className="text-base font-bold text-white">Fila no Sistema de Arquivos</h3>
-            <p className="text-xs text-slate-400 font-mono truncate" title={`queue/${activeCompany.id}/instagram/pending/`}>
-              📁 queue/{activeCompany.id}/instagram/pending/
+            <p
+              className="text-xs text-slate-300 font-mono truncate flex items-center gap-1.5"
+              title={`queue/${activeCompany.id}/instagram/pending/`}
+            >
+              <FolderOpen className="h-3.5 w-3.5 text-amber-400 shrink-0" />
+              <span>queue/{activeCompany.id}/instagram/pending/</span>
             </p>
 
             <div className="grid grid-cols-3 gap-2 pt-1 text-center">
-              <div className="bg-slate-950/70 p-2 rounded-lg border border-slate-800">
-                <div className="text-lg font-mono font-bold text-amber-400">{queueStatus.pendingCount}</div>
-                <div className="text-[10px] text-slate-400">Pendentes</div>
+              <div className="bg-slate-950 p-2 rounded-lg border border-slate-800">
+                <div className="text-lg font-mono font-bold text-amber-400 tabular-nums">
+                  {queueStatus.pendingCount}
+                </div>
+                <div className="text-xs text-slate-400">Pendentes</div>
               </div>
-              <div className="bg-slate-950/70 p-2 rounded-lg border border-slate-800">
-                <div className="text-lg font-mono font-bold text-emerald-400">{queueStatus.publishedCount}</div>
-                <div className="text-[10px] text-slate-400">Publicados</div>
+              <div className="bg-slate-950 p-2 rounded-lg border border-slate-800">
+                <div className="text-lg font-mono font-bold text-emerald-400 tabular-nums">
+                  {queueStatus.publishedCount}
+                </div>
+                <div className="text-xs text-slate-400">Publicados</div>
               </div>
-              <div className="bg-slate-950/70 p-2 rounded-lg border border-slate-800">
-                <div className="text-lg font-mono font-bold text-rose-400">{queueStatus.failedCount}</div>
-                <div className="text-[10px] text-slate-400">Falhas</div>
+              <div className="bg-slate-950 p-2 rounded-lg border border-slate-800">
+                <div className="text-lg font-mono font-bold text-rose-400 tabular-nums">
+                  {queueStatus.failedCount}
+                </div>
+                <div className="text-xs text-slate-400">Falhas</div>
               </div>
             </div>
           </div>
 
-          <div className="text-[11px] text-slate-500 flex items-center gap-1">
+          <div className="text-xs text-slate-400 flex items-center gap-1">
             <Clock className="h-3 w-3" />
             <span>Processado pelo motor Katzca/AutoSocial</span>
           </div>
         </Card>
 
         {/* Card Disparo Autônomo */}
-        <Card className="border-slate-800 bg-slate-900/60 p-5 space-y-4 flex flex-col justify-between">
+        <Card className="border-slate-800 bg-slate-900 p-5 space-y-4 flex flex-col justify-between">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+              <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
                 <Send className="h-4 w-4" />
                 Automação Semanal
               </span>
-              <Badge variant="outline" className="text-[10px] text-emerald-400 border-emerald-800/50">
+              <Badge variant="outline" className="text-xs text-emerald-300 border-emerald-800">
                 Pronto
               </Badge>
             </div>
@@ -349,12 +369,12 @@ export function PublicationQueue() {
       </div>
 
       {/* Tabela de Posts da Semana e Status de Publicação */}
-      <Card className="border-slate-800 bg-slate-900/60">
+      <Card className="border-slate-800 bg-slate-900">
         <CardHeader className="pb-4 border-b border-slate-800">
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="text-base text-white flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-indigo-400" />
+                <Calendar className="h-4 w-4 text-teal-400" />
                 <span>Grade Semanal de Publicações (Semana de {weekStartDate})</span>
               </CardTitle>
               <CardDescription>
@@ -371,16 +391,19 @@ export function PublicationQueue() {
               const isEnqueuing = enqueueingPostId === post.id;
 
               return (
-                <div key={post.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-900/40 transition-colors">
+                <div
+                  key={post.id}
+                  className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-800/40 transition-colors"
+                >
                   <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-xs font-bold text-slate-200">
                         {DAY_LABELS[post.dayOfWeek] || post.dayOfWeek}
                       </span>
-                      <Badge variant="outline" className={`text-[10px] border ${statusCfg.color}`}>
+                      <Badge variant="outline" className={`text-xs border ${statusCfg.color}`}>
                         {statusCfg.label}
                       </Badge>
-                      <Badge variant="outline" className="text-[10px] text-slate-500 border-slate-800">
+                      <Badge variant="outline" className="text-xs text-slate-400 border-slate-700 tabular-nums">
                         {post.slideCount} slides
                       </Badge>
                     </div>
@@ -394,7 +417,7 @@ export function PublicationQueue() {
                         {post.caption}
                       </p>
                     ) : (
-                      <p className="text-xs text-slate-600 italic">
+                      <p className="text-xs text-slate-400 italic">
                         Legenda não gerada. Acesse o Calendário para gerar com IA.
                       </p>
                     )}
@@ -406,7 +429,7 @@ export function PublicationQueue() {
                       variant="outline"
                       onClick={() => handleEnqueuePost(post.id)}
                       disabled={isEnqueuing}
-                      className="gap-1.5 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 text-xs"
+                      className="gap-1.5 border-slate-700 text-slate-200 hover:text-white hover:bg-slate-800 text-xs"
                     >
                       {isEnqueuing ? (
                         <>

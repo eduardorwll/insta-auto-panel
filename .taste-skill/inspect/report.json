@@ -1,0 +1,1503 @@
+{
+ "url": "http://localhost:3000",
+ "at": "2026-10-29T20:37:04.798Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 1253,
+     "screens": 1.4,
+     "words": 254,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 20,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "chars": 16,
+     "lines": 1,
+     "size": 16,
+     "vw": 1.1,
+     "font": "Instrument Sans",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.5,
+     "top": 18,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "lines": 1,
+     "size": 16,
+     "font": "Instrument Sans"
+    },
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Instrument Sans",
+       "share": 0.93,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.07,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      12,
+      14,
+      16,
+      18,
+      24
+     ],
+     "sizeCount": 5,
+     "notLoaded": [],
+     "body": {
+      "font": "Instrument Sans",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 6.8
+     },
+     "measureChars": 110,
+     "max": {
+      "size": 24,
+      "vw": 1.7,
+      "font": "Instrument Sans",
+      "text": "Clínica Prime Settings"
+     },
+     "monoShare": 0.07,
+     "monoProseShare": 0.07,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [
+      "PRO",
+      "@clinicaprimesettings",
+      "Semana de 2026-10-26",
+      "1 / 5",
+      "Proporção Instagram 4:5 (1080×1350px)",
+      "1080×1350px (4:5)"
+     ],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.18,
+     "smallText": 26
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#090d16",
+     "bodyBgHsl": {
+      "h": 222,
+      "s": 0.42,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#020618",
+       "top": 0,
+       "hsl": {
+        "h": 229,
+        "s": 0.85,
+        "l": 0.05
+       }
+      },
+      {
+       "color": "#0f172b",
+       "top": 535,
+       "hsl": {
+        "h": 223,
+        "s": 0.48,
+        "l": 0.11
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#90a1b9",
+       "share": 0.27
+      },
+      {
+       "color": "#cad5e2",
+       "share": 0.22
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.22
+      },
+      {
+       "color": "#e2e8f0",
+       "share": 0.13
+      },
+      {
+       "color": "#96f7e4",
+       "share": 0.06
+      }
+     ],
+     "button": {
+      "bg": "#1d293d",
+      "hsl": {
+       "h": 218,
+       "s": 0.36,
+       "l": 0.18
+      },
+      "fg": "#e2e8f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 15,
+     "inHero": 9,
+     "radius": 6,
+     "height": 32,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Clínica Prime Settings",
+      "Arquitetura",
+      "Configurar IA",
+      "Calendário",
+      "Semana Atual"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 7,
+     "hairlineSamples": [
+      "header.sticky.top-0 1440px",
+      "div.mt-4.pt-4 1182px",
+      "div.flex.flex-col 707px",
+      "div.space-y-4.pt-4 659px",
+      "div.w-full.flex 449px"
+     ],
+     "outlinedBoxes": 12,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 12,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 7,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 406
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": true,
+     "height": 61,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "instrument sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 1253,
+    "margins": {
+     "left": 111,
+     "right": 117
+    },
+    "sections": [
+     {
+      "sel": "div.rounded-xl.border",
+      "tag": "div",
+      "top": 85,
+      "height": 141,
+      "words": 13,
+      "media": 0,
+      "middle": 458,
+      "heading": {
+       "text": "Clínica Prime Settings",
+       "size": 24,
+       "tag": "h2"
+      },
+      "left": 129,
+      "right": 278,
+      "textLeft": 129,
+      "textRight": 278,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.w-full",
+      "tag": "div",
+      "top": 250,
+      "height": 979,
+      "words": 205,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Editar Post —",
+       "size": 16,
+       "tag": "h3"
+      },
+      "left": 104,
+      "right": 104,
+      "textLeft": 117,
+      "textRight": 117,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Social Panel PRO",
+      "size": 16,
+      "top": 18,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 129,
+      "n": 2
+     },
+     {
+      "x": 66,
+      "n": 1
+     },
+     {
+      "x": 153,
+      "n": 1
+     },
+     {
+      "x": 226,
+      "n": 1
+     },
+     {
+      "x": 957,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 6,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.07,
+    "voidBox": {
+     "x": 1140,
+     "y": 600,
+     "w": 300,
+     "h": 300
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": true,
+    "ground": "#090d16",
+    "sidebar": null,
+    "topbar": {
+     "h": 61
+    },
+    "canvas": {
+     "left": 104,
+     "right": 117
+    },
+    "hero": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "chars": 16,
+     "lines": 1,
+     "size": 16,
+     "vw": 1.1,
+     "font": "Instrument Sans",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.5,
+     "top": 18,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 10,
+     "firstScreen": 10,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 15,
+     "radii": [
+      [
+       8,
+       7
+      ],
+      [
+       12,
+       6
+      ],
+      [
+       0,
+       2
+      ]
+     ],
+     "heavyBorders": 1,
+     "borderSamples": [
+      "#00bba7 on #020618 (8.32:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 1,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 175,
+       "size": 32,
+       "radius": "8px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.48,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      14,
+      16,
+      18,
+      24
+     ]
+    },
+    "title": {
+     "text": "Social Panel\nPRO",
+     "size": 16,
+     "top": 18
+    },
+    "colourShare": 0.014
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 2046,
+     "screens": 2,
+     "words": 254,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 20,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "chars": 16,
+     "lines": 1,
+     "size": 16,
+     "vw": 2.1,
+     "font": "Instrument Sans",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.5,
+     "top": 18,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "lines": 1,
+     "size": 16,
+     "font": "Instrument Sans"
+    },
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Instrument Sans",
+       "share": 0.93,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.07,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      12,
+      14,
+      16,
+      18,
+      24
+     ],
+     "sizeCount": 5,
+     "notLoaded": [],
+     "body": {
+      "font": "Instrument Sans",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 6.8
+     },
+     "measureChars": 112,
+     "max": {
+      "size": 24,
+      "vw": 3.1,
+      "font": "Instrument Sans",
+      "text": "Clínica Prime Settings"
+     },
+     "monoShare": 0.07,
+     "monoProseShare": 0.07,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [
+      "PRO",
+      "@clinicaprimesettings",
+      "Semana de 2026-10-26",
+      "1 / 5",
+      "Proporção Instagram 4:5 (1080×1350px)",
+      "1080×1350px (4:5)"
+     ],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.18,
+     "smallText": 26
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#090d16",
+     "bodyBgHsl": {
+      "h": 222,
+      "s": 0.42,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#020618",
+       "top": 0,
+       "hsl": {
+        "h": 229,
+        "s": 0.85,
+        "l": 0.05
+       }
+      },
+      {
+       "color": "#0f172b",
+       "top": 633,
+       "hsl": {
+        "h": 223,
+        "s": 0.48,
+        "l": 0.11
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#90a1b9",
+       "share": 0.27
+      },
+      {
+       "color": "#cad5e2",
+       "share": 0.22
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.22
+      },
+      {
+       "color": "#e2e8f0",
+       "share": 0.13
+      },
+      {
+       "color": "#96f7e4",
+       "share": 0.06
+      }
+     ],
+     "button": {
+      "bg": "#1d293d",
+      "hsl": {
+       "h": 218,
+       "s": 0.36,
+       "l": 0.18
+      },
+      "fg": "#e2e8f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 15,
+     "inHero": 9,
+     "radius": 6,
+     "height": 32,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Clínica Prime Settings",
+      "Arquitetura",
+      "Configurar IA",
+      "Calendário",
+      "Semana Atual"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 7,
+     "hairlineSamples": [
+      "header.sticky.top-0 768px",
+      "div.mt-4.pt-4 670px",
+      "div.flex.flex-col 718px",
+      "div.space-y-4.pt-4 670px",
+      "div.w-full.flex 670px"
+     ],
+     "outlinedBoxes": 5,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 5,
+     "boxRadius": 12,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": true,
+     "height": 109,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "instrument sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 2046,
+    "margins": {
+     "left": 31,
+     "right": 37
+    },
+    "sections": [
+     {
+      "sel": "div.rounded-xl.border",
+      "tag": "div",
+      "top": 133,
+      "height": 175,
+      "words": 13,
+      "media": 0,
+      "middle": 68,
+      "heading": {
+       "text": "Clínica Prime Settings",
+       "size": 24,
+       "tag": "h2"
+      },
+      "left": 49,
+      "right": 202,
+      "textLeft": 49,
+      "textRight": 202,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.w-full",
+      "tag": "div",
+      "top": 332,
+      "height": 1690,
+      "words": 205,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Editar Post —",
+       "size": 16,
+       "tag": "h3"
+      },
+      "left": 24,
+      "right": 24,
+      "textLeft": 37,
+      "textRight": 37,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Social Panel PRO",
+      "size": 16,
+      "top": 18,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 49,
+      "n": 2
+     },
+     {
+      "x": 66,
+      "n": 2
+     },
+     {
+      "x": 146,
+      "n": 1
+     },
+     {
+      "x": 255,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 6,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": true,
+    "ground": "#090d16",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 31,
+     "right": 24
+    },
+    "hero": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "chars": 16,
+     "lines": 1,
+     "size": 16,
+     "vw": 2.1,
+     "font": "Instrument Sans",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.5,
+     "top": 18,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 3,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 8,
+     "radii": [
+      [
+       12,
+       6
+      ],
+      [
+       0,
+       2
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 1,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 175,
+       "size": 32,
+       "radius": "8px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.48,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      14,
+      16,
+      18,
+      24
+     ]
+    },
+    "title": {
+     "text": "Social Panel\nPRO",
+     "size": 16,
+     "top": 18
+    },
+    "colourShare": 0.017
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 4,
+   "filled": [
+    1,
+    1,
+    1,
+    0.99
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 2901,
+     "screens": 3.4,
+     "words": 249,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 20,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "chars": 16,
+     "lines": 1,
+     "size": 16,
+     "vw": 4.1,
+     "font": "Instrument Sans",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.5,
+     "top": 16,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "lines": 1,
+     "size": 16,
+     "font": "Instrument Sans"
+    },
+    "headings": [
+     {
+      "text": "Clínica Prime Settings",
+      "words": 3,
+      "chars": 22,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Instrument Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.33,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.62,
+      "top": 210,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Instrument Sans",
+       "share": 0.93,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.07,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      12,
+      14,
+      16,
+      18,
+      24
+     ],
+     "sizeCount": 5,
+     "notLoaded": [],
+     "body": {
+      "font": "Instrument Sans",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 6.8
+     },
+     "measureChars": 49,
+     "max": {
+      "size": 24,
+      "vw": 6.2,
+      "font": "Instrument Sans",
+      "text": "Clínica Prime Settings"
+     },
+     "monoShare": 0.07,
+     "monoProseShare": 0.07,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [
+      "PRO",
+      "@clinicaprimesettings",
+      "Semana de 2026-10-26",
+      "1 / 5",
+      "Proporção Instagram 4:5 (1080×1350px)",
+      "1080×1350px (4:5)"
+     ],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.18,
+     "smallText": 25
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#090d16",
+     "bodyBgHsl": {
+      "h": 222,
+      "s": 0.42,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#020618",
+       "top": 0,
+       "hsl": {
+        "h": 229,
+        "s": 0.85,
+        "l": 0.05
+       }
+      },
+      {
+       "color": "#0f172b",
+       "top": 1234,
+       "hsl": {
+        "h": 223,
+        "s": 0.48,
+        "l": 0.11
+       }
+      },
+      {
+       "color": "#0f172a",
+       "top": 2280,
+       "hsl": {
+        "h": 222,
+        "s": 0.47,
+        "l": 0.11
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#90a1b9",
+       "share": 0.27
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.22
+      },
+      {
+       "color": "#cad5e2",
+       "share": 0.21
+      },
+      {
+       "color": "#e2e8f0",
+       "share": 0.13
+      },
+      {
+       "color": "#96f7e4",
+       "share": 0.06
+      }
+     ],
+     "button": {
+      "bg": "#1d293d",
+      "hsl": {
+       "h": 218,
+       "s": 0.36,
+       "l": 0.18
+      },
+      "fg": "#e2e8f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 14,
+     "inHero": 4,
+     "radius": 6,
+     "height": 32,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Clínica Prime Settings",
+      "Configurar IA",
+      "Calendário",
+      "Semana Atual"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 7,
+     "hairlineSamples": [
+      "header.sticky.top-0 390px",
+      "div.mt-4.pt-4 292px",
+      "div.flex.flex-col 340px",
+      "div.space-y-4.pt-4 292px",
+      "div.w-full.flex 292px"
+     ],
+     "outlinedBoxes": 15,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 15,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 7,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 766
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": true,
+     "height": 161,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "instrument sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 2901,
+    "margins": {
+     "left": 24,
+     "right": 24
+    },
+    "sections": [
+     {
+      "sel": "header.sticky.top-0",
+      "tag": "header",
+      "top": 0,
+      "height": 161,
+      "words": 8,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Social Panel",
+       "size": 16,
+       "tag": "h1"
+      },
+      "left": 24,
+      "right": 126,
+      "textLeft": 61,
+      "textRight": 185,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": true
+     },
+     {
+      "sel": "div.rounded-xl.border",
+      "tag": "div",
+      "top": 185,
+      "height": 249,
+      "words": 13,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Clínica Prime Settings",
+       "size": 24,
+       "tag": "h2"
+      },
+      "left": 49,
+      "right": 74,
+      "textLeft": 49,
+      "textRight": 74,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.min-h-10.h-auto",
+      "tag": "div",
+      "top": 458,
+      "height": 154,
+      "words": 10,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 31,
+      "right": 31,
+      "textLeft": 118,
+      "textRight": 94,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div#radix-_r_5_-content-calendar.ring-offset-slate-950.focus",
+      "tag": "div",
+      "top": 628,
+      "height": 2249,
+      "words": 192,
+      "media": 0,
+      "middle": 6,
+      "heading": {
+       "text": "Editar Post —",
+       "size": 16,
+       "tag": "h3"
+      },
+      "left": 24,
+      "right": 0,
+      "textLeft": 37,
+      "textRight": 37,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Social Panel PRO",
+      "size": 16,
+      "top": 16,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 66,
+      "n": 3
+     },
+     {
+      "x": 49,
+      "n": 2
+     },
+     {
+      "x": 146,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 6,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": true,
+    "ground": "#090d16",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 24,
+     "right": 8
+    },
+    "hero": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "chars": 16,
+     "lines": 1,
+     "size": 16,
+     "vw": 4.1,
+     "font": "Instrument Sans",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.5,
+     "top": 16,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 12,
+     "firstScreen": 5,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 17,
+     "radii": [
+      [
+       8,
+       8
+      ],
+      [
+       12,
+       7
+      ],
+      [
+       0,
+       2
+      ]
+     ],
+     "heavyBorders": 1,
+     "borderSamples": [
+      "#00bba7 on #020618 (8.32:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 1,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 175,
+       "size": 32,
+       "radius": "8px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.48,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      14,
+      16,
+      18,
+      24
+     ]
+    },
+    "title": {
+     "text": "Social Panel\nPRO",
+     "size": 16,
+     "top": 16
+    },
+    "colourShare": 0.045
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "tiny-text",
+   "width": 1440,
+   "message": "48% of the text is under 13px.",
+   "fix": "Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "/home/eduardorwll/Sandbox/src/insta-auto-panel/.taste-skill/inspect/desktop-fold.jpg",
+   "pages": [
+    "/home/eduardorwll/Sandbox/src/insta-auto-panel/.taste-skill/inspect/desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "/home/eduardorwll/Sandbox/src/insta-auto-panel/.taste-skill/inspect/tablet-fold.jpg",
+   "pages": [
+    "/home/eduardorwll/Sandbox/src/insta-auto-panel/.taste-skill/inspect/tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "/home/eduardorwll/Sandbox/src/insta-auto-panel/.taste-skill/inspect/mobile-fold.jpg",
+   "pages": [
+    "/home/eduardorwll/Sandbox/src/insta-auto-panel/.taste-skill/inspect/mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

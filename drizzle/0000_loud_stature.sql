@@ -77,3 +77,20 @@ CREATE TABLE `weekly_schedules` (
 	`created_at` integer DEFAULT (unixepoch()),
 	FOREIGN KEY (`company_id`) REFERENCES `companies`(`id`) ON UPDATE no action ON DELETE cascade
 );
+--> statement-breakpoint
+CREATE TABLE `company_settings` (
+	`company_id` text PRIMARY KEY NOT NULL,
+	`instagram_session_id` text,
+	`instagram_csrf_token` text,
+	`instagram_ds_user_id` text,
+	`instagram_cookies_json` text,
+	`instagram_session_status` text DEFAULT 'unconfigured',
+	`instagram_last_verified_at` integer,
+	`preferred_image_provider` text DEFAULT 'pollinations',
+	`image_provider_api_key` text,
+	`image_provider_base_url` text DEFAULT 'http://localhost:8188',
+	`autosocial_queue_path` text DEFAULT 'data/autosocial/queue',
+	`default_template_id` text DEFAULT 'modern-bold',
+	`updated_at` integer DEFAULT (unixepoch()),
+	FOREIGN KEY (`company_id`) REFERENCES `companies`(`id`) ON UPDATE no action ON DELETE cascade
+);

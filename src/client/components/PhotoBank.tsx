@@ -70,7 +70,10 @@ export function PhotoBank() {
       formData.append("companyId", activeCompany.id);
       formData.append("category", category);
       if (tags.trim()) {
-        const tagArray = tags.split(",").map((t) => t.trim()).filter(Boolean);
+        const tagArray = tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean);
         formData.append("tags", JSON.stringify(tagArray));
       }
 
@@ -119,10 +122,10 @@ export function PhotoBank() {
   return (
     <div className="space-y-6">
       {/* Formulário de Upload */}
-      <Card className="border-slate-800 bg-slate-900/60 backdrop-blur">
+      <Card className="border-slate-800 bg-slate-900">
         <CardHeader className="pb-4">
           <CardTitle className="text-base flex items-center gap-2">
-            <Upload className="h-4 w-4 text-indigo-400" />
+            <Upload className="h-4 w-4 text-teal-400" />
             <span>Upload de Foto para o Banco Base</span>
           </CardTitle>
           <CardDescription>
@@ -135,8 +138,8 @@ export function PhotoBank() {
               <div
                 className={`flex items-center gap-2 p-3 rounded-md text-sm border ${
                   message.type === "success"
-                    ? "bg-emerald-950/40 border-emerald-800 text-emerald-300"
-                    : "bg-red-950/40 border-red-800 text-red-300"
+                    ? "bg-emerald-950/40 border-emerald-800 text-emerald-200"
+                    : "bg-red-950/40 border-red-800 text-red-200"
                 }`}
               >
                 {message.type === "success" ? (
@@ -166,7 +169,7 @@ export function PhotoBank() {
                   id="photo-category-select"
                   value={category}
                   onChange={(e) => setCategory(e.target.value as PhotoCategory)}
-                  className="flex h-9 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-1 text-sm text-slate-100 shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-indigo-500"
+                  className="flex h-9 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-1 text-sm text-slate-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-500"
                 >
                   {CATEGORIES.map((cat) => (
                     <option key={cat} value={cat}>
@@ -199,7 +202,7 @@ export function PhotoBank() {
 
       {/* Barra de Filtros por Categoria */}
       <div className="flex items-center justify-between gap-4 flex-wrap">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <Button
             variant={activeCategory === "ALL" ? "default" : "outline"}
             size="sm"
@@ -224,9 +227,11 @@ export function PhotoBank() {
       {isLoading ? (
         <div className="py-12 text-center text-slate-400">Carregando acervo de fotos...</div>
       ) : photos.length === 0 ? (
-        <Card className="border-slate-800 bg-slate-900/30 p-12 text-center space-y-3">
-          <ImageIcon className="h-10 w-10 text-slate-600 mx-auto" />
-          <h3 className="text-base font-semibold text-slate-200">Nenhuma foto no acervo desta categoria</h3>
+        <Card className="border-slate-800 bg-slate-900 p-12 text-center space-y-3">
+          <ImageIcon className="h-10 w-10 text-slate-500 mx-auto" />
+          <h3 className="text-base font-semibold text-slate-200">
+            Nenhuma foto no acervo desta categoria
+          </h3>
           <p className="text-xs text-slate-400 max-w-sm mx-auto">
             Faça upload de fotos do especialista, produtos ou logotipos para compor automaticamente os carrosséis semanais.
           </p>
@@ -236,20 +241,20 @@ export function PhotoBank() {
           {photos.map((photo) => (
             <div
               key={photo.id}
-              className="group relative rounded-lg border border-slate-800 bg-slate-900/80 overflow-hidden shadow transition-all hover:border-slate-700 hover:shadow-md flex flex-col"
+              className="group relative rounded-lg border border-slate-800 bg-slate-900 overflow-hidden transition-colors hover:border-slate-700 flex flex-col"
             >
               <div className="aspect-square w-full bg-slate-950 overflow-hidden relative">
                 <img
                   src={`/uploads/${photo.filename}`}
                   alt={photo.originalName}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                   loading="lazy"
                 />
                 <button
                   type="button"
                   aria-label="Excluir foto"
                   onClick={() => handleDelete(photo.id)}
-                  className="absolute top-2 right-2 p-1.5 rounded-full bg-black/70 text-slate-300 hover:text-red-400 hover:bg-black transition-colors opacity-0 group-hover:opacity-100 cursor-pointer"
+                  className="absolute top-2 right-2 p-1.5 rounded-full bg-slate-950/90 text-slate-300 hover:text-red-400 transition-opacity opacity-0 group-hover:opacity-100 cursor-pointer"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>
@@ -257,20 +262,25 @@ export function PhotoBank() {
 
               <div className="p-2.5 flex-1 flex flex-col justify-between space-y-2">
                 <div className="space-y-1">
-                  <p className="text-xs font-medium text-slate-200 truncate" title={photo.originalName}>
+                  <p
+                    className="text-xs font-medium text-slate-200 truncate"
+                    title={photo.originalName}
+                  >
                     {photo.originalName}
                   </p>
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
+                    <Badge variant="secondary" className="text-xs px-1.5 py-0">
                       {photo.category}
                     </Badge>
-                    <span className="text-[10px] text-slate-500">Uso: {photo.timesUsed || 0}x</span>
+                    <span className="text-xs text-slate-400 tabular-nums">
+                      Uso: {photo.timesUsed || 0}x
+                    </span>
                   </div>
                 </div>
 
                 {photo.tags && (
-                  <div className="flex items-center gap-1 text-[10px] text-slate-400 truncate">
-                    <Tag className="h-2.5 w-2.5 shrink-0 opacity-60" />
+                  <div className="flex items-center gap-1 text-xs text-slate-400 truncate">
+                    <Tag className="h-3 w-3 shrink-0 opacity-70" />
                     <span className="truncate">{JSON.parse(photo.tags).join(", ")}</span>
                   </div>
                 )}

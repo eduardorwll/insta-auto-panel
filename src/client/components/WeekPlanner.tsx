@@ -17,14 +17,12 @@ import {
   Minus,
   Save,
   CheckCircle,
-  Image as ImageIcon,
   Sparkles,
   Copy,
   Check,
   AlertCircle,
   RefreshCw,
   Send,
-  FileSpreadsheet,
   Layers,
 } from "lucide-react";
 
@@ -150,7 +148,7 @@ export function WeekPlanner() {
   };
 
   // Atualizar campo do post ativo
-  const handleUpdateActivePost = (field: keyof Post, value: any) => {
+  const handleUpdateActivePost = (field: keyof Post, value: unknown) => {
     if (!activePost) return;
     const updated = [...posts];
     updated[selectedDayIndex] = { ...activePost, [field]: value };
@@ -158,7 +156,7 @@ export function WeekPlanner() {
   };
 
   // Atualizar slide ativo
-  const handleUpdateSlide = (field: keyof PostSlide, value: any) => {
+  const handleUpdateSlide = (field: keyof PostSlide, value: unknown) => {
     if (!activePost) return;
     const updatedSlides = activePost.slides.map((s) => {
       if (s.slideNumber === activeSlideNumber) {
@@ -307,12 +305,12 @@ export function WeekPlanner() {
   return (
     <div className="space-y-6">
       {/* Seletor de Semana */}
-      <div className="flex items-center justify-between bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
+      <div className="flex items-center justify-between bg-slate-900 border border-slate-800 p-4 rounded-xl flex-wrap gap-3">
         <div className="flex items-center gap-3">
-          <CalendarIcon className="h-5 w-5 text-indigo-400" />
+          <CalendarIcon className="h-5 w-5 text-teal-400" />
           <div>
             <h3 className="text-sm font-semibold text-white">Planejamento Editorial Semanal</h3>
-            <p className="text-xs text-slate-400 font-mono">Semana de {weekStartDate}</p>
+            <p className="text-xs text-slate-400 font-mono tabular-nums">Semana de {weekStartDate}</p>
           </div>
         </div>
 
@@ -320,6 +318,7 @@ export function WeekPlanner() {
           <Button
             variant="outline"
             size="sm"
+            aria-label="Semana Anterior"
             onClick={() => {
               const d = new Date(weekStartDate || Date.now());
               d.setDate(d.getDate() - 7);
@@ -340,6 +339,7 @@ export function WeekPlanner() {
           <Button
             variant="outline"
             size="sm"
+            aria-label="Próxima Semana"
             onClick={() => {
               const d = new Date(weekStartDate || Date.now());
               d.setDate(d.getDate() + 7);
@@ -363,23 +363,23 @@ export function WeekPlanner() {
                 setSelectedDayIndex(idx);
                 setActiveSlideNumber(1);
               }}
-              className={`p-3 rounded-lg border text-left transition-all cursor-pointer ${
+              className={`p-3 rounded-lg border text-left transition-colors cursor-pointer ${
                 isSelected
-                  ? "border-indigo-500 bg-indigo-950/40 text-white ring-1 ring-indigo-500"
-                  : "border-slate-800 bg-slate-900/60 text-slate-300 hover:border-slate-700 hover:bg-slate-900"
+                  ? "border-teal-500 bg-teal-950/60 text-white"
+                  : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-700 hover:bg-slate-800/80"
               }`}
             >
-              <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+              <div className="text-sm font-semibold text-slate-200">
                 {DAY_LABELS[post.dayOfWeek]?.split("-")[0]}
               </div>
-              <div className="text-xs font-bold text-white truncate mt-1">
+              <div className="text-sm font-bold text-white truncate mt-1">
                 {post.theme || "A definir"}
               </div>
-              <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-800/80">
-                <Badge variant="outline" className="text-[9px] px-1 py-0">
+              <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-800">
+                <Badge variant="outline" className="text-xs px-1.5 py-0 tabular-nums">
                   {post.slideCount} slides
                 </Badge>
-                <span className="text-[10px] text-slate-400 truncate max-w-[60px]">
+                <span className="text-xs text-slate-300 truncate max-w-[74px]">
                   {post.category}
                 </span>
               </div>
@@ -388,56 +388,58 @@ export function WeekPlanner() {
         })}
       </div>
 
-      {/* Área de Edição do Post Selecionado + Preview 4:5 */}
+      {/* Área de Edição do Post Selecionado + Preview 4:5 (Alinhamento Simétrico items-stretch) */}
       {isLoading || !activePost ? (
         <div className="py-12 text-center text-slate-400">Carregando dados da semana...</div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Coluna de Configuração e Slides (8 cols) */}
-          <div className="lg:col-span-7 space-y-6">
-            <Card className="border-slate-800 bg-slate-900/70">
-              <CardHeader className="pb-4 border-b border-slate-800/80">
-                <div className="flex items-center justify-between">
-                  <div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          {/* Coluna de Configuração e Slides (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col">
+            <Card className="border-slate-800 bg-slate-900 h-full flex flex-col justify-between">
+              <CardHeader className="pb-4 border-b border-slate-800 space-y-3">
+                <div className="flex flex-col gap-3">
+                  <div className="space-y-1">
                     <CardTitle className="text-base text-white">
                       Editar Post — {DAY_LABELS[activePost.dayOfWeek]}
                     </CardTitle>
-                    <CardDescription>
+                    <CardDescription className="text-xs text-slate-400">
                       Configure a categoria editorial, tema central e a variável dinâmica de lâminas (3 a 10).
                     </CardDescription>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  {/* Barra de Ações Dedicada (evita esmagamento do título em colunas estreitas) */}
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
                     <Button
                       type="button"
                       variant="outline"
+                      size="sm"
                       onClick={handleGenerateWithAI}
                       disabled={isGeneratingAI || !activePost.theme}
-                      className="gap-2 border-indigo-500/40 bg-indigo-950/30 text-indigo-300 hover:bg-indigo-900/50 hover:text-white"
+                      className="gap-1.5 border-teal-800 bg-teal-950/40 text-teal-200 hover:bg-teal-900/60 hover:text-white"
                       title={!activePost.theme ? "Defina um tema primeiro" : "Gerar slides e legenda com IA"}
                     >
                       {isGeneratingAI ? (
                         <>
-                          <RefreshCw className="h-4 w-4 animate-spin text-indigo-400" />
+                          <RefreshCw className="h-3.5 w-3.5 animate-spin text-teal-400" />
                           <span>Gerando...</span>
                         </>
                       ) : (
                         <>
-                          <Sparkles className="h-4 w-4 text-indigo-400" />
+                          <Sparkles className="h-3.5 w-3.5 text-teal-400" />
                           <span>Gerar com IA</span>
                         </>
                       )}
                     </Button>
 
-                    <Button onClick={handleSave} disabled={isSaving} className="gap-2">
+                    <Button onClick={handleSave} disabled={isSaving} size="sm" className="gap-1.5">
                       {saveSuccess ? (
                         <>
-                          <CheckCircle className="h-4 w-4 text-emerald-400" />
+                          <CheckCircle className="h-3.5 w-3.5 text-emerald-300" />
                           <span>Salvo!</span>
                         </>
                       ) : (
                         <>
-                          <Save className="h-4 w-4" />
+                          <Save className="h-3.5 w-3.5" />
                           <span>{isSaving ? "Salvando..." : "Salvar Post"}</span>
                         </>
                       )}
@@ -446,35 +448,37 @@ export function WeekPlanner() {
                     <Button
                       type="button"
                       variant="outline"
+                      size="sm"
                       onClick={() => setIsStudioOpen(true)}
-                      className="gap-2 bg-teal-950/60 text-teal-200 hover:bg-teal-900 hover:text-white"
+                      className="gap-1.5 border-teal-700 bg-teal-950/60 text-teal-200 hover:bg-teal-900 hover:text-white"
                       title="Abrir Studio Visual OpenDesign 4:5 Sem Canva"
                     >
-                      <Layers className="h-4 w-4 text-teal-400" />
+                      <Layers className="h-3.5 w-3.5 text-teal-400" />
                       <span>Studio Visual (Sem Canva)</span>
                     </Button>
 
                     <Button
                       type="button"
                       variant="outline"
+                      size="sm"
                       onClick={handleEnqueueActivePost}
                       disabled={isEnqueuingPost}
-                      className="gap-2 border-amber-500/40 bg-amber-950/20 text-amber-300 hover:bg-amber-950/40 hover:text-white"
+                      className="gap-1.5 border-amber-800 bg-amber-950/30 text-amber-200 hover:bg-amber-900/50 hover:text-white"
                       title="Enviar post para fila do AutoSocial"
                     >
                       {isEnqueuingPost ? (
                         <>
-                          <RefreshCw className="h-4 w-4 animate-spin text-amber-400" />
+                          <RefreshCw className="h-3.5 w-3.5 animate-spin text-amber-400" />
                           <span>Enfileirando...</span>
                         </>
                       ) : enqueueSuccess || activePost.status === "queued" ? (
                         <>
-                          <CheckCircle className="h-4 w-4 text-emerald-400" />
+                          <CheckCircle className="h-3.5 w-3.5 text-emerald-400" />
                           <span>Enfileirado!</span>
                         </>
                       ) : (
                         <>
-                          <Send className="h-4 w-4 text-amber-400" />
+                          <Send className="h-3.5 w-3.5 text-amber-400" />
                           <span>AutoSocial</span>
                         </>
                       )}
@@ -483,277 +487,320 @@ export function WeekPlanner() {
                 </div>
               </CardHeader>
 
-              <CardContent className="space-y-6 pt-5">
-                {aiError && (
-                  <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-800 text-xs text-rose-300 flex items-center gap-2">
-                    <AlertCircle className="h-4 w-4 shrink-0" />
-                    <span>{aiError}</span>
-                  </div>
-                )}
-                {/* 1. Categoria & Tema */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <Label htmlFor="post-category">Categoria Editorial</Label>
-                    <select
-                      id="post-category"
-                      value={activePost.category}
-                      onChange={(e) => handleUpdateActivePost("category", e.target.value)}
-                      className="flex h-9 w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-1 text-sm text-slate-100 shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-indigo-500"
-                    >
-                      {EDITORIAL_CATEGORIES.map((cat) => (
-                        <option key={cat} value={cat}>
-                          {cat}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+              <CardContent className="space-y-5 pt-5 flex-1 flex flex-col justify-between">
+                <div className="space-y-5">
+                  {aiError && (
+                    <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-800 text-xs text-rose-200 flex items-center gap-2">
+                      <AlertCircle className="h-4 w-4 shrink-0" />
+                      <span>{aiError}</span>
+                    </div>
+                  )}
 
-                  <div className="space-y-1.5">
-                    <Label htmlFor="post-theme">Tema Central do Post</Label>
-                    <Input
-                      id="post-theme"
-                      value={activePost.theme}
-                      onChange={(e) => handleUpdateActivePost("theme", e.target.value)}
-                      placeholder="Ex: 5 Hábitos para Dentes Mais Claros"
-                    />
-                  </div>
-                </div>
-
-                {/* 2. Seletor Dinâmico de Lâminas (Stepper 3 a 10) */}
-                <div className="p-4 rounded-xl border border-indigo-900/40 bg-indigo-950/20 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label htmlFor="slide-count-stepper" className="text-sm font-semibold text-white">
-                        Quantidade de Lâminas do Carrossel
-                      </Label>
-                      <p className="text-xs text-slate-400">
-                        Variável dinâmica de 3 a 10 slides (Capa + Miolo + CTA)
-                      </p>
+                  {/* 1. Categoria & Tema */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="post-category">Categoria Editorial</Label>
+                      <select
+                        id="post-category"
+                        value={activePost.category}
+                        onChange={(e) => handleUpdateActivePost("category", e.target.value)}
+                        className="flex h-9 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-1 text-sm text-slate-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-500"
+                      >
+                        {EDITORIAL_CATEGORIES.map((cat) => (
+                          <option key={cat} value={cat}>
+                            {cat}
+                          </option>
+                        ))}
+                      </select>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="icon"
-                        onClick={() => handleSlideCountChange(activePost.slideCount - 1)}
-                        disabled={activePost.slideCount <= 3}
-                        className="h-8 w-8"
-                      >
-                        <Minus className="h-3.5 w-3.5" />
-                      </Button>
-
-                      <input
-                        id="slide-count-stepper"
-                        role="spinbutton"
-                        aria-label="Quantidade de Lâminas"
-                        type="number"
-                        min={3}
-                        max={10}
-                        value={activePost.slideCount}
-                        onChange={(e) => handleSlideCountChange(Number(e.target.value))}
-                        className="w-14 text-center h-8 rounded-md border border-slate-700 bg-slate-900 text-sm font-mono font-bold text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    <div className="space-y-1.5">
+                      <Label htmlFor="post-theme">Tema Central do Post</Label>
+                      <Input
+                        id="post-theme"
+                        value={activePost.theme}
+                        onChange={(e) => handleUpdateActivePost("theme", e.target.value)}
+                        placeholder="Ex: 5 Hábitos para Dentes Mais Claros"
                       />
-
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="icon"
-                        onClick={() => handleSlideCountChange(activePost.slideCount + 1)}
-                        disabled={activePost.slideCount >= 10}
-                        className="h-8 w-8"
-                      >
-                        <Plus className="h-3.5 w-3.5" />
-                      </Button>
                     </div>
                   </div>
-                </div>
 
-                {/* 3. Seleção de Foto Base do Acervo */}
-                <div className="space-y-2">
-                  <Label className="text-xs text-slate-300">Vincular Foto Base da Empresa ao Slide</Label>
-                  {photos.length === 0 ? (
-                    <p className="text-xs text-slate-500">
-                      Nenhuma foto cadastrada no banco. Acesse a aba "Fotos Base" para fazer upload.
-                    </p>
-                  ) : (
-                    <div className="flex items-center gap-2 overflow-x-auto pb-2">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleUpdateSlide("assignedPhotoId", null);
-                          handleUpdateActivePost("selectedPhotoIds", []);
-                        }}
-                        className={`h-12 w-12 rounded-lg border flex items-center justify-center text-[10px] text-slate-400 shrink-0 cursor-pointer ${
-                          !assignedPhoto ? "border-indigo-500 bg-indigo-950/40 text-white" : "border-slate-800"
-                        }`}
-                      >
-                        Sem foto
-                      </button>
+                  {/* 2. Seletor Dinâmico de Lâminas (Stepper 3 a 10) */}
+                  <div className="p-4 rounded-xl border border-slate-800 bg-slate-950 space-y-2">
+                    <div className="flex items-center justify-between gap-3 flex-wrap">
+                      <div>
+                        <Label htmlFor="slide-count-stepper" className="text-sm font-semibold text-white">
+                          Quantidade de Lâminas do Carrossel
+                        </Label>
+                        <p className="text-xs text-slate-400">
+                          Variável dinâmica de 3 a 10 slides (Capa + Miolo + CTA)
+                        </p>
+                      </div>
 
-                      {photos.map((p) => {
-                        const isAssigned = (activeSlide?.assignedPhotoId || activePost?.selectedPhotoIds?.[0]) === p.id;
+                      <div className="flex items-center gap-2">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          aria-label="Diminuir Lâminas"
+                          onClick={() => handleSlideCountChange(activePost.slideCount - 1)}
+                          disabled={activePost.slideCount <= 3}
+                          className="h-8 w-8"
+                        >
+                          <Minus className="h-3.5 w-3.5" />
+                        </Button>
+
+                        <input
+                          id="slide-count-stepper"
+                          role="spinbutton"
+                          aria-label="Quantidade de Lâminas"
+                          type="number"
+                          min={3}
+                          max={10}
+                          value={activePost.slideCount}
+                          onChange={(e) => handleSlideCountChange(Number(e.target.value))}
+                          className="w-14 text-center h-8 rounded-md border border-slate-700 bg-slate-900 text-sm font-mono font-bold text-white tabular-nums focus:outline-none focus:ring-1 focus:ring-teal-500"
+                        />
+
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          aria-label="Aumentar Lâminas"
+                          onClick={() => handleSlideCountChange(activePost.slideCount + 1)}
+                          disabled={activePost.slideCount >= 10}
+                          className="h-8 w-8"
+                        >
+                          <Plus className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 3. Seleção de Foto Base do Acervo */}
+                  <div className="space-y-2">
+                    <Label className="text-xs text-slate-300">Vincular Foto Base da Empresa ao Slide</Label>
+                    {photos.length === 0 ? (
+                      <p className="text-xs text-slate-400">
+                        Nenhuma foto cadastrada no banco. Acesse a aba "Fotos Base" para fazer upload.
+                      </p>
+                    ) : (
+                      <div className="flex items-center gap-2 overflow-x-auto pb-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            handleUpdateSlide("assignedPhotoId", null);
+                            handleUpdateActivePost("selectedPhotoIds", []);
+                          }}
+                          className={`h-12 px-3 rounded-lg border flex items-center justify-center text-xs text-slate-300 shrink-0 cursor-pointer ${
+                            !assignedPhoto ? "border-teal-500 bg-teal-950/40 text-white" : "border-slate-800"
+                          }`}
+                        >
+                          Sem foto
+                        </button>
+
+                        {photos.map((p) => {
+                          const isAssigned = (activeSlide?.assignedPhotoId || activePost?.selectedPhotoIds?.[0]) === p.id;
+                          return (
+                            <button
+                              key={p.id}
+                              type="button"
+                              onClick={() => {
+                                handleUpdateSlide("assignedPhotoId", p.id);
+                                handleUpdateActivePost("selectedPhotoIds", [p.id]);
+                              }}
+                              className={`h-12 w-12 rounded-lg overflow-hidden border shrink-0 relative cursor-pointer ${
+                                isAssigned ? "border-teal-500 ring-2 ring-teal-500" : "border-slate-800 opacity-70"
+                              }`}
+                            >
+                              <img
+                                src={`/uploads/${p.filename}`}
+                                alt={p.originalName}
+                                className="w-full h-full object-cover"
+                              />
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 4. Navegador de Lâminas e Editor de Conteúdo */}
+                  <div className="space-y-4 pt-4 border-t border-slate-800">
+                    <div className="flex items-center gap-1.5 overflow-x-auto pb-2">
+                      {activePost.slides.map((s) => {
+                        const isSlideActive = s.slideNumber === activeSlideNumber;
                         return (
                           <button
-                            key={p.id}
+                            key={s.id}
                             type="button"
-                            onClick={() => {
-                              handleUpdateSlide("assignedPhotoId", p.id);
-                              handleUpdateActivePost("selectedPhotoIds", [p.id]);
-                            }}
-                            className={`h-12 w-12 rounded-lg overflow-hidden border shrink-0 relative cursor-pointer ${
-                              isAssigned ? "border-indigo-500 ring-2 ring-indigo-500" : "border-slate-800 opacity-60"
+                            onClick={() => setActiveSlideNumber(s.slideNumber)}
+                            className={`px-3 py-1.5 rounded-md text-sm font-semibold whitespace-nowrap transition-colors cursor-pointer ${
+                              isSlideActive
+                                ? "bg-teal-700 text-white"
+                                : "bg-slate-800 text-slate-200 hover:bg-slate-700"
                             }`}
                           >
-                            <img
-                              src={`/uploads/${p.filename}`}
-                              alt={p.originalName}
-                              className="w-full h-full object-cover"
-                            />
+                            {s.slideNumber === 1
+                              ? "Slide 1 (Capa)"
+                              : s.slideNumber === activePost.slideCount
+                              ? `Slide ${s.slideNumber} (CTA)`
+                              : `Slide ${s.slideNumber}`}
                           </button>
                         );
                       })}
                     </div>
-                  )}
-                </div>
 
-                {/* 4. Navegador de Lâminas e Editor de Conteúdo */}
-                <div className="space-y-4 pt-4 border-t border-slate-800">
-                  <div className="flex items-center gap-1.5 overflow-x-auto pb-2">
-                    {activePost.slides.map((s) => {
-                      const isSlideActive = s.slideNumber === activeSlideNumber;
-                      return (
-                        <button
-                          key={s.id}
-                          type="button"
-                          onClick={() => setActiveSlideNumber(s.slideNumber)}
-                          className={`px-3 py-1.5 rounded-md text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
-                            isSlideActive
-                              ? "bg-indigo-600 text-white shadow"
-                              : "bg-slate-800 text-slate-300 hover:bg-slate-700"
-                          }`}
-                        >
-                          {s.slideNumber === 1
-                            ? "Slide 1 (Capa)"
-                            : s.slideNumber === activePost.slideCount
-                            ? `Slide ${s.slideNumber} (CTA)`
-                            : `Slide ${s.slideNumber}`}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* Campos do Slide Ativo */}
-                  {activeSlide && (
-                    <div className="space-y-3 bg-slate-950/60 p-4 rounded-xl border border-slate-800">
-                      <div className="space-y-1.5">
-                        <Label htmlFor="slide-title">Título / Gancho da Lâmina {activeSlideNumber}</Label>
-                        <Input
-                          id="slide-title"
-                          value={activeSlide.title || ""}
-                          onChange={(e) => handleUpdateSlide("title", e.target.value)}
-                          placeholder="Título chamativo da lâmina"
-                        />
-                      </div>
-
-                      <div className="space-y-1.5">
-                        <Label htmlFor="slide-body">Conteúdo Textual (Desenvolvimento)</Label>
-                        <textarea
-                          id="slide-body"
-                          rows={3}
-                          value={activeSlide.bodyText || ""}
-                          onChange={(e) => handleUpdateSlide("bodyText", e.target.value)}
-                          placeholder="Explicação do insight ou passo"
-                          className="flex w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-indigo-500"
-                        />
-                      </div>
-
-                      {activeSlideNumber === activePost.slideCount && (
+                    {/* Campos do Slide Ativo */}
+                    {activeSlide && (
+                      <div className="space-y-3 bg-slate-950 p-4 rounded-xl border border-slate-800">
                         <div className="space-y-1.5">
-                          <Label htmlFor="slide-cta">Chamada para Ação (CTA Final)</Label>
+                          <Label htmlFor="slide-title">Título / Gancho da Lâmina {activeSlideNumber}</Label>
                           <Input
-                            id="slide-cta"
-                            value={activeSlide.ctaText || ""}
-                            onChange={(e) => handleUpdateSlide("ctaText", e.target.value)}
-                            placeholder="Ex: Envie uma mensagem pelo WhatsApp!"
+                            id="slide-title"
+                            value={activeSlide.title || ""}
+                            onChange={(e) => handleUpdateSlide("title", e.target.value)}
+                            placeholder="Título chamativo da lâmina"
                           />
                         </div>
-                      )}
+
+                        <div className="space-y-1.5">
+                          <Label htmlFor="slide-body">Conteúdo Textual (Desenvolvimento)</Label>
+                          <textarea
+                            id="slide-body"
+                            rows={3}
+                            value={activeSlide.bodyText || ""}
+                            onChange={(e) => handleUpdateSlide("bodyText", e.target.value)}
+                            placeholder="Explicação do insight ou passo"
+                            className="flex w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-500"
+                          />
+                        </div>
+
+                        {activeSlideNumber === activePost.slideCount && (
+                          <div className="space-y-1.5">
+                            <Label htmlFor="slide-cta">Chamada para Ação (CTA Final)</Label>
+                            <Input
+                              id="slide-cta"
+                              value={activeSlide.ctaText || ""}
+                              onChange={(e) => handleUpdateSlide("ctaText", e.target.value)}
+                              placeholder="Ex: Envie uma mensagem pelo WhatsApp!"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 5. Legenda do Post (Gerada por IA com botão Copiar) */}
+                  {activePost.caption && (
+                    <div className="space-y-2.5 pt-4 border-t border-slate-800">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="post-caption" className="text-xs font-semibold text-slate-200">
+                            Legenda Estruturada do Instagram
+                          </Label>
+                          <Badge variant="outline" className="text-xs text-teal-300 border-teal-800">
+                            {activePost.status === "ai_generated" ? "Gerada com IA" : "Legenda Manual"}
+                          </Badge>
+                        </div>
+
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={handleCopyCaption}
+                          className="h-7 text-xs gap-1.5 text-slate-300 hover:text-white hover:bg-slate-800 cursor-pointer"
+                        >
+                          {copiedCaption ? (
+                            <>
+                              <Check className="h-3.5 w-3.5 text-emerald-400" />
+                              <span className="text-emerald-400">Copiada!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="h-3.5 w-3.5" />
+                              <span>Copiar Legenda</span>
+                            </>
+                          )}
+                        </Button>
+                      </div>
+
+                      <textarea
+                        id="post-caption"
+                        rows={5}
+                        value={activePost.caption}
+                        onChange={(e) => handleUpdateActivePost("caption", e.target.value)}
+                        placeholder="Legenda para publicação com hashtags e CTA..."
+                        className="flex w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-mono text-slate-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-500"
+                      />
                     </div>
                   )}
                 </div>
-
-                {/* 5. Legenda do Post (Gerada por IA com botão Copiar) */}
-                {activePost.caption && (
-                  <div className="space-y-2.5 pt-4 border-t border-slate-800">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Label htmlFor="post-caption" className="text-xs font-semibold text-slate-200">
-                          Legenda Estruturada do Instagram
-                        </Label>
-                        <Badge variant="outline" className="text-[10px] text-indigo-400 border-indigo-900/50">
-                          {activePost.status === "ai_generated" ? "Gerada com IA" : "Legenda Manual"}
-                        </Badge>
-                      </div>
-
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={handleCopyCaption}
-                        className="h-7 text-xs gap-1.5 text-slate-300 hover:text-white hover:bg-slate-800 cursor-pointer"
-                      >
-                        {copiedCaption ? (
-                          <>
-                            <Check className="h-3.5 w-3.5 text-emerald-400" />
-                            <span className="text-emerald-400">Copiada!</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="h-3.5 w-3.5" />
-                            <span>Copiar Legenda</span>
-                          </>
-                        )}
-                      </Button>
-                    </div>
-
-                    <textarea
-                      id="post-caption"
-                      rows={5}
-                      value={activePost.caption}
-                      onChange={(e) => handleUpdateActivePost("caption", e.target.value)}
-                      placeholder="Legenda para publicação com hashtags e CTA..."
-                      className="flex w-full rounded-md border border-slate-700 bg-slate-900/80 px-3 py-2 text-xs font-mono text-slate-200 shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-indigo-500"
-                    />
-                  </div>
-                )}
               </CardContent>
             </Card>
           </div>
 
-          {/* Coluna do Mockup 4:5 (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col items-center">
-            <Card className="w-full border-slate-800 bg-slate-900/60 p-6 flex flex-col items-center">
-              <div className="w-full flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
-                <span className="text-xs font-semibold text-slate-400">Preview Interativo</span>
-                <Badge variant="outline" className="text-[10px] text-indigo-400 border-indigo-900/40">
-                  Lâmina {activeSlideNumber} de {activePost.slideCount}
-                </Badge>
+          {/* Coluna do Mockup 4:5 (5 cols — h-full simétrico com Resumo Editorial) */}
+          <div className="lg:col-span-5 flex flex-col">
+            <Card className="w-full h-full border-slate-800 bg-slate-900 p-6 flex flex-col justify-between">
+              <div className="w-full flex flex-col items-center">
+                <div className="w-full flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+                  <span className="text-xs font-semibold text-slate-300">Preview Interativo 4:5</span>
+                  <Badge variant="outline" className="text-xs text-teal-300 border-teal-800 tabular-nums">
+                    Lâmina {activeSlideNumber} de {activePost.slideCount}
+                  </Badge>
+                </div>
+
+                <SlidePreview
+                  post={activePost}
+                  slideNumber={activeSlideNumber}
+                  photoUrl={photoUrl}
+                  brandColors={{
+                    primary: activeCompany.primaryColor,
+                    secondary: activeCompany.secondaryColor,
+                    background: activeCompany.backgroundColor,
+                    accent: activeCompany.accentColor,
+                  }}
+                  companyName={activeCompany.name}
+                  instagramHandle={activeCompany.instagramHandle}
+                />
               </div>
 
-              <SlidePreview
-                post={activePost}
-                slideNumber={activeSlideNumber}
-                photoUrl={photoUrl}
-                brandColors={{
-                  primary: activeCompany.primaryColor,
-                  secondary: activeCompany.secondaryColor,
-                  background: activeCompany.backgroundColor,
-                  accent: activeCompany.accentColor,
-                }}
-                companyName={activeCompany.name}
-                instagramHandle={activeCompany.instagramHandle}
-              />
+              {/* Resumo Editorial & Checklist de Publicação (equilibra a altura da coluna direita) */}
+              <div className="w-full mt-6 pt-4 border-t border-slate-800 space-y-3">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-semibold text-slate-200">Resumo Técnico do Carrossel</span>
+                  <span className="font-mono text-teal-400 tabular-nums">1080×1350px (4:5)</span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800">
+                    <span className="text-slate-400 block">Status Editorial</span>
+                    <span className="font-semibold text-white">
+                      {activePost.status === "queued"
+                        ? "Na Fila AutoSocial"
+                        : activePost.status === "ai_generated"
+                        ? "Roteiro IA Pronto"
+                        : "Em Edição"}
+                    </span>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800">
+                    <span className="text-slate-400 block">Motor de Arte</span>
+                    <span className="font-semibold text-teal-300">OpenDesign SVG/PNG</span>
+                  </div>
+                </div>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsStudioOpen(true)}
+                  className="w-full gap-2 border-teal-800 bg-slate-950 text-teal-200 hover:bg-teal-950 hover:text-white"
+                >
+                  <Layers className="h-4 w-4 text-teal-400" />
+                  <span>Abrir no Studio Visual 4:5 (Sem Canva)</span>
+                </Button>
+              </div>
             </Card>
           </div>
 

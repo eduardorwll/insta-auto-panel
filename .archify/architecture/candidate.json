@@ -2,14 +2,14 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "Social Panel PRO — System Architecture (M1–M6 Zero-Canva Studio)",
+    "title": "Social Panel PRO — System Architecture (M1–M7 SettingsHub & Instagram Sessions)",
     "output": "docs/architecture.html",
     "quality_profile": "showcase",
     "repository": {
       "url": "git@github.com:eduardorwll/insta-auto-panel.git",
       "provider": "github",
       "link_mode": "local-only",
-      "revision": "d108fe1c7c227e56b1adafb4496516b3213f821d"
+      "revision": "785459e83e2c5cd631be4a8672ae970f3ffd7a1c"
     }
   },
   "components": [
@@ -31,7 +31,7 @@
       "sources": [
         { "path": "src/client/App.tsx", "line": 27, "end_line": 245 },
         { "path": "src/client/components/WeekPlanner.tsx", "line": 58, "end_line": 292 },
-        { "path": "src/client/components/DesignStudioModal.tsx", "line": 144, "end_line": 510 }
+        { "path": "src/client/components/SettingsHub.tsx", "line": 1, "end_line": 450 }
       ]
     },
     {
@@ -42,8 +42,8 @@
       "pos": [560, 220],
       "size": [155, 64],
       "sources": [
-        { "path": "src/server/index.ts", "line": 8, "end_line": 105 },
-        { "path": "src/server/routes/schedules.ts", "line": 22, "end_line": 125 },
+        { "path": "src/server/index.ts", "line": 8, "end_line": 115 },
+        { "path": "src/server/routes/settings.ts", "line": 1, "end_line": 260 },
         { "path": "src/server/routes/design.ts", "line": 23, "end_line": 215 }
       ]
     },
@@ -141,6 +141,17 @@
       "sources": [
         { "path": "src/server/services/design/image-provider.ts", "line": 70, "end_line": 315 }
       ]
+    },
+    {
+      "id": "autosocial_profiles",
+      "type": "database",
+      "label": "Instagram Session Store",
+      "sublabel": ".profiles/ storageState.json",
+      "pos": [820, 540],
+      "size": [155, 64],
+      "sources": [
+        { "path": "src/server/routes/settings.ts", "line": 1, "end_line": 260 }
+      ]
     }
   ],
   "boundaries": [
@@ -155,7 +166,8 @@
         "photo_uploads",
         "export_engine",
         "autosocial_queue",
-        "opendesign_engine"
+        "opendesign_engine",
+        "autosocial_profiles"
       ]
     }
   ],
@@ -231,6 +243,13 @@
       "to": "image_ai_providers",
       "label": "AI backdrop",
       "variant": "dashed"
+    },
+    {
+      "id": "api-to-profiles",
+      "from": "api",
+      "to": "autosocial_profiles",
+      "label": "cookies & session",
+      "variant": "emphasis"
     }
   ],
   "cards": [
@@ -256,6 +275,14 @@
       "items": [
         "RFC 4180 CSV export with UTF-8 BOM for Canva Pro Bulk Create",
         "Filesystem queue writes .description sidecars and rendered PNG slides into queue/<company>/instagram/pending/"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "SettingsHub & Session Store",
+      "items": [
+        "Centralized API keys and models for LLMs and variable image providers (Pollinations, Flux, ComfyUI)",
+        "Per-company Instagram session cookie extractor and persistent Playwright storageState.json manager"
       ]
     }
   ]

@@ -22,14 +22,13 @@ export function SlidePreview({
   slideNumber = 1,
   photoUrl,
   brandColors,
-  companyName,
   instagramHandle,
 }: SlidePreviewProps) {
   const currentSlide =
     post.slides.find((s) => s.slideNumber === slideNumber) || post.slides[0];
 
-  const primary = brandColors?.primary || "#6366F1";
-  const secondary = brandColors?.secondary || "#EC4899";
+  const primary = brandColors?.primary || "#0D9488";
+  const secondary = brandColors?.secondary || "#0284C7";
   const bg = brandColors?.background || "#0F172A";
   const accent = brandColors?.accent || "#10B981";
 
@@ -37,10 +36,10 @@ export function SlidePreview({
   const isCta = slideNumber === post.slideCount;
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full">
       {/* Container Proporção 4:5 (1080x1350) */}
       <div
-        className="relative w-full max-w-[300px] aspect-[4/5] rounded-xl overflow-hidden shadow-2xl border border-slate-700/80 flex flex-col justify-between p-5 select-none"
+        className="relative w-full max-w-[300px] aspect-[4/5] rounded-xl overflow-hidden border border-slate-700 flex flex-col justify-between p-5 select-none"
         style={{ backgroundColor: bg }}
       >
         {/* Background Overlay com Foto (se houver) */}
@@ -52,10 +51,8 @@ export function SlidePreview({
               className="w-full h-full object-cover opacity-25 filter brightness-90"
             />
             <div
-              className="absolute inset-0"
-              style={{
-                background: `linear-gradient(180deg, ${bg}88 0%, ${bg}ee 60%, ${bg} 100%)`,
-              }}
+              className="absolute inset-0 bg-slate-950/75"
+              style={{ backgroundColor: `${bg}CC` }}
             />
           </div>
         )}
@@ -64,13 +61,13 @@ export function SlidePreview({
         <div className="relative z-10 flex items-center justify-between">
           <Badge
             variant="outline"
-            className="text-[10px] font-semibold border-white/20 text-white backdrop-blur-sm px-2 py-0.5"
+            className="text-xs font-semibold border-white/20 text-white px-2 py-0.5"
             style={{ borderColor: primary }}
           >
             {post.category}
           </Badge>
 
-          <span className="text-[11px] font-mono text-slate-300 bg-black/40 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/10">
+          <span className="text-xs font-mono tabular-nums text-slate-200 bg-slate-950/80 px-2 py-0.5 rounded-full border border-white/15">
             {slideNumber} / {post.slideCount}
           </span>
         </div>
@@ -80,12 +77,12 @@ export function SlidePreview({
           {isCover ? (
             <>
               <div
-                className="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded"
+                className="inline-block text-xs font-bold px-2 py-0.5 rounded"
                 style={{ backgroundColor: accent, color: "#090d16" }}
               >
                 {post.theme}
               </div>
-              <h3 className="text-lg font-black leading-tight text-white tracking-tight drop-shadow">
+              <h3 className="text-lg font-black leading-tight text-white tracking-tight">
                 {currentSlide?.title || "Como Escalar Seu Perfil com Conteúdo Autônomo"}
               </h3>
               <p className="text-xs text-slate-300 leading-relaxed line-clamp-3">
@@ -96,7 +93,7 @@ export function SlidePreview({
           ) : isCta ? (
             <>
               <div
-                className="w-8 h-8 rounded-full flex items-center justify-center mb-1 text-white shadow-lg"
+                className="w-8 h-8 rounded-full flex items-center justify-center mb-1 text-white"
                 style={{ backgroundColor: primary }}
               >
                 <Sparkles className="h-4 w-4" />
@@ -105,11 +102,12 @@ export function SlidePreview({
                 {currentSlide?.title || "Pronto para Transformar Seu Negócio?"}
               </h3>
               <p className="text-xs text-slate-300 leading-relaxed">
-                {currentSlide?.bodyText || "Compartilhe este post com quem precisa desse insight ou salve para consultar mais tarde!"}
+                {currentSlide?.bodyText ||
+                  "Compartilhe este post com quem precisa desse insight ou salve para consultar mais tarde!"}
               </p>
               {currentSlide?.ctaText && (
                 <div
-                  className="mt-2 text-center text-xs font-semibold py-1.5 px-3 rounded text-white shadow-md"
+                  className="mt-2 text-center text-xs font-semibold py-1.5 px-3 rounded text-white"
                   style={{ backgroundColor: secondary }}
                 >
                   {currentSlide.ctaText}
@@ -118,24 +116,22 @@ export function SlidePreview({
             </>
           ) : (
             <>
-              <div
-                className="text-xs font-bold"
-                style={{ color: secondary }}
-              >
+              <div className="text-xs font-bold tabular-nums" style={{ color: secondary }}>
                 Passo {slideNumber - 1} de {post.slideCount - 2}
               </div>
               <h3 className="text-base font-bold text-white leading-tight">
                 {currentSlide?.title || `Lâmina ${slideNumber}: Título da Etapa`}
               </h3>
               <p className="text-xs text-slate-300 leading-relaxed line-clamp-4">
-                {currentSlide?.bodyText || "Explicação detalhada deste insight prático com exemplos e orientações aplicáveis."}
+                {currentSlide?.bodyText ||
+                  "Explicação detalhada deste insight prático com exemplos e orientações aplicáveis."}
               </p>
             </>
           )}
         </div>
 
         {/* Rodapé do Slide */}
-        <div className="relative z-10 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-300">
+        <div className="relative z-10 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-300">
           <div className="flex items-center gap-1.5 truncate">
             <span
               className="h-2 w-2 rounded-full flex-shrink-0"
@@ -144,14 +140,14 @@ export function SlidePreview({
             <span className="font-semibold text-white truncate">{instagramHandle}</span>
           </div>
 
-          <div className="flex items-center gap-1 text-[10px] text-slate-400 font-medium">
+          <div className="flex items-center gap-1 text-xs text-slate-400 font-medium">
             <span>Arraste</span>
             <ArrowRight className="h-3 w-3" />
           </div>
         </div>
       </div>
 
-      <span className="text-[11px] text-slate-500 mt-2 font-mono">
+      <span className="text-xs text-slate-400 mt-2 font-mono tabular-nums">
         Proporção Instagram 4:5 (1080×1350px)
       </span>
     </div>

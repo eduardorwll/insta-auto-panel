@@ -3,10 +3,10 @@
 
 > **Arquivo:** `/home/eduardorwll/Sandbox/src/insta-auto-panel/plano-fluxo-desenvolvimento-e-testes-vite.md`  
 > **Status:** Plano de Engenharia e Governança de Desenvolvimento (Atualização Contínua)  
-> **Última Atualização:** 29 de Outubro de 2026 (v1.3)  
+> **Última Atualização:** 29 de Outubro de 2026 (v1.4)  
 > **Local do Repositório do Projeto:** `~/Sandbox/src/insta-auto-panel/`  
 > **Diretório de Execução do AGY:** `~/Sandbox/`  
-> **Objetivo:** Estabelecer o protocolo rigoroso de desenvolvimento iterativo para o **Social Panel PRO**, operando com os **4 Pilares Mandatórios de Economia de Tokens (`graphify`, `graft`/`prowl`, `caveman` Input-Only + `cavecrew`, e `delegate-skills` com fallback e lanes em `gemini-3.8-flash-high` / `effort: "high"`)**, a **Tríade Mandatória de UI, Design Engineering & Craft Visual (`taste-skill`, `emilkowalski/skills`, `impeccable`)**, diagrama único interativo via **`archify`** (`docs/architecture.html`), multi-branches isoladas, auto-teste Playwright headless e o **Marco 6 (M6): Studio Visual Autônomo Sem Canva (`OpenDesign` + `Variable Image AI Adapter`)**.
+> **Objetivo:** Estabelecer o protocolo rigoroso de desenvolvimento iterativo para o **Social Panel PRO**, operando com os **4 Pilares Mandatórios de Economia de Tokens (`graphify`, `graft`/`prowl`, `caveman` Input-Only + `cavecrew`, e `delegate-skills` com fallback e lanes em `gemini-3.8-flash-high` / `effort: "high"`)**, a **Tríade Mandatória de UI, Design Engineering & Craft Visual (`taste-skill`, `emilkowalski/skills`, `impeccable`)**, o **Ciclo Obrigatório de Interação Web e Inspeção Visual de Screenshots (`inspect.mjs` + leitura de `.taste-skill/inspect/*.jpg`)**, diagrama único interativo via **`archify`** (`docs/architecture.html`), o **Marco 6 (M6): Studio Visual Autônomo Sem Canva** e o **Marco 7 (M7): Aba Unificada de Configurações, Coleta de Cookies Instagram por Empresa & Refactor Completo de UI/UX**.
 
 ---
 
@@ -18,6 +18,7 @@
 | **v1.1** | 29/10/2026 | AGY & Usuário | **Governança Git & Multi-Branch com AGY:**<br>1. Localização oficial do repositório fixada em `~/Sandbox/src/insta-auto-panel/` com AGY rodando em `~/Sandbox`.<br>2. Paradigma de **Multi-Branches com Git Worktrees / Workspace 'share'** para trabalho paralelo de subagentes sem conflito de arquivos.<br>3. **Regra Obrigatória de Commits Atômicos:** Todo subagente DEVE commitar cada task finalizada e testada com 100% de êxito antes de qualquer merge.<br>4. Padrão estrito de Conventional Commits e política de gates pré-commit. |
 | **v1.2** | 29/10/2026 | AGY & Usuário | **4 Token Savers Mandatórios, Archify Single Diagram & Marco 6 (Zero Canva):**<br>1. Integração obrigatória em todo o Sandbox e no projeto dos 4 motores de economia de tokens: **`graphify`** (Macro AST), **`graft` + `prowl`** (Micro Context), **`caveman`** (`caveman-compress` / `shrink-log` para **entrada** + `cavecrew` para retorno compacto de subagentes, mantendo a **saída** no Relatório Padrão) e **`delegate-skills`**.<br>2. Manutenção de diagrama único interativo com **`archify`** (`docs/architecture.html` servido em `/architecture`).<br>3. Adição do **Marco 6 (M6):** Studio Visual Autônomo Sem Canva combinando o motor de Templates 4:5 inspirado em `clawnify/OpenDesign` com `Variable Image AI Adapter`. |
 | **v1.3** | 29/10/2026 | AGY & Usuário | **Tríade de UI/Design Craft (`taste-skill`, `emilkowalski/skills`, `impeccable`) & Fallback de Delegação em Flash Max Effort:**<br>1. Instalação global em `~/Sandbox/.agents/skills/` e integração obrigatória no fluxo de desenvolvimento de: **`Leonxlnx/taste-skill`** (`design-taste-frontend` com `draw.mjs --app`, `lint.mjs`, `inspect.mjs --app`), **`emilkowalski/skills`** (`emil-design-eng`, `animate`, `review-animations`, `improve-animations`, `animation-performance`, `break-ui`, `mobile-native`) e **`pbakaus/impeccable`** (`v4.8.0` — modos **Operate** e **Persuade**, comandos `shape`, `critique`, `audit`, `polish`, `harden`).<br>2. Configuração de `.delegate/config.json` e `delegate-lanes.json` com **fallback e lanes padronizadas no modelo `gemini-3.8-flash-high` com esforço máximo (`"effort": "high"`)**. |
+| **v1.4** | 29/10/2026 | AGY & Usuário | **Ciclo Mandatório de Interação com o Site (`inspect.mjs` + Screenshots) & Marco 7 (Aba Unificada de Configurações, Cookies Instagram por Empresa & Refactor Completo de UI/UX):**<br>1. Obrigatoriedade de iterar no navegador real a cada edição de UI: rodar `lint.mjs --app` (`0 FAIL`), executar `inspect.mjs <url> --app` nas 3 viewports (`1440px`, `768px`, `390px`) e **inspecionar visualmente os screenshots `.taste-skill/inspect/*.jpg` via `read_file`**.<br>2. Planejamento arquitetural e execução do **Marco 7 (M7):** Aba dedicada **`Configurações & Sessões`** (unificando Chaves de API de Texto/Imagem, **Coleta de Cookies de Login do Instagram por Empresa** em `.profiles/<company_id>/instagram/` para o `Katzca/AutoSocial`, e parâmetros gerais da aplicação) + Refactor completo de toda a UI/UX eliminando as 72 violações anti-slop, corrigindo o esmagamento de cabeçalhos, o overflow de abas mobile e o desalinhamento de alturas (`ragged-row`). |
 
 ---
 
@@ -317,6 +318,61 @@ O desenvolvimento é fatiado em **5 Marcos (Milestones)**. Ao final de cada marc
     3. **`emil-design-eng` (`animate` + `animation-performance` + `break-ui`):** Botões com `:active { transform: scale(0.97) }`, entrada do modal em `scale(0.95)` $\rightarrow$ `scale(1)` com `cubic-bezier(0.23, 1, 0.32, 1)` (`180ms`), `tabular-nums` em dimensões (`1080×1350`) e contadores de lâminas, renderizador Canvas HTML5 de alta definição e botão *"Renderizar Carrossel & Enviar para Fila AutoSocial (Sem Canva)"*.
   - **`M6-T4` (Lane `tests` + `review` — `gemini-3.8-flash-high`, `effort: "high"`):** Teste E2E Playwright (`tests/e2e/design-studio.spec.ts`) validando renderização de carrossel, stress-test de inputs (`break-ui`) e envio direto para a fila sem erros de console; inspeção `taste-skill` (`lint.mjs` / `inspect.mjs --app`); auditoria paralela em 2 eixos (`Standards` + `Spec`) com retorno `cavecrew`; e atualização do diagrama único `Archify` (`docs/architecture.html`).
 * 🚨 **GATE 6 - Checkpoint Humano:** O usuário abre o **Design Studio** no portal, escolhe um template visual, gera/renderiza as lâminas 4:5 e despacha diretamente para a fila do AutoSocial sem abrir o Canva.
+
+---
+
+### Marco 7 (M7): Aba Unificada de Configurações (`SettingsHub`), Coleta de Cookies do Instagram por Empresa & Refactor Completo de UI/UX (`taste-skill` + `impeccable` + `emil-design-eng`)
+
+#### 7.1. Diagnóstico Visual Real (`inspect.mjs` + Screenshots `.taste-skill/inspect/*.jpg`)
+A inspeção real de screenshots nas viewports `1440px`, `768px` e `390px` identificou os exatos problemas estruturais e visuais a serem eliminados no Refactor Completo de UI/UX:
+1. **Cabeçalho Esmagado no `WeekPlanner.tsx`:** O título *"Editar Post — Segunda-feira"* e sua descrição ficavam espremidos em uma coluna vertical estreita de 14 linhas ao lado dos 4 botões de ação. **Solução:** Header estruturado em duas faixas ou `flex-col xl:flex-row` com largura mínima protegida para o bloco de título e toolbar agrupada.
+2. **Overflow de Abas no Mobile (`390px`):** `TabsList` tinha altura fixa `h-10` com `grid-cols-2`, fazendo a segunda linha de abas vazar sobre o card abaixo. **Solução:** `min-h-10 h-auto flex-wrap p-1.5` com abas fluidas.
+3. **Desalinhamento de Colunas (`[ragged-row]` de `452px`):** A coluna esquerda de edição e a coluna direita de preview 4:5 terminavam em alturas muito diferentes. **Solução:** Grid `items-stretch` onde a coluna direita combina o **Palco 4:5 Interativo** com o **Painel de Status & Checklist Editorial da Lâmina**, nivelando a borda inferior.
+4. **Eliminação das 72 Violações `taste-skill` (`[purple]`, `[tiny-text]`, `[micro-label]`, `[gradient]`, `[shadow]`):**
+   - Substituição da paleta roxa/indigo genérica de IA (`#6366f1`) pela paleta **Editorial Teal & Obsidian Slate** (`--primary: #0d9488`, `--surface-0: #090d16`, `--surface-1: #0f172a`, `--surface-2: #162036`) e tipografia **Instrument Sans**.
+   - Eliminação de textos `< 11px` (`text-[9px]` / `text-[10px]` elevados para `text-xs` = `12px`), remoção de `uppercase tracking-wider text-xs` (`[micro-label]`) e remoção de gradientes/sombras pesadas em repouso.
+
+#### 7.2. Arquitetura da Nova Aba Unificada `Configurações` (`SettingsHub.tsx` + `/api/settings`)
+Substitui a antiga aba redundante `Módulo IA` por um **Hub Central de Configurações da Aplicação e da Empresa Ativa** dividido em 4 módulos claros no **Modo `Operate` (`impeccable`)**:
+
+```mermaid
+flowchart LR
+    subgraph SettingsHub["Aba: Configurações & Sessões (SettingsHub.tsx)"]
+        S1["1. Provedores LLM (Texto)\nGemini, OpenAI, Claude, Groq,\nOllama, ML Studio (:1234)"]
+        S2["2. Provedores Image AI (4:5)\nPollinations ($0), Fal Flux,\nOpenRouter, ComfyUI/Krita (:8188)"]
+        S3["3. Sessão & Cookies Instagram\npor Empresa (AutoSocial)\nsessionid, csrftoken, ds_user_id\n+ JSON / Playwright Profile"]
+        S4["4. Parâmetros da Aplicação\nPaths AutoSocial, Resolução 4:5,\nFuso Horário & Diagnóstico"]
+    end
+    S1 --> API["/api/ai/settings"]
+    S2 --> SET_API["/api/settings"]
+    S3 --> SET_API
+    S4 --> SET_API
+    SET_API --> DB[("SQLite ACID:\nai_provider_settings\ncompany_settings")]
+    SET_API --> PROFILE[("Filesystem AutoSocial:\ndata/autosocial/.profiles/\n<company_id>/instagram/\ncookies.json & state.json")]
+```
+
+1. **Tabela SQLite `company_settings` (`src/server/db/schema.ts`):**
+   - `companyId` (`PRIMARY KEY`, FK para `companies.id` com `ON DELETE CASCADE`)
+   - `instagramSessionId` (cookie `sessionid` autenticado da conta Instagram da empresa)
+   - `instagramCsrfToken` (`csrftoken`)
+   - `instagramDsUserId` (`ds_user_id`)
+   - `instagramCookiesJson` (payload JSON completo de cookies no formato Playwright/EditThisCookie)
+   - `instagramSessionStatus` (`'unconfigured' | 'active' | 'expired'`)
+   - `instagramLastVerifiedAt` (`timestamp`)
+   - `preferredImageProvider` (`'pollinations' | 'fal-flux' | 'openrouter-image' | 'comfyui-local' | 'gemini-imagen' | 'openai-image'`)
+   - `imageProviderApiKey` (`text`)
+   - `imageProviderBaseUrl` (`text`, ex: `http://localhost:8188` para ComfyUI/Krita Local)
+   - `autosocialQueuePath` (`text`, default `data/autosocial/queue`)
+   - `defaultTemplateId` (`'modern-bold' | 'editorial-clean' | 'dark-neon' | 'split-photo'`)
+2. **Persistência Dupla de Cookies Instagram (SQLite + Filesystem `.profiles/<company_id>/instagram/`):**
+   - Ao salvar os cookies do Instagram da empresa ativa (`PUT /api/settings/instagram-cookies`), o backend valida a presença de `sessionid` (via campo direto ou extração automática de array JSON colado do navegador) e grava automaticamente:
+     - `data/autosocial/.profiles/<company_id>/instagram/cookies.json`
+     - `data/autosocial/.profiles/<company_id>/instagram/storageState.json` (compatível nativamente com `browser.newContext({ storageState })` do Playwright usado pelo `Katzca/AutoSocial`).
+   - Também oferece a rota `POST /api/settings/instagram-browser-profile` para inicializar/verificar o diretório de perfil persistente do Chromium para login assistido.
+3. **Ciclo Obrigatório de Verificação Visual (`M7-T4`):**
+   - `node .agents/skills/taste-skill/scripts/lint.mjs src/client --app` $\rightarrow$ **`0 FAIL`**.
+   - `node .agents/skills/taste-skill/scripts/inspect.mjs http://localhost:5173 --app` $\rightarrow$ leitura obrigatória de `.taste-skill/inspect/desktop-page-01.jpg` e `mobile-fold.jpg` via `read_file`.
+   - Suíte `bun test` + `bun run test:e2e` com `0` erros de console.
 
 ---
 

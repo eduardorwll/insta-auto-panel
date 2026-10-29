@@ -5,9 +5,9 @@
 ## Subsystem Nodes
 
 - **[server-db](./server-db.md)** — Database Layer (SQLite WAL + Drizzle Schema & Migrations) (4 files)
-- **[server-routes](./server-routes.md)** — HTTP REST API Routes (Bun.serve Endpoints) (6 files)
-- **[server-services](./server-services.md)** — Domain Services & AI Provider Adapters (8 files)
-- **[client-ui](./client-ui.md)** — React 19 + Tailwind v4 + shadcn/ui Frontend Portal (25 files)
-- **[tests-suite](./tests-suite.md)** — Automated Test Suite (Bun Unit/Integration + Playwright E2E) (17 files)
+- **[server-routes](./server-routes.md)** — HTTP REST API Routes (Bun.serve Endpoints) (8 files)
+- **[server-services](./server-services.md)** — Domain Services & AI Provider Adapters (10 files)
+- **[client-ui](./client-ui.md)** — React 19 + Tailwind v4 + shadcn/ui Frontend Portal (27 files)
+- **[tests-suite](./tests-suite.md)** — Automated Test Suite (Bun Unit/Integration + Playwright E2E) (22 files)
 
-Total indexed files: 60 | Total symbols: 150
+Total indexed files: 71 | Total symbols: 200

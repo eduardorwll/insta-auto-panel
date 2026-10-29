@@ -25,8 +25,8 @@ const defaultForm: CompanyFormData = {
   instagramHandle: "",
   niche: "",
   toneOfVoice: "",
-  primaryColor: "#6366F1",
-  secondaryColor: "#EC4899",
+  primaryColor: "#0D9488",
+  secondaryColor: "#0284C7",
   backgroundColor: "#0F172A",
   accentColor: "#10B981",
   whatsappNumber: "",
@@ -49,8 +49,8 @@ export function CompanyModal({ isOpen, onClose, companyToEdit }: CompanyModalPro
         instagramHandle: companyToEdit.instagramHandle,
         niche: companyToEdit.niche,
         toneOfVoice: companyToEdit.toneOfVoice,
-        primaryColor: companyToEdit.primaryColor || "#6366F1",
-        secondaryColor: companyToEdit.secondaryColor || "#EC4899",
+        primaryColor: companyToEdit.primaryColor || "#0D9488",
+        secondaryColor: companyToEdit.secondaryColor || "#0284C7",
         backgroundColor: companyToEdit.backgroundColor || "#0F172A",
         accentColor: companyToEdit.accentColor || "#10B981",
         whatsappNumber: companyToEdit.whatsappNumber || "",
@@ -147,7 +147,7 @@ export function CompanyModal({ isOpen, onClose, companyToEdit }: CompanyModalPro
         <form onSubmit={handleSubmit} className="space-y-6 py-2">
           {/* Seção 1: Dados Gerais */}
           <div className="space-y-4">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400">Dados Principais</h4>
+            <h4 className="text-xs font-semibold text-slate-300">Dados Principais</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <Label htmlFor="company-name">Nome Fantasia / Razão Social *</Label>
@@ -170,7 +170,9 @@ export function CompanyModal({ isOpen, onClose, companyToEdit }: CompanyModalPro
                   disabled={!!companyToEdit}
                   required
                 />
-                <p className="text-[11px] text-slate-500">Mapeado para .profiles e pastas de fila no AutoSocial</p>
+                <p className="text-xs text-slate-400">
+                  Mapeado para .profiles e pastas de fila no AutoSocial
+                </p>
               </div>
 
               <div className="space-y-1.5">
@@ -210,9 +212,7 @@ export function CompanyModal({ isOpen, onClose, companyToEdit }: CompanyModalPro
 
           {/* Seção 2: Brand Kit (Cores) */}
           <div className="space-y-3 pt-2 border-t border-slate-800">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-              Identidade Visual (Brand Kit)
-            </h4>
+            <h4 className="text-xs font-semibold text-slate-300">Identidade Visual (Brand Kit)</h4>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <div className="space-y-1.5">
                 <Label className="text-xs">Cor Primária</Label>
@@ -220,14 +220,14 @@ export function CompanyModal({ isOpen, onClose, companyToEdit }: CompanyModalPro
                   <input
                     type="color"
                     aria-label="Cor Primária"
-                    value={formData.primaryColor || "#6366F1"}
+                    value={formData.primaryColor || "#0D9488"}
                     onChange={(e) => handleChange("primaryColor", e.target.value)}
                     className="h-8 w-8 rounded cursor-pointer border border-slate-700 bg-transparent p-0"
                   />
                   <Input
                     value={formData.primaryColor || ""}
                     onChange={(e) => handleChange("primaryColor", e.target.value)}
-                    className="h-8 text-xs uppercase"
+                    className="h-8 text-xs font-mono"
                     maxLength={7}
                   />
                 </div>
@@ -239,14 +239,14 @@ export function CompanyModal({ isOpen, onClose, companyToEdit }: CompanyModalPro
                   <input
                     type="color"
                     aria-label="Cor Secundária"
-                    value={formData.secondaryColor || "#EC4899"}
+                    value={formData.secondaryColor || "#0284C7"}
                     onChange={(e) => handleChange("secondaryColor", e.target.value)}
                     className="h-8 w-8 rounded cursor-pointer border border-slate-700 bg-transparent p-0"
                   />
                   <Input
                     value={formData.secondaryColor || ""}
                     onChange={(e) => handleChange("secondaryColor", e.target.value)}
-                    className="h-8 text-xs uppercase"
+                    className="h-8 text-xs font-mono"
                     maxLength={7}
                   />
                 </div>
@@ -265,7 +265,7 @@ export function CompanyModal({ isOpen, onClose, companyToEdit }: CompanyModalPro
                   <Input
                     value={formData.backgroundColor || ""}
                     onChange={(e) => handleChange("backgroundColor", e.target.value)}
-                    className="h-8 text-xs uppercase"
+                    className="h-8 text-xs font-mono"
                     maxLength={7}
                   />
                 </div>
@@ -284,7 +284,7 @@ export function CompanyModal({ isOpen, onClose, companyToEdit }: CompanyModalPro
                   <Input
                     value={formData.accentColor || ""}
                     onChange={(e) => handleChange("accentColor", e.target.value)}
-                    className="h-8 text-xs uppercase"
+                    className="h-8 text-xs font-mono"
                     maxLength={7}
                   />
                 </div>
@@ -294,9 +294,7 @@ export function CompanyModal({ isOpen, onClose, companyToEdit }: CompanyModalPro
 
           {/* Seção 3: Canais de Conversão & Canva */}
           <div className="space-y-4 pt-2 border-t border-slate-800">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-              Conversão e Integrações
-            </h4>
+            <h4 className="text-xs font-semibold text-slate-300">Conversão e Integrações</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <Label htmlFor="company-whatsapp">WhatsApp (com DDI/DDD)</Label>
@@ -335,7 +333,11 @@ export function CompanyModal({ isOpen, onClose, companyToEdit }: CompanyModalPro
               Cancelar
             </Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Salvando..." : companyToEdit ? "Salvar Alterações" : "Cadastrar Empresa"}
+              {isSubmitting
+                ? "Salvando..."
+                : companyToEdit
+                ? "Salvar Alterações"
+                : "Cadastrar Empresa"}
             </Button>
           </DialogFooter>
         </form>
