@@ -3,10 +3,10 @@
 
 > **Arquivo:** `/home/eduardorwll/Sandbox/src/insta-auto-panel/plano-fluxo-desenvolvimento-e-testes-vite.md`  
 > **Status:** Plano de Engenharia e Governança de Desenvolvimento (Atualização Contínua)  
-> **Última Atualização:** 29 de Outubro de 2026 (v1.2)  
+> **Última Atualização:** 29 de Outubro de 2026 (v1.3)  
 > **Local do Repositório do Projeto:** `~/Sandbox/src/insta-auto-panel/`  
 > **Diretório de Execução do AGY:** `~/Sandbox/`  
-> **Objetivo:** Estabelecer o protocolo rigoroso de desenvolvimento iterativo para o **Social Panel PRO**, operando com os **4 Pilares Mandatórios de Economia de Tokens (`graphify`, `graft`/`prowl`, `caveman` Input-Only + `cavecrew`, e `delegate-skills`)**, diagrama único interativo via **`archify`** (`docs/architecture.html`), multi-branches isoladas, auto-teste Playwright headless e o novo **Marco 6 (M6): Studio Visual Autônomo Sem Canva (`OpenDesign` + `Variable Image AI Adapter`)**.
+> **Objetivo:** Estabelecer o protocolo rigoroso de desenvolvimento iterativo para o **Social Panel PRO**, operando com os **4 Pilares Mandatórios de Economia de Tokens (`graphify`, `graft`/`prowl`, `caveman` Input-Only + `cavecrew`, e `delegate-skills` com fallback e lanes em `gemini-3.8-flash-high` / `effort: "high"`)**, a **Tríade Mandatória de UI, Design Engineering & Craft Visual (`taste-skill`, `emilkowalski/skills`, `impeccable`)**, diagrama único interativo via **`archify`** (`docs/architecture.html`), multi-branches isoladas, auto-teste Playwright headless e o **Marco 6 (M6): Studio Visual Autônomo Sem Canva (`OpenDesign` + `Variable Image AI Adapter`)**.
 
 ---
 
@@ -16,7 +16,8 @@
 | :---: | :---: | :---: | :--- |
 | **v1.0** | 29/10/2026 | AGY & Usuário | Mapeamento inicial: subagentes especializados, auto-teste web com Playwright headless, integração das skills do Sandbox e 5 marcos com checkpoints humanos. |
 | **v1.1** | 29/10/2026 | AGY & Usuário | **Governança Git & Multi-Branch com AGY:**<br>1. Localização oficial do repositório fixada em `~/Sandbox/src/insta-auto-panel/` com AGY rodando em `~/Sandbox`.<br>2. Paradigma de **Multi-Branches com Git Worktrees / Workspace 'share'** para trabalho paralelo de subagentes sem conflito de arquivos.<br>3. **Regra Obrigatória de Commits Atômicos:** Todo subagente DEVE commitar cada task finalizada e testada com 100% de êxito antes de qualquer merge.<br>4. Padrão estrito de Conventional Commits e política de gates pré-commit. |
-| **v1.2** | 29/10/2026 | AGY & Usuário | **4 Token Savers Mandatórios, Archify Single Diagram & Marco 6 (Zero Canva):**<br>1. Integração obrigatória em todo o Sandbox e no projeto dos 4 motores de economia de tokens: **`graphify`** (Macro AST), **`graft` + `prowl`** (Micro Context), **`caveman`** (`caveman-compress` / `shrink-log` para **entrada** + `cavecrew` para retorno compacto de subagentes, mantendo a **saída** no Relatório Padrão) e **`delegate-skills`** (5 Lanes em `.delegate/config.json`: `fast`, `tests`, `feature`, `ui`, `review`).<br>2. Manutenção de diagrama único interativo com **`archify`** (`docs/architecture.html` servido em `/architecture`).<br>3. Adição do **Marco 6 (M6):** Studio Visual Autônomo Sem Canva combinando o motor de Templates 4:5 inspirado em `clawnify/OpenDesign` com `Variable Image AI Adapter` (Pollinations, Flux Schnell, OpenRouter, Gemini Imagen, OpenAI e ComfyUI/Krita Local Backend). |
+| **v1.2** | 29/10/2026 | AGY & Usuário | **4 Token Savers Mandatórios, Archify Single Diagram & Marco 6 (Zero Canva):**<br>1. Integração obrigatória em todo o Sandbox e no projeto dos 4 motores de economia de tokens: **`graphify`** (Macro AST), **`graft` + `prowl`** (Micro Context), **`caveman`** (`caveman-compress` / `shrink-log` para **entrada** + `cavecrew` para retorno compacto de subagentes, mantendo a **saída** no Relatório Padrão) e **`delegate-skills`**.<br>2. Manutenção de diagrama único interativo com **`archify`** (`docs/architecture.html` servido em `/architecture`).<br>3. Adição do **Marco 6 (M6):** Studio Visual Autônomo Sem Canva combinando o motor de Templates 4:5 inspirado em `clawnify/OpenDesign` com `Variable Image AI Adapter`. |
+| **v1.3** | 29/10/2026 | AGY & Usuário | **Tríade de UI/Design Craft (`taste-skill`, `emilkowalski/skills`, `impeccable`) & Fallback de Delegação em Flash Max Effort:**<br>1. Instalação global em `~/Sandbox/.agents/skills/` e integração obrigatória no fluxo de desenvolvimento de: **`Leonxlnx/taste-skill`** (`design-taste-frontend` com `draw.mjs --app`, `lint.mjs`, `inspect.mjs --app`), **`emilkowalski/skills`** (`emil-design-eng`, `animate`, `review-animations`, `improve-animations`, `animation-performance`, `break-ui`, `mobile-native`) e **`pbakaus/impeccable`** (`v4.8.0` — modos **Operate** e **Persuade**, comandos `shape`, `critique`, `audit`, `polish`, `harden`).<br>2. Configuração de `.delegate/config.json` e `delegate-lanes.json` com **fallback e lanes padronizadas no modelo `gemini-3.8-flash-high` com esforço máximo (`"effort": "high"`)**. |
 
 ---
 
@@ -62,7 +63,10 @@ O repositório em `~/Sandbox/.agents/skills/` contém um acervo avançado de eng
 | **`graphify`** | Contexto Macro AST (`graphify-out/`) | Mapeamento arquitetural e travessia BFS de grafos (`16.6x` menos tokens por consulta) + Git hooks automáticos. |
 | **`graft` + `prowl`** | Contexto Micro Cirúrgico (`graft/`) | Extração de APIs (`graft skeleton`), *blast radius* (`graft callers`) e busca semântica (`97%` de redução / `31.6x` mais leve). |
 | **`caveman` (`caveman-compress` + `cavecrew`)** | Compressão de **Entrada** (Input-Only) | Comprime *briefs*, docs de contexto e logs (`caveman compress` / `shrink-log`) e força subagentes a responderem em formato compacto `cavecrew`, preservando a **saída ao usuário** no Relatório Padrão completo. |
-| **`delegate-skills` (`delegate-setup` + `agy-delegate`)** | Orquestração Multi-Lane (`.delegate/config.json`) | Descarrega tarefas em 5 lanes especializadas (`fast` -> `gemini-3.8-flash-low`, `tests` -> `gemini-3.8-flash-medium`, `feature` -> `gemini-3.8-flash-high`, `ui` -> `gemini-4-argon-medium`, `review` -> `gpt-oss-120b-medium`). |
+| **`delegate-skills` (`delegate-setup` + `agy-delegate`)** | Orquestração Multi-Lane (`.delegate/config.json`) | Descarrega tarefas nas lanes `default`, `fallback`, `fast`, `tests`, `feature`, `ui` e `review` padronizadas com **`gemini-3.8-flash-high` (`effort: "high"`)**. |
+| **`taste-skill` (`design-taste-frontend`)** | Direção de Arte & Anti-Slop Frontend | Aplica blueprint visual (`draw.mjs --app`), lint estático anti-slop (`lint.mjs`) e inspeção real multi-viewport (`inspect.mjs --app` em `1440px`, `768px`, `390px`), garantindo hierarquia por luminância e densidade real. |
+| **`emilkowalski/skills` (`emil-design-eng`, `animate`, `review-animations`, `break-ui`)** | Micro-Interações, Física de UI & Stress-Testing | Aplica feedback tátil imediato (`scale(0.97)` em `:active`), proíbe `scale(0)` (usa `scale(0.95)` + `opacity: 0`), curvas `ease-out` customizadas (`cubic-bezier(0.23, 1, 0.32, 1)`) `< 300ms`, GPU `transform`/`opacity`, `tabular-nums` e teste de quebra com inputs extremos (`break-ui`). |
+| **`impeccable` (`pbakaus/impeccable` v4.8.0)** | Modos de Superfície (`Operate` / `Persuade`) & Polimento | Separa o design do Studio de Operação (modo **Operate**) do design das lâminas 4:5 de carrossel (modo **Persuade**), aplicando o pipeline `shape` -> `layout`/`typeset`/`colorize` -> `critique`/`audit` -> `polish`/`harden`. |
 | **`archify`** | Diagrama Único de Arquitetura (`docs/architecture.html`) | Mantém um único diagrama interativo auditado por gates (`validate`, `deliver`, `check`, `browser-check`) acessível em `/architecture`. |
 
 ### Skills Globais Complementares Ativadas:
@@ -129,60 +133,70 @@ Todo commit gerado pelos agentes deve seguir o formato semântico padronizado:
 
 ---
 
-## 4. Novas Skills Recomendadas para Turbinar o Fluxo
+## 4. A Tríade Mandatória de UI, Design Engineering & Craft Visual + Auto-Teste
 
-Para que os agentes consigam **testar a si mesmos no navegador** e elevar o padrão do ambiente Bun/Vite, recomendamos a adição de 3 novas skills especializadas:
+Além de auto-teste no navegador e otimização Bun/Vite, todas as tarefas visuais e de interface do **Social Panel PRO** seguem obrigatoriamente a **Tríade de UI Craft** instalada globalmente em `~/Sandbox/.agents/skills/`:
 
-### 4.1. Skill `playwright-agent-tester` (Auto-Teste de Interface Web)
-* **Objetivo:** Ensina o subagente a instanciar o Playwright para testar aplicações web locais em tempo de desenvolvimento.
-* **Regras Estritas:**
-  - Uso prioritário de seletores semânticos acessíveis (`getByRole`, `getByLabel`, `getByText`) em vez de classes CSS frágeis.
-  - Monitoramento contínuo de eventos de console (`page.on('console', msg => ...)` e `page.on('pageerror', err => ...)`) para reprovar o teste se houver qualquer erro não tratado no React.
-  - Captura automatizada de screenshots em caso de falha para evidência.
-  - Validação de estados assíncronos via web assertions nativas (`await expect(locator).toBeVisible()`).
+### 4.1. Direção de Arte & Inspeção Anti-Slop (`Leonxlnx/taste-skill` — `design-taste-frontend`)
+* **Objetivo:** Eliminar estética genérica de IA ("AI slop"), excesso de bordas 1px desnecessárias e gradientes decorativos sem função, impondo hierarquia por luminância (`surface-0` $\rightarrow$ `surface-1` $\rightarrow$ `surface-2`) e densidade de dados reais.
+* **Pipeline Obrigatório para Telas de App (`--app`):**
+  1. **Blueprint (`draw.mjs --app`):** Geração do mapa estrutural da tela antes de escrever JSX pesado.
+  2. **Lint Estático (`lint.mjs`):** Verificação automática contra anti-padrões visuais e de layout.
+  3. **Inspeção Multi-Viewport (`inspect.mjs <url> --app`):** Auditoria em navegador real nas três larguras canônicas (`1440px`, `768px`, `390px`).
 
-### 4.2. Skill `bun-vite-tooling`
-* **Objetivo:** Otimização de scripts de build, hot-reload, variáveis de ambiente `.env` e concorrência no runtime do Bun (`Bun.serve()` coexistindo com o proxy de desenvolvimento do Vite).
+### 4.2. Design Engineering, Micro-Interações e Stress-Testing (`emilkowalski/skills`)
+* **Objetivo:** Aplicar as leis físicas e de interação de Emil Kowalski (`emil-design-eng`, `animate`, `review-animations`, `improve-animations`, `animation-performance`, `break-ui`, `mobile-native`).
+* **Regras Inegociáveis de Interação:**
+  - **Feedback Tátil Imediato:** Todo botão interativo deve responder com `transform: scale(0.97)` em `:active`.
+  - **Proibido `scale(0)`:** Elementos nunca entram a partir de `scale(0)`; toda entrada de modal/popover/card parte de `scale(0.95)` + `opacity: 0`.
+  - **Curvas `ease-out` Customizadas e Rápidas:** Transições de UI usam `cubic-bezier(0.23, 1, 0.32, 1)` com duração `< 300ms` (`150ms–220ms` para micro-interações) e nunca animam ações repetidas centenas de vezes por dia ou atalhos de teclado.
+  - **Performance GPU & Tipografia Numérica:** Animações restritas a `transform` e `opacity`; contadores, preços, dimensões (`1080×1350`) e contagens de slides usam obrigatoriamente `font-variant-numeric: tabular-nums`.
+  - **Teste de Quebra (`break-ui`):** Simulação de estados extremos (headlines longas de 300 caracteres, listas vazias, cliques rápidos repetidos e desconexão de API).
 
-### 4.3. Skill `hitl-checkpoint-protocol` (Human-in-the-Loop)
-* **Objetivo:** Padronização do formato dos relatórios de entrega para o humano, exibindo o que foi feito, os testes que passaram, o link local para visualização e as perguntas específicas de validação antes de avançar.
+### 4.3. Modos de Superfície e Polimento Sistêmico (`pbakaus/impeccable` v4.8.0)
+* **Objetivo:** Governar o design por intenção de superfície antes da implementação:
+  - **Modo `Operate`** (Painel Social Panel PRO, `WeekPlanner`, `DesignStudioModal`, `PublicationQueue`): Prioriza densidade operacional, clareza de estado, atalhos rápidos e zero distração visual.
+  - **Modo `Persuade`** (Templates 4:5 exportados pelo motor `OpenDesign`): Prioriza impacto tipográfico, ponto focal único, contraste editorial e ritmo narrativo entre os slides `1..N`.
+  - **Modo `Read`** (Documentação e `/architecture`): Prioriza medida de linha (`60–75ch`) e escaneabilidade.
+* **Sequência Impeccable:** `shape` (UX/superfície) $\rightarrow$ `layout` / `typeset` / `colorize` $\rightarrow$ `critique` / `audit` $\rightarrow$ `polish` / `harden`.
+
+### 4.4. Auto-Teste Web (`playwright-agent-tester`) & `hitl-checkpoint-protocol`
+* **Seletores Semânticos & Console Limpo:** Uso prioritário de `getByRole`, `getByLabel`, `getByText` e monitoramento estrito de `page.on('console')` e `page.on('pageerror')`.
+* **Checkpoints Humanos (HITL):** Relatórios estruturados completos para o usuário humano com telemetria dos 4 motores de economia de tokens (`bun run tokens:report`).
 
 ---
 
-## 5. O Paradigma de Subagentes Especializados
+## 5. O Paradigma de Subagentes Especializados e Lanes `delegate-skills` (`gemini-3.8-flash-high`)
 
-Para evitar sobrecarga de contexto e garantir especialização, o agente orquestrador invocará subagentes específicos conforme a tarefa:
+Para evitar sobrecarga de contexto e garantir máxima eficiência de quota, o agente orquestrador despacha tarefas para subagentes `cavecrew` e lanes do `.delegate/config.json`, onde **todas as lanes e o fallback utilizam o modelo `gemini-3.8-flash-high` com esforço máximo (`"effort": "high"`)**:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │                   ORQUESTRADOR PRINCIPAL (TECH LEAD)                   │
-│       Coordena o backlog, gerencia as etapas e interage com o Humano   │
+│   Comprime entradas (caveman), orquestra lanes (gemini-3.8-flash-high) │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
     ┌───────────────────────────────┼───────────────────────────────┐
     ▼                               ▼                               ▼
 ┌───────────────────────┐ ┌───────────────────────┐ ┌────────────────────┐
-│ SUBAGENTE 1: BACKEND  │ │ SUBAGENTE 2: FRONTEND │ │ SUBAGENTE 3: QA    │
-│ Bun, SQLite, Drizzle, │ │ Vite, React, shadcn,  │ │ Playwright Headless│
-│ Gemini/OpenAI Adapter │ │ UI/UX Pro Max, Telas  │ │ Auto-Teste & Logs  │
+│ LANE FEATURE / TESTS  │ │ LANE UI (CRAFT TRIAD) │ │ LANE REVIEW / QA   │
+│ Bun, SQLite, Drizzle, │ │ taste-skill + emil +  │ │ Playwright Headless│
+│ AI & Image Adapters   │ │ impeccable + React 19 │ │ Spec + Standards   │
 └───────────────────────┘ └───────────────────────┘ └────────────────────┘
 ```
 
 1. **Subagente Tech Lead / Planner:**
-   - Lê as especificações, decompõe os tickets da etapa e confere a integridade da arquitetura.
-   - Apresenta os checkpoints ao usuário humano e aguarda a autorização explícita para prosseguir.
-2. **Subagente Backend & Database (`bun-engineer`):**
-   - Implementa schemas no SQLite via Drizzle ORM, serviços de persistência e endpoints REST locais.
-   - Aplica as skills `clean-architecture` e `tdd`.
-3. **Subagente Frontend & UI (`vite-ui-engineer`):**
-   - Cria componentes no Vite/React utilizando shadcn/ui e Tailwind CSS.
-   - Aplica as skills `ui-ux-pro-max` e `ui-styling`.
-4. **Subagente de QA & Verificação Autônoma (`playwright-tester`):**
-   - Executa `bun run dev`, conecta o Playwright no `http://localhost:5173`, simula cliques reais de usuário, valida formulários e garante que a UI funciona sem erros de JavaScript.
-   - Gera o relatório de aprovação técnica.
-5. **Subagente de Code Quality & Review (`code-reviewer`):**
-   - Roda `tsc --noEmit` para garantir zero erros de tipagem TypeScript.
-   - Executa linters e aplica as skills `clean-code` e `code-review`.
+   - Lê as especificações, comprime *briefs* com `bun run caveman compress`, decompõe os tickets da etapa e confere a integridade da arquitetura via `graphify` e `graft`.
+2. **Subagente Researcher (`Lane fast` — `gemini-3.8-flash-high`, `effort: "high"`, `readOnly: true`):**
+   - Explora o grafo AST (`graphify`) e esqueletos (`graft skeleton` / `callers`), retornando exclusivamente em formato compacto `cavecrew-investigator`.
+3. **Subagente Backend & Database (`Lanes tests / feature` — `gemini-3.8-flash-high`, `effort: "high"`):**
+   - Implementa schemas no SQLite via Drizzle ORM, serviços de persistência e adaptadores (`AIProvider`, `ImageProviderAdapter`) seguindo `tdd` e `clean-architecture`, retornando em `cavecrew-builder`.
+4. **Subagente Frontend & UI Craft (`Lane ui` — `gemini-3.8-flash-high`, `effort: "high"`):**
+   - Cria e refina componentes React 19/Tailwind aplicando obrigatoriamente a **Tríade de UI Craft** (`taste-skill`, `emil-design-eng` + `break-ui`, e `impeccable` nos modos **Operate** e **Persuade**).
+5. **Subagente de QA & Code Review (`Lane review` — `gemini-3.8-flash-high`, `effort: "high"`, `readOnly: true`):**
+   - Executa `bun run verify:cycle`, Playwright headless (`bun run test:e2e`), auditoria de animações (`review-animations`) e revisão dupla independente (`Spec Match` + `Standards & Quality`), retornando em `cavecrew-reviewer`.
+6. **Lane `fallback` (`gemini-3.8-flash-high`, `effort: "high"`, `timeout: "25m"`):**
+   - Garante resiliência automática com o modelo Flash em esforço máximo caso qualquer lane especializada sofra timeout ou contenção.
 
 ---
 
@@ -294,11 +308,14 @@ O desenvolvimento é fatiado em **5 Marcos (Milestones)**. Ao final de cada marc
   2. **`fal-flux` / `openrouter-image` (Ultra Baixo Custo ~$0.003/img):** Modelo `FLUX.1-schnell` / `FLUX.1.1-pro` via API compatível.
   3. **`gemini-imagen` / `openai-image`:** Google Imagen 3 (`gemini-2.5-flash-image`) e OpenAI (`gpt-image-1` / `dall-e-3`).
   4. **`comfyui-local` (Custo $0.00 Local — Motor do Krita AI Diffusion):** Conexão direta com servidor local `http://localhost:8188` (ComfyUI / Stable Diffusion) sem precisar abrir o Krita Desktop.
-* **Decomposição Atômica e Lanes de Execução (`delegate-skills` + `caveman` + `graft`):**
-  - **`M6-T1` (Lane `tests` + `feature`):** Schema (`renderedImageUrl`, `templateId`, `imagePrompt` em `post_slides` + configurações de provedor de imagem) e `ImageProviderAdapter` Agnóstico com testes TDD (`tests/server/image-providers.test.ts`).
-  - **`M6-T2` (Lane `feature`):** Motor de Templates 4:5 (`OpenDesign` Template Fields Engine) e endpoint `POST /api/design/render-post` + geração de backgrounds com IA (`POST /api/design/generate-background`), salvando PNGs reais em `data/renders/<companyId>/<postId>/` e integrando direto com `enqueuePostForAutoSocial`.
-  - **`M6-T3` (Lane `ui`):** Componente `DesignStudioModal.tsx` integrado ao `WeekPlanner` e `PublicationQueue`: seletor de 4 Templates Visuais (`Modern Bold`, `Editorial Clean`, `Dark Neon`, `Split Photo`), renderizador Canvas HTML5 `1080×1350` de alta definição, botão *"Gerar Fundo IA"* e botão *"Renderizar Carrossel & Enviar para Fila AutoSocial (Sem Canva)"*.
-  - **`M6-T4` (Lane `tests` + `review`):** Teste E2E Playwright (`tests/e2e/design-studio.spec.ts`) validando renderização de carrossel e envio direto para a fila sem erros de console, auditoria paralela em 2 eixos (`Standards` + `Spec`) com retorno `cavecrew`, e atualização do diagrama único `Archify` (`docs/architecture.html`).
+* **Decomposição Atômica e Lanes de Execução (`delegate-skills` em `gemini-3.8-flash-high` + `caveman` + `graft` + Tríade de UI Craft):**
+  - **`M6-T1` (Lane `tests` + `feature` — `gemini-3.8-flash-high`, `effort: "high"`):** Schema (`renderedImageUrl`, `templateId`, `imagePrompt` em `post_slides` + configurações de provedor de imagem) e `ImageProviderAdapter` Agnóstico com testes TDD (`tests/server/image-providers.test.ts`).
+  - **`M6-T2` (Lane `feature` — `gemini-3.8-flash-high`, `effort: "high"`):** Motor de Templates 4:5 (`OpenDesign` Template Fields Engine) e endpoint `POST /api/design/render-post` + geração de backgrounds com IA (`POST /api/design/generate-background`), salvando PNGs reais em `data/renders/<companyId>/<postId>/` e integrando direto com `enqueuePostForAutoSocial`.
+  - **`M6-T3` (Lane `ui` — `gemini-3.8-flash-high`, `effort: "high"` + Tríade de UI Craft):** Componente `DesignStudioModal.tsx` integrado ao `WeekPlanner` e `PublicationQueue`, projetado com:
+    1. **`impeccable` (`shape` + `polish` + `harden`):** Modo **Operate** para os controles do Studio e Modo **Persuade** para os 4 Templates Visuais (`Modern Bold`, `Editorial Clean`, `Dark Neon`, `Split Photo`).
+    2. **`taste-skill` (`draw.mjs --app` + `lint.mjs`):** Hierarquia por luminância (`surface-0..2`), densidade real e zero "AI slop".
+    3. **`emil-design-eng` (`animate` + `animation-performance` + `break-ui`):** Botões com `:active { transform: scale(0.97) }`, entrada do modal em `scale(0.95)` $\rightarrow$ `scale(1)` com `cubic-bezier(0.23, 1, 0.32, 1)` (`180ms`), `tabular-nums` em dimensões (`1080×1350`) e contadores de lâminas, renderizador Canvas HTML5 de alta definição e botão *"Renderizar Carrossel & Enviar para Fila AutoSocial (Sem Canva)"*.
+  - **`M6-T4` (Lane `tests` + `review` — `gemini-3.8-flash-high`, `effort: "high"`):** Teste E2E Playwright (`tests/e2e/design-studio.spec.ts`) validando renderização de carrossel, stress-test de inputs (`break-ui`) e envio direto para a fila sem erros de console; inspeção `taste-skill` (`lint.mjs` / `inspect.mjs --app`); auditoria paralela em 2 eixos (`Standards` + `Spec`) com retorno `cavecrew`; e atualização do diagrama único `Archify` (`docs/architecture.html`).
 * 🚨 **GATE 6 - Checkpoint Humano:** O usuário abre o **Design Studio** no portal, escolhe um template visual, gera/renderiza as lâminas 4:5 e despacha diretamente para a fila do AutoSocial sem abrir o Canva.
 
 ---
@@ -309,13 +326,14 @@ Para que um marco ou tarefa seja submetido à avaliação do humano, ele deve ob
 
 1. **Zero Erros de Tipagem e Zero `any`:** `bun x tsc --noEmit` passa sem nenhum erro.
 2. **Suíte Unitária e E2E Playwright Passando:** `bun test` e `bun run test:e2e` com 100% de sucesso e **0 erros de console**.
-3. **Sincronização de Grafos e Diagrama Único (`Archify`):** `bun run verify:cycle` e `bun run archify` executados e verdes (`docs/architecture.html` atualizado).
-4. **Commit Atômico Realizado:** A tarefa foi formalmente commitada seguindo o padrão Conventional Commits.
-5. **Relatório de Evidências + Telemetria Obrigatória dos 4 Token Savers (`bun run tokens:report`):** Todo relatório de fim de tarefa deve exibir explicitamente os tokens economizados por cada ferramenta:
+3. **Conformidade com a Tríade de UI Craft (quando houver UI/Frontend):** `taste-skill` (`lint.mjs`), `emil-design-eng` (`scale(0.97)` active, sem `scale(0)`, `<300ms` custom `ease-out`, `tabular-nums`, `break-ui`) e `impeccable` (`Operate`/`Persuade` polish & harden).
+4. **Sincronização de Grafos e Diagrama Único (`Archify`):** `bun run verify:cycle` e `bun run archify` executados e verdes (`docs/architecture.html` atualizado).
+5. **Commit Atômico Realizado:** A tarefa foi formalmente commitada seguindo o padrão Conventional Commits.
+6. **Relatório de Evidências + Telemetria Obrigatória dos 4 Token Savers (`bun run tokens:report`):** Todo relatório de fim de tarefa deve exibir explicitamente os tokens economizados por cada ferramenta:
    - `🌱 graft + prowl saved ~N tokens`
    - `🕸️ graphify AST saved ~M tokens`
    - `🪨 caveman (input compression & cavecrew) saved ~K tokens`
-   - `🤝 delegate-skills offloaded ~L tokens`
+   - `🤝 delegate-skills (gemini-3.8-flash-high, effort: high) offloaded ~L tokens`
 
 ---
 
