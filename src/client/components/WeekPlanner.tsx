@@ -3,6 +3,7 @@ import { useCompany } from "@/client/context/CompanyContext";
 import type { Post, PostSlide } from "@/client/types/schedule";
 import type { PhotoAsset } from "@/client/types/photo";
 import { SlidePreview } from "./SlidePreview";
+import { DesignStudioModal } from "./DesignStudioModal";
 import { Button } from "@/client/components/ui/button";
 import { Input } from "@/client/components/ui/input";
 import { Label } from "@/client/components/ui/label";
@@ -24,6 +25,7 @@ import {
   RefreshCw,
   Send,
   FileSpreadsheet,
+  Layers,
 } from "lucide-react";
 
 const EDITORIAL_CATEGORIES = [
@@ -69,6 +71,7 @@ export function WeekPlanner() {
   const [copiedCaption, setCopiedCaption] = useState(false);
   const [isEnqueuingPost, setIsEnqueuingPost] = useState(false);
   const [enqueueSuccess, setEnqueueSuccess] = useState(false);
+  const [isStudioOpen, setIsStudioOpen] = useState(false);
 
   // Carregar cronograma da semana
   const fetchSchedule = async () => {
@@ -443,6 +446,17 @@ export function WeekPlanner() {
                     <Button
                       type="button"
                       variant="outline"
+                      onClick={() => setIsStudioOpen(true)}
+                      className="gap-2 bg-teal-950/60 text-teal-200 hover:bg-teal-900 hover:text-white"
+                      title="Abrir Studio Visual OpenDesign 4:5 Sem Canva"
+                    >
+                      <Layers className="h-4 w-4 text-teal-400" />
+                      <span>Studio Visual (Sem Canva)</span>
+                    </Button>
+
+                    <Button
+                      type="button"
+                      variant="outline"
                       onClick={handleEnqueueActivePost}
                       disabled={isEnqueuingPost}
                       className="gap-2 border-amber-500/40 bg-amber-950/20 text-amber-300 hover:bg-amber-950/40 hover:text-white"
@@ -742,6 +756,21 @@ export function WeekPlanner() {
               />
             </Card>
           </div>
+
+          <DesignStudioModal
+            isOpen={isStudioOpen}
+            onClose={() => setIsStudioOpen(false)}
+            postId={activePost.id}
+            postTheme={activePost.theme}
+            slides={activePost.slides || []}
+            company={activeCompany}
+            onRenderedSuccess={(queued) => {
+              if (queued) {
+                setEnqueueSuccess(true);
+              }
+              fetchSchedule();
+            }}
+          />
         </div>
       )}
     </div>
