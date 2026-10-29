@@ -444,14 +444,14 @@
     "semantic_hash": ""
   },
   ".archify/architecture/candidate.json": {
-    "mtime": 1793298847.396325,
-    "seen": 1793298955.025846,
+    "mtime": 1793302008.539083,
+    "seen": 1793302009.4620974,
     "ast_hash": "75d6f4c7638ece55965c208c1869c729",
     "semantic_hash": ""
   },
   "docs/architecture.html": {
-    "mtime": 1793298901.324675,
-    "seen": 1793298955.027024,
+    "mtime": 1793302008.8137214,
+    "seen": 1793302009.4621844,
     "ast_hash": "542b707f591f193ef9612c031d213018",
     "semantic_hash": ""
   },
@@ -507,6 +507,12 @@
     "mtime": 1793301957.1744664,
     "seen": 1793301967.5041664,
     "ast_hash": "dd30d3f46f9616dae9c014f1a7c6ffb5",
+    "semantic_hash": ""
+  },
+  "drizzle/0000_loud_stature.sql": {
+    "mtime": 1793293038.7380862,
+    "seen": 1793302009.4621105,
+    "ast_hash": "3cd089c9a16fbfc59483d6929e80afc4",
     "semantic_hash": ""
   }
 }
