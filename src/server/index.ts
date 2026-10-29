@@ -1,5 +1,6 @@
 import { handleCompaniesRoutes } from "./routes/companies";
 import { handlePhotosRoutes } from "./routes/photos";
+import { handleSchedulesRoutes } from "./routes/schedules";
 import path from "path";
 
 export const server = Bun.serve({
@@ -24,7 +25,11 @@ export const server = Bun.serve({
     const photosResponse = await handlePhotosRoutes(req, url);
     if (photosResponse) return photosResponse;
 
-    // 4. Servir uploads de fotos (/uploads/*)
+    // 4. Rotas de Cronograma & Posts (/api/schedules, /api/posts)
+    const schedulesResponse = await handleSchedulesRoutes(req, url);
+    if (schedulesResponse) return schedulesResponse;
+
+    // 5. Servir uploads de fotos (/uploads/*)
     if (url.pathname.startsWith("/uploads/")) {
       const uploadFilename = url.pathname.replace("/uploads/", "");
       const uploadsDir = path.resolve(import.meta.dirname, "../../data/uploads");
@@ -36,7 +41,7 @@ export const server = Bun.serve({
       return new Response("Imagem não encontrada", { status: 404 });
     }
 
-    // 5. Servir arquivos estáticos do frontend (dist/) se compilado
+    // 6. Servir arquivos estáticos do frontend (dist/) se compilado
     if (!url.pathname.startsWith("/api/")) {
       const distDir = path.resolve(import.meta.dirname, "../../dist");
       const relativePath = url.pathname === "/" ? "index.html" : url.pathname.slice(1);
