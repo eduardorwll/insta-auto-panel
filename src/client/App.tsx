@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CompanyProvider, useCompany } from "@/client/context/CompanyContext";
 import { CompanySwitcher } from "@/client/components/CompanySwitcher";
 import { CompanyModal } from "@/client/components/CompanyModal";
+import { PhotoBank } from "@/client/components/PhotoBank";
 import { Button } from "@/client/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/client/components/ui/card";
 import { Badge } from "@/client/components/ui/badge";
@@ -187,13 +188,7 @@ function DashboardContent() {
               </TabsContent>
 
               <TabsContent value="photos" className="mt-4">
-                <Card className="border-slate-800 bg-slate-900/40 p-8 text-center space-y-2">
-                  <ImageIcon className="h-8 w-8 text-rose-400 mx-auto opacity-80" />
-                  <CardTitle className="text-lg">Banco de Fotos Base da Empresa</CardTitle>
-                  <CardDescription>
-                    Galeria visual isolada para fotos do especialista, produtos, logotipos e texturas de fundo (Marco 3).
-                  </CardDescription>
-                </Card>
+                <PhotoBank />
               </TabsContent>
 
               <TabsContent value="ai" className="mt-4">
