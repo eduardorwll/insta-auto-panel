@@ -22,6 +22,12 @@ data/*.db*
 # Local Media Uploads & AutoSocial Queue Artifacts
 data/uploads/*
 !data/uploads/.gitkeep
+data/renders/*
+!data/renders/.gitkeep
+data/autosocial/.profiles/*
+!data/autosocial/.profiles/.gitkeep
+data/autosocial/queue/*
+!data/autosocial/queue/.gitkeep
 queue/
 .profiles/
 
@@ -60,6 +66,8 @@ bun-debug.log*
 .tmp/
 
 # OS & Editor Files
+.claude/
+.omp/
 .DS_Store
 Thumbs.db
 *.swp
@@ -70,14 +78,7 @@ Thumbs.db
 !.vscode/extensions.json
 !.vscode/settings.json
 # prowl-agent: derived state
-.prowl/index.db*
-.prowl/index-refresh.lock
-.prowl/cache/
-.prowl/logs/
-.prowl/editor/
-.prowl/setup-applies.json
-.prowl/*.caveman.md
-.prowl/token-telemetry.json
+.prowl/
 .prowl-setup.lock
 # /prowl-agent: derived state
 

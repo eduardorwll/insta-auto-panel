@@ -70,3 +70,46 @@ Todos os agentes operando neste repositório estão simultaneamente submetidos a
   2. **`emilkowalski/skills` (`emil-design-eng`, `animate`, `review-animations`, `improve-animations`, `animation-performance`, `break-ui`, `mobile-native`):** Feedback tátil em botões (`transform: scale(0.97)` em `:active`), proibido `scale(0)` (usar `scale(0.95)` + `opacity: 0`), curvas `ease-out` customizadas (`cubic-bezier(0.23, 1, 0.32, 1)`) `< 300ms`, zero animação em ações frequentes de teclado, animações restritas à GPU (`transform`/`opacity`), `tabular-nums` em dimensões/contadores e stress-testing de estados extremos (`break-ui`).
   3. **`impeccable` (`pbakaus/impeccable` v4.8.0):** Separação explícita de superfície (**Operate** para o painel/Studio Visual do Social Panel PRO e **Persuade** para os templates de slides 4:5 exportados) e roteamento estruturado (`shape` -> `layout`/`typeset`/`colorize` -> `critique`/`audit` -> `polish`/`harden`).
 - **Diagrama Único de Arquitetura (`Archify`):** Mantido em `docs/architecture.html` (especificação em `.archify/architecture/candidate.json`), atualizado a cada milestone via `bun run archify` e servido em `/architecture`.
+
+<!-- prowl-agent -->
+## Prowl project context
+
+This repo has a Prowl index of its files, symbols, and how they connect. For any
+semantic or structural question -- where code is, what it does, who calls it, or
+what a change touches -- **run the read-only prowl CLI first**; do not grep or
+read whole files just to locate things. Prowl reindexes what changed before each
+query, so answers stay current and are cited to file:line, returned in one call
+instead of a grep hit list you then open files to disambiguate.
+
+| Question | First command |
+|---|---|
+| Map the repository | `prowl overview` |
+| Locate a feature or concept | `prowl search "<question>"` |
+| Locate a named symbol | `prowl find <name>` |
+| Read one symbol's source | `prowl def <name-or-id>` |
+| Inspect a file's structure | `prowl outline <path>` |
+| Trace who uses a symbol | `prowl references <name-or-id>` |
+| Size a change's blast radius | `prowl impact <path>` |
+| Inspect uncommitted work | `prowl wip` / `prowl changed` |
+| Read a located line range | `prowl peek <file:start-end>` |
+
+Keep grep for exact literal or regex text and glob for filename patterns. CLI
+output is token-lean TOON by default; add --format human|toon|json|markdown. If
+your harness also wires Prowl as an MCP server, the same index is reachable
+there; the CLI needs no server and is the first choice.
+<!-- /prowl-agent -->
+
+<!-- prowl-agent:map -->
+## Prowl project map
+
+Auto-generated from the Prowl index, refreshed on each `overview`/`init`. Prefer retrieving from Prowl (and reading the cited files) over grepping or relying on training memory; this is the current shape of the repo.
+
+- size: 91 files, 2229 symbols, 356 edges (resolved 219, external deps 128, unresolved 9)
+- languages: typescript:56 tsx:20 json:7 markdown:6 css:1 toml:1
+- subsystems: src/client(27,tsx) · src/server(22,typescript) · tests/server(16,typescript) · scripts(2,typescript)
+- entrypoints: src/server/index.ts · src/client/main.tsx · src/server/db/seed.ts · scripts/graft.ts · src/server/db/migrate.ts
+- central files (most depended-on): src/server/db/schema.ts · src/client/lib/utils.ts · src/server/db/client.ts · src/server/services/ai/provider.ts · src/server/index.ts
+- read these guides first: README.md · AGENTS.md
+
+Depth on demand: `prowl find|def|outline|references <name>`, `search <text>`, `context search "<question>"`, `sketch <ui>`.
+<!-- /prowl-agent:map -->

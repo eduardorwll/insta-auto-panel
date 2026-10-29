@@ -1,6 +1,33 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("M2 E2E: Navegação, Company Switcher e Cadastro de Empresa", () => {
+  let createdSlug: string | null = null;
+
+  test.beforeEach(async ({ request }) => {
+    // Limpeza defensiva de empresas de testes anteriores caso tenham sido abortados
+    try {
+      const res = await request.get("/api/companies");
+      if (res.ok()) {
+        const json = (await res.json()) as { success: boolean; data: Array<{ id: string }> };
+        for (const company of json.data || []) {
+          if (company.id.startsWith("e2e_alpha_")) {
+            await request.delete(`/api/companies/${company.id}`);
+          }
+        }
+      }
+    } catch {}
+  });
+
+  test.afterEach(async ({ request }) => {
+    // Teardown garantido: tolerância zero a empresas residuais de teste no banco
+    if (createdSlug) {
+      try {
+        await request.delete(`/api/companies/${createdSlug}`);
+      } catch {}
+      createdSlug = null;
+    }
+  });
+
   test("deve carregar a interface web sem erros no console, cadastrar empresa e selecionar dinamicamente", async ({
     page,
   }) => {
@@ -36,6 +63,7 @@ test.describe("M2 E2E: Navegação, Company Switcher e Cadastro de Empresa", () 
     await expect(page.getByRole("heading", { name: /Cadastrar Nova Empresa/i })).toBeVisible();
 
     const testSlug = `e2e_alpha_${Date.now()}`;
+    createdSlug = testSlug;
     await page.getByLabel(/Nome Fantasia/i).fill("Alpha Odonto E2E");
     await page.getByLabel(/Slug do Identificador/i).fill(testSlug);
     await page.getByLabel(/Instagram/i).fill("@alphaodonto");
@@ -62,8 +90,9 @@ test.describe("M2 E2E: Navegação, Company Switcher e Cadastro de Empresa", () 
       await expect(page.getByRole("heading", { name: "Demo Corp" })).toBeVisible();
     }
 
-    // 10. Limpeza da empresa temporária do teste para evitar acúmulo no banco
+    // 10. Limpeza imediata da empresa temporária do teste
     await page.request.delete(`/api/companies/${testSlug}`);
+    createdSlug = null;
 
     // 11. Validação mandatória: console limpo com ZERO erros de execução
     expect(consoleErrors).toEqual([]);

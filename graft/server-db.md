@@ -2,15 +2,17 @@
 node: server-db
 title: "Database Layer (SQLite WAL + Drizzle Schema & Migrations)"
 covers:
-  - src/server/db/client.ts:1-102
+  - src/server/db/client.ts:1-104
   - src/server/db/client.ts:8-11 # interface DatabaseConnection
-  - src/server/db/client.ts:20-70 # function createDatabaseConnection
-  - src/server/db/client.ts:75-80 # function createTestDb
-  - src/server/db/client.ts:84-89 # function getDatabase
-  - src/server/db/client.ts:91-95 # const db
-  - src/server/db/client.ts:97-101 # const sqlite
+  - src/server/db/client.ts:20-72 # function createDatabaseConnection
+  - src/server/db/client.ts:77-82 # function createTestDb
+  - src/server/db/client.ts:86-91 # function getDatabase
+  - src/server/db/client.ts:93-97 # const db
+  - src/server/db/client.ts:99-103 # const sqlite
   - src/server/db/migrate.ts:1-22
   - src/server/db/migrate.ts:5-8 # function runMigrations
+  - src/server/db/sanitize.ts:1-78
+  - src/server/db/sanitize.ts:14-64 # function sanitizeDatabase
   - src/server/db/schema.ts:1-328
   - src/server/db/schema.ts:8-8 # const PHOTO_CATEGORIES
   - src/server/db/schema.ts:9-9 # type PhotoCategory
@@ -58,16 +60,19 @@ Manages ACID persistence in SQLite with WAL mode, schema definitions (companies,
 
 ## Covered Files & Symbols
 
-### `src/server/db/client.ts` (lines 1-102)
+### `src/server/db/client.ts` (lines 1-104)
 - `DatabaseConnection` (interface) → `src/server/db/client.ts:8-11`
-- `createDatabaseConnection` (function) → `src/server/db/client.ts:20-70`
-- `createTestDb` (function) → `src/server/db/client.ts:75-80`
-- `getDatabase` (function) → `src/server/db/client.ts:84-89`
-- `db` (const) → `src/server/db/client.ts:91-95`
-- `sqlite` (const) → `src/server/db/client.ts:97-101`
+- `createDatabaseConnection` (function) → `src/server/db/client.ts:20-72`
+- `createTestDb` (function) → `src/server/db/client.ts:77-82`
+- `getDatabase` (function) → `src/server/db/client.ts:86-91`
+- `db` (const) → `src/server/db/client.ts:93-97`
+- `sqlite` (const) → `src/server/db/client.ts:99-103`
 
 ### `src/server/db/migrate.ts` (lines 1-22)
 - `runMigrations` (function) → `src/server/db/migrate.ts:5-8`
+
+### `src/server/db/sanitize.ts` (lines 1-78)
+- `sanitizeDatabase` (function) → `src/server/db/sanitize.ts:14-64`
 
 ### `src/server/db/schema.ts` (lines 1-328)
 - `PHOTO_CATEGORIES` (const) → `src/server/db/schema.ts:8-8`

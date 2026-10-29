@@ -1,11 +1,31 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test, beforeAll, afterAll } from "bun:test";
 import { server } from "../../src/server/index";
 import { db } from "../../src/server/db/client";
 import { companies, weekly_schedules, posts, post_slides } from "../../src/server/db/schema";
 import { eq } from "drizzle-orm";
+import fs from "node:fs/promises";
+import path from "node:path";
 
 describe("M6-T2: REST API Studio Visual Sem Canva (/api/design)", () => {
   const baseUrl = `http://localhost:${server.port}`;
+
+  const companyId = "test_studio_co";
+  const scheduleId = "test_studio_sched";
+  const postId = "test_studio_post";
+
+  beforeAll(async () => {
+    // Limpeza prévia para garantir idempotência
+    await db.delete(companies).where(eq(companies.id, companyId));
+  });
+
+  afterAll(async () => {
+    // Teardown completo de banco e disco para tolerância zero a empresas residuais
+    await db.delete(companies).where(eq(companies.id, companyId));
+    const renderDir = path.resolve(import.meta.dirname, `../../data/renders/${companyId}`);
+    await fs.rm(renderDir, { recursive: true, force: true });
+    const queueDir = path.resolve(import.meta.dirname, `../../data/autosocial/queue/${companyId}`);
+    await fs.rm(queueDir, { recursive: true, force: true });
+  });
 
   test("POST /api/design/generate-background deve gerar background com provedor variável (Pollinations / ComfyUI Local)", async () => {
     const res = await fetch(`${baseUrl}/api/design/generate-background`, {
@@ -32,10 +52,6 @@ describe("M6-T2: REST API Studio Visual Sem Canva (/api/design)", () => {
   });
 
   test("POST /api/design/render-post deve renderizar lâminas 4:5 (OpenDesign), salvar PNGs e enfileirar direto no AutoSocial sem Canva", async () => {
-    const companyId = `studio_co_${Date.now()}`;
-    const scheduleId = `studio_sched_${Date.now()}`;
-    const postId = `studio_post_${Date.now()}`;
-
     await db.insert(companies).values({
       id: companyId,
       name: "Studio Dental Prime",

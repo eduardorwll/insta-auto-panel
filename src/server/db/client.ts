@@ -17,7 +17,9 @@ export interface DatabaseConnection {
  * - Synchronous NORMAL para equilíbrio ótimo de persistência e performance
  * - Execução automática de migrations pendentes
  */
-export function createDatabaseConnection(dbPath: string = "./data/social_panel.db"): DatabaseConnection {
+export function createDatabaseConnection(
+  dbPath: string = process.env.DB_PATH || "./data/social_panel.db"
+): DatabaseConnection {
   if (dbPath !== ":memory:") {
     const dir = path.dirname(dbPath);
     if (dir) {

@@ -1,24 +1,46 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test, beforeAll, afterAll } from "bun:test";
 import { server } from "../../src/server/index";
 import { db } from "../../src/server/db/client";
 import { companies } from "../../src/server/db/schema";
+import { inArray, eq } from "drizzle-orm";
 import fs from "node:fs/promises";
 import path from "node:path";
 
 describe("M7-T1: REST API Hub de Configurações & Cookies Instagram por Empresa (/api/settings)", () => {
   const baseUrl = `http://localhost:${server.port}`;
 
+  const cfgCompanyId = "test_cfg_co";
+  const igCookieCompanyId = "test_ig_cookie_co";
+  const appCfgCompanyId = "test_app_cfg_co";
+  const testCompanyIds = [cfgCompanyId, igCookieCompanyId, appCfgCompanyId];
+
+  beforeAll(async () => {
+    // Limpeza prévia para garantir idempotência
+    await db.delete(companies).where(inArray(companies.id, testCompanyIds));
+  });
+
+  afterAll(async () => {
+    // Teardown completo de banco e disco para tolerância zero a empresas residuais
+    await db.delete(companies).where(inArray(companies.id, testCompanyIds));
+    for (const id of testCompanyIds) {
+      const profileDir = path.resolve(
+        import.meta.dirname,
+        `../../data/autosocial/.profiles/${id}`
+      );
+      await fs.rm(profileDir, { recursive: true, force: true });
+    }
+  });
+
   test("GET /api/settings deve retornar configurações padrão da empresa quando ainda não configurada", async () => {
-    const companyId = `cfg_co_${Date.now()}`;
     await db.insert(companies).values({
-      id: companyId,
+      id: cfgCompanyId,
       name: "Clínica Prime Settings",
       instagramHandle: "@clinicaprimesettings",
       niche: "Odontologia",
       toneOfVoice: " Técnico e humano",
     });
 
-    const res = await fetch(`${baseUrl}/api/settings?companyId=${companyId}`);
+    const res = await fetch(`${baseUrl}/api/settings?companyId=${cfgCompanyId}`);
     expect(res.status).toBe(200);
     const body = (await res.json()) as {
       success: boolean;
@@ -31,16 +53,15 @@ describe("M7-T1: REST API Hub de Configurações & Cookies Instagram por Empresa
     };
 
     expect(body.success).toBe(true);
-    expect(body.data.companyId).toBe(companyId);
+    expect(body.data.companyId).toBe(cfgCompanyId);
     expect(body.data.instagramSessionStatus).toBe("unconfigured");
     expect(body.data.preferredImageProvider).toBe("pollinations");
     expect(body.data.defaultTemplateId).toBe("modern-bold");
   });
 
   test("PUT /api/settings/instagram-cookies deve extrair sessionid de JSON de cookies ou campos diretos e persistir em .profiles/<companyId>/instagram/", async () => {
-    const companyId = `ig_cookie_co_${Date.now()}`;
     await db.insert(companies).values({
-      id: companyId,
+      id: igCookieCompanyId,
       name: "Odonto Cookie Lab",
       instagramHandle: "@odontocookielab",
       niche: "Estética Dental",
@@ -72,7 +93,7 @@ describe("M7-T1: REST API Hub de Configurações & Cookies Instagram por Empresa
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        companyId,
+        companyId: igCookieCompanyId,
         cookiesJson: sampleCookieArray,
       }),
     });
@@ -94,16 +115,15 @@ describe("M7-T1: REST API Hub de Configurações & Cookies Instagram por Empresa
     // Conferir arquivos físicos criados para o Katzca/AutoSocial
     const storageStatePath = path.resolve(
       import.meta.dirname,
-      `../../data/autosocial/.profiles/${companyId}/instagram/storageState.json`
+      `../../data/autosocial/.profiles/${igCookieCompanyId}/instagram/storageState.json`
     );
     const stat = await fs.stat(storageStatePath);
     expect(stat.size).toBeGreaterThan(50);
   });
 
   test("PUT /api/settings/app deve salvar provedor de imagem IA, URL ComfyUI e template padrão da empresa", async () => {
-    const companyId = `app_cfg_co_${Date.now()}`;
     await db.insert(companies).values({
-      id: companyId,
+      id: appCfgCompanyId,
       name: "Studio Config Co",
       instagramHandle: "@studioconfigco",
       niche: "Arquitetura",
@@ -114,7 +134,7 @@ describe("M7-T1: REST API Hub de Configurações & Cookies Instagram por Empresa
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        companyId,
+        companyId: appCfgCompanyId,
         preferredImageProvider: "comfyui-local",
         imageProviderBaseUrl: "http://localhost:8188",
         defaultTemplateId: "editorial-clean",

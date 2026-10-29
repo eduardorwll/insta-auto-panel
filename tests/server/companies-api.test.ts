@@ -1,4 +1,4 @@
-import { describe, expect, it, beforeAll } from "bun:test";
+import { describe, expect, it, beforeAll, afterAll } from "bun:test";
 import { server } from "@/server/index";
 import { db } from "@/server/db/client";
 import { companies } from "@/server/db/schema";
@@ -115,5 +115,10 @@ describe("REST API: Gestão de Empresas (/api/companies)", () => {
     const checkReq = new Request(`http://localhost:${server.port}/api/companies/clinica_api_test`);
     const checkRes = await server.fetch(checkReq);
     expect(checkRes.status).toBe(404);
+  });
+
+  afterAll(async () => {
+    // Teardown garantido mesmo em caso de falha de asserção intermediária
+    await db.delete(companies).where(eq(companies.id, "clinica_api_test"));
   });
 });

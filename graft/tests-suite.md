@@ -3,7 +3,7 @@ node: tests-suite
 title: "Automated Test Suite (Bun Unit/Integration + Playwright E2E)"
 covers:
   - tests/e2e/ai-generation.spec.ts:1-186
-  - tests/e2e/companies.spec.ts:1-72
+  - tests/e2e/companies.spec.ts:1-101
   - tests/e2e/design-studio.spec.ts:1-98
   - tests/e2e/export-autosocial.spec.ts:1-88
   - tests/e2e/planner-photos.spec.ts:1-87
@@ -13,17 +13,18 @@ covers:
   - tests/server/ai-settings.test.ts:1-102
   - tests/server/autosocial-queue.test.ts:1-160
   - tests/server/canva-export.test.ts:1-135
-  - tests/server/companies-api.test.ts:1-120
+  - tests/server/companies-api.test.ts:1-125
   - tests/server/companies-photos.test.ts:1-147
   - tests/server/db-client.test.ts:1-46
-  - tests/server/design-routes.test.ts:1-117
+  - tests/server/design-routes.test.ts:1-133
   - tests/server/health.test.ts:1-22
   - tests/server/image-providers.test.ts:1-126
   - tests/server/migrations-seed.test.ts:1-43
   - tests/server/photos-api.test.ts:1-109
   - tests/server/schedules-api.test.ts:1-127
   - tests/server/schedules-posts-slides.test.ts:1-218
-  - tests/server/settings-api.test.ts:1-141
+  - tests/server/settings-api.test.ts:1-161
+  - tests/server/zero-leakage.test.ts:1-47
 ---
 
 # Automated Test Suite (Bun Unit/Integration + Playwright E2E)
@@ -34,7 +35,7 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 
 ### `tests/e2e/ai-generation.spec.ts` (lines 1-186)
 
-### `tests/e2e/companies.spec.ts` (lines 1-72)
+### `tests/e2e/companies.spec.ts` (lines 1-101)
 
 ### `tests/e2e/design-studio.spec.ts` (lines 1-98)
 
@@ -54,13 +55,13 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 
 ### `tests/server/canva-export.test.ts` (lines 1-135)
 
-### `tests/server/companies-api.test.ts` (lines 1-120)
+### `tests/server/companies-api.test.ts` (lines 1-125)
 
 ### `tests/server/companies-photos.test.ts` (lines 1-147)
 
 ### `tests/server/db-client.test.ts` (lines 1-46)
 
-### `tests/server/design-routes.test.ts` (lines 1-117)
+### `tests/server/design-routes.test.ts` (lines 1-133)
 
 ### `tests/server/health.test.ts` (lines 1-22)
 
@@ -74,4 +75,6 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 
 ### `tests/server/schedules-posts-slides.test.ts` (lines 1-218)
 
-### `tests/server/settings-api.test.ts` (lines 1-141)
+### `tests/server/settings-api.test.ts` (lines 1-161)
+
+### `tests/server/zero-leakage.test.ts` (lines 1-47)
