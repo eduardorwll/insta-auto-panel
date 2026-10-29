@@ -50,7 +50,7 @@ test.describe("M2 E2E: Navegação, Company Switcher e Cadastro de Empresa", () 
     // 8. O modal deve fechar e a nova empresa deve estar ativa no topo e no painel
     await expect(page.getByRole("heading", { name: /Cadastrar Nova Empresa/i })).not.toBeVisible();
     await expect(page.getByRole("heading", { name: "Alpha Odonto E2E" })).toBeVisible();
-    await expect(page.getByText("@alphaodonto")).toBeVisible();
+    await expect(page.getByText("@alphaodonto").first()).toBeVisible();
     await expect(page.getByText("Odontologia Estética")).toBeVisible();
     await expect(page.getByText("5511999998888")).toBeVisible();
 
