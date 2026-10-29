@@ -9,10 +9,11 @@ import { CanvaExportTab } from "@/client/components/CanvaExportTab";
 import { AISettingsModal } from "@/client/components/AISettingsModal";
 import { PublicationQueue } from "@/client/components/PublicationQueue";
 import { SettingsHub } from "@/client/components/SettingsHub";
+import { SidebarNavigation, NavTabId } from "@/client/components/SidebarNavigation";
 import { Button } from "@/client/components/ui/button";
 import { Card, CardContent } from "@/client/components/ui/card";
 import { Badge } from "@/client/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/client/components/ui/tabs";
+import { Tabs, TabsContent } from "@/client/components/ui/tabs";
 import {
   Sparkles,
   Calendar,
@@ -27,6 +28,7 @@ import {
   Cpu,
   Send,
   X,
+  Menu,
   FileSpreadsheet,
 } from "lucide-react";
 
@@ -35,7 +37,25 @@ function DashboardContent() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
   const [isArchModalOpen, setIsArchModalOpen] = useState(false);
-  const [currentTab, setCurrentTab] = useState("calendar");
+  const [currentTab, setCurrentTab] = useState<NavTabId>("calendar");
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem("insta-panel-sidebar-collapsed") === "true";
+    } catch {
+      return false;
+    }
+  });
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleToggleSidebar = () => {
+    setIsSidebarCollapsed((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("insta-panel-sidebar-collapsed", String(next));
+      } catch {}
+      return next;
+    });
+  };
 
   if (isLoading) {
     return (
@@ -48,8 +68,19 @@ function DashboardContent() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
       {/* Topbar Fixa (Operate Mode — Superfície Tonal Plana) */}
-      <header className="sticky top-0 z-40 border-b border-slate-800 bg-slate-950 px-6 py-3 flex items-center justify-between gap-4 flex-wrap">
-        <div className="flex items-center gap-5 flex-wrap">
+      <header className="sticky top-0 z-40 border-b border-slate-800 bg-slate-950 px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4 flex-wrap">
+        <div className="flex items-center gap-3 sm:gap-5 flex-wrap">
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="md:hidden h-8 w-8 border-slate-800 bg-slate-900 text-slate-300 hover:text-white active:scale-[0.97]"
+            title="Abrir navegação lateral"
+          >
+            <Menu className="h-4 w-4" />
+          </Button>
+
           <div className="flex items-center gap-2.5">
             <div className="h-8 w-8 rounded-lg bg-teal-600 flex items-center justify-center">
               <Sparkles className="h-4 w-4 text-white" />
@@ -100,8 +131,19 @@ function DashboardContent() {
         </div>
       </header>
 
-      {/* Área Principal */}
-      <main className="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
+      {/* Layout Principal com Sidebar Lateral Recolhível e Área de Conteúdo */}
+      <div className="flex-1 flex min-h-0">
+        <SidebarNavigation
+          currentTab={currentTab}
+          onSelectTab={(tab) => setCurrentTab(tab)}
+          isCollapsed={isSidebarCollapsed}
+          onToggleCollapse={handleToggleSidebar}
+          isMobileOpen={isMobileMenuOpen}
+          onCloseMobile={() => setIsMobileMenuOpen(false)}
+        />
+
+        {/* Área Principal */}
+        <main className="flex-1 p-4 sm:p-6 max-w-7xl w-full mx-auto space-y-6 overflow-y-auto">
         {!activeCompany ? (
           <div className="flex flex-col items-center justify-center py-20 text-center space-y-4">
             <div className="p-4 rounded-full bg-slate-900 border border-slate-800 text-slate-400">
@@ -199,73 +241,29 @@ function DashboardContent() {
               </CardContent>
             </Card>
 
-            {/* Módulos do Sistema (Navegação em Abas com Transição de Modos — Operate Mode) */}
-            <Tabs value={currentTab} onValueChange={setCurrentTab} className="w-full">
-              <TabsList className="flex flex-wrap items-center justify-start rounded-xl bg-slate-900/90 p-1.5 text-slate-400 border border-slate-800 gap-1.5 w-full">
-                <TabsTrigger value="calendar" className="gap-2 px-3 py-2 text-xs sm:text-sm">
-                  <Calendar className="h-4 w-4 shrink-0 text-slate-400" />
-                  <span>Calendário</span>
-                </TabsTrigger>
-
-                <TabsTrigger
-                  value="studio"
-                  className="gap-2 px-3 py-2 text-xs sm:text-sm font-semibold border border-teal-800/60 bg-teal-950/20 data-[state=active]:bg-teal-700 data-[state=active]:border-teal-500"
-                >
-                  <Layers className="h-4 w-4 shrink-0 text-teal-400" />
-                  <span>Studio Visual (Sem Canva)</span>
-                  <span className="hidden md:inline-block text-[11px] bg-teal-900/80 text-teal-200 px-1.5 py-0.5 rounded font-mono">
-                    100% IA
-                  </span>
-                </TabsTrigger>
-
-                <TabsTrigger
-                  value="canva"
-                  className="gap-2 px-3 py-2 text-xs sm:text-sm border border-sky-800/50 bg-sky-950/20 data-[state=active]:bg-sky-700 data-[state=active]:border-sky-500"
-                >
-                  <FileSpreadsheet className="h-4 w-4 shrink-0 text-sky-400" />
-                  <span>Exportar Canva (Com Canva)</span>
-                  <span className="hidden md:inline-block text-[11px] bg-sky-900/80 text-sky-200 px-1.5 py-0.5 rounded font-mono">
-                    CSV
-                  </span>
-                </TabsTrigger>
-
-                <TabsTrigger value="photos" className="gap-2 px-3 py-2 text-xs sm:text-sm">
-                  <ImageIcon className="h-4 w-4 shrink-0 text-slate-400" />
-                  <span>Fotos Base</span>
-                </TabsTrigger>
-
-                <TabsTrigger value="queue" className="gap-2 px-3 py-2 text-xs sm:text-sm">
-                  <Send className="h-4 w-4 shrink-0 text-slate-400" />
-                  <span>Publicação & Fila</span>
-                </TabsTrigger>
-
-                <TabsTrigger value="ai" className="gap-2 px-3 py-2 text-xs sm:text-sm">
-                  <Settings className="h-4 w-4 shrink-0 text-slate-400" />
-                  <span>Configurações & Módulo IA</span>
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="calendar" className="mt-4">
+            {/* Módulos do Sistema (Navegação via Barra Lateral Categorizada — Operate Mode) */}
+            <Tabs value={currentTab} onValueChange={(val) => setCurrentTab(val as NavTabId)} className="w-full">
+              <TabsContent value="calendar" className="mt-0 focus-visible:outline-none">
                 <WeekPlanner onOpenStudio={() => setCurrentTab("studio")} />
               </TabsContent>
 
-              <TabsContent value="studio" className="mt-4">
+              <TabsContent value="studio" className="mt-0 focus-visible:outline-none">
                 <DesignStudioTab onSwitchToCanva={() => setCurrentTab("canva")} />
               </TabsContent>
 
-              <TabsContent value="canva" className="mt-4">
+              <TabsContent value="canva" className="mt-0 focus-visible:outline-none">
                 <CanvaExportTab onSwitchToStudio={() => setCurrentTab("studio")} />
               </TabsContent>
 
-              <TabsContent value="photos" className="mt-4">
+              <TabsContent value="photos" className="mt-0 focus-visible:outline-none">
                 <PhotoBank />
               </TabsContent>
 
-              <TabsContent value="queue" className="mt-4">
+              <TabsContent value="queue" className="mt-0 focus-visible:outline-none">
                 <PublicationQueue />
               </TabsContent>
 
-              <TabsContent value="ai" className="mt-4">
+              <TabsContent value="ai" className="mt-0 focus-visible:outline-none">
                 <SettingsHub onOpenLegacyAIModal={() => setIsAIModalOpen(true)} />
               </TabsContent>
             </Tabs>
@@ -324,6 +322,7 @@ function DashboardContent() {
           </div>
         )}
       </main>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 {
- "url": "http://localhost:5173",
- "at": "2026-10-29T21:40:25.995Z",
+ "url": "http://localhost:3000",
+ "at": "2026-10-29T23:02:16.618Z",
  "allow": [],
  "viewports": [
   {
@@ -9,7 +9,7 @@
    "load": "load",
    "screens": 2,
    "filled": [
-    1,
+    0.99,
     1
    ],
    "motion": {
@@ -26,13 +26,13 @@
      "h": 900
     },
     "page": {
-     "height": 1354,
-     "screens": 1.5,
-     "words": 265,
-     "img": 4,
+     "height": 1280,
+     "screens": 1.4,
+     "words": 280,
+     "img": 14,
      "video": 0,
      "canvas": 0,
-     "svg": 24,
+     "svg": 26,
      "sections": 0,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
@@ -43,7 +43,7 @@
      "uiPictures": 0,
      "pictureSamples": [],
      "blendText": 0,
-     "sideScrollers": 0,
+     "sideScrollers": 1,
      "brokenImages": [],
      "emoji": [],
      "videosNoPoster": 0
@@ -55,948 +55,6 @@
      "lines": 1,
      "size": 16,
      "vw": 1.1,
-     "font": "Instrument Sans",
-     "weight": 700,
-     "tracking": -0.02,
-     "leading": 1.5,
-     "top": 18,
-     "tag": "h1",
-     "kind": "heading",
-     "align": "left",
-     "position": "left"
-    },
-    "h1": {
-     "text": "Social Panel PRO",
-     "words": 3,
-     "lines": 1,
-     "size": 16,
-     "font": "Instrument Sans"
-    },
-    "headings": [],
-    "headingSummary": {
-     "count": 0,
-     "maxLines": 0,
-     "over2Lines": 0,
-     "statements": 0,
-     "centered": 0,
-     "medianWords": null,
-     "mixedFontHeadings": 0
-    },
-    "type": {
-     "families": [
-      {
-       "family": "Instrument Sans",
-       "share": 0.93,
-       "mono": false
-      },
-      {
-       "family": "ui-monospace",
-       "share": 0.07,
-       "mono": false
-      }
-     ],
-     "familyCount": 2,
-     "sizes": [
-      11,
-      12,
-      14,
-      16,
-      18,
-      24
-     ],
-     "sizeCount": 6,
-     "notLoaded": [],
-     "body": {
-      "font": "Instrument Sans",
-      "size": 12,
-      "leading": 1.33,
-      "weight": 400,
-      "tracking": 0,
-      "contrast": 6.8
-     },
-     "measureChars": 110,
-     "max": {
-      "size": 24,
-      "vw": 1.7,
-      "font": "Instrument Sans",
-      "text": "Demo Corp"
-     },
-     "monoShare": 0.07,
-     "monoProseShare": 0.07,
-     "monoFamilies": [
-      "ui-monospace"
-     ],
-     "monoSamples": [
-      "PRO",
-      "@democorp",
-      "100% IA",
-      "CSV",
-      "Semana de 2026-10-26",
-      "1 / 5"
-     ],
-     "microLabels": 0,
-     "microLabelShare": 0,
-     "microSamples": [],
-     "upperShare": 0.01,
-     "centerShare": 0.22,
-     "smallText": 26
-    },
-    "eyebrows": [],
-    "numbered": [],
-    "color": {
-     "bodyBg": "#090d16",
-     "bodyBgHsl": {
-      "h": 222,
-      "s": 0.42,
-      "l": 0.06
-     },
-     "dark": true,
-     "sectionBgs": [
-      {
-       "color": "#020618",
-       "top": 0,
-       "hsl": {
-        "h": 229,
-        "s": 0.85,
-        "l": 0.05
-       }
-      },
-      {
-       "color": "#0f172b",
-       "top": 596,
-       "hsl": {
-        "h": 223,
-        "s": 0.48,
-        "l": 0.11
-       }
-      }
-     ],
-     "textColors": [
-      {
-       "color": "#90a1b9",
-       "share": 0.28
-      },
-      {
-       "color": "#ffffff",
-       "share": 0.23
-      },
-      {
-       "color": "#cad5e2",
-       "share": 0.22
-      },
-      {
-       "color": "#e2e8f0",
-       "share": 0.1
-      },
-      {
-       "color": "#96f7e4",
-       "share": 0.06
-      }
-     ],
-     "button": {
-      "bg": "#1d293d",
-      "hsl": {
-       "h": 218,
-       "s": 0.36,
-       "l": 0.18
-      },
-      "fg": "#e2e8f0"
-     },
-     "lowContrast": []
-    },
-    "buttons": {
-     "count": 18,
-     "inHero": 11,
-     "radius": 6,
-     "height": 32,
-     "withShadow": 0,
-     "withGradient": 0,
-     "mono": 0,
-     "upper": 0,
-     "heroLabels": [
-      "Demo Corp",
-      "Arquitetura",
-      "Configurar IA",
-      "Calendário",
-      "Studio Visual (Sem Canva) 100% IA"
-     ]
-    },
-    "surfaces": {
-     "shadowStatic": 0,
-     "shadowOverlay": 0,
-     "shadowSamples": [],
-     "gradients": 0,
-     "scrims": 0,
-     "gradientSamples": [],
-     "gradientText": 0,
-     "hairlines": 7,
-     "hairlineSamples": [
-      "header.sticky.top-0 1440px",
-      "div.mt-4.pt-4 1182px",
-      "div.flex.flex-col 707px",
-      "div.space-y-4.pt-4 659px",
-      "div.w-full.flex 449px"
-     ],
-     "outlinedBoxes": 13,
-     "dashed": 0,
-     "blurred": 0,
-     "roundedBoxes": 13,
-     "boxRadius": 8,
-     "squareMedia": 0,
-     "roundedMedia": 0,
-     "mediaRadius": 0,
-     "textShadow": 0,
-     "cardRows": [
-      {
-       "count": 7,
-       "iconTopped": false,
-       "rounded": true,
-       "top": 470
-      }
-     ]
-    },
-    "heroMedia": [],
-    "nav": {
-     "links": 0,
-     "fixed": true,
-     "height": 61,
-     "floatingPill": false,
-     "blur": false
-    },
-    "fontsLoaded": [
-     "instrument sans"
-    ]
-   },
-   "layout": {
-    "viewport": {
-     "w": 1440,
-     "h": 900
-    },
-    "pageH": 1354,
-    "margins": {
-     "left": 111,
-     "right": 121
-    },
-    "sections": [
-     {
-      "sel": "div.rounded-xl.border",
-      "tag": "div",
-      "top": 85,
-      "height": 157,
-      "words": 17,
-      "media": 0,
-      "middle": 606,
-      "heading": {
-       "text": "Demo Corp",
-       "size": 24,
-       "tag": "h2"
-      },
-      "left": 129,
-      "right": 278,
-      "textLeft": 129,
-      "textRight": 278,
-      "fullBleed": false,
-      "footer": false,
-      "hero": true,
-      "continues": false,
-      "pinned": false
-     },
-     {
-      "sel": "div.w-full",
-      "tag": "div",
-      "top": 266,
-      "height": 1064,
-      "words": 212,
-      "media": 0,
-      "middle": 4,
-      "heading": {
-       "text": "Editar Post —",
-       "size": 16,
-       "tag": "h3"
-      },
-      "left": 104,
-      "right": 104,
-      "textLeft": 117,
-      "textRight": 117,
-      "fullBleed": false,
-      "footer": true,
-      "hero": true,
-      "continues": false,
-      "pinned": false
-     }
-    ],
-    "gaps": [],
-    "h1s": [
-     {
-      "text": "Social Panel PRO",
-      "size": 16,
-      "top": 18,
-      "firstScreen": true
-     }
-    ],
-    "edgeText": [],
-    "edges": [
-     {
-      "x": 129,
-      "n": 2
-     },
-     {
-      "x": 66,
-      "n": 1
-     },
-     {
-      "x": 153,
-      "n": 1
-     },
-     {
-      "x": 226,
-      "n": 1
-     },
-     {
-      "x": 957,
-      "n": 1
-     }
-    ],
-    "leftBlocks": 6,
-    "bodySize": 12,
-    "stage": false,
-    "explains": false,
-    "slivers": [],
-    "voidShare": 0.06,
-    "voidBox": {
-     "x": 1140,
-     "y": 660,
-     "w": 300,
-     "h": 240
-    }
-   },
-   "app": {
-    "viewport": {
-     "w": 1440,
-     "h": 900
-    },
-    "dark": true,
-    "ground": "#090d16",
-    "sidebar": null,
-    "topbar": {
-     "h": 61
-    },
-    "canvas": {
-     "left": 111,
-     "right": 121
-    },
-    "hero": {
-     "text": "Social Panel PRO",
-     "words": 3,
-     "chars": 16,
-     "lines": 1,
-     "size": 16,
-     "vw": 1.1,
-     "font": "Instrument Sans",
-     "weight": 700,
-     "tracking": -0.02,
-     "leading": 1.5,
-     "top": 18,
-     "tag": "h1",
-     "kind": "heading",
-     "align": "left",
-     "position": "left"
-    },
-    "charts": 0,
-    "layout": {
-     "panels": 11,
-     "firstScreen": 11,
-     "ragged": [],
-     "voids": []
-    },
-    "tiles": 0,
-    "panels": {
-     "count": 16,
-     "radii": [
-      [
-       12,
-       7
-      ],
-      [
-       8,
-       7
-      ],
-      [
-       0,
-       2
-      ]
-     ],
-     "heavyBorders": 1,
-     "borderSamples": [
-      "#00bba7 on #020618 (8.32:1)"
-     ],
-     "heavyShadows": 0,
-     "softShadows": 0,
-     "shadowSamples": [],
-     "glass": 0
-    },
-    "chips": {
-     "count": 1,
-     "hues": 1,
-     "samples": [
-      {
-       "hue": 175,
-       "size": 32,
-       "radius": "8px"
-      }
-     ]
-    },
-    "numbers": {
-     "cells": 0,
-     "leftAligned": 0,
-     "figures": 0,
-     "tabularShare": null,
-     "kpiMax": null
-    },
-    "rows": null,
-    "chartHues": 0,
-    "placeholders": [],
-    "type": {
-     "under13": 0.48,
-     "tiny": 0,
-     "tinySamples": [],
-     "sizes": [
-      11,
-      12,
-      14,
-      16,
-      18,
-      24
-     ]
-    },
-    "title": {
-     "text": "Social Panel\nPRO",
-     "size": 16,
-     "top": 18
-    },
-    "colourShare": 0.014
-   },
-   "consoleErrors": []
-  },
-  {
-   "width": 768,
-   "height": 1024,
-   "load": "load",
-   "screens": 3,
-   "filled": [
-    1,
-    1,
-    1
-   ],
-   "motion": {
-    "elements": 0,
-    "css": 0,
-    "transitions": 0,
-    "scripted": 0,
-    "videos": 0,
-    "playingVideos": 0
-   },
-   "metrics": {
-    "viewport": {
-     "w": 768,
-     "h": 1024
-    },
-    "page": {
-     "height": 2208,
-     "screens": 2.2,
-     "words": 265,
-     "img": 4,
-     "video": 0,
-     "canvas": 0,
-     "svg": 24,
-     "sections": 0,
-     "horizontalOverflow": 0,
-     "overflowCulprits": [],
-     "uiFragments": 0,
-     "uiAbuse": false,
-     "realPictures": 0,
-     "videoCount": 0,
-     "uiPictures": 0,
-     "pictureSamples": [],
-     "blendText": 0,
-     "sideScrollers": 0,
-     "brokenImages": [],
-     "emoji": [],
-     "videosNoPoster": 0
-    },
-    "hero": {
-     "text": "Social Panel PRO",
-     "words": 3,
-     "chars": 16,
-     "lines": 1,
-     "size": 16,
-     "vw": 2.1,
-     "font": "Instrument Sans",
-     "weight": 700,
-     "tracking": -0.02,
-     "leading": 1.5,
-     "top": 18,
-     "tag": "h1",
-     "kind": "heading",
-     "align": "left",
-     "position": "left"
-    },
-    "h1": {
-     "text": "Social Panel PRO",
-     "words": 3,
-     "lines": 1,
-     "size": 16,
-     "font": "Instrument Sans"
-    },
-    "headings": [],
-    "headingSummary": {
-     "count": 0,
-     "maxLines": 0,
-     "over2Lines": 0,
-     "statements": 0,
-     "centered": 0,
-     "medianWords": null,
-     "mixedFontHeadings": 0
-    },
-    "type": {
-     "families": [
-      {
-       "family": "Instrument Sans",
-       "share": 0.93,
-       "mono": false
-      },
-      {
-       "family": "ui-monospace",
-       "share": 0.07,
-       "mono": false
-      }
-     ],
-     "familyCount": 2,
-     "sizes": [
-      11,
-      12,
-      14,
-      16,
-      18,
-      24
-     ],
-     "sizeCount": 6,
-     "notLoaded": [],
-     "body": {
-      "font": "Instrument Sans",
-      "size": 12,
-      "leading": 1.33,
-      "weight": 400,
-      "tracking": 0,
-      "contrast": 6.8
-     },
-     "measureChars": 112,
-     "max": {
-      "size": 24,
-      "vw": 3.1,
-      "font": "Instrument Sans",
-      "text": "Demo Corp"
-     },
-     "monoShare": 0.07,
-     "monoProseShare": 0.07,
-     "monoFamilies": [
-      "ui-monospace"
-     ],
-     "monoSamples": [
-      "PRO",
-      "@democorp",
-      "100% IA",
-      "CSV",
-      "Semana de 2026-10-26",
-      "1 / 5"
-     ],
-     "microLabels": 0,
-     "microLabelShare": 0,
-     "microSamples": [],
-     "upperShare": 0.01,
-     "centerShare": 0.22,
-     "smallText": 26
-    },
-    "eyebrows": [],
-    "numbered": [],
-    "color": {
-     "bodyBg": "#090d16",
-     "bodyBgHsl": {
-      "h": 222,
-      "s": 0.42,
-      "l": 0.06
-     },
-     "dark": true,
-     "sectionBgs": [
-      {
-       "color": "#020618",
-       "top": 0,
-       "hsl": {
-        "h": 229,
-        "s": 0.85,
-        "l": 0.05
-       }
-      },
-      {
-       "color": "#0f172b",
-       "top": 755,
-       "hsl": {
-        "h": 223,
-        "s": 0.48,
-        "l": 0.11
-       }
-      }
-     ],
-     "textColors": [
-      {
-       "color": "#90a1b9",
-       "share": 0.28
-      },
-      {
-       "color": "#ffffff",
-       "share": 0.23
-      },
-      {
-       "color": "#cad5e2",
-       "share": 0.22
-      },
-      {
-       "color": "#e2e8f0",
-       "share": 0.1
-      },
-      {
-       "color": "#96f7e4",
-       "share": 0.06
-      }
-     ],
-     "button": {
-      "bg": "#1d293d",
-      "hsl": {
-       "h": 218,
-       "s": 0.36,
-       "l": 0.18
-      },
-      "fg": "#e2e8f0"
-     },
-     "lowContrast": []
-    },
-    "buttons": {
-     "count": 18,
-     "inHero": 11,
-     "radius": 6,
-     "height": 32,
-     "withShadow": 0,
-     "withGradient": 0,
-     "mono": 0,
-     "upper": 0,
-     "heroLabels": [
-      "Demo Corp",
-      "Arquitetura",
-      "Configurar IA",
-      "Calendário",
-      "Studio Visual (Sem Canva) 100% IA"
-     ]
-    },
-    "surfaces": {
-     "shadowStatic": 0,
-     "shadowOverlay": 0,
-     "shadowSamples": [],
-     "gradients": 0,
-     "scrims": 0,
-     "gradientSamples": [],
-     "gradientText": 0,
-     "hairlines": 7,
-     "hairlineSamples": [
-      "header.sticky.top-0 768px",
-      "div.mt-4.pt-4 670px",
-      "div.flex.flex-col 718px",
-      "div.space-y-4.pt-4 670px",
-      "div.w-full.flex 670px"
-     ],
-     "outlinedBoxes": 13,
-     "dashed": 0,
-     "blurred": 0,
-     "roundedBoxes": 13,
-     "boxRadius": 8,
-     "squareMedia": 0,
-     "roundedMedia": 0,
-     "mediaRadius": 0,
-     "textShadow": 0,
-     "cardRows": [
-      {
-       "count": 7,
-       "iconTopped": false,
-       "rounded": true,
-       "top": 518
-      }
-     ]
-    },
-    "heroMedia": [],
-    "nav": {
-     "links": 0,
-     "fixed": true,
-     "height": 109,
-     "floatingPill": false,
-     "blur": false
-    },
-    "fontsLoaded": [
-     "instrument sans"
-    ]
-   },
-   "layout": {
-    "viewport": {
-     "w": 768,
-     "h": 1024
-    },
-    "pageH": 2208,
-    "margins": {
-     "left": 31,
-     "right": 41
-    },
-    "sections": [
-     {
-      "sel": "div.rounded-xl.border",
-      "tag": "div",
-      "top": 133,
-      "height": 157,
-      "words": 17,
-      "media": 0,
-      "middle": 94,
-      "heading": {
-       "text": "Demo Corp",
-       "size": 24,
-       "tag": "h2"
-      },
-      "left": 49,
-      "right": 198,
-      "textLeft": 49,
-      "textRight": 198,
-      "fullBleed": false,
-      "footer": false,
-      "hero": true,
-      "continues": false,
-      "pinned": false
-     },
-     {
-      "sel": "div.w-full",
-      "tag": "div",
-      "top": 314,
-      "height": 1870,
-      "words": 212,
-      "media": 0,
-      "middle": 0,
-      "heading": {
-       "text": "Editar Post —",
-       "size": 16,
-       "tag": "h3"
-      },
-      "left": 24,
-      "right": 24,
-      "textLeft": 37,
-      "textRight": 37,
-      "fullBleed": false,
-      "footer": true,
-      "hero": true,
-      "continues": false,
-      "pinned": false
-     }
-    ],
-    "gaps": [],
-    "h1s": [
-     {
-      "text": "Social Panel PRO",
-      "size": 16,
-      "top": 18,
-      "firstScreen": true
-     }
-    ],
-    "edgeText": [],
-    "edges": [
-     {
-      "x": 49,
-      "n": 2
-     },
-     {
-      "x": 66,
-      "n": 2
-     },
-     {
-      "x": 146,
-      "n": 1
-     },
-     {
-      "x": 255,
-      "n": 1
-     }
-    ],
-    "leftBlocks": 6,
-    "bodySize": 12,
-    "stage": false,
-    "explains": false,
-    "slivers": [],
-    "voidShare": 0,
-    "voidBox": null
-   },
-   "app": {
-    "viewport": {
-     "w": 768,
-     "h": 1024
-    },
-    "dark": true,
-    "ground": "#090d16",
-    "sidebar": null,
-    "topbar": null,
-    "canvas": {
-     "left": 31,
-     "right": 41
-    },
-    "hero": {
-     "text": "Social Panel PRO",
-     "words": 3,
-     "chars": 16,
-     "lines": 1,
-     "size": 16,
-     "vw": 2.1,
-     "font": "Instrument Sans",
-     "weight": 700,
-     "tracking": -0.02,
-     "leading": 1.5,
-     "top": 18,
-     "tag": "h1",
-     "kind": "heading",
-     "align": "left",
-     "position": "left"
-    },
-    "charts": 0,
-    "layout": {
-     "panels": 11,
-     "firstScreen": 10,
-     "ragged": [],
-     "voids": []
-    },
-    "tiles": 0,
-    "panels": {
-     "count": 16,
-     "radii": [
-      [
-       12,
-       7
-      ],
-      [
-       8,
-       7
-      ],
-      [
-       0,
-       2
-      ]
-     ],
-     "heavyBorders": 1,
-     "borderSamples": [
-      "#00bba7 on #020618 (8.32:1)"
-     ],
-     "heavyShadows": 0,
-     "softShadows": 0,
-     "shadowSamples": [],
-     "glass": 0
-    },
-    "chips": {
-     "count": 1,
-     "hues": 1,
-     "samples": [
-      {
-       "hue": 175,
-       "size": 32,
-       "radius": "8px"
-      }
-     ]
-    },
-    "numbers": {
-     "cells": 0,
-     "leftAligned": 0,
-     "figures": 0,
-     "tabularShare": null,
-     "kpiMax": null
-    },
-    "rows": null,
-    "chartHues": 0,
-    "placeholders": [],
-    "type": {
-     "under13": 0.48,
-     "tiny": 0,
-     "tinySamples": [],
-     "sizes": [
-      11,
-      12,
-      14,
-      16,
-      18,
-      24
-     ]
-    },
-    "title": {
-     "text": "Social Panel\nPRO",
-     "size": 16,
-     "top": 18
-    },
-    "colourShare": 0.017
-   },
-   "consoleErrors": []
-  },
-  {
-   "width": 390,
-   "height": 844,
-   "load": "load",
-   "screens": 4,
-   "filled": [
-    1,
-    1,
-    1,
-    0.99
-   ],
-   "motion": {
-    "elements": 0,
-    "css": 0,
-    "transitions": 0,
-    "scripted": 0,
-    "videos": 0,
-    "playingVideos": 0
-   },
-   "metrics": {
-    "viewport": {
-     "w": 390,
-     "h": 844
-    },
-    "page": {
-     "height": 2943,
-     "screens": 3.5,
-     "words": 257,
-     "img": 4,
-     "video": 0,
-     "canvas": 0,
-     "svg": 24,
-     "sections": 0,
-     "horizontalOverflow": 0,
-     "overflowCulprits": [],
-     "uiFragments": 0,
-     "uiAbuse": false,
-     "realPictures": 0,
-     "videoCount": 0,
-     "uiPictures": 0,
-     "pictureSamples": [],
-     "blendText": 0,
-     "sideScrollers": 0,
-     "brokenImages": [],
-     "emoji": [],
-     "videosNoPoster": 0
-    },
-    "hero": {
-     "text": "Social Panel PRO",
-     "words": 3,
-     "chars": 16,
-     "lines": 1,
-     "size": 16,
-     "vw": 4.1,
      "font": "Instrument Sans",
      "weight": 700,
      "tracking": -0.02,
@@ -1014,32 +72,10 @@
      "size": 16,
      "font": "Instrument Sans"
     },
-    "headings": [
-     {
-      "text": "Demo Corp",
-      "words": 2,
-      "chars": 9,
-      "lines": 1,
-      "size": 24,
-      "vw": 6.2,
-      "font": "Instrument Sans",
-      "weight": 700,
-      "tracking": -0.025,
-      "leading": 1.33,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "left",
-      "widthRatio": 0.32,
-      "top": 210,
-      "tag": "h2",
-      "kind": "heading"
-     }
-    ],
+    "headings": [],
     "headingSummary": {
-     "count": 1,
-     "maxLines": 1,
+     "count": 0,
+     "maxLines": 0,
      "over2Lines": 0,
      "statements": 0,
      "centered": 0,
@@ -1078,10 +114,10 @@
       "tracking": 0,
       "contrast": 6.8
      },
-     "measureChars": 49,
+     "measureChars": 100,
      "max": {
       "size": 24,
-      "vw": 6.2,
+      "vw": 1.7,
       "font": "Instrument Sans",
       "text": "Demo Corp"
      },
@@ -1092,18 +128,18 @@
      ],
      "monoSamples": [
       "PRO",
+      "100% IA",
+      "CSV",
       "@democorp",
       "Semana de 2026-10-26",
-      "1 / 5",
-      "Proporção Instagram 4:5 (1080×1350px)",
-      "1080×1350px (4:5)"
+      "1 / 5"
      ],
      "microLabels": 0,
      "microLabelShare": 0,
      "microSamples": [],
-     "upperShare": 0,
-     "centerShare": 0.21,
-     "smallText": 29
+     "upperShare": 0.01,
+     "centerShare": 0.14,
+     "smallText": 37
     },
     "eyebrows": [],
     "numbered": [],
@@ -1127,19 +163,10 @@
       },
       {
        "color": "#0f172b",
-       "top": 1252,
+       "top": 482,
        "hsl": {
         "h": 223,
         "s": 0.48,
-        "l": 0.11
-       }
-      },
-      {
-       "color": "#0f172a",
-       "top": 2322,
-       "hsl": {
-        "h": 222,
-        "s": 0.47,
         "l": 0.11
        }
       }
@@ -1147,11 +174,11 @@
      "textColors": [
       {
        "color": "#90a1b9",
-       "share": 0.29
+       "share": 0.32
       },
       {
        "color": "#ffffff",
-       "share": 0.24
+       "share": 0.22
       },
       {
        "color": "#cad5e2",
@@ -1159,7 +186,7 @@
       },
       {
        "color": "#e2e8f0",
-       "share": 0.1
+       "share": 0.09
       },
       {
        "color": "#96f7e4",
@@ -1178,8 +205,8 @@
      "lowContrast": []
     },
     "buttons": {
-     "count": 17,
-     "inHero": 6,
+     "count": 22,
+     "inHero": 15,
      "radius": 6,
      "height": 32,
      "withShadow": 0,
@@ -1188,10 +215,10 @@
      "upper": 0,
      "heroLabels": [
       "Demo Corp",
+      "Arquitetura",
       "Configurar IA",
-      "Calendário",
-      "Studio Visual (Sem Canva)",
-      "Exportar Canva (Com Canva)"
+      "Calendário Semanal",
+      "Studio Visual 4:5 100% IA"
      ]
     },
     "surfaces": {
@@ -1202,19 +229,19 @@
      "scrims": 0,
      "gradientSamples": [],
      "gradientText": 0,
-     "hairlines": 7,
+     "hairlines": 9,
      "hairlineSamples": [
-      "header.sticky.top-0 390px",
-      "div.mt-4.pt-4 292px",
-      "div.flex.flex-col 340px",
-      "div.space-y-4.pt-4 292px",
-      "div.w-full.flex 292px"
+      "header.sticky.top-0 1440px",
+      "aside.hidden.md:flex 256px",
+      "div.p-3.border-t 255px",
+      "div.mt-4.pt-4 1086px",
+      "div.flex.flex-col 651px"
      ],
-     "outlinedBoxes": 15,
+     "outlinedBoxes": 12,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 15,
-     "boxRadius": 12,
+     "roundedBoxes": 12,
+     "boxRadius": 8,
      "squareMedia": 0,
      "roundedMedia": 0,
      "mediaRadius": 0,
@@ -1224,7 +251,7 @@
        "count": 7,
        "iconTopped": false,
        "rounded": true,
-       "top": 792
+       "top": 356
       }
      ]
     },
@@ -1232,7 +259,7 @@
     "nav": {
      "links": 0,
      "fixed": true,
-     "height": 161,
+     "height": 57,
      "floatingPill": false,
      "blur": false
     },
@@ -1242,101 +269,59 @@
    },
    "layout": {
     "viewport": {
-     "w": 390,
-     "h": 844
+     "w": 1440,
+     "h": 900
     },
-    "pageH": 2943,
+    "pageH": 1280,
     "margins": {
-     "left": 24,
-     "right": 24
+     "left": 12,
+     "right": 41
     },
     "sections": [
      {
-      "sel": "header.sticky.top-0",
-      "tag": "header",
-      "top": 0,
-      "height": 161,
-      "words": 7,
-      "media": 0,
-      "middle": 0,
-      "heading": {
-       "text": "Social Panel",
-       "size": 16,
-       "tag": "h1"
-      },
-      "left": 24,
-      "right": 126,
-      "textLeft": 61,
-      "textRight": 192,
-      "fullBleed": false,
-      "footer": false,
-      "hero": true,
-      "continues": false,
-      "pinned": true
-     },
-     {
       "sel": "div.rounded-xl.border",
       "tag": "div",
-      "top": 185,
-      "height": 265,
+      "top": 81,
+      "height": 157,
       "words": 17,
       "media": 0,
-      "middle": 0,
+      "middle": 510,
       "heading": {
        "text": "Demo Corp",
        "size": 24,
        "tag": "h2"
       },
-      "left": 49,
-      "right": 94,
-      "textLeft": 49,
-      "textRight": 94,
+      "left": 305,
+      "right": 198,
+      "textLeft": 305,
+      "textRight": 198,
       "fullBleed": false,
       "footer": false,
       "hero": true,
-      "continues": true,
+      "continues": false,
       "pinned": false
      },
      {
-      "sel": "div.min-h-10.h-auto",
+      "sel": "div.w-full",
       "tag": "div",
-      "top": 474,
-      "height": 164,
-      "words": 18,
+      "top": 262,
+      "height": 994,
+      "words": 191,
       "media": 0,
       "middle": 0,
-      "heading": null,
-      "left": 31,
-      "right": 33,
-      "textLeft": 67,
-      "textRight": 45,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "div#radix-_r_5_-content-calendar.ring-offset-slate-950.focus",
-      "tag": "div",
-      "top": 654,
-      "height": 2265,
-      "words": 188,
-      "media": 0,
-      "middle": 6,
       "heading": {
-       "text": "Editar Post —",
-       "size": 16,
+       "text": "Capa / Gancho",
+       "size": 18,
        "tag": "h3"
       },
-      "left": 24,
-      "right": 0,
-      "textLeft": 37,
+      "left": 280,
+      "right": 24,
+      "textLeft": 293,
       "textRight": 37,
       "fullBleed": false,
       "footer": true,
-      "hero": false,
-      "continues": true,
+      "hero": true,
+      "continues": false,
       "pinned": false
      }
     ],
@@ -1352,15 +337,23 @@
     "edgeText": [],
     "edges": [
      {
-      "x": 66,
-      "n": 3
-     },
-     {
-      "x": 49,
+      "x": 305,
       "n": 2
      },
      {
-      "x": 146,
+      "x": 66,
+      "n": 1
+     },
+     {
+      "x": 329,
+      "n": 1
+     },
+     {
+      "x": 402,
+      "n": 1
+     },
+     {
+      "x": 1057,
       "n": 1
      }
     ],
@@ -1369,21 +362,33 @@
     "stage": false,
     "explains": false,
     "slivers": [],
-    "voidShare": 0,
-    "voidBox": null
+    "voidShare": 0.1,
+    "voidBox": {
+     "x": 0,
+     "y": 480,
+     "w": 300,
+     "h": 420
+    }
    },
    "app": {
     "viewport": {
-     "w": 390,
-     "h": 844
+     "w": 1440,
+     "h": 900
     },
     "dark": true,
     "ground": "#090d16",
-    "sidebar": null,
-    "topbar": null,
+    "sidebar": {
+     "w": 256,
+     "tag": "aside",
+     "links": 7,
+     "share": 0.18
+    },
+    "topbar": {
+     "h": 57
+    },
     "canvas": {
-     "left": 24,
-     "right": 20
+     "left": 37,
+     "right": 41
     },
     "hero": {
      "text": "Social Panel PRO",
@@ -1391,7 +396,7 @@
      "chars": 16,
      "lines": 1,
      "size": 16,
-     "vw": 4.1,
+     "vw": 1.1,
      "font": "Instrument Sans",
      "weight": 700,
      "tracking": -0.02,
@@ -1404,22 +409,22 @@
     },
     "charts": 0,
     "layout": {
-     "panels": 12,
-     "firstScreen": 5,
+     "panels": 10,
+     "firstScreen": 10,
      "ragged": [],
      "voids": []
     },
     "tiles": 0,
     "panels": {
-     "count": 17,
+     "count": 15,
      "radii": [
-      [
-       12,
-       8
-      ],
       [
        8,
        7
+      ],
+      [
+       12,
+       6
       ],
       [
        0,
@@ -1457,7 +462,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.55,
+     "under13": 0.58,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -1474,7 +479,963 @@
      "size": 16,
      "top": 16
     },
-    "colourShare": 0.025
+    "colourShare": 0.017
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 3,
+   "filled": [
+    0.98,
+    1,
+    0.96
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 2326,
+     "screens": 2.3,
+     "words": 280,
+     "img": 14,
+     "video": 0,
+     "canvas": 0,
+     "svg": 26,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 1,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "chars": 16,
+     "lines": 1,
+     "size": 16,
+     "vw": 2.1,
+     "font": "Instrument Sans",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.5,
+     "top": 16,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "lines": 1,
+     "size": 16,
+     "font": "Instrument Sans"
+    },
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Instrument Sans",
+       "share": 0.94,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.06,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      11,
+      12,
+      14,
+      16,
+      18,
+      24
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Instrument Sans",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 6.8
+     },
+     "measureChars": 69,
+     "max": {
+      "size": 24,
+      "vw": 3.1,
+      "font": "Instrument Sans",
+      "text": "Demo Corp"
+     },
+     "monoShare": 0.06,
+     "monoProseShare": 0.06,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [
+      "PRO",
+      "100% IA",
+      "CSV",
+      "@democorp",
+      "Semana de 2026-10-26",
+      "1 / 5"
+     ],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.01,
+     "centerShare": 0.14,
+     "smallText": 37
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#090d16",
+     "bodyBgHsl": {
+      "h": 222,
+      "s": 0.42,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#020618",
+       "top": 0,
+       "hsl": {
+        "h": 229,
+        "s": 0.85,
+        "l": 0.05
+       }
+      },
+      {
+       "color": "#0f172b",
+       "top": 773,
+       "hsl": {
+        "h": 223,
+        "s": 0.48,
+        "l": 0.11
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#90a1b9",
+       "share": 0.32
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.22
+      },
+      {
+       "color": "#cad5e2",
+       "share": 0.21
+      },
+      {
+       "color": "#e2e8f0",
+       "share": 0.09
+      },
+      {
+       "color": "#96f7e4",
+       "share": 0.06
+      }
+     ],
+     "button": {
+      "bg": "#1d293d",
+      "hsl": {
+       "h": 218,
+       "s": 0.36,
+       "l": 0.18
+      },
+      "fg": "#e2e8f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 22,
+     "inHero": 14,
+     "radius": 6,
+     "height": 32,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Demo Corp",
+      "Arquitetura",
+      "Configurar IA",
+      "Calendário Semanal",
+      "Studio Visual 4:5 100% IA"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 9,
+     "hairlineSamples": [
+      "header.sticky.top-0 768px",
+      "aside.hidden.md:flex 256px",
+      "div.p-3.border-t 255px",
+      "div.mt-4.pt-4 414px",
+      "div.flex.flex-col 462px"
+     ],
+     "outlinedBoxes": 7,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 7,
+     "boxRadius": 12,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": true,
+     "height": 105,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "instrument sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 2326,
+    "margins": {
+     "left": 12,
+     "right": 37
+    },
+    "sections": [
+     {
+      "sel": "div.rounded-xl.border",
+      "tag": "div",
+      "top": 129,
+      "height": 245,
+      "words": 17,
+      "media": 0,
+      "middle": 36,
+      "heading": {
+       "text": "Demo Corp",
+       "size": 24,
+       "tag": "h2"
+      },
+      "left": 305,
+      "right": 202,
+      "textLeft": 305,
+      "textRight": 202,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.w-full",
+      "tag": "div",
+      "top": 398,
+      "height": 1904,
+      "words": 191,
+      "media": 0,
+      "middle": 349,
+      "heading": {
+       "text": "Editar Post —",
+       "size": 16,
+       "tag": "h3"
+      },
+      "left": 280,
+      "right": 0,
+      "textLeft": 293,
+      "textRight": 37,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Social Panel PRO",
+      "size": 16,
+      "top": 16,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 305,
+      "n": 2
+     },
+     {
+      "x": 66,
+      "n": 1
+     },
+     {
+      "x": 329,
+      "n": 1
+     },
+     {
+      "x": 383,
+      "n": 1
+     },
+     {
+      "x": 402,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 6,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": true,
+    "ground": "#090d16",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 12,
+     "right": -340
+    },
+    "hero": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "chars": 16,
+     "lines": 1,
+     "size": 16,
+     "vw": 2.1,
+     "font": "Instrument Sans",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.5,
+     "top": 16,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 4,
+     "firstScreen": 3,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 9,
+     "radii": [
+      [
+       12,
+       7
+      ],
+      [
+       0,
+       2
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 1,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 175,
+       "size": 32,
+       "radius": "8px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.58,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      14,
+      16,
+      18,
+      24
+     ]
+    },
+    "title": {
+     "text": "Social Panel\nPRO",
+     "size": 16,
+     "top": 16
+    },
+    "colourShare": 0.012
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 4,
+   "filled": [
+    0.99,
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 2745,
+     "screens": 3.3,
+     "words": 239,
+     "img": 14,
+     "video": 0,
+     "canvas": 0,
+     "svg": 26,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 1,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "chars": 16,
+     "lines": 1,
+     "size": 16,
+     "vw": 4.1,
+     "font": "Instrument Sans",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.5,
+     "top": 14,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "lines": 1,
+     "size": 16,
+     "font": "Instrument Sans"
+    },
+    "headings": [
+     {
+      "text": "Demo Corp",
+      "words": 2,
+      "chars": 9,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Instrument Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.33,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.32,
+      "top": 190,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Instrument Sans",
+       "share": 0.93,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.07,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      11,
+      12,
+      14,
+      16,
+      18,
+      24
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Instrument Sans",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 6.8
+     },
+     "measureChars": 51,
+     "max": {
+      "size": 24,
+      "vw": 6.2,
+      "font": "Instrument Sans",
+      "text": "Demo Corp"
+     },
+     "monoShare": 0.07,
+     "monoProseShare": 0.07,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [
+      "PRO",
+      "@democorp",
+      "Semana de 2026-10-26",
+      "1 / 5",
+      "Proporção Instagram 4:5 (1080×1350px)",
+      "1080×1350px (4:5)"
+     ],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.14,
+     "smallText": 25
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#090d16",
+     "bodyBgHsl": {
+      "h": 222,
+      "s": 0.42,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#020618",
+       "top": 0,
+       "hsl": {
+        "h": 229,
+        "s": 0.85,
+        "l": 0.05
+       }
+      },
+      {
+       "color": "#0f172b",
+       "top": 1052,
+       "hsl": {
+        "h": 223,
+        "s": 0.48,
+        "l": 0.11
+       }
+      },
+      {
+       "color": "#0f172a",
+       "top": 2122,
+       "hsl": {
+        "h": 222,
+        "s": 0.47,
+        "l": 0.11
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#ffffff",
+       "share": 0.25
+      },
+      {
+       "color": "#90a1b9",
+       "share": 0.23
+      },
+      {
+       "color": "#cad5e2",
+       "share": 0.23
+      },
+      {
+       "color": "#e2e8f0",
+       "share": 0.11
+      },
+      {
+       "color": "#96f7e4",
+       "share": 0.07
+      }
+     ],
+     "button": {
+      "bg": "#1d293d",
+      "hsl": {
+       "h": 218,
+       "s": 0.36,
+       "l": 0.18
+      },
+      "fg": "#e2e8f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 14,
+     "inHero": 3,
+     "radius": 6,
+     "height": 32,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Demo Corp",
+      "Configurar IA",
+      "Semana Atual"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 7,
+     "hairlineSamples": [
+      "header.sticky.top-0 390px",
+      "div.mt-4.pt-4 308px",
+      "div.flex.flex-col 356px",
+      "div.space-y-4.pt-4 308px",
+      "div.w-full.flex 308px"
+     ],
+     "outlinedBoxes": 14,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 14,
+     "boxRadius": 12,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 7,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 592
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": true,
+     "height": 149,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "instrument sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 2745,
+    "margins": {
+     "left": 16,
+     "right": 16
+    },
+    "sections": [
+     {
+      "sel": "header.sticky.top-0",
+      "tag": "header",
+      "top": 0,
+      "height": 149,
+      "words": 7,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Social Panel",
+       "size": 16,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 134,
+      "textLeft": 53,
+      "textRight": 165,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": true
+     },
+     {
+      "sel": "div.flex-1.flex",
+      "tag": "div",
+      "top": 149,
+      "height": 2596,
+      "words": 205,
+      "media": 0,
+      "middle": 463,
+      "heading": {
+       "text": "Demo Corp",
+       "size": 24,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 0,
+      "textLeft": 29,
+      "textRight": 29,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Social Panel PRO",
+      "size": 16,
+      "top": 14,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 41,
+      "n": 2
+     },
+     {
+      "x": 65,
+      "n": 2
+     },
+     {
+      "x": 102,
+      "n": 1
+     },
+     {
+      "x": 138,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 6,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": true,
+    "ground": "#090d16",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 16,
+     "right": -454
+    },
+    "hero": {
+     "text": "Social Panel PRO",
+     "words": 3,
+     "chars": 16,
+     "lines": 1,
+     "size": 16,
+     "vw": 4.1,
+     "font": "Instrument Sans",
+     "weight": 700,
+     "tracking": -0.02,
+     "leading": 1.5,
+     "top": 14,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 11,
+     "firstScreen": 6,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 16,
+     "radii": [
+      [
+       12,
+       7
+      ],
+      [
+       8,
+       7
+      ],
+      [
+       0,
+       2
+      ]
+     ],
+     "heavyBorders": 1,
+     "borderSamples": [
+      "#00bba7 on #020618 (8.32:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 2,
+     "hues": 2,
+     "samples": [
+      {
+       "hue": 223,
+       "size": 32,
+       "radius": "6px"
+      },
+      {
+       "hue": 175,
+       "size": 32,
+       "radius": "8px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.58,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      14,
+      16,
+      18,
+      24
+     ]
+    },
+    "title": {
+     "text": "Social Panel\nPRO",
+     "size": 16,
+     "top": 14
+    },
+    "colourShare": 0.015
    },
    "consoleErrors": []
   }
@@ -1482,20 +1443,9 @@
  "findings": [
   {
    "level": "WARN",
-   "id": "dev-server",
-   "width": 1440,
-   "message": "This page is served by a development server (Vite, webpack or Next in dev mode).",
-   "fix": "Run the last gate on the production build too (vite build && vite preview, next build && next start, or the built index.html): minifiers and bundlers change the CSS a visitor receives.",
-   "alsoAt": [
-    768,
-    390
-   ]
-  },
-  {
-   "level": "WARN",
    "id": "tiny-text",
    "width": 1440,
-   "message": "48% of the text is under 13px.",
+   "message": "58% of the text is under 13px.",
    "fix": "Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks.",
    "alsoAt": [
     768,

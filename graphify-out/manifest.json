@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "src/client/App.tsx": {
-    "mtime": 1793309764.2124274,
-    "seen": 1793310075.2897282,
-    "ast_hash": "09397aa99bd97a3be6b68dcea5a394e9",
+    "mtime": 1793314280.8546863,
+    "seen": 1793315010.5939903,
+    "ast_hash": "1bfee8a5db97e70bdd0debf9d70077ee",
     "semantic_hash": ""
   },
   "src/client/components/AISettingsModal.tsx": {
@@ -468,39 +468,39 @@
     "semantic_hash": ""
   },
   "graft/INDEX.md": {
-    "mtime": 1793310073.9100816,
-    "seen": 1793310075.291009,
-    "ast_hash": "880a581d2790b887099701dd60170750",
+    "mtime": 1793315009.1415024,
+    "seen": 1793315010.595304,
+    "ast_hash": "39ee69e4774c8d3c80605aec5207d4d7",
     "semantic_hash": ""
   },
   "graft/client-ui.md": {
-    "mtime": 1793310073.9090815,
-    "seen": 1793310075.2910101,
-    "ast_hash": "7205fdece2fecb212e26811d8f32d8cd",
+    "mtime": 1793315009.1415024,
+    "seen": 1793315010.595305,
+    "ast_hash": "897e08b0c85b7c7ffc044bcf6ec8edd8",
     "semantic_hash": ""
   },
   "graft/server-db.md": {
-    "mtime": 1793310073.9040813,
-    "seen": 1793310075.291011,
+    "mtime": 1793315009.1365023,
+    "seen": 1793315010.595306,
     "ast_hash": "bc60582b499f63d5d617c59951538634",
     "semantic_hash": ""
   },
   "graft/server-routes.md": {
-    "mtime": 1793310073.9050815,
-    "seen": 1793310075.291012,
+    "mtime": 1793315009.1375022,
+    "seen": 1793315010.595307,
     "ast_hash": "2a1edd78a8e0d22d055de38697115a13",
     "semantic_hash": ""
   },
   "graft/server-services.md": {
-    "mtime": 1793310073.9060814,
-    "seen": 1793310075.291013,
+    "mtime": 1793315009.1385024,
+    "seen": 1793315010.595308,
     "ast_hash": "70f5d0ae721dbfb7fd640ffa38ab1a74",
     "semantic_hash": ""
   },
   "graft/tests-suite.md": {
-    "mtime": 1793310073.9100816,
-    "seen": 1793310075.2910142,
-    "ast_hash": "abab58b1fb86091f07ae8504fdbf83b6",
+    "mtime": 1793315009.1415024,
+    "seen": 1793315010.595309,
+    "ast_hash": "e39a872ea7f6aaa30357fd51cb010749",
     "semantic_hash": ""
   },
   "src/server/services/ai/claude.ts": {
@@ -511,7 +511,7 @@
   },
   "drizzle/0000_loud_stature.sql": {
     "mtime": 1793307133.0513723,
-    "seen": 1793308773.0237713,
+    "seen": 1793310104.0498512,
     "ast_hash": "",
     "semantic_hash": ""
   },
@@ -642,9 +642,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/design-studio.spec.ts": {
-    "mtime": 1793307133.059335,
-    "seen": 1793307134.9424531,
-    "ast_hash": "03783e08806e74d1cc3ce7ff1e41a208",
+    "mtime": 1793314774.8864334,
+    "seen": 1793315010.59487,
+    "ast_hash": "7e064db78a4f39ce1a3ba1bbe1389e2a",
     "semantic_hash": ""
   },
   "public/architecture.html": {
@@ -654,15 +654,15 @@
     "semantic_hash": ""
   },
   ".taste-skill/inspect/report.json": {
-    "mtime": 1793310038.972916,
-    "seen": 1793310075.2896132,
-    "ast_hash": "d27c9996402e67d89b486b544238f443",
+    "mtime": 1793314949.3585708,
+    "seen": 1793315010.5938828,
+    "ast_hash": "fd22dd0c4b96e4479d29a981d6f17797",
     "semantic_hash": ""
   },
   "src/client/components/SettingsHub.tsx": {
-    "mtime": 1793309462.217111,
-    "seen": 1793310075.2898245,
-    "ast_hash": "9937942f26b60803c2593cae53aa86ea",
+    "mtime": 1793314158.973363,
+    "seen": 1793315010.5941129,
+    "ast_hash": "0c2b3f3804f02a81dceae0680223ac72",
     "semantic_hash": ""
   },
   "src/server/routes/settings.ts": {
@@ -684,45 +684,45 @@
     "semantic_hash": ""
   },
   ".taste-skill/inspect/desktop-fold.jpg": {
-    "mtime": 1793310028.3800743,
-    "seen": 1793310075.2910714,
-    "ast_hash": "c8e99a82a16cc1e252287a5c6394efa3",
+    "mtime": 1793314938.9684763,
+    "seen": 1793315010.5953667,
+    "ast_hash": "0ba9d3ffbb49565c7c7740fe615627ff",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/desktop-page-01.jpg": {
-    "mtime": 1793310029.6091285,
-    "seen": 1793310075.2910726,
-    "ast_hash": "b0c5a25f763e766ff400eda3133d7d64",
+    "mtime": 1793314940.1965292,
+    "seen": 1793315010.5953677,
+    "ast_hash": "6544c0d08a8e843f465e01944424a0d2",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/mobile-fold.jpg": {
-    "mtime": 1793310035.9874096,
-    "seen": 1793310075.2910736,
-    "ast_hash": "a7520ec72100ccaef36ba4433ea13e20",
+    "mtime": 1793314946.3737953,
+    "seen": 1793315010.5953686,
+    "ast_hash": "4e9ab44c9accf2ddcd3c96ad4663a121",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/mobile-page-01.jpg": {
-    "mtime": 1793310038.6655278,
-    "seen": 1793310075.2910748,
-    "ast_hash": "672ef333791d640b2375bc5833724593",
+    "mtime": 1793314949.0509107,
+    "seen": 1793315010.5953698,
+    "ast_hash": "76f83ee567950958dc0d533287c06fef",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/settings-hub-e2e.jpg": {
-    "mtime": 1793310065.9667313,
-    "seen": 1793310075.291076,
-    "ast_hash": "a4999f63fd8d6b4dc9683007f1c9bdfa",
+    "mtime": 1793314914.2874138,
+    "seen": 1793315010.595371,
+    "ast_hash": "d92560e945a50e7a00df802e54ce82fe",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/tablet-fold.jpg": {
-    "mtime": 1793310031.8262262,
-    "seen": 1793310075.291077,
-    "ast_hash": "d64d428850ff12af17b0a509e74b949e",
+    "mtime": 1793314942.3126204,
+    "seen": 1793315010.595372,
+    "ast_hash": "2115fbe9fe40b1076b804b8c520f82a9",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/tablet-page-01.jpg": {
-    "mtime": 1793310033.7603116,
-    "seen": 1793310075.2910779,
-    "ast_hash": "4b68302d21c3f4aa391e3396e9a731b0",
+    "mtime": 1793314944.2477038,
+    "seen": 1793315010.595373,
+    "ast_hash": "1ff0fe920d6c37ea8f1205c20e5165fe",
     "semantic_hash": ""
   },
   "src/server/db/sanitize.ts": {
@@ -744,9 +744,21 @@
     "semantic_hash": ""
   },
   "src/client/components/DesignStudioTab.tsx": {
-    "mtime": 1793309939.1321397,
-    "seen": 1793310075.2897885,
-    "ast_hash": "fe8d141c1a136f19303c1244e7e5a050",
+    "mtime": 1793314443.584417,
+    "seen": 1793315010.594077,
+    "ast_hash": "8a4838782fd7ef3b6305375ee66ef013",
+    "semantic_hash": ""
+  },
+  "src/client/components/SidebarNavigation.tsx": {
+    "mtime": 1793314704.8666546,
+    "seen": 1793315010.5941148,
+    "ast_hash": "f4c9a809834a0380e74d0fda0a8bd52c",
+    "semantic_hash": ""
+  },
+  "tests/e2e/sidebar-navigation.spec.ts": {
+    "mtime": 1793314901.2778542,
+    "seen": 1793315010.5949175,
+    "ast_hash": "b56976c253c4e377659a34f0caf5236a",
     "semantic_hash": ""
   }
 }

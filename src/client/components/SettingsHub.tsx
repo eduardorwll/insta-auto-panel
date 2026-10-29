@@ -506,17 +506,17 @@ export function SettingsHub({ onOpenLegacyAIModal }: SettingsHubProps) {
                 </div>
               )}
 
-              <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-slate-800">
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
                   disabled={isInitializingProfile}
                   onClick={handleInitBrowserProfile}
-                  className="gap-1.5 border-slate-700 bg-slate-950 text-slate-300 hover:text-white"
+                  className="gap-1.5 border-slate-700 bg-slate-950 text-slate-300 hover:text-white w-full sm:w-auto active:scale-[0.97]"
                 >
                   <Terminal className="h-3.5 w-3.5 text-teal-400" />
-                  <span>
+                  <span className="truncate">
                     {isInitializingProfile
                       ? "Inicializando..."
                       : "Inicializar Perfil Chromium Local"}
@@ -527,10 +527,10 @@ export function SettingsHub({ onOpenLegacyAIModal }: SettingsHubProps) {
                   type="submit"
                   size="sm"
                   disabled={isSavingCookies}
-                  className="gap-1.5 bg-teal-600 hover:bg-teal-500 text-white"
+                  className="gap-1.5 bg-teal-600 hover:bg-teal-500 text-white w-full sm:w-auto active:scale-[0.97]"
                 >
                   <ShieldCheck className="h-4 w-4" />
-                  <span>
+                  <span className="truncate">
                     {isSavingCookies
                       ? "Gravando Sessão..."
                       : "Validar & Salvar Cookies Instagram"}
@@ -684,27 +684,27 @@ export function SettingsHub({ onOpenLegacyAIModal }: SettingsHubProps) {
                 </div>
               )}
 
-              <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-slate-800">
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
                   disabled={isTestingLlm}
                   onClick={handleTestLlm}
-                  className="gap-1.5 border-slate-700 bg-slate-950 text-slate-300 hover:text-white"
+                  className="gap-1.5 border-slate-700 bg-slate-950 text-slate-300 hover:text-white w-full sm:w-auto active:scale-[0.97]"
                 >
                   <RefreshCw className={`h-3.5 w-3.5 ${isTestingLlm ? "animate-spin" : ""}`} />
-                  <span>{isTestingLlm ? "Testando..." : "Testar Endpoint LLM"}</span>
+                  <span className="truncate">{isTestingLlm ? "Testando..." : "Testar Endpoint LLM"}</span>
                 </Button>
 
                 <Button
                   type="submit"
                   size="sm"
                   disabled={isSavingLlm}
-                  className="gap-1.5 bg-teal-600 hover:bg-teal-500 text-white"
+                  className="gap-1.5 bg-teal-600 hover:bg-teal-500 text-white w-full sm:w-auto active:scale-[0.97]"
                 >
                   <CheckCircle className="h-4 w-4" />
-                  <span>{isSavingLlm ? "Salvando..." : "Salvar Motor LLM"}</span>
+                  <span className="truncate">{isSavingLlm ? "Salvando..." : "Salvar Motor LLM"}</span>
                 </Button>
               </div>
             </form>
@@ -809,10 +809,13 @@ export function SettingsHub({ onOpenLegacyAIModal }: SettingsHubProps) {
                 />
               </div>
 
-              <div className="flex items-end justify-between gap-3">
-                <div className="text-xs text-slate-400 space-y-0.5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-3 border-t border-slate-800">
+                <div className="text-xs text-slate-400 space-y-0.5 min-w-0 flex-1">
                   <p className="font-medium text-slate-300">Perfil Persistente da Empresa:</p>
-                  <p className="font-mono text-slate-400 truncate max-w-md">
+                  <p
+                    className="font-mono text-slate-400 text-[11px] truncate block"
+                    title={companySettings?.profileDir || `data/autosocial/.profiles/${activeCompany.id}/instagram`}
+                  >
                     {companySettings?.profileDir || `data/autosocial/.profiles/${activeCompany.id}/instagram`}
                   </p>
                 </div>
@@ -821,10 +824,10 @@ export function SettingsHub({ onOpenLegacyAIModal }: SettingsHubProps) {
                   type="submit"
                   size="sm"
                   disabled={isSavingApp}
-                  className="gap-1.5 bg-teal-600 hover:bg-teal-500 text-white shrink-0"
+                  className="gap-1.5 bg-teal-600 hover:bg-teal-500 text-white shrink-0 w-full sm:w-auto active:scale-[0.97]"
                 >
                   <CheckCircle className="h-4 w-4" />
-                  <span>{isSavingApp ? "Salvando..." : "Salvar Preferências do Studio"}</span>
+                  <span className="truncate">{isSavingApp ? "Salvando..." : "Salvar Preferências do Studio"}</span>
                 </Button>
               </div>
             </div>

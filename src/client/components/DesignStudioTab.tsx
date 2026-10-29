@@ -551,6 +551,7 @@ export function DesignStudioTab({ onSwitchToCanva }: DesignStudioTabProps) {
 
             <select
               id="studio-tab-provider"
+              aria-label="Provedor de Imagem IA"
               value={selectedProvider}
               onChange={(e) => setSelectedProvider(e.target.value as StudioImageProvider)}
               className="flex h-9 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-1 text-sm text-slate-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-500"
@@ -564,6 +565,7 @@ export function DesignStudioTab({ onSwitchToCanva }: DesignStudioTabProps) {
 
             <div className="flex gap-2">
               <Input
+                aria-label="Prompt de Background IA"
                 value={imagePrompt}
                 onChange={(e) => setImagePrompt(e.target.value)}
                 placeholder="Descreva o fundo desejado (ex: clínica estética com luz natural)..."

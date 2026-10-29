@@ -4,10 +4,11 @@ title: "Automated Test Suite (Bun Unit/Integration + Playwright E2E)"
 covers:
   - tests/e2e/ai-generation.spec.ts:1-186
   - tests/e2e/companies.spec.ts:1-101
-  - tests/e2e/design-studio.spec.ts:1-98
+  - tests/e2e/design-studio.spec.ts:1-94
   - tests/e2e/export-autosocial.spec.ts:1-88
   - tests/e2e/planner-photos.spec.ts:1-87
   - tests/e2e/settings-hub.spec.ts:1-104
+  - tests/e2e/sidebar-navigation.spec.ts:1-77
   - tests/server/ai-adapters.test.ts:1-116
   - tests/server/ai-routes.test.ts:1-124
   - tests/server/ai-settings.test.ts:1-102
@@ -37,13 +38,15 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 
 ### `tests/e2e/companies.spec.ts` (lines 1-101)
 
-### `tests/e2e/design-studio.spec.ts` (lines 1-98)
+### `tests/e2e/design-studio.spec.ts` (lines 1-94)
 
 ### `tests/e2e/export-autosocial.spec.ts` (lines 1-88)
 
 ### `tests/e2e/planner-photos.spec.ts` (lines 1-87)
 
 ### `tests/e2e/settings-hub.spec.ts` (lines 1-104)
+
+### `tests/e2e/sidebar-navigation.spec.ts` (lines 1-77)
 
 ### `tests/server/ai-adapters.test.ts` (lines 1-116)
 
