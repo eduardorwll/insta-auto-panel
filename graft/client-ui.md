@@ -2,12 +2,16 @@
 node: client-ui
 title: "React 19 + Tailwind v4 + shadcn/ui Frontend Portal"
 covers:
-  - src/client/App.tsx:1-301
-  - src/client/App.tsx:30-292 # function DashboardContent
+  - src/client/App.tsx:1-338
+  - src/client/App.tsx:33-329 # function DashboardContent
   - src/client/components/AISettingsModal.tsx:1-468
   - src/client/components/AISettingsModal.tsx:26-29 # interface AISettingsModalProps
   - src/client/components/AISettingsModal.tsx:31-36 # const PROVIDER_OPTIONS
   - src/client/components/AISettingsModal.tsx:77-467 # function AISettingsModal
+  - src/client/components/CanvaExportTab.tsx:1-321
+  - src/client/components/CanvaExportTab.tsx:20-22 # interface CanvaExportTabProps
+  - src/client/components/CanvaExportTab.tsx:24-30 # function getMonday
+  - src/client/components/CanvaExportTab.tsx:32-320 # function CanvaExportTab
   - src/client/components/CompanyModal.tsx:1-348
   - src/client/components/CompanyModal.tsx:16-20 # interface CompanyModalProps
   - src/client/components/CompanyModal.tsx:22-36 # const defaultForm
@@ -23,6 +27,14 @@ covers:
   - src/client/components/DesignStudioModal.tsx:78-82 # const IMAGE_PROVIDER_OPTIONS
   - src/client/components/DesignStudioModal.tsx:115-149 # function wrapCanvasLines
   - src/client/components/DesignStudioModal.tsx:151-656 # function DesignStudioModal
+  - src/client/components/DesignStudioTab.tsx:1-714
+  - src/client/components/DesignStudioTab.tsx:25-27 # interface DesignStudioTabProps
+  - src/client/components/DesignStudioTab.tsx:29-33 # const TEMPLATE_OPTIONS
+  - src/client/components/DesignStudioTab.tsx:56-60 # const IMAGE_PROVIDER_OPTIONS
+  - src/client/components/DesignStudioTab.tsx:93-101 # const DAY_LABELS
+  - src/client/components/DesignStudioTab.tsx:103-109 # function getMonday
+  - src/client/components/DesignStudioTab.tsx:111-138 # function wrapCanvasLines
+  - src/client/components/DesignStudioTab.tsx:140-713 # function DesignStudioTab
   - src/client/components/PhotoBank.tsx:1-295
   - src/client/components/PhotoBank.tsx:11-11 # const CATEGORIES
   - src/client/components/PhotoBank.tsx:13-294 # function PhotoBank
@@ -32,21 +44,21 @@ covers:
   - src/client/components/PublicationQueue.tsx:32-38 # const STATUS_CONFIG
   - src/client/components/PublicationQueue.tsx:40-46 # function getMonday
   - src/client/components/PublicationQueue.tsx:48-455 # function PublicationQueue
-  - src/client/components/SettingsHub.tsx:1-843
+  - src/client/components/SettingsHub.tsx:1-844
   - src/client/components/SettingsHub.tsx:25-27 # interface SettingsHubProps
   - src/client/components/SettingsHub.tsx:29-45 # interface CompanySettingsData
   - src/client/components/SettingsHub.tsx:47-52 # const LLM_PROVIDER_OPTIONS
   - src/client/components/SettingsHub.tsx:93-97 # const IMAGE_PROVIDER_OPTIONS
   - src/client/components/SettingsHub.tsx:120-121 # const TEMPLATE_OPTIONS
-  - src/client/components/SettingsHub.tsx:127-842 # function SettingsHub
-  - src/client/components/SlidePreview.tsx:1-156
+  - src/client/components/SettingsHub.tsx:127-843 # function SettingsHub
+  - src/client/components/SlidePreview.tsx:1-157
   - src/client/components/SlidePreview.tsx:6-18 # interface SlidePreviewProps
-  - src/client/components/SlidePreview.tsx:20-155 # function SlidePreview
-  - src/client/components/WeekPlanner.tsx:1-826
+  - src/client/components/SlidePreview.tsx:20-156 # function SlidePreview
+  - src/client/components/WeekPlanner.tsx:1-828
   - src/client/components/WeekPlanner.tsx:29-36 # const EDITORIAL_CATEGORIES
   - src/client/components/WeekPlanner.tsx:38-46 # const DAY_LABELS
   - src/client/components/WeekPlanner.tsx:49-55 # function getMonday
-  - src/client/components/WeekPlanner.tsx:57-825 # function WeekPlanner
+  - src/client/components/WeekPlanner.tsx:57-827 # function WeekPlanner
   - src/client/components/ui/badge.tsx:1-33
   - src/client/components/ui/badge.tsx:5-21 # const badgeVariants
   - src/client/components/ui/badge.tsx:24-26 # interface BadgeProps
@@ -133,13 +145,18 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 
 ## Covered Files & Symbols
 
-### `src/client/App.tsx` (lines 1-301)
-- `DashboardContent` (function) → `src/client/App.tsx:30-292`
+### `src/client/App.tsx` (lines 1-338)
+- `DashboardContent` (function) → `src/client/App.tsx:33-329`
 
 ### `src/client/components/AISettingsModal.tsx` (lines 1-468)
 - `AISettingsModalProps` (interface) → `src/client/components/AISettingsModal.tsx:26-29`
 - `PROVIDER_OPTIONS` (const) → `src/client/components/AISettingsModal.tsx:31-36`
 - `AISettingsModal` (function) → `src/client/components/AISettingsModal.tsx:77-467`
+
+### `src/client/components/CanvaExportTab.tsx` (lines 1-321)
+- `CanvaExportTabProps` (interface) → `src/client/components/CanvaExportTab.tsx:20-22`
+- `getMonday` (function) → `src/client/components/CanvaExportTab.tsx:24-30`
+- `CanvaExportTab` (function) → `src/client/components/CanvaExportTab.tsx:32-320`
 
 ### `src/client/components/CompanyModal.tsx` (lines 1-348)
 - `CompanyModalProps` (interface) → `src/client/components/CompanyModal.tsx:16-20`
@@ -159,6 +176,15 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `wrapCanvasLines` (function) → `src/client/components/DesignStudioModal.tsx:115-149`
 - `DesignStudioModal` (function) → `src/client/components/DesignStudioModal.tsx:151-656`
 
+### `src/client/components/DesignStudioTab.tsx` (lines 1-714)
+- `DesignStudioTabProps` (interface) → `src/client/components/DesignStudioTab.tsx:25-27`
+- `TEMPLATE_OPTIONS` (const) → `src/client/components/DesignStudioTab.tsx:29-33`
+- `IMAGE_PROVIDER_OPTIONS` (const) → `src/client/components/DesignStudioTab.tsx:56-60`
+- `DAY_LABELS` (const) → `src/client/components/DesignStudioTab.tsx:93-101`
+- `getMonday` (function) → `src/client/components/DesignStudioTab.tsx:103-109`
+- `wrapCanvasLines` (function) → `src/client/components/DesignStudioTab.tsx:111-138`
+- `DesignStudioTab` (function) → `src/client/components/DesignStudioTab.tsx:140-713`
+
 ### `src/client/components/PhotoBank.tsx` (lines 1-295)
 - `CATEGORIES` (const) → `src/client/components/PhotoBank.tsx:11-11`
 - `PhotoBank` (function) → `src/client/components/PhotoBank.tsx:13-294`
@@ -170,23 +196,23 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `getMonday` (function) → `src/client/components/PublicationQueue.tsx:40-46`
 - `PublicationQueue` (function) → `src/client/components/PublicationQueue.tsx:48-455`
 
-### `src/client/components/SettingsHub.tsx` (lines 1-843)
+### `src/client/components/SettingsHub.tsx` (lines 1-844)
 - `SettingsHubProps` (interface) → `src/client/components/SettingsHub.tsx:25-27`
 - `CompanySettingsData` (interface) → `src/client/components/SettingsHub.tsx:29-45`
 - `LLM_PROVIDER_OPTIONS` (const) → `src/client/components/SettingsHub.tsx:47-52`
 - `IMAGE_PROVIDER_OPTIONS` (const) → `src/client/components/SettingsHub.tsx:93-97`
 - `TEMPLATE_OPTIONS` (const) → `src/client/components/SettingsHub.tsx:120-121`
-- `SettingsHub` (function) → `src/client/components/SettingsHub.tsx:127-842`
+- `SettingsHub` (function) → `src/client/components/SettingsHub.tsx:127-843`
 
-### `src/client/components/SlidePreview.tsx` (lines 1-156)
+### `src/client/components/SlidePreview.tsx` (lines 1-157)
 - `SlidePreviewProps` (interface) → `src/client/components/SlidePreview.tsx:6-18`
-- `SlidePreview` (function) → `src/client/components/SlidePreview.tsx:20-155`
+- `SlidePreview` (function) → `src/client/components/SlidePreview.tsx:20-156`
 
-### `src/client/components/WeekPlanner.tsx` (lines 1-826)
+### `src/client/components/WeekPlanner.tsx` (lines 1-828)
 - `EDITORIAL_CATEGORIES` (const) → `src/client/components/WeekPlanner.tsx:29-36`
 - `DAY_LABELS` (const) → `src/client/components/WeekPlanner.tsx:38-46`
 - `getMonday` (function) → `src/client/components/WeekPlanner.tsx:49-55`
-- `WeekPlanner` (function) → `src/client/components/WeekPlanner.tsx:57-825`
+- `WeekPlanner` (function) → `src/client/components/WeekPlanner.tsx:57-827`
 
 ### `src/client/components/ui/badge.tsx` (lines 1-33)
 - `badgeVariants` (const) → `src/client/components/ui/badge.tsx:5-21`

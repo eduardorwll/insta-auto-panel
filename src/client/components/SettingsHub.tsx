@@ -565,7 +565,8 @@ export function SettingsHub({ onOpenLegacyAIModal }: SettingsHubProps) {
                 <button
                   type="button"
                   onClick={() => setLlmScope("company")}
-                  className={`px-2.5 py-1 rounded text-xs font-medium transition-colors cursor-pointer ${
+                  title={`Configuração específica: ${activeCompany.name}`}
+                  className={`px-2.5 py-1 rounded text-xs font-medium max-w-[130px] truncate transition-colors cursor-pointer ${
                     llmScope === "company"
                       ? "bg-teal-600 text-white"
                       : "text-slate-400 hover:text-white"

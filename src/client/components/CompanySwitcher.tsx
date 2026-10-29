@@ -40,7 +40,7 @@ export function CompanySwitcher() {
             aria-label="Empresa"
             className="w-[240px] justify-between border-slate-700 bg-slate-900 hover:bg-slate-800"
           >
-            <div className="flex items-center gap-2 truncate">
+            <div className="flex items-center gap-2 truncate min-w-0 flex-1">
               {activeCompany ? (
                 <>
                   <span
@@ -50,9 +50,9 @@ export function CompanySwitcher() {
                   <span className="truncate font-medium text-slate-100">{activeCompany.name}</span>
                 </>
               ) : (
-                <div className="flex items-center gap-2 text-slate-400">
-                  <Building2 className="h-4 w-4" />
-                  <span>Selecionar Empresa</span>
+                <div className="flex items-center gap-2 text-slate-400 truncate min-w-0">
+                  <Building2 className="h-4 w-4 shrink-0" />
+                  <span className="truncate">Selecionar Empresa</span>
                 </div>
               )}
             </div>
@@ -80,16 +80,16 @@ export function CompanySwitcher() {
                     onClick={() => setActiveCompanyId(comp.id)}
                     className="flex items-center justify-between py-2 cursor-pointer"
                   >
-                    <div className="flex items-center gap-2 truncate">
+                    <div className="flex items-center gap-2 truncate min-w-0 flex-1">
                       <span
                         className="h-2.5 w-2.5 rounded-full flex-shrink-0"
                         style={{ backgroundColor: comp.primaryColor || "#0D9488" }}
                       />
-                      <div className="flex flex-col truncate">
+                      <div className="flex flex-col truncate min-w-0 flex-1">
                         <span className="text-sm font-medium leading-tight truncate">
                           {comp.name}
                         </span>
-                        <span className="text-xs text-slate-400 leading-tight">
+                        <span className="text-xs text-slate-400 leading-tight truncate">
                           {comp.instagramHandle}
                         </span>
                       </div>

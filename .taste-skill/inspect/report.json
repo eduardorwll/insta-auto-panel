@@ -1,6 +1,6 @@
 {
- "url": "http://localhost:3000",
- "at": "2026-10-29T20:37:04.798Z",
+ "url": "http://localhost:5173",
+ "at": "2026-10-29T21:40:25.995Z",
  "allow": [],
  "viewports": [
   {
@@ -26,13 +26,13 @@
      "h": 900
     },
     "page": {
-     "height": 1253,
-     "screens": 1.4,
-     "words": 254,
-     "img": 0,
+     "height": 1354,
+     "screens": 1.5,
+     "words": 265,
+     "img": 4,
      "video": 0,
      "canvas": 0,
-     "svg": 20,
+     "svg": 24,
      "sections": 0,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
@@ -97,13 +97,14 @@
      ],
      "familyCount": 2,
      "sizes": [
+      11,
       12,
       14,
       16,
       18,
       24
      ],
-     "sizeCount": 5,
+     "sizeCount": 6,
      "notLoaded": [],
      "body": {
       "font": "Instrument Sans",
@@ -118,7 +119,7 @@
       "size": 24,
       "vw": 1.7,
       "font": "Instrument Sans",
-      "text": "Clínica Prime Settings"
+      "text": "Demo Corp"
      },
      "monoShare": 0.07,
      "monoProseShare": 0.07,
@@ -127,17 +128,17 @@
      ],
      "monoSamples": [
       "PRO",
-      "@clinicaprimesettings",
+      "@democorp",
+      "100% IA",
+      "CSV",
       "Semana de 2026-10-26",
-      "1 / 5",
-      "Proporção Instagram 4:5 (1080×1350px)",
-      "1080×1350px (4:5)"
+      "1 / 5"
      ],
      "microLabels": 0,
      "microLabelShare": 0,
      "microSamples": [],
-     "upperShare": 0,
-     "centerShare": 0.18,
+     "upperShare": 0.01,
+     "centerShare": 0.22,
      "smallText": 26
     },
     "eyebrows": [],
@@ -162,7 +163,7 @@
       },
       {
        "color": "#0f172b",
-       "top": 535,
+       "top": 596,
        "hsl": {
         "h": 223,
         "s": 0.48,
@@ -173,19 +174,19 @@
      "textColors": [
       {
        "color": "#90a1b9",
-       "share": 0.27
+       "share": 0.28
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.23
       },
       {
        "color": "#cad5e2",
        "share": 0.22
       },
       {
-       "color": "#ffffff",
-       "share": 0.22
-      },
-      {
        "color": "#e2e8f0",
-       "share": 0.13
+       "share": 0.1
       },
       {
        "color": "#96f7e4",
@@ -204,8 +205,8 @@
      "lowContrast": []
     },
     "buttons": {
-     "count": 15,
-     "inHero": 9,
+     "count": 18,
+     "inHero": 11,
      "radius": 6,
      "height": 32,
      "withShadow": 0,
@@ -213,11 +214,11 @@
      "mono": 0,
      "upper": 0,
      "heroLabels": [
-      "Clínica Prime Settings",
+      "Demo Corp",
       "Arquitetura",
       "Configurar IA",
       "Calendário",
-      "Semana Atual"
+      "Studio Visual (Sem Canva) 100% IA"
      ]
     },
     "surfaces": {
@@ -236,10 +237,10 @@
       "div.space-y-4.pt-4 659px",
       "div.w-full.flex 449px"
      ],
-     "outlinedBoxes": 12,
+     "outlinedBoxes": 13,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 12,
+     "roundedBoxes": 13,
      "boxRadius": 8,
      "squareMedia": 0,
      "roundedMedia": 0,
@@ -250,7 +251,7 @@
        "count": 7,
        "iconTopped": false,
        "rounded": true,
-       "top": 406
+       "top": 470
       }
      ]
     },
@@ -271,22 +272,22 @@
      "w": 1440,
      "h": 900
     },
-    "pageH": 1253,
+    "pageH": 1354,
     "margins": {
      "left": 111,
-     "right": 117
+     "right": 121
     },
     "sections": [
      {
       "sel": "div.rounded-xl.border",
       "tag": "div",
       "top": 85,
-      "height": 141,
-      "words": 13,
+      "height": 157,
+      "words": 17,
       "media": 0,
-      "middle": 458,
+      "middle": 606,
       "heading": {
-       "text": "Clínica Prime Settings",
+       "text": "Demo Corp",
        "size": 24,
        "tag": "h2"
       },
@@ -303,11 +304,11 @@
      {
       "sel": "div.w-full",
       "tag": "div",
-      "top": 250,
-      "height": 979,
-      "words": 205,
+      "top": 266,
+      "height": 1064,
+      "words": 212,
       "media": 0,
-      "middle": 0,
+      "middle": 4,
       "heading": {
        "text": "Editar Post —",
        "size": 16,
@@ -361,12 +362,12 @@
     "stage": false,
     "explains": false,
     "slivers": [],
-    "voidShare": 0.07,
+    "voidShare": 0.06,
     "voidBox": {
      "x": 1140,
-     "y": 600,
+     "y": 660,
      "w": 300,
-     "h": 300
+     "h": 240
     }
    },
    "app": {
@@ -381,8 +382,8 @@
      "h": 61
     },
     "canvas": {
-     "left": 104,
-     "right": 117
+     "left": 111,
+     "right": 121
     },
     "hero": {
      "text": "Social Panel PRO",
@@ -403,22 +404,22 @@
     },
     "charts": 0,
     "layout": {
-     "panels": 10,
-     "firstScreen": 10,
+     "panels": 11,
+     "firstScreen": 11,
      "ragged": [],
      "voids": []
     },
     "tiles": 0,
     "panels": {
-     "count": 15,
+     "count": 16,
      "radii": [
       [
-       8,
+       12,
        7
       ],
       [
-       12,
-       6
+       8,
+       7
       ],
       [
        0,
@@ -460,6 +461,7 @@
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
+      11,
       12,
       14,
       16,
@@ -480,8 +482,9 @@
    "width": 768,
    "height": 1024,
    "load": "load",
-   "screens": 2,
+   "screens": 3,
    "filled": [
+    1,
     1,
     1
    ],
@@ -499,13 +502,13 @@
      "h": 1024
     },
     "page": {
-     "height": 2046,
-     "screens": 2,
-     "words": 254,
-     "img": 0,
+     "height": 2208,
+     "screens": 2.2,
+     "words": 265,
+     "img": 4,
      "video": 0,
      "canvas": 0,
-     "svg": 20,
+     "svg": 24,
      "sections": 0,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
@@ -570,13 +573,14 @@
      ],
      "familyCount": 2,
      "sizes": [
+      11,
       12,
       14,
       16,
       18,
       24
      ],
-     "sizeCount": 5,
+     "sizeCount": 6,
      "notLoaded": [],
      "body": {
       "font": "Instrument Sans",
@@ -591,7 +595,7 @@
       "size": 24,
       "vw": 3.1,
       "font": "Instrument Sans",
-      "text": "Clínica Prime Settings"
+      "text": "Demo Corp"
      },
      "monoShare": 0.07,
      "monoProseShare": 0.07,
@@ -600,17 +604,17 @@
      ],
      "monoSamples": [
       "PRO",
-      "@clinicaprimesettings",
+      "@democorp",
+      "100% IA",
+      "CSV",
       "Semana de 2026-10-26",
-      "1 / 5",
-      "Proporção Instagram 4:5 (1080×1350px)",
-      "1080×1350px (4:5)"
+      "1 / 5"
      ],
      "microLabels": 0,
      "microLabelShare": 0,
      "microSamples": [],
-     "upperShare": 0,
-     "centerShare": 0.18,
+     "upperShare": 0.01,
+     "centerShare": 0.22,
      "smallText": 26
     },
     "eyebrows": [],
@@ -635,7 +639,7 @@
       },
       {
        "color": "#0f172b",
-       "top": 633,
+       "top": 755,
        "hsl": {
         "h": 223,
         "s": 0.48,
@@ -646,19 +650,19 @@
      "textColors": [
       {
        "color": "#90a1b9",
-       "share": 0.27
+       "share": 0.28
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.23
       },
       {
        "color": "#cad5e2",
        "share": 0.22
       },
       {
-       "color": "#ffffff",
-       "share": 0.22
-      },
-      {
        "color": "#e2e8f0",
-       "share": 0.13
+       "share": 0.1
       },
       {
        "color": "#96f7e4",
@@ -677,8 +681,8 @@
      "lowContrast": []
     },
     "buttons": {
-     "count": 15,
-     "inHero": 9,
+     "count": 18,
+     "inHero": 11,
      "radius": 6,
      "height": 32,
      "withShadow": 0,
@@ -686,11 +690,11 @@
      "mono": 0,
      "upper": 0,
      "heroLabels": [
-      "Clínica Prime Settings",
+      "Demo Corp",
       "Arquitetura",
       "Configurar IA",
       "Calendário",
-      "Semana Atual"
+      "Studio Visual (Sem Canva) 100% IA"
      ]
     },
     "surfaces": {
@@ -709,16 +713,23 @@
       "div.space-y-4.pt-4 670px",
       "div.w-full.flex 670px"
      ],
-     "outlinedBoxes": 5,
+     "outlinedBoxes": 13,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 5,
-     "boxRadius": 12,
+     "roundedBoxes": 13,
+     "boxRadius": 8,
      "squareMedia": 0,
      "roundedMedia": 0,
      "mediaRadius": 0,
      "textShadow": 0,
-     "cardRows": []
+     "cardRows": [
+      {
+       "count": 7,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 518
+      }
+     ]
     },
     "heroMedia": [],
     "nav": {
@@ -737,29 +748,29 @@
      "w": 768,
      "h": 1024
     },
-    "pageH": 2046,
+    "pageH": 2208,
     "margins": {
      "left": 31,
-     "right": 37
+     "right": 41
     },
     "sections": [
      {
       "sel": "div.rounded-xl.border",
       "tag": "div",
       "top": 133,
-      "height": 175,
-      "words": 13,
+      "height": 157,
+      "words": 17,
       "media": 0,
-      "middle": 68,
+      "middle": 94,
       "heading": {
-       "text": "Clínica Prime Settings",
+       "text": "Demo Corp",
        "size": 24,
        "tag": "h2"
       },
       "left": 49,
-      "right": 202,
+      "right": 198,
       "textLeft": 49,
-      "textRight": 202,
+      "textRight": 198,
       "fullBleed": false,
       "footer": false,
       "hero": true,
@@ -769,9 +780,9 @@
      {
       "sel": "div.w-full",
       "tag": "div",
-      "top": 332,
-      "height": 1690,
-      "words": 205,
+      "top": 314,
+      "height": 1870,
+      "words": 212,
       "media": 0,
       "middle": 0,
       "heading": {
@@ -837,7 +848,7 @@
     "topbar": null,
     "canvas": {
      "left": 31,
-     "right": 24
+     "right": 41
     },
     "hero": {
      "text": "Social Panel PRO",
@@ -858,26 +869,32 @@
     },
     "charts": 0,
     "layout": {
-     "panels": 3,
-     "firstScreen": 2,
+     "panels": 11,
+     "firstScreen": 10,
      "ragged": [],
      "voids": []
     },
     "tiles": 0,
     "panels": {
-     "count": 8,
+     "count": 16,
      "radii": [
       [
        12,
-       6
+       7
+      ],
+      [
+       8,
+       7
       ],
       [
        0,
        2
       ]
      ],
-     "heavyBorders": 0,
-     "borderSamples": [],
+     "heavyBorders": 1,
+     "borderSamples": [
+      "#00bba7 on #020618 (8.32:1)"
+     ],
      "heavyShadows": 0,
      "softShadows": 0,
      "shadowSamples": [],
@@ -909,6 +926,7 @@
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
+      11,
       12,
       14,
       16,
@@ -950,13 +968,13 @@
      "h": 844
     },
     "page": {
-     "height": 2901,
-     "screens": 3.4,
-     "words": 249,
-     "img": 0,
+     "height": 2943,
+     "screens": 3.5,
+     "words": 257,
+     "img": 4,
      "video": 0,
      "canvas": 0,
-     "svg": 20,
+     "svg": 24,
      "sections": 0,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
@@ -998,9 +1016,9 @@
     },
     "headings": [
      {
-      "text": "Clínica Prime Settings",
-      "words": 3,
-      "chars": 22,
+      "text": "Demo Corp",
+      "words": 2,
+      "chars": 9,
       "lines": 1,
       "size": 24,
       "vw": 6.2,
@@ -1012,8 +1030,8 @@
       "italic": false,
       "mono": false,
       "align": "left",
-      "position": "center",
-      "widthRatio": 0.62,
+      "position": "left",
+      "widthRatio": 0.32,
       "top": 210,
       "tag": "h2",
       "kind": "heading"
@@ -1032,24 +1050,25 @@
      "families": [
       {
        "family": "Instrument Sans",
-       "share": 0.93,
+       "share": 0.94,
        "mono": false
       },
       {
        "family": "ui-monospace",
-       "share": 0.07,
+       "share": 0.06,
        "mono": false
       }
      ],
      "familyCount": 2,
      "sizes": [
+      11,
       12,
       14,
       16,
       18,
       24
      ],
-     "sizeCount": 5,
+     "sizeCount": 6,
      "notLoaded": [],
      "body": {
       "font": "Instrument Sans",
@@ -1064,16 +1083,16 @@
       "size": 24,
       "vw": 6.2,
       "font": "Instrument Sans",
-      "text": "Clínica Prime Settings"
+      "text": "Demo Corp"
      },
-     "monoShare": 0.07,
-     "monoProseShare": 0.07,
+     "monoShare": 0.06,
+     "monoProseShare": 0.06,
      "monoFamilies": [
       "ui-monospace"
      ],
      "monoSamples": [
       "PRO",
-      "@clinicaprimesettings",
+      "@democorp",
       "Semana de 2026-10-26",
       "1 / 5",
       "Proporção Instagram 4:5 (1080×1350px)",
@@ -1083,8 +1102,8 @@
      "microLabelShare": 0,
      "microSamples": [],
      "upperShare": 0,
-     "centerShare": 0.18,
-     "smallText": 25
+     "centerShare": 0.21,
+     "smallText": 29
     },
     "eyebrows": [],
     "numbered": [],
@@ -1108,7 +1127,7 @@
       },
       {
        "color": "#0f172b",
-       "top": 1234,
+       "top": 1252,
        "hsl": {
         "h": 223,
         "s": 0.48,
@@ -1117,7 +1136,7 @@
       },
       {
        "color": "#0f172a",
-       "top": 2280,
+       "top": 2322,
        "hsl": {
         "h": 222,
         "s": 0.47,
@@ -1128,11 +1147,11 @@
      "textColors": [
       {
        "color": "#90a1b9",
-       "share": 0.27
+       "share": 0.29
       },
       {
        "color": "#ffffff",
-       "share": 0.22
+       "share": 0.24
       },
       {
        "color": "#cad5e2",
@@ -1140,7 +1159,7 @@
       },
       {
        "color": "#e2e8f0",
-       "share": 0.13
+       "share": 0.1
       },
       {
        "color": "#96f7e4",
@@ -1159,8 +1178,8 @@
      "lowContrast": []
     },
     "buttons": {
-     "count": 14,
-     "inHero": 4,
+     "count": 17,
+     "inHero": 6,
      "radius": 6,
      "height": 32,
      "withShadow": 0,
@@ -1168,10 +1187,11 @@
      "mono": 0,
      "upper": 0,
      "heroLabels": [
-      "Clínica Prime Settings",
+      "Demo Corp",
       "Configurar IA",
       "Calendário",
-      "Semana Atual"
+      "Studio Visual (Sem Canva)",
+      "Exportar Canva (Com Canva)"
      ]
     },
     "surfaces": {
@@ -1194,7 +1214,7 @@
      "dashed": 0,
      "blurred": 0,
      "roundedBoxes": 15,
-     "boxRadius": 8,
+     "boxRadius": 12,
      "squareMedia": 0,
      "roundedMedia": 0,
      "mediaRadius": 0,
@@ -1204,7 +1224,7 @@
        "count": 7,
        "iconTopped": false,
        "rounded": true,
-       "top": 766
+       "top": 792
       }
      ]
     },
@@ -1225,7 +1245,7 @@
      "w": 390,
      "h": 844
     },
-    "pageH": 2901,
+    "pageH": 2943,
     "margins": {
      "left": 24,
      "right": 24
@@ -1236,7 +1256,7 @@
       "tag": "header",
       "top": 0,
       "height": 161,
-      "words": 8,
+      "words": 7,
       "media": 0,
       "middle": 0,
       "heading": {
@@ -1247,7 +1267,7 @@
       "left": 24,
       "right": 126,
       "textLeft": 61,
-      "textRight": 185,
+      "textRight": 192,
       "fullBleed": false,
       "footer": false,
       "hero": true,
@@ -1258,19 +1278,19 @@
       "sel": "div.rounded-xl.border",
       "tag": "div",
       "top": 185,
-      "height": 249,
-      "words": 13,
+      "height": 265,
+      "words": 17,
       "media": 0,
       "middle": 0,
       "heading": {
-       "text": "Clínica Prime Settings",
+       "text": "Demo Corp",
        "size": 24,
        "tag": "h2"
       },
       "left": 49,
-      "right": 74,
+      "right": 94,
       "textLeft": 49,
-      "textRight": 74,
+      "textRight": 94,
       "fullBleed": false,
       "footer": false,
       "hero": true,
@@ -1280,16 +1300,16 @@
      {
       "sel": "div.min-h-10.h-auto",
       "tag": "div",
-      "top": 458,
-      "height": 154,
-      "words": 10,
+      "top": 474,
+      "height": 164,
+      "words": 18,
       "media": 0,
       "middle": 0,
       "heading": null,
       "left": 31,
-      "right": 31,
-      "textLeft": 118,
-      "textRight": 94,
+      "right": 33,
+      "textLeft": 67,
+      "textRight": 45,
       "fullBleed": false,
       "footer": false,
       "hero": false,
@@ -1299,9 +1319,9 @@
      {
       "sel": "div#radix-_r_5_-content-calendar.ring-offset-slate-950.focus",
       "tag": "div",
-      "top": 628,
-      "height": 2249,
-      "words": 192,
+      "top": 654,
+      "height": 2265,
+      "words": 188,
       "media": 0,
       "middle": 6,
       "heading": {
@@ -1363,7 +1383,7 @@
     "topbar": null,
     "canvas": {
      "left": 24,
-     "right": 8
+     "right": 20
     },
     "hero": {
      "text": "Social Panel PRO",
@@ -1394,11 +1414,11 @@
      "count": 17,
      "radii": [
       [
-       8,
+       12,
        8
       ],
       [
-       12,
+       8,
        7
       ],
       [
@@ -1437,10 +1457,11 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.48,
+     "under13": 0.55,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
+      11,
       12,
       14,
       16,
@@ -1453,12 +1474,23 @@
      "size": 16,
      "top": 16
     },
-    "colourShare": 0.045
+    "colourShare": 0.025
    },
    "consoleErrors": []
   }
  ],
  "findings": [
+  {
+   "level": "WARN",
+   "id": "dev-server",
+   "width": 1440,
+   "message": "This page is served by a development server (Vite, webpack or Next in dev mode).",
+   "fix": "Run the last gate on the production build too (vite build && vite preview, next build && next start, or the built index.html): minifiers and bundlers change the CSS a visitor receives.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
   {
    "level": "WARN",
    "id": "tiny-text",

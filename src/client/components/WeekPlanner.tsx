@@ -54,7 +54,7 @@ function getMonday(d = new Date()): string {
   return date.toISOString().split("T")[0] || "";
 }
 
-export function WeekPlanner() {
+export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: () => void } = {}) {
   const { activeCompany } = useCompany();
   const [weekStartDate, setWeekStartDate] = useState<string>(getMonday());
   const [posts, setPosts] = useState<Post[]>([]);
@@ -352,7 +352,7 @@ export function WeekPlanner() {
       </div>
 
       {/* Grid de Dias da Semana (Segunda a Domingo) */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2.5">
         {posts.map((post, idx) => {
           const isSelected = idx === selectedDayIndex;
           return (
@@ -363,23 +363,25 @@ export function WeekPlanner() {
                 setSelectedDayIndex(idx);
                 setActiveSlideNumber(1);
               }}
-              className={`p-3 rounded-lg border text-left transition-colors cursor-pointer ${
+              className={`p-3 rounded-lg border text-left transition-colors cursor-pointer min-w-0 w-full overflow-hidden flex flex-col justify-between ${
                 isSelected
                   ? "border-teal-500 bg-teal-950/60 text-white"
                   : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-700 hover:bg-slate-800/80"
               }`}
             >
-              <div className="text-sm font-semibold text-slate-200">
-                {DAY_LABELS[post.dayOfWeek]?.split("-")[0]}
+              <div className="w-full min-w-0">
+                <div className="text-xs font-semibold text-slate-400">
+                  {DAY_LABELS[post.dayOfWeek]?.split("-")[0]}
+                </div>
+                <div className="text-sm font-bold text-white truncate mt-1" title={post.theme || "A definir"}>
+                  {post.theme || "A definir"}
+                </div>
               </div>
-              <div className="text-sm font-bold text-white truncate mt-1">
-                {post.theme || "A definir"}
-              </div>
-              <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-800">
-                <Badge variant="outline" className="text-xs px-1.5 py-0 tabular-nums">
+              <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-800/80 w-full min-w-0 gap-1">
+                <Badge variant="outline" className="text-[11px] px-1 py-0 tabular-nums shrink-0">
                   {post.slideCount} slides
                 </Badge>
-                <span className="text-xs text-slate-300 truncate max-w-[74px]">
+                <span className="text-[11px] text-slate-300 truncate max-w-[85px]" title={post.category}>
                   {post.category}
                 </span>
               </div>
@@ -449,7 +451,7 @@ export function WeekPlanner() {
                       type="button"
                       variant="outline"
                       size="sm"
-                      onClick={() => setIsStudioOpen(true)}
+                      onClick={() => (onOpenStudio ? onOpenStudio() : setIsStudioOpen(true))}
                       className="gap-1.5 border-teal-700 bg-teal-950/60 text-teal-200 hover:bg-teal-900 hover:text-white"
                       title="Abrir Studio Visual OpenDesign 4:5 Sem Canva"
                     >
@@ -627,7 +629,7 @@ export function WeekPlanner() {
 
                   {/* 4. Navegador de Lâminas e Editor de Conteúdo */}
                   <div className="space-y-4 pt-4 border-t border-slate-800">
-                    <div className="flex items-center gap-1.5 overflow-x-auto pb-2">
+                    <div className="flex items-center gap-1.5 overflow-x-auto pb-2 max-w-full min-w-0">
                       {activePost.slides.map((s) => {
                         const isSlideActive = s.slideNumber === activeSlideNumber;
                         return (
@@ -635,7 +637,7 @@ export function WeekPlanner() {
                             key={s.id}
                             type="button"
                             onClick={() => setActiveSlideNumber(s.slideNumber)}
-                            className={`px-3 py-1.5 rounded-md text-sm font-semibold whitespace-nowrap transition-colors cursor-pointer ${
+                            className={`px-3 py-1.5 rounded-md text-sm font-semibold whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
                               isSlideActive
                                 ? "bg-teal-700 text-white"
                                 : "bg-slate-800 text-slate-200 hover:bg-slate-700"
@@ -794,7 +796,7 @@ export function WeekPlanner() {
                   type="button"
                   variant="outline"
                   size="sm"
-                  onClick={() => setIsStudioOpen(true)}
+                  onClick={() => (onOpenStudio ? onOpenStudio() : setIsStudioOpen(true))}
                   className="w-full gap-2 border-teal-800 bg-slate-950 text-teal-200 hover:bg-teal-950 hover:text-white"
                 >
                   <Layers className="h-4 w-4 text-teal-400" />

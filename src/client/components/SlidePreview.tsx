@@ -73,19 +73,20 @@ export function SlidePreview({
         </div>
 
         {/* Miolo do Slide (Conteúdo Tipográfico) */}
-        <div className="relative z-10 space-y-3 my-auto">
+        <div className="relative z-10 space-y-3 my-auto w-full min-w-0 overflow-hidden">
           {isCover ? (
             <>
               <div
-                className="inline-block text-xs font-bold px-2 py-0.5 rounded"
+                className="inline-block max-w-full text-xs font-bold px-2 py-0.5 rounded truncate"
+                title={post.theme}
                 style={{ backgroundColor: accent, color: "#090d16" }}
               >
                 {post.theme}
               </div>
-              <h3 className="text-lg font-black leading-tight text-white tracking-tight">
+              <h3 className="text-lg font-black leading-tight text-white tracking-tight break-words line-clamp-3">
                 {currentSlide?.title || "Como Escalar Seu Perfil com Conteúdo Autônomo"}
               </h3>
-              <p className="text-xs text-slate-300 leading-relaxed line-clamp-3">
+              <p className="text-xs text-slate-300 leading-relaxed line-clamp-3 break-words">
                 {currentSlide?.bodyText ||
                   "Descubra o passo a passo validado para gerar carrosséis estratégicos sem perder horas criando artes manuais."}
               </p>
@@ -93,21 +94,21 @@ export function SlidePreview({
           ) : isCta ? (
             <>
               <div
-                className="w-8 h-8 rounded-full flex items-center justify-center mb-1 text-white"
+                className="w-8 h-8 rounded-full flex items-center justify-center mb-1 text-white shrink-0"
                 style={{ backgroundColor: primary }}
               >
                 <Sparkles className="h-4 w-4" />
               </div>
-              <h3 className="text-base font-bold text-white leading-tight">
+              <h3 className="text-base font-bold text-white leading-tight break-words line-clamp-3">
                 {currentSlide?.title || "Pronto para Transformar Seu Negócio?"}
               </h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-slate-300 leading-relaxed line-clamp-4 break-words">
                 {currentSlide?.bodyText ||
                   "Compartilhe este post com quem precisa desse insight ou salve para consultar mais tarde!"}
               </p>
               {currentSlide?.ctaText && (
                 <div
-                  className="mt-2 text-center text-xs font-semibold py-1.5 px-3 rounded text-white"
+                  className="mt-2 text-center text-xs font-semibold py-1.5 px-3 rounded text-white break-words line-clamp-2"
                   style={{ backgroundColor: secondary }}
                 >
                   {currentSlide.ctaText}
@@ -119,10 +120,10 @@ export function SlidePreview({
               <div className="text-xs font-bold tabular-nums" style={{ color: secondary }}>
                 Passo {slideNumber - 1} de {post.slideCount - 2}
               </div>
-              <h3 className="text-base font-bold text-white leading-tight">
+              <h3 className="text-base font-bold text-white leading-tight break-words line-clamp-3">
                 {currentSlide?.title || `Lâmina ${slideNumber}: Título da Etapa`}
               </h3>
-              <p className="text-xs text-slate-300 leading-relaxed line-clamp-4">
+              <p className="text-xs text-slate-300 leading-relaxed line-clamp-4 break-words">
                 {currentSlide?.bodyText ||
                   "Explicação detalhada deste insight prático com exemplos e orientações aplicáveis."}
               </p>
@@ -132,7 +133,7 @@ export function SlidePreview({
 
         {/* Rodapé do Slide */}
         <div className="relative z-10 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-300">
-          <div className="flex items-center gap-1.5 truncate">
+          <div className="flex items-center gap-1.5 truncate min-w-0 max-w-[200px]">
             <span
               className="h-2 w-2 rounded-full flex-shrink-0"
               style={{ backgroundColor: primary }}
@@ -140,7 +141,7 @@ export function SlidePreview({
             <span className="font-semibold text-white truncate">{instagramHandle}</span>
           </div>
 
-          <div className="flex items-center gap-1 text-xs text-slate-400 font-medium">
+          <div className="flex items-center gap-1 text-xs text-slate-400 font-medium shrink-0">
             <span>Arraste</span>
             <ArrowRight className="h-3 w-3" />
           </div>

@@ -4,6 +4,8 @@ import { CompanySwitcher } from "@/client/components/CompanySwitcher";
 import { CompanyModal } from "@/client/components/CompanyModal";
 import { PhotoBank } from "@/client/components/PhotoBank";
 import { WeekPlanner } from "@/client/components/WeekPlanner";
+import { DesignStudioTab } from "@/client/components/DesignStudioTab";
+import { CanvaExportTab } from "@/client/components/CanvaExportTab";
 import { AISettingsModal } from "@/client/components/AISettingsModal";
 import { PublicationQueue } from "@/client/components/PublicationQueue";
 import { SettingsHub } from "@/client/components/SettingsHub";
@@ -25,6 +27,7 @@ import {
   Cpu,
   Send,
   X,
+  FileSpreadsheet,
 } from "lucide-react";
 
 function DashboardContent() {
@@ -32,6 +35,7 @@ function DashboardContent() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
   const [isArchModalOpen, setIsArchModalOpen] = useState(false);
+  const [currentTab, setCurrentTab] = useState("calendar");
 
   if (isLoading) {
     return (
@@ -195,41 +199,74 @@ function DashboardContent() {
               </CardContent>
             </Card>
 
-            {/* Módulos do Sistema (Navegação em Abas — Operate Mode) */}
-            <Tabs defaultValue="calendar" className="w-full">
-              <TabsList className="grid grid-cols-1 sm:grid-cols-4 max-w-3xl w-full">
-                <TabsTrigger value="calendar" className="gap-2 w-full">
-                  <Calendar className="h-4 w-4 shrink-0" />
+            {/* Módulos do Sistema (Navegação em Abas com Transição de Modos — Operate Mode) */}
+            <Tabs value={currentTab} onValueChange={setCurrentTab} className="w-full">
+              <TabsList className="flex flex-wrap items-center justify-start rounded-xl bg-slate-900/90 p-1.5 text-slate-400 border border-slate-800 gap-1.5 w-full">
+                <TabsTrigger value="calendar" className="gap-2 px-3 py-2 text-xs sm:text-sm">
+                  <Calendar className="h-4 w-4 shrink-0 text-slate-400" />
                   <span>Calendário</span>
                 </TabsTrigger>
-                <TabsTrigger value="photos" className="gap-2 w-full">
-                  <ImageIcon className="h-4 w-4 shrink-0" />
+
+                <TabsTrigger
+                  value="studio"
+                  className="gap-2 px-3 py-2 text-xs sm:text-sm font-semibold border border-teal-800/60 bg-teal-950/20 data-[state=active]:bg-teal-700 data-[state=active]:border-teal-500"
+                >
+                  <Layers className="h-4 w-4 shrink-0 text-teal-400" />
+                  <span>Studio Visual (Sem Canva)</span>
+                  <span className="hidden md:inline-block text-[11px] bg-teal-900/80 text-teal-200 px-1.5 py-0.5 rounded font-mono">
+                    100% IA
+                  </span>
+                </TabsTrigger>
+
+                <TabsTrigger
+                  value="canva"
+                  className="gap-2 px-3 py-2 text-xs sm:text-sm border border-sky-800/50 bg-sky-950/20 data-[state=active]:bg-sky-700 data-[state=active]:border-sky-500"
+                >
+                  <FileSpreadsheet className="h-4 w-4 shrink-0 text-sky-400" />
+                  <span>Exportar Canva (Com Canva)</span>
+                  <span className="hidden md:inline-block text-[11px] bg-sky-900/80 text-sky-200 px-1.5 py-0.5 rounded font-mono">
+                    CSV
+                  </span>
+                </TabsTrigger>
+
+                <TabsTrigger value="photos" className="gap-2 px-3 py-2 text-xs sm:text-sm">
+                  <ImageIcon className="h-4 w-4 shrink-0 text-slate-400" />
                   <span>Fotos Base</span>
                 </TabsTrigger>
-                <TabsTrigger value="ai" className="gap-2 w-full">
-                  <Settings className="h-4 w-4 shrink-0" />
-                  <span>Configurações & Módulo IA</span>
-                </TabsTrigger>
-                <TabsTrigger value="queue" className="gap-2 w-full">
-                  <Send className="h-4 w-4 shrink-0" />
+
+                <TabsTrigger value="queue" className="gap-2 px-3 py-2 text-xs sm:text-sm">
+                  <Send className="h-4 w-4 shrink-0 text-slate-400" />
                   <span>Publicação & Fila</span>
+                </TabsTrigger>
+
+                <TabsTrigger value="ai" className="gap-2 px-3 py-2 text-xs sm:text-sm">
+                  <Settings className="h-4 w-4 shrink-0 text-slate-400" />
+                  <span>Configurações & Módulo IA</span>
                 </TabsTrigger>
               </TabsList>
 
               <TabsContent value="calendar" className="mt-4">
-                <WeekPlanner />
+                <WeekPlanner onOpenStudio={() => setCurrentTab("studio")} />
+              </TabsContent>
+
+              <TabsContent value="studio" className="mt-4">
+                <DesignStudioTab onSwitchToCanva={() => setCurrentTab("canva")} />
+              </TabsContent>
+
+              <TabsContent value="canva" className="mt-4">
+                <CanvaExportTab onSwitchToStudio={() => setCurrentTab("studio")} />
               </TabsContent>
 
               <TabsContent value="photos" className="mt-4">
                 <PhotoBank />
               </TabsContent>
 
-              <TabsContent value="ai" className="mt-4">
-                <SettingsHub onOpenLegacyAIModal={() => setIsAIModalOpen(true)} />
-              </TabsContent>
-
               <TabsContent value="queue" className="mt-4">
                 <PublicationQueue />
+              </TabsContent>
+
+              <TabsContent value="ai" className="mt-4">
+                <SettingsHub onOpenLegacyAIModal={() => setIsAIModalOpen(true)} />
               </TabsContent>
             </Tabs>
 
