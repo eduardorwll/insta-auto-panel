@@ -768,7 +768,7 @@ export function WeekPlanner() {
               if (queued) {
                 setEnqueueSuccess(true);
               }
-              fetchSchedule();
+              handleUpdateActivePost("status", queued ? "queued" : "ready");
             }}
           />
         </div>
