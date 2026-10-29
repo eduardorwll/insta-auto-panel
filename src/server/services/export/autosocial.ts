@@ -12,6 +12,7 @@ import path from "path";
 
 const BASE_QUEUE_DIR = path.resolve(import.meta.dirname, "../../../data/autosocial/queue");
 const UPLOADS_DIR = path.resolve(import.meta.dirname, "../../../data/uploads");
+const RENDERS_DIR = path.resolve(import.meta.dirname, "../../../../data/renders");
 
 export interface QueueStatusResult {
   pendingCount: number;
@@ -57,7 +58,25 @@ export async function enqueuePostForAutoSocial(postId: string): Promise<{ succes
 
   const createdFiles: string[] = [descFilePath];
 
-  // 4. Copiar mídias vinculadas (se houver)
+  // 4. Copiar lâminas renderizadas pelo Studio OpenDesign (Sem Canva), se existirem
+  const postRenderDir = path.join(RENDERS_DIR, post.companyId, post.id);
+  try {
+    const renderedEntries = (await fs.readdir(postRenderDir))
+      .filter((f) => f.endsWith(".png"))
+      .sort();
+    for (const entry of renderedEntries) {
+      const sourceRenderPath = path.join(postRenderDir, entry);
+      const targetRenderPath = path.join(dirs.pending, `${filePrefix}_${entry}`);
+      if (await Bun.file(sourceRenderPath).exists()) {
+        await fs.copyFile(sourceRenderPath, targetRenderPath);
+        createdFiles.push(targetRenderPath);
+      }
+    }
+  } catch {
+    // Sem renders gerados ainda para este post
+  }
+
+  // 5. Copiar mídias vinculadas do banco de fotos (se houver)
   let photoIds: string[] = [];
   if (post.selectedPhotoIds) {
     try {

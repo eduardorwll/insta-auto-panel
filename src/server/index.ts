@@ -3,6 +3,7 @@ import { handlePhotosRoutes } from "./routes/photos";
 import { handleSchedulesRoutes } from "./routes/schedules";
 import { handleAIRoutes } from "./routes/ai";
 import { handleExportRoutes } from "./routes/export";
+import { handleDesignRoutes } from "./routes/design";
 import path from "path";
 
 export const server = Bun.serve({
@@ -39,6 +40,10 @@ export const server = Bun.serve({
     const exportResponse = await handleExportRoutes(req, url);
     if (exportResponse) return exportResponse;
 
+    // 6.5. Rotas do Studio Visual OpenDesign Sem Canva (/api/design)
+    const designResponse = await handleDesignRoutes(req, url);
+    if (designResponse) return designResponse;
+
     // 7. Servir diagrama único de arquitetura Archify (/architecture)
     if (url.pathname === "/architecture" || url.pathname === "/architecture.html") {
       const archFile = Bun.file(path.resolve(import.meta.dirname, "../../docs/architecture.html"));
@@ -50,7 +55,7 @@ export const server = Bun.serve({
       return new Response("Diagrama de arquitetura ainda não gerado (rode bun run archify)", { status: 404 });
     }
 
-    // 8. Servir uploads de fotos (/uploads/*)
+    // 8. Servir uploads de fotos (/uploads/*) e renders do Studio (/renders/*)
     if (url.pathname.startsWith("/uploads/")) {
       const uploadFilename = url.pathname.replace("/uploads/", "");
       const uploadsDir = path.resolve(import.meta.dirname, "../../data/uploads");
@@ -60,6 +65,22 @@ export const server = Bun.serve({
         return new Response(file);
       }
       return new Response("Imagem não encontrada", { status: 404 });
+    }
+
+    if (url.pathname.startsWith("/renders/")) {
+      const relRenderPath = url.pathname.replace("/renders/", "");
+      const rendersDir = path.resolve(import.meta.dirname, "../../data/renders");
+      const filePath = path.join(rendersDir, relRenderPath);
+      const file = Bun.file(filePath);
+      if (await file.exists()) {
+        const contentType = filePath.endsWith(".svg")
+          ? "image/svg+xml"
+          : "image/png";
+        return new Response(file, {
+          headers: { "Content-Type": contentType },
+        });
+      }
+      return new Response("Render não encontrado", { status: 404 });
     }
 
     // 6. Servir arquivos estáticos do frontend (dist/) se compilado
