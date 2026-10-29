@@ -86,7 +86,9 @@ export class OpenAIProvider extends BaseAIProvider {
       throw new Error(`Erro na API (${res.status}): ${errorText.substring(0, 150)}`);
     }
 
-    const json = (await res.json()) as any;
+    const json = (await res.json()) as {
+      choices?: Array<{ message?: { content?: string } }>;
+    };
     const content = json.choices?.[0]?.message?.content || "{}";
     const cleanJson = content.replace(/^```json\s*/, "").replace(/\s*```$/, "");
     const parsedObj = JSON.parse(cleanJson);

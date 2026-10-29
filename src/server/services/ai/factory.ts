@@ -2,6 +2,7 @@ import type { AISettings, AIProvider } from "./provider";
 import { GeminiProvider } from "./gemini";
 import { MLStudioProvider } from "./mlstudio";
 import { OpenAIProvider } from "./openai";
+import { ClaudeProvider } from "./claude";
 import { db } from "@/server/db/client";
 import { ai_provider_settings } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
@@ -28,6 +29,9 @@ export class AIProviderFactory {
       case "deepseek":
       case "openrouter":
         return new OpenAIProvider(settings);
+
+      case "claude":
+        return new ClaudeProvider(settings);
 
       default:
         return new GeminiProvider(settings);

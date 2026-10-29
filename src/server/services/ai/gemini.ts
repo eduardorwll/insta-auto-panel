@@ -69,7 +69,9 @@ export class GeminiProvider extends BaseAIProvider {
       throw new Error(`Erro na API do Gemini (${res.status}): ${errorText.substring(0, 150)}`);
     }
 
-    const json = (await res.json()) as any;
+    const json = (await res.json()) as {
+      candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+    };
     const rawContent = json.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
     const cleanJson = rawContent.replace(/^```json\s*/, "").replace(/\s*```$/, "");
     const parsedObj = JSON.parse(cleanJson);

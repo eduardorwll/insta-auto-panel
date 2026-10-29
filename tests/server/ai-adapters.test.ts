@@ -3,6 +3,7 @@ import { AIProviderFactory } from "@/server/services/ai/factory";
 import { MLStudioProvider } from "@/server/services/ai/mlstudio";
 import { GeminiProvider } from "@/server/services/ai/gemini";
 import { OpenAIProvider } from "@/server/services/ai/openai";
+import { ClaudeProvider } from "@/server/services/ai/claude";
 import { carouselResponseSchema } from "@/server/services/ai/provider";
 
 describe("IA Generativa Agnóstica: Adapters e ML Studio API", () => {
@@ -57,6 +58,15 @@ describe("IA Generativa Agnóstica: Adapters e ML Studio API", () => {
       isActive: 1,
     });
     expect(openai).toBeInstanceOf(OpenAIProvider);
+
+    const claude = AIProviderFactory.create({
+      id: "global",
+      provider: "claude",
+      modelName: "claude-sonnet-4-20250514",
+      temperature: 0.7,
+      isActive: 1,
+    });
+    expect(claude).toBeInstanceOf(ClaudeProvider);
   });
 
   it("MLStudioProvider deve validar respostas com Zod garantindo estrutura exata para N lâminas", () => {

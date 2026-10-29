@@ -137,7 +137,7 @@ export async function handleSchedulesRoutes(req: Request, url: URL): Promise<Res
       const body = await req.json();
       const parsed = postUpdateSchema.parse(body);
 
-      const updateValues: Record<string, any> = {};
+      const updateValues: Partial<typeof posts.$inferInsert> = {};
       if (parsed.theme !== undefined) updateValues.theme = parsed.theme;
       if (parsed.category !== undefined) updateValues.category = parsed.category;
       if (parsed.status !== undefined) updateValues.status = parsed.status;

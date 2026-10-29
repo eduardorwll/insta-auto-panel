@@ -81,7 +81,9 @@ export class MLStudioProvider extends BaseAIProvider {
       throw new Error(`Erro na API do ML Studio (HTTP ${res.status}): ${errorText.substring(0, 150)}`);
     }
 
-    const json = (await res.json()) as any;
+    const json = (await res.json()) as {
+      choices?: Array<{ message?: { content?: string } }>;
+    };
     const content = json.choices?.[0]?.message?.content || "";
 
     // Parse e sanitização do JSON retornado

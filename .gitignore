@@ -69,3 +69,17 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+# prowl-agent: derived state
+.prowl/index.db*
+.prowl/index-refresh.lock
+.prowl/cache/
+.prowl/logs/
+.prowl/editor/
+.prowl/setup-applies.json
+.prowl-setup.lock
+# /prowl-agent: derived state
+
+# Archify transient receipts
+docs/*.finalize*.json
+docs/*.browser-check.json
+docs/*.delivery.json
