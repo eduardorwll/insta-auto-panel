@@ -768,7 +768,7 @@ export function WeekPlanner() {
               if (queued) {
                 setEnqueueSuccess(true);
               }
-              handleUpdateActivePost("status", queued ? "queued" : "ready");
+              handleUpdateActivePost("status", queued ? "queued" : "ready_canva");
             }}
           />
         </div>

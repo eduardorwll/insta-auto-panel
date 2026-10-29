@@ -17,14 +17,6 @@
   "15": "vite.config.ts",
   "16": "main.tsx",
   "17": "prowl",
-  "18": "GEMINI.md",
-  "19": "1. Arquitetura e Stack Obrigatória",
-  "20": "2.1. Regra de Commits Atômicos Obrigatórios",
-  "21": "2.2. Regra de Multi-Branches com Subagentes (Git Worktrees)",
-  "22": "2.3. Regra de Auto-Teste Web (Playwright Headless & Console Limpo)",
-  "23": "2.4. Regra de Checkpoints Humanos Obrigatórios (HITL — Human-in-the-Loop)",
-  "24": "2. Regras Operacionais Mandatórias do Repositório",
-  "25": "3. Herança das Regras do Sandbox (`~/Sandbox/.agents/rules/`)",
-  "26": "Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente",
-  "27": "vite-env.d.ts"
+  "27": "vite-env.d.ts",
+  "28": "image-providers.test.ts"
 }
