@@ -83,7 +83,10 @@ describe("Schema e Integridade: Calendário, Posts Dinâmicos (3 a 10 Slides) e 
         title TEXT,
         body_text TEXT,
         cta_text TEXT,
-        assigned_photo_id TEXT REFERENCES photo_assets(id) ON DELETE SET NULL
+        assigned_photo_id TEXT REFERENCES photo_assets(id) ON DELETE SET NULL,
+        template_id TEXT DEFAULT 'modern-bold',
+        rendered_image_url TEXT,
+        image_prompt TEXT
       );
     `);
   });

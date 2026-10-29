@@ -55,6 +55,32 @@ export type AIProviderName = (typeof AI_PROVIDERS)[number];
 export const aiProviderSchema = z.enum(AI_PROVIDERS);
 
 /**
+ * Provedores variáveis de IA de Imagem (Marco 6 — Custo-Benefício Sem Canva)
+ */
+export const IMAGE_PROVIDERS = [
+  "pollinations",
+  "fal-flux",
+  "openrouter-image",
+  "gemini-imagen",
+  "openai-image",
+  "comfyui-local",
+] as const;
+export type ImageProviderName = (typeof IMAGE_PROVIDERS)[number];
+export const imageProviderSchema = z.enum(IMAGE_PROVIDERS);
+
+/**
+ * Templates determinísticos 4:5 (1080x1350) do OpenDesign Engine (Modo Persuade)
+ */
+export const DESIGN_TEMPLATES = [
+  "modern-bold",
+  "editorial-clean",
+  "dark-neon",
+  "split-photo",
+] as const;
+export type DesignTemplateId = (typeof DESIGN_TEMPLATES)[number];
+export const designTemplateSchema = z.enum(DESIGN_TEMPLATES);
+
+/**
  * Tabela de Empresas (Multi-Tenant)
  */
 export const companies = sqliteTable("companies", {
@@ -139,6 +165,9 @@ export const post_slides = sqliteTable("post_slides", {
   assignedPhotoId: text("assigned_photo_id").references(() => photo_assets.id, {
     onDelete: "set null",
   }),
+  templateId: text("template_id").default("modern-bold"),
+  renderedImageUrl: text("rendered_image_url"),
+  imagePrompt: text("image_prompt"),
 });
 
 /**
@@ -260,6 +289,9 @@ export const postSlideInsertSchema = z.object({
   bodyText: z.string().optional().nullable(),
   ctaText: z.string().optional().nullable(),
   assignedPhotoId: z.string().optional().nullable(),
+  templateId: designTemplateSchema.optional().nullable().default("modern-bold"),
+  renderedImageUrl: z.string().optional().nullable(),
+  imagePrompt: z.string().optional().nullable(),
 });
 
 export const aiProviderSettingsInsertSchema = z.object({
