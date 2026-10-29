@@ -1,8 +1,222 @@
+import React, { useState } from "react";
+import { CompanyProvider, useCompany } from "@/client/context/CompanyContext";
+import { CompanySwitcher } from "@/client/components/CompanySwitcher";
+import { CompanyModal } from "@/client/components/CompanyModal";
+import { Button } from "@/client/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/client/components/ui/card";
+import { Badge } from "@/client/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/client/components/ui/tabs";
+import {
+  Sparkles,
+  Calendar,
+  Image as ImageIcon,
+  Bot,
+  ExternalLink,
+  MessageCircle,
+  Palette,
+  Layers,
+  PlusCircle,
+} from "lucide-react";
+
+function DashboardContent() {
+  const { activeCompany, isLoading } = useCompany();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+      {/* Topbar Fixa */}
+      <header className="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/80 backdrop-blur-md px-6 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2.5">
+            <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-amber-500 via-rose-500 to-indigo-600 flex items-center justify-center shadow-md">
+              <Sparkles className="h-4 w-4 text-white" />
+            </div>
+            <div>
+              <h1 className="text-base font-bold tracking-tight text-white flex items-center gap-2">
+                Social Panel <span className="text-xs bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 px-1.5 py-0.5 rounded font-mono">PRO</span>
+              </h1>
+            </div>
+          </div>
+
+          <div className="h-4 w-px bg-slate-800 hidden md:block" />
+
+          {/* Company Switcher */}
+          <CompanySwitcher />
+        </div>
+
+        <div className="flex items-center gap-3">
+          <Badge variant="outline" className="text-xs border-slate-700 text-slate-400 gap-1.5 hidden sm:flex">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            Bun + SQLite WAL
+          </Badge>
+        </div>
+      </header>
+
+      {/* Área Principal */}
+      <main className="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
+        {!activeCompany ? (
+          <div className="flex flex-col items-center justify-center py-20 text-center space-y-4">
+            <div className="p-4 rounded-full bg-slate-900 border border-slate-800 text-slate-400">
+              <Layers className="h-10 w-10 text-indigo-400" />
+            </div>
+            <div className="max-w-md space-y-2">
+              <h2 className="text-xl font-semibold text-white">Nenhuma Empresa Selecionada</h2>
+              <p className="text-sm text-slate-400">
+                Cadastre sua primeira empresa ou selecione uma conta no menu superior para gerenciar os cronogramas semanais e Brand Kit.
+              </p>
+            </div>
+            <Button onClick={() => setIsModalOpen(true)} className="gap-2">
+              <PlusCircle className="h-4 w-4" />
+              Cadastrar Primeira Empresa
+            </Button>
+            <CompanyModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+          </div>
+        ) : (
+          <>
+            {/* Resumo da Empresa Ativa & Brand Kit */}
+            <Card className="border-slate-800 bg-slate-900/60 backdrop-blur">
+              <CardContent className="p-6">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <h2 className="text-2xl font-bold text-white tracking-tight">{activeCompany.name}</h2>
+                      <Badge variant="secondary" className="font-mono text-indigo-400 border border-indigo-900/50">
+                        {activeCompany.instagramHandle}
+                      </Badge>
+                      <Badge variant="outline" className="text-xs text-slate-400 border-slate-700">
+                        {activeCompany.niche}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-slate-400 max-w-2xl">
+                      <span className="text-slate-300 font-medium">Tom de Voz:</span> {activeCompany.toneOfVoice}
+                    </p>
+                  </div>
+
+                  {/* Visual Brand Kit Swatches */}
+                  <div className="flex items-center gap-4 bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
+                    <div className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                      <Palette className="h-3.5 w-3.5 text-indigo-400" />
+                      <span>Brand Kit:</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div
+                        title={`Primária: ${activeCompany.primaryColor}`}
+                        className="h-6 w-6 rounded-md shadow border border-white/10"
+                        style={{ backgroundColor: activeCompany.primaryColor || "#6366F1" }}
+                      />
+                      <div
+                        title={`Secundária: ${activeCompany.secondaryColor}`}
+                        className="h-6 w-6 rounded-md shadow border border-white/10"
+                        style={{ backgroundColor: activeCompany.secondaryColor || "#EC4899" }}
+                      />
+                      <div
+                        title={`Fundo: ${activeCompany.backgroundColor}`}
+                        className="h-6 w-6 rounded-md shadow border border-white/10"
+                        style={{ backgroundColor: activeCompany.backgroundColor || "#0F172A" }}
+                      />
+                      <div
+                        title={`Destaque: ${activeCompany.accentColor}`}
+                        className="h-6 w-6 rounded-md shadow border border-white/10"
+                        style={{ backgroundColor: activeCompany.accentColor || "#10B981" }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Badges de Links & Conversão */}
+                <div className="mt-4 pt-4 border-t border-slate-800/60 flex items-center gap-4 text-xs text-slate-400 flex-wrap">
+                  {activeCompany.whatsappNumber && (
+                    <span className="flex items-center gap-1.5 text-emerald-400">
+                      <MessageCircle className="h-3.5 w-3.5" />
+                      {activeCompany.whatsappNumber}
+                    </span>
+                  )}
+                  {activeCompany.websiteUrl && (
+                    <a
+                      href={activeCompany.websiteUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-1 hover:text-indigo-400 transition-colors"
+                    >
+                      <ExternalLink className="h-3.5 w-3.5" />
+                      Bio/Site
+                    </a>
+                  )}
+                  {activeCompany.canvaTemplateId && (
+                    <span className="flex items-center gap-1 font-mono text-slate-500">
+                      Canva ID: {activeCompany.canvaTemplateId}
+                    </span>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Módulos do Sistema (Navegação em Abas) */}
+            <Tabs defaultValue="calendar" className="w-full">
+              <TabsList className="grid grid-cols-3 max-w-md">
+                <TabsTrigger value="calendar" className="gap-2">
+                  <Calendar className="h-4 w-4" />
+                  <span>Calendário</span>
+                </TabsTrigger>
+                <TabsTrigger value="photos" className="gap-2">
+                  <ImageIcon className="h-4 w-4" />
+                  <span>Fotos Base</span>
+                </TabsTrigger>
+                <TabsTrigger value="ai" className="gap-2">
+                  <Bot className="h-4 w-4" />
+                  <span>Módulo IA</span>
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="calendar" className="mt-4">
+                <Card className="border-slate-800 bg-slate-900/40 p-8 text-center space-y-2">
+                  <Calendar className="h-8 w-8 text-indigo-400 mx-auto opacity-80" />
+                  <CardTitle className="text-lg">Planejador Semanal de Posts</CardTitle>
+                  <CardDescription>
+                    Seletor dinâmico de lâminas (3 a 10 slides), categorização editorial e geração autônoma de conteúdo (Marco 3).
+                  </CardDescription>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="photos" className="mt-4">
+                <Card className="border-slate-800 bg-slate-900/40 p-8 text-center space-y-2">
+                  <ImageIcon className="h-8 w-8 text-rose-400 mx-auto opacity-80" />
+                  <CardTitle className="text-lg">Banco de Fotos Base da Empresa</CardTitle>
+                  <CardDescription>
+                    Galeria visual isolada para fotos do especialista, produtos, logotipos e texturas de fundo (Marco 3).
+                  </CardDescription>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="ai" className="mt-4">
+                <Card className="border-slate-800 bg-slate-900/40 p-8 text-center space-y-2">
+                  <Bot className="h-8 w-8 text-emerald-400 mx-auto opacity-80" />
+                  <CardTitle className="text-lg">IA Generativa Agnóstica</CardTitle>
+                  <CardDescription>
+                    Configuração multi-provedor (Gemini, OpenAI, Claude, Groq, Ollama) com saídas estruturadas adaptativas (Marco 4).
+                  </CardDescription>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </>
+        )}
+      </main>
+    </div>
+  );
+}
+
 export default function App() {
   return (
-    <main style={{ padding: "2rem", fontFamily: "system-ui, sans-serif" }}>
-      <h1>Social Panel PRO</h1>
-      <p>Painel de Automação de Conteúdo Multi-Conta para Instagram</p>
-    </main>
+    <CompanyProvider>
+      <DashboardContent />
+    </CompanyProvider>
   );
 }
