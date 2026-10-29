@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1793297719.337275,
-    "seen": 1793298581.3426085,
-    "ast_hash": "2a940a4cc1a31a08d93038f5a83fb3ea",
+    "mtime": 1793298946.81867,
+    "seen": 1793298955.025942,
+    "ast_hash": "72f816ebd5486f020ffd1666418c705b",
     "semantic_hash": ""
   },
   "playwright.config.ts": {
@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "src/client/App.tsx": {
-    "mtime": 1793297415.3881195,
-    "seen": 1793298581.3426104,
-    "ast_hash": "3c3bb51e921387e03ca2af53ae9ac0e9",
+    "mtime": 1793298944.9585886,
+    "seen": 1793298955.0259583,
+    "ast_hash": "0c94435e36bfed244a6e19042d94ec78",
     "semantic_hash": ""
   },
   "src/client/components/AISettingsModal.tsx": {
@@ -204,9 +204,9 @@
     "semantic_hash": ""
   },
   "src/server/index.ts": {
-    "mtime": 1793298515.4758434,
-    "seen": 1793298581.342636,
-    "ast_hash": "b627e26b250150016464ff9ad00e2cc2",
+    "mtime": 1793298941.8444526,
+    "seen": 1793298955.0264509,
+    "ast_hash": "3fddd85e47881bd1521dd509c805144a",
     "semantic_hash": ""
   },
   "src/server/routes/ai.ts": {
@@ -390,9 +390,9 @@
     "semantic_hash": ""
   },
   "vite.config.ts": {
-    "mtime": 1793297713.387013,
-    "seen": 1793298581.3426652,
-    "ast_hash": "cd1ea0bc7f976786727890d62f92036e",
+    "mtime": 1793298943.686533,
+    "seen": 1793298955.026959,
+    "ast_hash": "5718438c9c53d47c236b83d9f6fced35",
     "semantic_hash": ""
   },
   "AGENTS.md": {
@@ -441,6 +441,42 @@
     "mtime": 1793295553.1356535,
     "seen": 1793298581.3426723,
     "ast_hash": "f829b914fc47cfc9c0747c119c27cf1b",
+    "semantic_hash": ""
+  },
+  ".archify/architecture/candidate.json": {
+    "mtime": 1793298847.396325,
+    "seen": 1793298955.025846,
+    "ast_hash": "75d6f4c7638ece55965c208c1869c729",
+    "semantic_hash": ""
+  },
+  "docs/architecture.browser-check.json": {
+    "mtime": 1793298902.9766736,
+    "seen": 1793298955.025852,
+    "ast_hash": "4c579b49fa7578b3b156a14298c268d5",
+    "semantic_hash": ""
+  },
+  "docs/architecture.delivery.json": {
+    "mtime": 1793298901.4106853,
+    "seen": 1793298955.0258543,
+    "ast_hash": "52fb180f78d080d5620c172587506024",
+    "semantic_hash": ""
+  },
+  "docs/architecture.finalize-summary.json": {
+    "mtime": 1793298903.013397,
+    "seen": 1793298955.025856,
+    "ast_hash": "f731f4f70b96d0e39e9e40ef992fb05d",
+    "semantic_hash": ""
+  },
+  "docs/architecture.finalize.json": {
+    "mtime": 1793298903.002755,
+    "seen": 1793298955.025857,
+    "ast_hash": "8b25127ac531d9a95e7a422580166632",
+    "semantic_hash": ""
+  },
+  "docs/architecture.html": {
+    "mtime": 1793298901.324675,
+    "seen": 1793298955.027024,
+    "ast_hash": "542b707f591f193ef9612c031d213018",
     "semantic_hash": ""
   }
 }
