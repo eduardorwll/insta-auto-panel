@@ -2,6 +2,7 @@ import { handleCompaniesRoutes } from "./routes/companies";
 import { handlePhotosRoutes } from "./routes/photos";
 import { handleSchedulesRoutes } from "./routes/schedules";
 import { handleAIRoutes } from "./routes/ai";
+import { handleExportRoutes } from "./routes/export";
 import path from "path";
 
 export const server = Bun.serve({
@@ -34,7 +35,11 @@ export const server = Bun.serve({
     const aiResponse = await handleAIRoutes(req, url);
     if (aiResponse) return aiResponse;
 
-    // 6. Servir uploads de fotos (/uploads/*)
+    // 6. Rotas de Exportação e Publicação (/api/export)
+    const exportResponse = await handleExportRoutes(req, url);
+    if (exportResponse) return exportResponse;
+
+    // 7. Servir uploads de fotos (/uploads/*)
     if (url.pathname.startsWith("/uploads/")) {
       const uploadFilename = url.pathname.replace("/uploads/", "");
       const uploadsDir = path.resolve(import.meta.dirname, "../../data/uploads");

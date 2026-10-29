@@ -5,6 +5,7 @@ import { CompanyModal } from "@/client/components/CompanyModal";
 import { PhotoBank } from "@/client/components/PhotoBank";
 import { WeekPlanner } from "@/client/components/WeekPlanner";
 import { AISettingsModal } from "@/client/components/AISettingsModal";
+import { PublicationQueue } from "@/client/components/PublicationQueue";
 import { Button } from "@/client/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/client/components/ui/card";
 import { Badge } from "@/client/components/ui/badge";
@@ -21,6 +22,7 @@ import {
   PlusCircle,
   Settings,
   Cpu,
+  Send,
 } from "lucide-react";
 
 function DashboardContent() {
@@ -177,7 +179,7 @@ function DashboardContent() {
 
             {/* Módulos do Sistema (Navegação em Abas) */}
             <Tabs defaultValue="calendar" className="w-full">
-              <TabsList className="grid grid-cols-3 max-w-md">
+              <TabsList className="grid grid-cols-2 sm:grid-cols-4 max-w-xl">
                 <TabsTrigger value="calendar" className="gap-2">
                   <Calendar className="h-4 w-4" />
                   <span>Calendário</span>
@@ -189,6 +191,10 @@ function DashboardContent() {
                 <TabsTrigger value="ai" className="gap-2">
                   <Bot className="h-4 w-4" />
                   <span>Módulo IA</span>
+                </TabsTrigger>
+                <TabsTrigger value="queue" className="gap-2">
+                  <Send className="h-4 w-4" />
+                  <span>Publicação & Fila</span>
                 </TabsTrigger>
               </TabsList>
 
@@ -222,6 +228,10 @@ function DashboardContent() {
                     </Button>
                   </div>
                 </Card>
+              </TabsContent>
+
+              <TabsContent value="queue" className="mt-4">
+                <PublicationQueue />
               </TabsContent>
             </Tabs>
 
