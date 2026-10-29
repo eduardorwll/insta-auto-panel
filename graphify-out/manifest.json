@@ -396,21 +396,21 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1793302496.342049,
-    "seen": 1793302585.2418203,
-    "ast_hash": "83d21ef1fb5e36d810b3f384eca9d98f",
+    "mtime": 1793303006.5935543,
+    "seen": 1793303185.9415627,
+    "ast_hash": "b83188e2d67bc66d3da94d196c257eb8",
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1793302496.342049,
-    "seen": 1793302585.2418215,
-    "ast_hash": "83d21ef1fb5e36d810b3f384eca9d98f",
+    "mtime": 1793303006.5935543,
+    "seen": 1793303185.941564,
+    "ast_hash": "b83188e2d67bc66d3da94d196c257eb8",
     "semantic_hash": ""
   },
   "GEMINI.md": {
-    "mtime": 1793302496.342049,
-    "seen": 1793302585.2418225,
-    "ast_hash": "83d21ef1fb5e36d810b3f384eca9d98f",
+    "mtime": 1793303006.5935543,
+    "seen": 1793303185.941565,
+    "ast_hash": "b83188e2d67bc66d3da94d196c257eb8",
     "semantic_hash": ""
   },
   "README.md": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "plano-fluxo-desenvolvimento-e-testes-vite.md": {
-    "mtime": 1793302553.4735625,
-    "seen": 1793302585.241874,
-    "ast_hash": "c2097bce3ea61d2a8989a0ec97532f05",
+    "mtime": 1793303160.849375,
+    "seen": 1793303185.9416153,
+    "ast_hash": "7228b76107f1b39ff979fd1648e6fde9",
     "semantic_hash": ""
   },
   "requisitos-planejamento-automacao-instagram.md": {
@@ -468,38 +468,38 @@
     "semantic_hash": ""
   },
   "graft/INDEX.md": {
-    "mtime": 1793302647.557706,
-    "seen": 1793302648.5559626,
+    "mtime": 1793303184.771433,
+    "seen": 1793303185.9415956,
     "ast_hash": "24d57fcdfee675618ddee283f33fdddc",
     "semantic_hash": ""
   },
   "graft/client-ui.md": {
-    "mtime": 1793302647.557706,
-    "seen": 1793302648.555964,
+    "mtime": 1793303184.771433,
+    "seen": 1793303185.941597,
     "ast_hash": "0357cf9ceeb15ea47741382436e2b0f0",
     "semantic_hash": ""
   },
   "graft/server-db.md": {
-    "mtime": 1793302647.554706,
-    "seen": 1793302648.5559652,
+    "mtime": 1793303184.768433,
+    "seen": 1793303185.941598,
     "ast_hash": "dab01c98444178a352acfeeee3f80108",
     "semantic_hash": ""
   },
   "graft/server-routes.md": {
-    "mtime": 1793302647.554706,
-    "seen": 1793302648.5559661,
+    "mtime": 1793303184.768433,
+    "seen": 1793303185.941599,
     "ast_hash": "e32b98e8fff2b92958c639c667d63bd2",
     "semantic_hash": ""
   },
   "graft/server-services.md": {
-    "mtime": 1793302647.555706,
-    "seen": 1793302648.5559673,
+    "mtime": 1793303184.769433,
+    "seen": 1793303185.9416,
     "ast_hash": "3fd1ae9461ed2e7b769be878f376bf21",
     "semantic_hash": ""
   },
   "graft/tests-suite.md": {
-    "mtime": 1793302647.557706,
-    "seen": 1793302648.5559683,
+    "mtime": 1793303184.771433,
+    "seen": 1793303185.941601,
     "ast_hash": "7a6aa972b94c52862ad134499c38172f",
     "semantic_hash": ""
   },
@@ -511,14 +511,14 @@
   },
   "drizzle/0000_loud_stature.sql": {
     "mtime": 1793293038.7380862,
-    "seen": 1793302009.4621105,
-    "ast_hash": "",
+    "seen": 1793303218.4983885,
+    "ast_hash": "3cd089c9a16fbfc59483d6929e80afc4",
     "semantic_hash": ""
   },
   ".delegate/config.json": {
-    "mtime": 1793302338.5850723,
-    "seen": 1793302585.2406697,
-    "ast_hash": "52f714e22a75eb685285ef10034b168d",
+    "mtime": 1793302857.8029811,
+    "seen": 1793303185.9403687,
+    "ast_hash": "48ed4bf496b07d37c0c9d01f8ab7a664",
     "semantic_hash": ""
   },
   "scripts/caveman.ts": {
