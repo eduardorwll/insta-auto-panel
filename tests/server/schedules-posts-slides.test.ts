@@ -32,6 +32,9 @@ describe("Schema e Integridade: Calendário, Posts Dinâmicos (3 a 10 Slides) e 
         whatsapp_default_message TEXT,
         website_url TEXT,
         canva_template_id TEXT,
+        seo_display_name TEXT,
+        bio_text TEXT,
+        target_keywords TEXT,
         created_at INTEGER
       );
     `);
@@ -70,6 +73,7 @@ describe("Schema e Integridade: Calendário, Posts Dinâmicos (3 a 10 Slides) e 
         slide_count INTEGER NOT NULL DEFAULT 5,
         status TEXT DEFAULT 'draft',
         caption TEXT,
+        alt_text TEXT,
         scheduled_time TEXT DEFAULT '09:00',
         selected_photo_ids TEXT,
         created_at INTEGER

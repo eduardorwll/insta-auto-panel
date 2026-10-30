@@ -79,7 +79,7 @@ test.describe("M2 E2E: Navegação, Company Switcher e Cadastro de Empresa", () 
     await expect(page.getByRole("heading", { name: /Cadastrar Nova Empresa/i })).not.toBeVisible();
     await expect(page.getByRole("heading", { name: "Alpha Odonto E2E" })).toBeVisible();
     await expect(page.getByText("@alphaodonto").first()).toBeVisible();
-    await expect(page.getByText("Odontologia Estética")).toBeVisible();
+    await expect(page.getByText("Odontologia Estética", { exact: true })).toBeVisible();
     await expect(page.getByText("5511999998888")).toBeVisible();
 
     // 9. Trocar de empresa via switcher

@@ -97,6 +97,9 @@ export const companies = sqliteTable("companies", {
   whatsappDefaultMessage: text("whatsapp_default_message"),
   websiteUrl: text("website_url"),
   canvaTemplateId: text("canva_template_id"),
+  seoDisplayName: text("seo_display_name"),
+  bioText: text("bio_text"),
+  targetKeywords: text("target_keywords"),
   createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`),
 });
 
@@ -146,6 +149,7 @@ export const posts = sqliteTable("posts", {
   slideCount: integer("slide_count").notNull().default(5), // Variável dinâmica (3 a 10 lâminas)
   status: text("status").default("draft"),
   caption: text("caption"),
+  altText: text("alt_text"),
   scheduledTime: text("scheduled_time").default("09:00"),
   selectedPhotoIds: text("selected_photo_ids"), // JSON array serializado
   createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`),
@@ -250,6 +254,9 @@ export const companyInsertSchema = z.object({
   whatsappDefaultMessage: z.string().optional().nullable(),
   websiteUrl: z.string().url().optional().nullable().or(z.literal("")),
   canvaTemplateId: z.string().optional().nullable(),
+  seoDisplayName: z.string().optional().nullable(),
+  bioText: z.string().optional().nullable(),
+  targetKeywords: z.string().optional().nullable(),
 });
 
 export const photoAssetInsertSchema = z.object({
@@ -279,6 +286,7 @@ export const postInsertSchema = z.object({
   slideCount: z.number().int().min(3, "Mínimo de 3 lâminas").max(10, "Máximo de 10 lâminas").default(5),
   status: postStatusSchema.default("draft"),
   caption: z.string().optional().nullable(),
+  altText: z.string().optional().nullable(),
   scheduledTime: z.string().optional().default("09:00"),
   selectedPhotoIds: z.array(z.string()).optional().nullable(),
 });

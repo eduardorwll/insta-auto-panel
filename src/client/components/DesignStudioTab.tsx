@@ -410,6 +410,7 @@ export function DesignStudioTab({
           slideCount: activePost.slideCount,
           status: activePost.status,
           caption: activePost.caption,
+          altText: activePost.altText,
           scheduledTime: activePost.scheduledTime || "09:00",
         }),
       });
@@ -461,7 +462,10 @@ export function DesignStudioTab({
       const updatedPosts = [...posts];
       updatedPosts[selectedDayIndex] = updatedPost;
       setPosts(updatedPosts);
-      setStatusMessage("Post preenchido pela IA com sugestões calibradas e fotos da marca!");
+      if (json.data.suggestedImagePrompt) {
+        setImagePrompt(json.data.suggestedImagePrompt);
+      }
+      setStatusMessage("Post otimizado com IA (Instagram SEO MATCH)! Legenda Search-First, Alt Text e background sugerido.");
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Erro na geração";
       setStatusMessage(`Erro: ${msg}`);
@@ -1108,6 +1112,29 @@ export function DesignStudioTab({
               placeholder="Legenda completa do post gerada com IA ou personalizada..."
               className="w-full rounded-md border border-slate-700 bg-slate-950 p-2.5 text-xs text-slate-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-500 font-sans"
             />
+
+            {/* Campo de Alt Text para Instagram SEO / Computer Vision (MATCH Framework) */}
+            <div className="pt-2 border-t border-slate-800 space-y-1.5">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="post-alt-text" className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+                  <Sparkles className="h-3.5 w-3.5 text-teal-400" />
+                  <span>Alt Text (Computer Vision & Acessibilidade)</span>
+                </Label>
+                <Badge variant="outline" className="text-[10px] text-teal-300 border-teal-800 font-mono">
+                  MATCH C
+                </Badge>
+              </div>
+              <Input
+                id="post-alt-text"
+                value={activePost?.altText || ""}
+                onChange={(e) => handleUpdateActivePost("altText", e.target.value)}
+                placeholder="Texto alternativo descrevendo a imagem da capa com a palavra-chave primária..."
+                className="bg-slate-950 text-slate-100 border-slate-700 text-xs h-8"
+              />
+              <p className="text-[11px] text-slate-400">
+                O algoritmo do Instagram confere se o Alt Text e a imagem correspondem à legenda. Correspondências exatas elevam o ranking de busca.
+              </p>
+            </div>
 
             <div className="flex items-center justify-between pt-2">
               <div className="text-xs text-slate-400">

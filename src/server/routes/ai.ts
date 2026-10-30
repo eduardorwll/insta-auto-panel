@@ -189,6 +189,9 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
         status: "ai_generated",
       };
 
+      if (generated.altText) {
+        postUpdates.altText = generated.altText;
+      }
       if (generated.suggestedTime) {
         postUpdates.scheduledTime = generated.suggestedTime;
       }
@@ -218,6 +221,11 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
           ? genSlide.suggestedPhotoId
           : null;
 
+        const slideImagePrompt =
+          genSlide.slideNumber === 1 && generated.suggestedImagePrompt
+            ? generated.suggestedImagePrompt
+            : undefined;
+
         const existingSlide = currentSlides.find((s) => s.slideNumber === genSlide.slideNumber);
         if (existingSlide) {
           await db
@@ -227,6 +235,7 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
               bodyText: genSlide.bodyText,
               ctaText: genSlide.ctaText || null,
               ...(assignedPhoto ? { assignedPhotoId: assignedPhoto } : {}),
+              ...(slideImagePrompt ? { imagePrompt: slideImagePrompt } : {}),
             })
             .where(eq(post_slides.id, existingSlide.id));
         } else {
@@ -238,6 +247,7 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
             bodyText: genSlide.bodyText,
             ctaText: genSlide.ctaText || null,
             assignedPhotoId: assignedPhoto,
+            imagePrompt: slideImagePrompt || null,
           });
         }
       }

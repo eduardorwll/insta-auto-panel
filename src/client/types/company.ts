@@ -12,6 +12,9 @@ export interface Company {
   whatsappDefaultMessage?: string | null;
   websiteUrl?: string | null;
   canvaTemplateId?: string | null;
+  seoDisplayName?: string | null;
+  bioText?: string | null;
+  targetKeywords?: string | null;
   createdAt?: string | number | null;
 }
 

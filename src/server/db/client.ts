@@ -40,12 +40,16 @@ export function createDatabaseConnection(
       const migrationsFolder = path.resolve(import.meta.dirname, "../../../drizzle");
       migrate(db, { migrationsFolder });
     } catch {}
-    // Garante colunas do Marco 6 (OpenDesign Studio), Marco 7 (company_settings) e Separação por Horário em bancos pré-existentes
+    // Garante colunas do Marco 6 (OpenDesign Studio), Marco 7 (company_settings), Separação por Horário e Instagram SEO MATCH em bancos pré-existentes
     for (const alterSql of [
       "ALTER TABLE posts ADD COLUMN scheduled_time text DEFAULT '09:00';",
+      "ALTER TABLE posts ADD COLUMN alt_text text;",
       "ALTER TABLE post_slides ADD COLUMN template_id text DEFAULT 'modern-bold';",
       "ALTER TABLE post_slides ADD COLUMN rendered_image_url text;",
       "ALTER TABLE post_slides ADD COLUMN image_prompt text;",
+      "ALTER TABLE companies ADD COLUMN seo_display_name text;",
+      "ALTER TABLE companies ADD COLUMN bio_text text;",
+      "ALTER TABLE companies ADD COLUMN target_keywords text;",
       `CREATE TABLE IF NOT EXISTS company_settings (
         company_id text PRIMARY KEY NOT NULL,
         instagram_session_id text,

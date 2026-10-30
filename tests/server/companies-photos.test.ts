@@ -24,6 +24,9 @@ describe("Schema e Integridade: Companies & Photo Assets", () => {
         whatsapp_default_message TEXT,
         website_url TEXT,
         canva_template_id TEXT,
+        seo_display_name TEXT,
+        bio_text TEXT,
+        target_keywords TEXT,
         created_at INTEGER
       );
     `);

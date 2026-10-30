@@ -9,6 +9,9 @@ export interface CompanyProfile {
   whatsappNumber?: string | null;
   whatsappDefaultMessage?: string | null;
   websiteUrl?: string | null;
+  seoDisplayName?: string | null;
+  bioText?: string | null;
+  targetKeywords?: string | null;
 }
 
 export interface AISettings {
@@ -40,6 +43,9 @@ export const carouselResponseSchema = z.object({
   suggestedTheme: z.string().optional(),
   suggestedCategory: z.string().optional(),
   suggestedTime: z.string().optional(),
+  altText: z.string().optional(),
+  suggestedImagePrompt: z.string().optional(),
+  keywordCluster: z.array(z.string()).optional(),
   slides: z.array(carouselSlideSchema).min(3).max(10),
   caption: z.string().min(1),
 });
@@ -87,14 +93,16 @@ export abstract class BaseAIProvider implements AIProvider {
             .join("\n")
         : "Nenhuma foto previamente cadastrada. Deixe suggestedPhotoId como null.";
 
-    return `Você é um copywriter e estrategista de elite especializado em carrosséis virais de alto engajamento no Instagram.
-Gere um roteiro completo de carrossel com EXATAMENTE ${targetSlideCount} LÂMINAS, sugestão de melhor horário de publicação e uma legenda magnética.
+    return `Você é um estrategista e copywriter sênior especializado em Instagram SEO (Framework MATCH) e carrosséis 4:5 de alto engajamento.
+Gere um roteiro completo de carrossel com EXATAMENTE ${targetSlideCount} LÂMINAS, sugestão de melhor horário de publicação, sugestão visual de background, texto alternativo (Alt Text para Computer Vision) e uma legenda magnética indexável para busca.
 
 DADOS DA EMPRESA (TENANT):
 - Nome: ${company.name}
 - Perfil: ${company.instagramHandle}
+${company.seoDisplayName ? `- Nome de Busca (Display Name SEO): ${company.seoDisplayName}` : ""}
 - Nicho: ${company.niche}
 - Tom de Voz: ${company.toneOfVoice}
+${company.targetKeywords ? `- Palavras-Chave Prioritárias da Marca: ${company.targetKeywords}` : ""}
 ${company.whatsappNumber ? `- WhatsApp de Atendimento: ${company.whatsappNumber}` : ""}
 ${company.whatsappDefaultMessage ? `- Assunto / Intenção de Contato: "${company.whatsappDefaultMessage}"` : ""}
 ${company.websiteUrl ? `- Site / Canal: ${company.websiteUrl}` : ""}
@@ -107,17 +115,23 @@ POST A SER CRIADO:
 - Categoria Editorial: "${targetCategory}"
 - Quantidade Obrigatória de Lâminas: ${targetSlideCount}
 
-DIRETRIZES MANDATÓRIAS DE CONVERSÃO & LINKS (INSTAGRAM):
-- ATENÇÃO: Links no corpo da legenda e nas imagens do Instagram NÃO são clicáveis!
-- NUNCA insira URLs cruas (como "wa.me/...", "http://...", "https://...") na legenda nem nas lâminas do carrossel.
-- As informações de canais de contato (WhatsApp, Site, etc.) devem ser usadas EXCLUSIVAMENTE para orientar o tom do Call-to-Action (CTA).
-- O CTA deve direcionar o seguidor para:
-  1. Enviar uma mensagem pelo Direct;
-  2. Ou acessar os canais / WhatsApp através do link na bio do perfil (${company.instagramHandle}).
-- Exemplo de CTA: "Quer agendar uma consulta ou tirar dúvidas? Envie um direct ou acesse os canais no link da bio!"
+FRAMEWORK MATCH DE INSTAGRAM SEO (DIRETRIZES MANDATÓRIAS):
+1. M (Mine the Query Cluster): Defina um cluster de 3 a 5 termos de busca reais do nicho ${company.niche} em "keywordCluster".
+2. A (Anchor to Search - Legenda Search-First):
+   - A PRIMEIRA FRASE (primeiros ~125 caracteres visíveis na prévia do feed) DEVE começar diretamente com a palavra-chave primária de busca (o que o usuário realmente digitaria na busca do Instagram ou Google, ex: "Clareamento dental seguro em consultório: conheça o passo a passo...").
+   - Desenvolva o valor em 150 a 300 palavras com quebras de linha e emojis bem dosados, tecendo os termos do cluster sem repetição forçada (no keyword stuffing).
+   - Otimize o carrossel para SALVAMENTO (Saves) e COMPARTILHAMENTO (Shares) — ex: "Salve este post para consultar quando precisar!".
+   - Fechamento com CTA convidativo para enviar mensagem pelo Direct ou acessar os canais no link da bio (${company.instagramHandle}).
+   - HASHTAGS: EXATAMENTE 3 a 5 hashtags temáticas de nicho no final (proibido usar mais de 5; hashtags genéricas como #viral ou #explore são proibidas).
+   - NUNCA insira URLs cruas (wa.me, http://, https://) na legenda nem nas lâminas (links em legendas não são clicáveis).
+3. C (Confirm Visual Matches & Alt Text):
+   - Lâmina 1 (Capa): O título DEVE conter a palavra-chave primária para que o OCR da imagem e a legenda estejam em sintonia semântica (Computer Vision do Instagram).
+   - "altText": Gere um texto alternativo descritivo detalhando a cena/infográfico da capa com a palavra-chave principal (usado pelo Computer Vision e acessibilidade).
+   - "suggestedImagePrompt": Sugira uma descrição de imagem fotográfica de alta qualidade para o background da lâmina 1 (clean, estética minimalista, sem texto, proporção 4:5 vertical).
+4. H (Harvest over time): Foco em autoridade e retenção perene.
 
 ESTRUTURA DAS LÂMINAS (DE 1 A ${targetSlideCount}):
-- Lâmina 1 (Capa): Gancho provocativo (Hook) de alta retenção + subtítulo impactante. Se houver foto adequada do acervo, indique seu ID em "suggestedPhotoId".
+- Lâmina 1 (Capa): Título provocativo de alta retenção contendo a palavra-chave primária + subtítulo de apoio. Se houver foto adequada do acervo, indique seu ID em "suggestedPhotoId".
 - Lâminas 2 a ${targetSlideCount - 1} (Desenvolvimento): Distribuição matemática e proporcional dos passos práticos, argumentos ou dados sobre o tema.
 - Lâmina ${targetSlideCount} (Final): Chamada para ação (CTA) persuasiva direcionando para enviar mensagem no Direct ou acessar o link na bio (sem URLs cruas).
 
@@ -130,10 +144,13 @@ Responda EXCLUSIVAMENTE em formato JSON puro, sem blocos markdown ao redor:
   "suggestedTheme": "${targetTheme}",
   "suggestedCategory": "${targetCategory}",
   "suggestedTime": "18:30",
+  "altText": "Texto alternativo descritivo da imagem com a palavra-chave principal para Computer Vision e acessibilidade",
+  "suggestedImagePrompt": "Descrição de cena fotográfica limpa para background 4:5 vertical sem texto",
+  "keywordCluster": ["palavra chave 1", "palavra chave 2", "palavra chave 3", "palavra chave 4"],
   "slides": [
     {
       "slideNumber": 1,
-      "title": "Título provocativo da capa",
+      "title": "Título com palavra-chave na capa",
       "bodyText": "Subtítulo de apoio",
       "ctaText": null,
       "suggestedPhotoId": null
@@ -147,7 +164,7 @@ Responda EXCLUSIVAMENTE em formato JSON puro, sem blocos markdown ao redor:
       "suggestedPhotoId": null
     }
   ],
-  "caption": "Legenda completa do post com quebras de linha, emojis, CTA contextual convidando para o direct ou link na bio (SEM URLs cruas) e 5 a 8 hashtags estratégicas."
+  "caption": "[Palavra-chave primária na primeira frase / 125 chars]. Desenvolvimento do post com cluster de busca, valor prático, chamada para salvar o carrossel, CTA para direct e link na bio, e 3 a 5 hashtags de nicho."
 }`;
   }
 

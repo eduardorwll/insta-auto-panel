@@ -1,7 +1,7 @@
 # Graph Report - insta-auto-panel  (2026-10-29)
 
 ## Corpus Check
-- 108 files · ~205,165 words
+- 108 files · ~206,487 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 9 file(s) not represented in the graph (top: (none) 4, .toml 3, .lock 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9e8b920a`
+- Built from commit: `cf83dfce`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -34,14 +34,14 @@
 - Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram
 - @playwright/test
 - 2. Regras Operacionais Mandatórias do Repositório
+- 2. Regras Operacionais Mandatórias do Repositório
 - 6. Camada de Inteligência Artificial Generativa Agnóstica (Multi-Provedor)
+- Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente
 - Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente
 - 3. Pesquisa Profunda: `Katzca/AutoSocial` como Backbone de Automação
 - 5. Módulos Funcionais e Modelo de Dados
 - prowl
 - design.ts
-- Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente
-- 2. Regras Operacionais Mandatórias do Repositório
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 37 edges
@@ -136,6 +136,10 @@ Nodes (10): @radix-ui/react-tabs@^1.2.1, tailwind-merge@^3.7.0, typescript@^7.0.
 Cohesion: 0.18
 Nodes (11): 1. Visão Geral e Filosofia do Sistema, 2. O Que Está Explicitamente DESCARTADO, 4.1. Stack Tecnológica, 4.2. Banco de Dados Confiável: SQLite Nativo com Drizzle ORM, 4. O Novo Painel de Gestão: Arquitetura Técnica, 7. Schema Relacional do Banco de Dados Confiável (SQLite / Drizzle), 8. Arquitetura de Pastas Proposta para o Novo Projeto, 9. Próximos Passos de Decisão para Fechamento do Planejamento (+3 more)
 
+### Community 17 - "2. Regras Operacionais Mandatórias do Repositório"
+Cohesion: 0.29
+Nodes (7): 2.1. Regra de Commits Atômicos Obrigatórios, 2.2. Regra de Multi-Branches com Subagentes (Git Worktrees), 2.3. Regra de Auto-Teste Web (Playwright Headless & Console Limpo), 2.4. Regra de Checkpoints Humanos Obrigatórios (HITL — Human-in-the-Loop), 2.5. Regra Mandatória de UI/UX Engineering para Toda Mudança de Interface, 2.6. Regra Mandatória do Paradigma Why-First & Rotina de Refatoração Contínua, 2. Regras Operacionais Mandatórias do Repositório
+
 ### Community 18 - "2. Regras Operacionais Mandatórias do Repositório"
 Cohesion: 0.29
 Nodes (7): 2.1. Regra de Commits Atômicos Obrigatórios, 2.2. Regra de Multi-Branches com Subagentes (Git Worktrees), 2.3. Regra de Auto-Teste Web (Playwright Headless & Console Limpo), 2.4. Regra de Checkpoints Humanos Obrigatórios (HITL — Human-in-the-Loop), 2.5. Regra Mandatória de UI/UX Engineering para Toda Mudança de Interface, 2.6. Regra Mandatória do Paradigma Why-First & Rotina de Refatoração Contínua, 2. Regras Operacionais Mandatórias do Repositório
@@ -144,29 +148,25 @@ Nodes (7): 2.1. Regra de Commits Atômicos Obrigatórios, 2.2. Regra de Multi-Br
 Cohesion: 0.33
 Nodes (6): 6.1. Gestão de Provedores na Interface do Painel, 6.2. Padrão Arquitetural: Adapter Pattern em TypeScript, 6.3. Garantia de Formato: Saídas Estruturadas (Structured Outputs) e Validação Zod, 6.4. Escopo de Chaves: Global vs. Específica por Empresa, 6.5. O Papel do Canva Pro (Criação Visual de Alto Padrão), 6. Camada de Inteligência Artificial Generativa Agnóstica (Multi-Provedor)
 
+### Community 20 - "Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente"
+Cohesion: 0.40
+Nodes (5): 1. Arquitetura e Stack Obrigatória, 3. Herança das Regras do Sandbox (`~/Sandbox/.agents/rules/`), Prowl project context, Prowl project map, Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente
+
 ### Community 21 - "Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente"
 Cohesion: 0.25
 Nodes (5): 1. Arquitetura e Stack Obrigatória, 3. Herança das Regras do Sandbox (`~/Sandbox/.agents/rules/`), Prowl project context, Prowl project map, Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente
 
-### Community 23 - "3. Pesquisa Profunda: `Katzca/AutoSocial` como Backbone de Automação"
+### Community 22 - "3. Pesquisa Profunda: `Katzca/AutoSocial` como Backbone de Automação"
 Cohesion: 0.40
 Nodes (5): 3.1. Arquitetura de Sessões Persistentes (`.profiles/`), 3.2. Máquina de Filas em Filesystem (`queue/`), 3.3. O Padrão Sidecar (`.description`), 3.4. Mecanismos de Disparo e Agendamento, 3. Pesquisa Profunda: `Katzca/AutoSocial` como Backbone de Automação
 
-### Community 24 - "5. Módulos Funcionais e Modelo de Dados"
+### Community 23 - "5. Módulos Funcionais e Modelo de Dados"
 Cohesion: 0.40
 Nodes (5): 5.1. Módulo 1: Gestão de Múltiplas Contas / Empresas (Multi-Tenant), 5.2. Módulo 2: Banco de Fotos Base Isolado por Empresa, 5.3.1. Regra de Negócio: Número de Slides como Variável Dinâmica (3 a 10), 5.3. Módulo 3: Selecionador Semanal de Assuntos (Segunda a Domingo), 5. Módulos Funcionais e Modelo de Dados
 
 ### Community 28 - "design.ts"
 Cohesion: 0.09
 Nodes (31): `src/server/db/schema.ts` (lines 1-330), `src/server/services/design/image-provider.ts` (lines 1-317), `src/server/services/design/template-engine.ts` (lines 1-322), DayOfWeek, DESIGN_TEMPLATES, DesignTemplateId, IMAGE_PROVIDERS, ImageProviderName (+23 more)
-
-### Community 31 - "Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente"
-Cohesion: 0.40
-Nodes (5): 1. Arquitetura e Stack Obrigatória, 3. Herança das Regras do Sandbox (`~/Sandbox/.agents/rules/`), Prowl project context, Prowl project map, Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente
-
-### Community 32 - "2. Regras Operacionais Mandatórias do Repositório"
-Cohesion: 0.29
-Nodes (7): 2.1. Regra de Commits Atômicos Obrigatórios, 2.2. Regra de Multi-Branches com Subagentes (Git Worktrees), 2.3. Regra de Auto-Teste Web (Playwright Headless & Console Limpo), 2.4. Regra de Checkpoints Humanos Obrigatórios (HITL — Human-in-the-Loop), 2.5. Regra Mandatória de UI/UX Engineering para Toda Mudança de Interface, 2.6. Regra Mandatória do Paradigma Why-First & Rotina de Refatoração Contínua, 2. Regras Operacionais Mandatórias do Repositório
 
 ## Knowledge Gaps
 - **3 isolated node(s):** `prowl`, `RFC-4180`, `RFC-4180`

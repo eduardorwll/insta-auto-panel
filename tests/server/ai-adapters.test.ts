@@ -115,4 +115,31 @@ describe("IA Generativa Agnóstica: Adapters e ML Studio API", () => {
     expect(caption).toMatch(/direct|link na bio/i);
     expect(caption).toContain(dummyCompany.instagramHandle);
   });
+
+  it("deve validar o schema Zod e suporte ao framework MATCH (Instagram SEO 2026: altText, suggestedImagePrompt e keywordCluster)", () => {
+    const seoOutput = {
+      suggestedTheme: "Clareamento Dental Seguro em Consultório",
+      suggestedCategory: "Dica Prática",
+      suggestedTime: "18:30",
+      altText: "Dentista especialista realizando procedimento de clareamento dental seguro em paciente na clínica",
+      suggestedImagePrompt: "Modern dental clinic treatment room, soft natural lighting, pristine aesthetic, professional atmosphere, no text, 4:5 vertical",
+      keywordCluster: ["clareamento dental seguro", "clareamento em consultorio", "estetica dental", "dentes brancos"],
+      slides: [
+        { slideNumber: 1, title: "Clareamento Dental Seguro: O Que Saber", bodyText: "Tire suas dúvidas antes de começar" },
+        { slideNumber: 2, title: "Como Funciona o Gel Clareador", bodyText: "Ação nas camadas do esmalte sem agredir a gengiva" },
+        { slideNumber: 3, title: "Salve para Consultar e Chame no Direct", bodyText: "Tire dúvidas sobre sensibilidade pelo direct ou acesse o link na bio", ctaText: "Fale no Direct" },
+      ],
+      caption: "Clareamento dental seguro em consultório: confira as principais recomendações para manter o sorriso radiante e sem sensibilidade. Salve este post para consultar quando precisar! Para saber mais, envie um direct ou acesse os canais no link da nossa bio! #clareamentodental #odontologiaestetica #saudebucal",
+    };
+
+    const parsed = carouselResponseSchema.safeParse(seoOutput);
+    expect(parsed.success).toBe(true);
+    if (parsed.success) {
+      expect(parsed.data.altText).toBeDefined();
+      expect(parsed.data.altText).toContain("clareamento dental seguro");
+      expect(parsed.data.suggestedImagePrompt).toBeDefined();
+      expect(parsed.data.keywordCluster?.length).toBe(4);
+      expect(parsed.data.slides.length).toBe(3);
+    }
+  });
 });

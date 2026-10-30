@@ -54,8 +54,9 @@ export async function enqueuePostForAutoSocial(postId: string): Promise<{ succes
   const descFilePath = path.join(dirs.pending, `${filePrefix}.description`);
 
   const scheduledTimeTag = post.scheduledTime ? `[SCHEDULED_TIME: ${post.scheduledTime}]\n` : "";
+  const altTextTag = post.altText ? `[ALT_TEXT: ${post.altText}]\n` : "";
   const rawCaption = post.caption || `Post sobre ${post.theme}\n\n#socialpanel #instagram`;
-  const captionContent = `${scheduledTimeTag}${rawCaption}`;
+  const captionContent = `${scheduledTimeTag}${altTextTag}${rawCaption}`;
   await Bun.write(descFilePath, captionContent);
 
   const createdFiles: string[] = [descFilePath];

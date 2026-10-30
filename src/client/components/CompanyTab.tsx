@@ -20,6 +20,8 @@ import {
   AtSign,
   Briefcase,
   Megaphone,
+  Search,
+  Hash,
 } from "lucide-react";
 import type { CompanyFormData } from "@/client/types/company";
 
@@ -47,6 +49,9 @@ export function CompanyTab() {
     whatsappDefaultMessage: "",
     websiteUrl: "",
     canvaTemplateId: "",
+    seoDisplayName: "",
+    bioText: "",
+    targetKeywords: "",
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -70,6 +75,9 @@ export function CompanyTab() {
         whatsappDefaultMessage: activeCompany.whatsappDefaultMessage || "",
         websiteUrl: activeCompany.websiteUrl || "",
         canvaTemplateId: activeCompany.canvaTemplateId || "",
+        seoDisplayName: activeCompany.seoDisplayName || "",
+        bioText: activeCompany.bioText || "",
+        targetKeywords: activeCompany.targetKeywords || "",
       });
       setErrorMessage(null);
       setSaveSuccess(false);
@@ -108,6 +116,9 @@ export function CompanyTab() {
         whatsappDefaultMessage: activeCompany.whatsappDefaultMessage || "",
         websiteUrl: activeCompany.websiteUrl || "",
         canvaTemplateId: activeCompany.canvaTemplateId || "",
+        seoDisplayName: activeCompany.seoDisplayName || "",
+        bioText: activeCompany.bioText || "",
+        targetKeywords: activeCompany.targetKeywords || "",
       });
       setErrorMessage(null);
       setSaveSuccess(false);
@@ -550,6 +561,77 @@ export function CompanyTab() {
             </div>
           </Card>
 
+          {/* Card 4: Instagram SEO & Otimização do Perfil (Framework MATCH) */}
+          <Card className="border-slate-800 bg-slate-900 p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <Label className="text-sm font-semibold text-white flex items-center gap-2">
+                <Search className="h-4 w-4 text-teal-400" />
+                <span>4. Instagram SEO & Perfil de Busca (Framework MATCH)</span>
+              </Label>
+              <Badge variant="outline" className="text-[11px] text-teal-300 border-teal-800">
+                SEO 2026
+              </Badge>
+            </div>
+
+            <div className="p-3 bg-slate-950/70 border border-slate-800/80 rounded-lg flex items-start gap-2.5 text-xs text-slate-300">
+              <Sparkles className="h-4 w-4 text-teal-400 shrink-0 mt-0.5" />
+              <div className="leading-relaxed">
+                <span className="font-semibold text-slate-200">Instagram é um Motor de Busca:</span> O algoritmo prioriza palavras-chave no <strong>Name Field</strong>, <strong>Bio</strong> e <strong>Legendas</strong> (hashtags foram despriorizadas para 3-5 rótulos). Estes parâmetros ancoram todas as criações da IA em clusters de busca reais.
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="company-seo-display-name" className="text-xs text-slate-300 flex items-center justify-between">
+                <span>Display Name SEO (Nome de Exibição no Perfil)</span>
+                <span className="text-[11px] text-teal-400 font-medium">Peso Máximo na Busca</span>
+              </Label>
+              <Input
+                id="company-seo-display-name"
+                value={formData.seoDisplayName || ""}
+                onChange={(e) => handleChange("seoDisplayName", e.target.value)}
+                placeholder="Ex: Dental Pro | Odontologia e Estética"
+                className="bg-slate-950 text-slate-100 border-slate-700 text-xs h-9"
+              />
+              <p className="text-[11px] text-slate-400">
+                Formato ideal: "Nome da Marca | Nicho / Especialidade". É a superfície com maior peso de ranqueamento no Instagram.
+              </p>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="company-target-keywords" className="text-xs text-slate-300 flex items-center gap-1.5">
+                <Hash className="h-3.5 w-3.5 text-teal-400" />
+                <span>Cluster de Palavras-Chave Prioritárias (separadas por vírgula)</span>
+              </Label>
+              <Input
+                id="company-target-keywords"
+                value={formData.targetKeywords || ""}
+                onChange={(e) => handleChange("targetKeywords", e.target.value)}
+                placeholder="Ex: clareamento dental, facetas em resina, implante sem dor"
+                className="bg-slate-950 text-slate-100 border-slate-700 text-xs h-9"
+              />
+              <p className="text-[11px] text-slate-400">
+                A IA distribui este cluster naturalmente no texto da legenda (150-300 palavras) e na capa para Computer Vision.
+              </p>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="company-bio-text" className="text-xs text-slate-300">
+                Bio Indexável do Perfil (Nicho + Oferta + Localização + CTA)
+              </Label>
+              <textarea
+                id="company-bio-text"
+                rows={3}
+                value={formData.bioText || ""}
+                onChange={(e) => handleChange("bioText", e.target.value)}
+                placeholder="Ex: Odontologia Estética de Alta Performance&#10;Transformamos sorrisos com tecnologia e precisão&#10;São Paulo - SP&#10;Agende sua avaliação no link:"
+                className="w-full bg-slate-950 text-slate-100 border border-slate-700 rounded-md p-2 text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-500 font-mono"
+              />
+              <p className="text-[11px] text-slate-400">
+                Indexada pelo Instagram e buscadores externos (Google/Bing). Alimenta a contextualização de tom da IA.
+              </p>
+            </div>
+          </Card>
+
           {/* Botão de Salvar Rodapé */}
           <div className="pt-2">
             <Button
@@ -707,17 +789,78 @@ export function CompanyTab() {
               </div>
             </div>
 
-            {/* Resumo de Conversão */}
+            {/* Resumo de Conversão & Propagação */}
             <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs">
               <div className="text-slate-300 font-semibold flex items-center gap-1.5">
                 <Layers className="h-3.5 w-3.5 text-teal-400" />
-                <span>Propagação Automática:</span>
+                <span>Propagação Automática & Instagram SEO:</span>
               </div>
               <ul className="text-slate-400 space-y-1 text-[11px] list-disc list-inside">
                 <li>O nome e @ são impressos nas lâminas 4:5 do Studio Visual.</li>
                 <li>As cores aplicam-se aos 4 templates determinísticos e Canva.</li>
-                <li>O WhatsApp formata os links diretos na legenda com IA.</li>
+                <li>O WhatsApp e canais subsidiam os CTAs para Direct e link na bio gerados pela IA.</li>
+                <li>O Display Name e o cluster de keywords ancoram o ranqueamento de busca no Instagram.</li>
               </ul>
+            </div>
+
+            {/* Simulação do Perfil no Instagram (Instagram Search Preview) */}
+            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3 text-xs">
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-slate-200 flex items-center gap-1.5">
+                  <Search className="h-3.5 w-3.5 text-teal-400" />
+                  <span>Instagram Search Preview</span>
+                </span>
+                <Badge variant="outline" className="text-[10px] text-teal-300 border-teal-800">
+                  Como o público encontra
+                </Badge>
+              </div>
+
+              <div className="p-3 rounded-lg bg-slate-900 border border-slate-800/80 space-y-2">
+                <div className="flex items-center gap-2.5">
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-sm shrink-0 border border-white/10"
+                    style={{ backgroundColor: formData.primaryColor || "#0D9488" }}
+                  >
+                    {formData.name.charAt(0) || "I"}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs font-bold text-white truncate">
+                      {formData.seoDisplayName || `${formData.name || "Nome da Empresa"} | ${formData.niche || "Nicho"}`}
+                    </div>
+                    <div className="text-[11px] text-slate-400 font-mono">
+                      {formData.instagramHandle || "@arroba"}
+                    </div>
+                  </div>
+                </div>
+
+                {formData.bioText ? (
+                  <p className="text-[11px] text-slate-300 whitespace-pre-line leading-relaxed pt-1 border-t border-slate-800">
+                    {formData.bioText}
+                  </p>
+                ) : (
+                  <p className="text-[11px] text-slate-500 italic pt-1 border-t border-slate-800">
+                    Nenhuma bio indexável configurada. A bio ajuda o algoritmo do Instagram a indexar seu perfil.
+                  </p>
+                )}
+
+                {formData.targetKeywords && (
+                  <div className="pt-2 border-t border-slate-800/60 flex flex-wrap gap-1">
+                    {formData.targetKeywords
+                      .split(",")
+                      .map((kw) => kw.trim())
+                      .filter(Boolean)
+                      .slice(0, 5)
+                      .map((kw) => (
+                        <span
+                          key={kw}
+                          className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-teal-300 border border-teal-900/50"
+                        >
+                          #{kw}
+                        </span>
+                      ))}
+                  </div>
+                )}
+              </div>
             </div>
           </Card>
         </div>

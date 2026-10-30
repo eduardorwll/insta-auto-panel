@@ -16,14 +16,14 @@
   "14": "package.json",
   "15": "Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram",
   "16": "@playwright/test",
+  "17": "2. Regras Operacionais Mandatórias do Repositório",
   "18": "2. Regras Operacionais Mandatórias do Repositório",
   "19": "6. Camada de Inteligência Artificial Generativa Agnóstica (Multi-Provedor)",
+  "20": "Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente",
   "21": "Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente",
-  "23": "3. Pesquisa Profunda: `Katzca/AutoSocial` como Backbone de Automação",
-  "24": "5. Módulos Funcionais e Modelo de Dados",
+  "22": "3. Pesquisa Profunda: `Katzca/AutoSocial` como Backbone de Automação",
+  "23": "5. Módulos Funcionais e Modelo de Dados",
   "26": "prowl",
   "28": "design.ts",
-  "31": "Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente",
-  "32": "2. Regras Operacionais Mandatórias do Repositório",
   "43": "vite-env.d.ts"
 }
