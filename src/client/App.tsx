@@ -9,6 +9,7 @@ import { CanvaExportTab } from "@/client/components/CanvaExportTab";
 import { AISettingsModal } from "@/client/components/AISettingsModal";
 import { PublicationQueue } from "@/client/components/PublicationQueue";
 import { SettingsHub } from "@/client/components/SettingsHub";
+import { CompanyTab } from "@/client/components/CompanyTab";
 import { SidebarNavigation, NavTabId } from "@/client/components/SidebarNavigation";
 import { Button } from "@/client/components/ui/button";
 import { Card, CardContent } from "@/client/components/ui/card";
@@ -58,7 +59,7 @@ function DashboardContent() {
     });
   };
 
-  if (isLoading) {
+  if (isLoading && !activeCompany) {
     return (
       <div className="flex h-screen items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500"></div>
@@ -99,7 +100,7 @@ function DashboardContent() {
           <div className="h-4 w-px bg-slate-800 hidden md:block" />
 
           {/* Company Switcher */}
-          <CompanySwitcher />
+          <CompanySwitcher onNavigateToCompanyTab={() => setCurrentTab("company")} />
         </div>
 
         <div className="flex items-center gap-2.5 flex-wrap">
@@ -164,84 +165,6 @@ function DashboardContent() {
           </div>
         ) : (
           <>
-            {/* Resumo da Empresa Ativa & Brand Kit */}
-            <Card className="border-slate-800 bg-slate-900">
-              <CardContent className="p-6">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-3 flex-wrap">
-                      <h2 className="text-2xl font-bold text-white tracking-tight">{activeCompany.name}</h2>
-                      <Badge variant="secondary" className="font-mono text-teal-300 border border-teal-900">
-                        {activeCompany.instagramHandle}
-                      </Badge>
-                      <Badge variant="outline" className="text-xs text-slate-300 border-slate-700">
-                        {activeCompany.niche}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-slate-400 max-w-2xl">
-                      <span className="text-slate-200 font-medium">Tom de Voz:</span> {activeCompany.toneOfVoice}
-                    </p>
-                  </div>
-
-                  {/* Visual Brand Kit Swatches */}
-                  <div className="flex items-center gap-4 bg-slate-950 p-3 rounded-lg border border-slate-800">
-                    <div className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                      <Palette className="h-3.5 w-3.5 text-teal-400" />
-                      <span>Brand Kit:</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div
-                        title={`Primária: ${activeCompany.primaryColor}`}
-                        className="h-6 w-6 rounded-md border border-white/15"
-                        style={{ backgroundColor: activeCompany.primaryColor || "#0D9488" }}
-                      />
-                      <div
-                        title={`Secundária: ${activeCompany.secondaryColor}`}
-                        className="h-6 w-6 rounded-md border border-white/15"
-                        style={{ backgroundColor: activeCompany.secondaryColor || "#EC4899" }}
-                      />
-                      <div
-                        title={`Fundo: ${activeCompany.backgroundColor}`}
-                        className="h-6 w-6 rounded-md border border-white/15"
-                        style={{ backgroundColor: activeCompany.backgroundColor || "#0F172A" }}
-                      />
-                      <div
-                        title={`Destaque: ${activeCompany.accentColor}`}
-                        className="h-6 w-6 rounded-md border border-white/15"
-                        style={{ backgroundColor: activeCompany.accentColor || "#10B981" }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Badges de Links & Conversão */}
-                <div className="mt-4 pt-4 border-t border-slate-800 flex items-center gap-4 text-xs text-slate-400 flex-wrap">
-                  {activeCompany.whatsappNumber && (
-                    <span className="flex items-center gap-1.5 text-emerald-400 tabular-nums">
-                      <MessageCircle className="h-3.5 w-3.5" />
-                      {activeCompany.whatsappNumber}
-                    </span>
-                  )}
-                  {activeCompany.websiteUrl && (
-                    <a
-                      href={activeCompany.websiteUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex items-center gap-1 hover:text-teal-400 transition-colors"
-                    >
-                      <ExternalLink className="h-3.5 w-3.5" />
-                      Bio/Site
-                    </a>
-                  )}
-                  {activeCompany.canvaTemplateId && (
-                    <span className="flex items-center gap-1 font-mono text-slate-400">
-                      Canva ID: {activeCompany.canvaTemplateId}
-                    </span>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
             {/* Módulos do Sistema (Navegação via Barra Lateral Categorizada — Operate Mode) */}
             <Tabs value={currentTab} onValueChange={(val) => setCurrentTab(val as NavTabId)} className="w-full">
               <TabsContent value="calendar" className="mt-0 focus-visible:outline-none">
@@ -275,6 +198,10 @@ function DashboardContent() {
 
               <TabsContent value="ai" className="mt-0 focus-visible:outline-none">
                 <SettingsHub onOpenLegacyAIModal={() => setIsAIModalOpen(true)} />
+              </TabsContent>
+
+              <TabsContent value="company" className="mt-0 focus-visible:outline-none">
+                <CompanyTab />
               </TabsContent>
             </Tabs>
 

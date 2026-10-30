@@ -12,9 +12,10 @@ import {
   PanelLeftOpen,
   X,
   Sparkles,
+  Building2,
 } from "lucide-react";
 
-export type NavTabId = "calendar" | "studio" | "canva" | "photos" | "queue" | "ai";
+export type NavTabId = "calendar" | "studio" | "canva" | "photos" | "queue" | "ai" | "company";
 
 export interface NavItem {
   id: NavTabId;
@@ -83,6 +84,12 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     name: "Sistema & Ajustes",
     items: [
+      {
+        id: "company",
+        label: "Dados da Empresa",
+        shortLabel: "Empresa",
+        icon: Building2,
+      },
       {
         id: "ai",
         label: "Configurações & Módulo IA",

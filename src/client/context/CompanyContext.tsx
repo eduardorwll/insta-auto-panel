@@ -22,9 +22,9 @@ export function CompanyProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchCompanies = async () => {
+  const fetchCompanies = async (silent = false) => {
     try {
-      setIsLoading(true);
+      if (!silent) setIsLoading(true);
       setError(null);
       const res = await fetch("/api/companies");
       if (!res.ok) throw new Error("Erro ao carregar empresas");
@@ -44,7 +44,7 @@ export function CompanyProvider({ children }: { children: ReactNode }) {
       const message = err instanceof Error ? err.message : "Erro desconhecido";
       setError(message);
     } finally {
-      setIsLoading(false);
+      if (!silent) setIsLoading(false);
     }
   };
 
@@ -103,7 +103,7 @@ export function CompanyProvider({ children }: { children: ReactNode }) {
       if (!res.ok || !json.success) {
         return { success: false, error: json.error || "Erro ao atualizar empresa" };
       }
-      await fetchCompanies();
+      await fetchCompanies(true);
       return { success: true };
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Erro de conexão";

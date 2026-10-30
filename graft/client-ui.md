@@ -2,8 +2,8 @@
 node: client-ui
 title: "React 19 + Tailwind v4 + shadcn/ui Frontend Portal"
 covers:
-  - src/client/App.tsx:1-347
-  - src/client/App.tsx:35-338 # function DashboardContent
+  - src/client/App.tsx:1-274
+  - src/client/App.tsx:36-265 # function DashboardContent
   - src/client/components/AISettingsModal.tsx:1-468
   - src/client/components/AISettingsModal.tsx:26-29 # interface AISettingsModalProps
   - src/client/components/AISettingsModal.tsx:31-36 # const PROVIDER_OPTIONS
@@ -16,8 +16,12 @@ covers:
   - src/client/components/CompanyModal.tsx:16-20 # interface CompanyModalProps
   - src/client/components/CompanyModal.tsx:22-36 # const defaultForm
   - src/client/components/CompanyModal.tsx:38-347 # function CompanyModal
-  - src/client/components/CompanySwitcher.tsx:1-134
-  - src/client/components/CompanySwitcher.tsx:16-133 # function CompanySwitcher
+  - src/client/components/CompanySwitcher.tsx:1-147
+  - src/client/components/CompanySwitcher.tsx:16-18 # interface CompanySwitcherProps
+  - src/client/components/CompanySwitcher.tsx:20-146 # function CompanySwitcher
+  - src/client/components/CompanyTab.tsx:1-717
+  - src/client/components/CompanyTab.tsx:26-27 # const COLOR_PRESETS
+  - src/client/components/CompanyTab.tsx:33-716 # function CompanyTab
   - src/client/components/DesignStudioModal.tsx:1-657
   - src/client/components/DesignStudioModal.tsx:19-23 # type StudioTemplateId
   - src/client/components/DesignStudioModal.tsx:25-31 # type StudioImageProvider
@@ -54,13 +58,13 @@ covers:
   - src/client/components/SettingsHub.tsx:93-97 # const IMAGE_PROVIDER_OPTIONS
   - src/client/components/SettingsHub.tsx:120-121 # const TEMPLATE_OPTIONS
   - src/client/components/SettingsHub.tsx:127-846 # function SettingsHub
-  - src/client/components/SidebarNavigation.tsx:1-241
-  - src/client/components/SidebarNavigation.tsx:17-17 # type NavTabId
-  - src/client/components/SidebarNavigation.tsx:19-26 # interface NavItem
-  - src/client/components/SidebarNavigation.tsx:28-31 # interface NavGroup
-  - src/client/components/SidebarNavigation.tsx:33-60 # const NAV_GROUPS
-  - src/client/components/SidebarNavigation.tsx:96-103 # interface SidebarNavigationProps
-  - src/client/components/SidebarNavigation.tsx:105-240 # function SidebarNavigation
+  - src/client/components/SidebarNavigation.tsx:1-248
+  - src/client/components/SidebarNavigation.tsx:18-18 # type NavTabId
+  - src/client/components/SidebarNavigation.tsx:20-27 # interface NavItem
+  - src/client/components/SidebarNavigation.tsx:29-32 # interface NavGroup
+  - src/client/components/SidebarNavigation.tsx:34-61 # const NAV_GROUPS
+  - src/client/components/SidebarNavigation.tsx:103-110 # interface SidebarNavigationProps
+  - src/client/components/SidebarNavigation.tsx:112-247 # function SidebarNavigation
   - src/client/components/SlidePreview.tsx:1-157
   - src/client/components/SlidePreview.tsx:6-18 # interface SlidePreviewProps
   - src/client/components/SlidePreview.tsx:20-156 # function SlidePreview
@@ -159,8 +163,8 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 
 ## Covered Files & Symbols
 
-### `src/client/App.tsx` (lines 1-347)
-- `DashboardContent` (function) → `src/client/App.tsx:35-338`
+### `src/client/App.tsx` (lines 1-274)
+- `DashboardContent` (function) → `src/client/App.tsx:36-265`
 
 ### `src/client/components/AISettingsModal.tsx` (lines 1-468)
 - `AISettingsModalProps` (interface) → `src/client/components/AISettingsModal.tsx:26-29`
@@ -177,8 +181,13 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `defaultForm` (const) → `src/client/components/CompanyModal.tsx:22-36`
 - `CompanyModal` (function) → `src/client/components/CompanyModal.tsx:38-347`
 
-### `src/client/components/CompanySwitcher.tsx` (lines 1-134)
-- `CompanySwitcher` (function) → `src/client/components/CompanySwitcher.tsx:16-133`
+### `src/client/components/CompanySwitcher.tsx` (lines 1-147)
+- `CompanySwitcherProps` (interface) → `src/client/components/CompanySwitcher.tsx:16-18`
+- `CompanySwitcher` (function) → `src/client/components/CompanySwitcher.tsx:20-146`
+
+### `src/client/components/CompanyTab.tsx` (lines 1-717)
+- `COLOR_PRESETS` (const) → `src/client/components/CompanyTab.tsx:26-27`
+- `CompanyTab` (function) → `src/client/components/CompanyTab.tsx:33-716`
 
 ### `src/client/components/DesignStudioModal.tsx` (lines 1-657)
 - `StudioTemplateId` (type) → `src/client/components/DesignStudioModal.tsx:19-23`
@@ -221,13 +230,13 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `TEMPLATE_OPTIONS` (const) → `src/client/components/SettingsHub.tsx:120-121`
 - `SettingsHub` (function) → `src/client/components/SettingsHub.tsx:127-846`
 
-### `src/client/components/SidebarNavigation.tsx` (lines 1-241)
-- `NavTabId` (type) → `src/client/components/SidebarNavigation.tsx:17-17`
-- `NavItem` (interface) → `src/client/components/SidebarNavigation.tsx:19-26`
-- `NavGroup` (interface) → `src/client/components/SidebarNavigation.tsx:28-31`
-- `NAV_GROUPS` (const) → `src/client/components/SidebarNavigation.tsx:33-60`
-- `SidebarNavigationProps` (interface) → `src/client/components/SidebarNavigation.tsx:96-103`
-- `SidebarNavigation` (function) → `src/client/components/SidebarNavigation.tsx:105-240`
+### `src/client/components/SidebarNavigation.tsx` (lines 1-248)
+- `NavTabId` (type) → `src/client/components/SidebarNavigation.tsx:18-18`
+- `NavItem` (interface) → `src/client/components/SidebarNavigation.tsx:20-27`
+- `NavGroup` (interface) → `src/client/components/SidebarNavigation.tsx:29-32`
+- `NAV_GROUPS` (const) → `src/client/components/SidebarNavigation.tsx:34-61`
+- `SidebarNavigationProps` (interface) → `src/client/components/SidebarNavigation.tsx:103-110`
+- `SidebarNavigation` (function) → `src/client/components/SidebarNavigation.tsx:112-247`
 
 ### `src/client/components/SlidePreview.tsx` (lines 1-157)
 - `SlidePreviewProps` (interface) → `src/client/components/SlidePreview.tsx:6-18`

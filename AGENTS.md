@@ -51,6 +51,13 @@ Este arquivo define as diretrizes operacionais inegociáveis para o **Lead Archi
   2. Revisão em Dois Eixos (**Spec Match** + **Standards & Quality**).
   3. **Autorização explícita do usuário humano** para prosseguir.
 
+### 2.5. Regra Mandatória de UI/UX Engineering para Toda Mudança de Interface
+- **Aplicação Mandatória do Kit de Skills Especializadas:** Qualquer adição, refatoração, migração ou modificação em componentes visuais, abas, modais, formulários ou painéis deve utilizar e cumprir rigorosamente o kit especializado de engenharia UI/UX:
+  1. **`taste-skill` (`Leonxlnx/taste-skill`):** Zero estética genérica ("AI slop"), zero roxo/indigo padrão, separação tonal por luminância (`surface-0..2`), fontes `>= 11px` (proibido `text-[9px]`/`text-[10px]`), e validação obrigatória via `taste-skill lint` (meta: **0 FAIL**) e `taste-skill inspect` nas viewports `1440px`, `768px` e `390px`.
+  2. **`emilkowalski/skills` (`emil-design-eng`):** Leis físicas de interação: feedback tátil obrigatório em botões interativos (`active:scale-95` ou `active:scale-[0.97]`), proibido `scale(0)` (iniciar em `scale(0.95)` + `opacity: 0`), curvas de transição `ease-out` curtas (`< 300ms`), animações restritas exclusivamente à GPU (`transform`/`opacity`), números dinâmicos e métricas com `tabular-nums`, e stress-testing com textos longos (`break-ui`).
+  3. **`impeccable` (v4.8.0):** Classificação explícita de superfície: modo **Operate** para painéis/dashboards/studios de gestão de conteúdo (alta densidade, velocidade, zero distração) e modo **Persuade** para os templates 4:5 de conversão/slides.
+  4. **Conferência Visual Obrigatória:** Toda alteração de UI deve abrir os screenshots gerados em `.taste-skill/inspect/*.jpg` via `read_file` para inspecionar alinhamentos, quebras, contrastes e bordas antes de dar a tarefa por concluída.
+
 ---
 
 ## 3. Herança das Regras do Sandbox (`~/Sandbox/.agents/rules/`)

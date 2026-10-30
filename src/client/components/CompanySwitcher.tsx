@@ -13,7 +13,11 @@ import { CompanyModal } from "./CompanyModal";
 import { ChevronsUpDown, Plus, Settings2, Check, Building2 } from "lucide-react";
 import type { Company } from "@/client/types/company";
 
-export function CompanySwitcher() {
+interface CompanySwitcherProps {
+  onNavigateToCompanyTab?: () => void;
+}
+
+export function CompanySwitcher({ onNavigateToCompanyTab }: CompanySwitcherProps = {}) {
   const { companies, activeCompany, setActiveCompanyId } = useCompany();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [companyToEdit, setCompanyToEdit] = useState<Company | null>(null);
@@ -24,6 +28,10 @@ export function CompanySwitcher() {
   };
 
   const handleOpenEdit = () => {
+    if (onNavigateToCompanyTab) {
+      onNavigateToCompanyTab();
+      return;
+    }
     if (activeCompany) {
       setCompanyToEdit(activeCompany);
       setIsModalOpen(true);
@@ -109,7 +117,7 @@ export function CompanySwitcher() {
               className="cursor-pointer gap-2 text-slate-300"
             >
               <Settings2 className="h-4 w-4" />
-              <span>Configurar Brand Kit</span>
+              <span>Configurar Brand Kit & Dados</span>
             </DropdownMenuItem>
           )}
 
@@ -125,7 +133,12 @@ export function CompanySwitcher() {
 
       <CompanyModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          if (!companyToEdit && onNavigateToCompanyTab) {
+            onNavigateToCompanyTab();
+          }
+        }}
         companyToEdit={companyToEdit}
       />
     </>

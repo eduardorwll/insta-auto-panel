@@ -17,6 +17,17 @@ test.describe("M7.2 E2E: Barra Lateral Recolhível (Sidebar Navigation) & Ausên
     await page.goto("/");
     await expect(page.getByRole("heading", { name: /Social Panel/i })).toBeVisible();
 
+    // Garantir empresa ativa canônica (Demo Corp)
+    const switcher = page.getByRole("combobox", { name: /Empresa/i });
+    await expect(switcher).toBeVisible();
+    await switcher.click();
+    const demoOption = page.getByRole("option", { name: /Demo Corp/i });
+    if (await demoOption.isVisible()) {
+      await demoOption.click();
+    } else {
+      await page.keyboard.press("Escape");
+    }
+
     // 1. Validar grupos de domínio na Sidebar Navigation
     await expect(page.getByText("Criação & Editorial")).toBeVisible();
     await expect(page.getByText("Acervo de Mídia")).toBeVisible();
@@ -66,7 +77,22 @@ test.describe("M7.2 E2E: Barra Lateral Recolhível (Sidebar Navigation) & Ausên
     await photosTab.click();
     await expect(page.getByText(/Upload de Foto para o Banco Base/i)).toBeVisible();
 
-    // 7. Navegar de volta ao "Calendário Semanal"
+    // 7. Navegar para a nova aba "Dados da Empresa" & Brand Kit
+    const companyTab = page.getByRole("tab", { name: /Dados da Empresa/i });
+    await expect(companyTab).toBeVisible();
+    await companyTab.click();
+    await expect(page.getByRole("heading", { name: /Dados da Empresa & Brand Kit/i })).toBeVisible();
+    await expect(page.getByText(/Live Brand Kit Preview/i)).toBeVisible();
+    await expect(page.locator("#company-name")).toBeVisible();
+    await expect(page.locator("#company-instagram")).toBeVisible();
+
+    // Testar salvar alterações na aba de dados da empresa
+    const saveCompanyBtn = page.locator("#btn-save-company-data-top");
+    await expect(saveCompanyBtn).toBeVisible();
+    await saveCompanyBtn.click();
+    await expect(page.getByText(/Salvo com Sucesso!/i).first()).toBeVisible();
+
+    // 8. Navegar de volta ao "Calendário Semanal"
     const calendarTab = page.getByRole("tab", { name: /Calendário Semanal/i });
     await calendarTab.click();
     await expect(page.getByText(/Planejamento Editorial Semanal/i)).toBeVisible();

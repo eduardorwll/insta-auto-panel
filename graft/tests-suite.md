@@ -8,7 +8,7 @@ covers:
   - tests/e2e/export-autosocial.spec.ts:1-88
   - tests/e2e/planner-photos.spec.ts:1-92
   - tests/e2e/settings-hub.spec.ts:1-104
-  - tests/e2e/sidebar-navigation.spec.ts:1-77
+  - tests/e2e/sidebar-navigation.spec.ts:1-103
   - tests/server/ai-adapters.test.ts:1-116
   - tests/server/ai-routes.test.ts:1-124
   - tests/server/ai-settings.test.ts:1-102
@@ -23,7 +23,7 @@ covers:
   - tests/server/image-providers.test.ts:1-126
   - tests/server/migrations-seed.test.ts:1-43
   - tests/server/photos-api.test.ts:1-109
-  - tests/server/schedules-add-posts.test.ts:1-118
+  - tests/server/schedules-add-posts.test.ts:1-125
   - tests/server/schedules-api.test.ts:1-127
   - tests/server/schedules-posts-slides.test.ts:1-219
   - tests/server/schedules-scheduled-time.test.ts:1-146
@@ -50,7 +50,7 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 
 ### `tests/e2e/settings-hub.spec.ts` (lines 1-104)
 
-### `tests/e2e/sidebar-navigation.spec.ts` (lines 1-77)
+### `tests/e2e/sidebar-navigation.spec.ts` (lines 1-103)
 
 ### `tests/server/ai-adapters.test.ts` (lines 1-116)
 
@@ -80,7 +80,7 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 
 ### `tests/server/photos-api.test.ts` (lines 1-109)
 
-### `tests/server/schedules-add-posts.test.ts` (lines 1-118)
+### `tests/server/schedules-add-posts.test.ts` (lines 1-125)
 
 ### `tests/server/schedules-api.test.ts` (lines 1-127)
 

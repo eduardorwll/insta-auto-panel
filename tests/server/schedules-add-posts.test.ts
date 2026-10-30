@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach } from "bun:test";
+import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { handleSchedulesRoutes } from "../../src/server/routes/schedules";
-import { db, createDatabaseConnection } from "../../src/server/db/client";
+import { db } from "../../src/server/db/client";
 import { companies, weekly_schedules, posts, post_slides } from "../../src/server/db/schema";
 import { eq } from "drizzle-orm";
 
@@ -8,11 +8,11 @@ describe("REST API: Adicionar Posts no Cronograma (/api/posts)", () => {
   const companyId = "test_co_add_posts";
   const weekStartDate = "2026-11-02";
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     await db.delete(post_slides);
-    await db.delete(posts);
-    await db.delete(weekly_schedules);
-    await db.delete(companies);
+    await db.delete(posts).where(eq(posts.companyId, companyId));
+    await db.delete(weekly_schedules).where(eq(weekly_schedules.companyId, companyId));
+    await db.delete(companies).where(eq(companies.id, companyId));
 
     await db.insert(companies).values({
       id: companyId,
@@ -22,6 +22,13 @@ describe("REST API: Adicionar Posts no Cronograma (/api/posts)", () => {
       toneOfVoice: "Inovador",
       primaryColor: "#6366F1",
     });
+  });
+
+  afterAll(async () => {
+    await db.delete(post_slides);
+    await db.delete(posts).where(eq(posts.companyId, companyId));
+    await db.delete(weekly_schedules).where(eq(weekly_schedules.companyId, companyId));
+    await db.delete(companies).where(eq(companies.id, companyId));
   });
 
   it("1. deve criar cronograma e permitir ADICIONAR um novo post via POST /api/posts", async () => {
