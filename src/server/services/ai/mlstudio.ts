@@ -2,7 +2,6 @@ import {
   BaseAIProvider,
   type GeneratePostParams,
   type CarouselSlidesResponse,
-  carouselResponseSchema,
 } from "./provider";
 
 /**
@@ -86,13 +85,6 @@ export class MLStudioProvider extends BaseAIProvider {
     };
     const content = json.choices?.[0]?.message?.content || "";
 
-    // Parse e sanitização do JSON retornado
-    const cleanJson = content.replace(/^```json\s*/, "").replace(/\s*```$/, "");
-    const parsedObj = JSON.parse(cleanJson);
-
-    const validated = carouselResponseSchema.parse(parsedObj);
-    validated.caption = this.formatCaptionWithConversion(validated.caption, params.company);
-
-    return validated;
+    return this.parseCarouselResponse(content, params.company);
   }
 }

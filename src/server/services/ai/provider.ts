@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { AIProviderName } from "@/server/db/schema";
+import { normalizeCaption } from "./seo-quality";
 
 export interface CompanyProfile {
   name: string;
@@ -169,6 +170,17 @@ Responda EXCLUSIVAMENTE em formato JSON puro, sem blocos markdown ao redor:
   }
 
   /**
+   * Parse e sanitização do JSON retornado pelo modelo (remove cercas ```json),
+   * validação Zod e formatação da legenda com CTA/arroba. Compartilhado pelos adapters.
+   */
+  protected parseCarouselResponse(rawContent: string, company: CompanyProfile): CarouselSlidesResponse {
+    const cleanJson = rawContent.replace(/^```json\s*/, "").replace(/\s*```$/, "");
+    const validated = carouselResponseSchema.parse(JSON.parse(cleanJson));
+    validated.caption = this.formatCaptionWithConversion(validated.caption, company);
+    return validated;
+  }
+
+  /**
    * Formata e enriquece a legenda com CTA contextual para o Instagram e arroba oficial.
    * Regra Mandatória: No Instagram, links em legendas NÃO são clicáveis. URLs cruas
    * (como https://wa.me/... ou https://...) poluem a experiência visual. Por isso,
@@ -176,17 +188,12 @@ Responda EXCLUSIVAMENTE em formato JSON puro, sem blocos markdown ao redor:
    * orientando para o Direct ou para o canal no link da Bio.
    */
   public formatCaptionWithConversion(rawCaption: string, company: CompanyProfile): string {
-    let caption = rawCaption.trim();
+    // 1. Quality gate: remove frases com URL crua (sem deixar texto quebrado) e limita a 5 hashtags
+    let caption = normalizeCaption(rawCaption);
 
-    // 1. Sanitização defensiva: remove URLs cruas (wa.me, http://, https://) que possam ter sido geradas
-    caption = caption
-      .replace(/https?:\/\/[^\s]+/gi, "")
-      .replace(/wa\.me\/[^\s]+/gi, "")
-      .replace(/[ \t]{2,}/g, " ")
-      .trim();
-
-    // 2. Se a legenda ainda não contiver indicação de conversão para direct ou link na bio
-    const hasCta = /direct|link na bio|link da bio|link em nossa bio/i.test(caption);
+    // 2. Se a legenda ainda não contiver um CTA real para direct ou link na bio
+    //    (exige a expressão de ação, não qualquer ocorrência solta da palavra "direct")
+    const hasCta = /(pelo|no|via|um|por)\s+direct|link\s+(na|da|em\s+nossa)\s+bio/i.test(caption);
     if (!hasCta) {
       if (company.whatsappNumber || company.websiteUrl) {
         caption += `\n\n📲 Para conversar conosco ou saber mais, envie uma mensagem pelo Direct ou acesse os canais no link da nossa bio!`;

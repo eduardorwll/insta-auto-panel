@@ -2,7 +2,6 @@ import {
   BaseAIProvider,
   type GeneratePostParams,
   type CarouselSlidesResponse,
-  carouselResponseSchema,
 } from "./provider";
 
 export class OpenAIProvider extends BaseAIProvider {
@@ -90,12 +89,6 @@ export class OpenAIProvider extends BaseAIProvider {
       choices?: Array<{ message?: { content?: string } }>;
     };
     const content = json.choices?.[0]?.message?.content || "{}";
-    const cleanJson = content.replace(/^```json\s*/, "").replace(/\s*```$/, "");
-    const parsedObj = JSON.parse(cleanJson);
-
-    const validated = carouselResponseSchema.parse(parsedObj);
-    validated.caption = this.formatCaptionWithConversion(validated.caption, params.company);
-
-    return validated;
+    return this.parseCarouselResponse(content, params.company);
   }
 }

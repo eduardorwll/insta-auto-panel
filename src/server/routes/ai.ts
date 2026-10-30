@@ -9,6 +9,7 @@ import {
 } from "../db/schema";
 import { AIProviderFactory } from "../services/ai/factory";
 import type { AISettings } from "../services/ai/provider";
+import { auditPost } from "../services/ai/seo-quality";
 import { eq, asc } from "drizzle-orm";
 import { z } from "zod";
 
@@ -259,12 +260,21 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
         .where(eq(post_slides.postId, postId))
         .orderBy(asc(post_slides.slideNumber));
 
+      const seoWarnings = auditPost({
+        caption: generated.caption,
+        altText: generated.altText,
+        keywordCluster: generated.keywordCluster,
+      });
+
       return Response.json({
         success: true,
         data: {
           ...updatedPost,
           selectedPhotoIds: updatedPost?.selectedPhotoIds ? JSON.parse(updatedPost.selectedPhotoIds) : [],
           slides,
+          suggestedImagePrompt: generated.suggestedImagePrompt ?? null,
+          keywordCluster: generated.keywordCluster ?? [],
+          seoWarnings,
         },
       });
     } catch (err: unknown) {

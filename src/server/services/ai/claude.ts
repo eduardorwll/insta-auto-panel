@@ -1,6 +1,5 @@
 import {
   BaseAIProvider,
-  carouselResponseSchema,
   type CarouselSlidesResponse,
   type GeneratePostParams,
 } from "./provider";
@@ -93,12 +92,6 @@ export class ClaudeProvider extends BaseAIProvider {
 
     const json = (await res.json()) as AnthropicMessagesResponse;
     const rawContent = json.content?.[0]?.text || "{}";
-    const cleanJson = rawContent.replace(/^```json\s*/, "").replace(/\s*```$/, "");
-    const parsedObj: unknown = JSON.parse(cleanJson);
-
-    const validated = carouselResponseSchema.parse(parsedObj);
-    validated.caption = this.formatCaptionWithConversion(validated.caption, params.company);
-
-    return validated;
+    return this.parseCarouselResponse(rawContent, params.company);
   }
 }

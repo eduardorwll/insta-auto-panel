@@ -2,7 +2,6 @@ import {
   BaseAIProvider,
   type GeneratePostParams,
   type CarouselSlidesResponse,
-  carouselResponseSchema,
 } from "./provider";
 
 export class GeminiProvider extends BaseAIProvider {
@@ -73,12 +72,6 @@ export class GeminiProvider extends BaseAIProvider {
       candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
     };
     const rawContent = json.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-    const cleanJson = rawContent.replace(/^```json\s*/, "").replace(/\s*```$/, "");
-    const parsedObj = JSON.parse(cleanJson);
-
-    const validated = carouselResponseSchema.parse(parsedObj);
-    validated.caption = this.formatCaptionWithConversion(validated.caption, params.company);
-
-    return validated;
+    return this.parseCarouselResponse(rawContent, params.company);
   }
 }
