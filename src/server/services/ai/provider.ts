@@ -95,8 +95,9 @@ DADOS DA EMPRESA (TENANT):
 - Perfil: ${company.instagramHandle}
 - Nicho: ${company.niche}
 - Tom de Voz: ${company.toneOfVoice}
-${company.whatsappNumber ? `- WhatsApp: ${company.whatsappNumber}` : ""}
-${company.websiteUrl ? `- Site: ${company.websiteUrl}` : ""}
+${company.whatsappNumber ? `- WhatsApp de Atendimento: ${company.whatsappNumber}` : ""}
+${company.whatsappDefaultMessage ? `- Assunto / Intenção de Contato: "${company.whatsappDefaultMessage}"` : ""}
+${company.websiteUrl ? `- Site / Canal: ${company.websiteUrl}` : ""}
 
 ACERVO DE FOTOS DA EMPRESA (SEPARAÇÃO ESTRITA — USE APENAS ESSES IDs):
 ${photosCatalog}
@@ -106,10 +107,19 @@ POST A SER CRIADO:
 - Categoria Editorial: "${targetCategory}"
 - Quantidade Obrigatória de Lâminas: ${targetSlideCount}
 
+DIRETRIZES MANDATÓRIAS DE CONVERSÃO & LINKS (INSTAGRAM):
+- ATENÇÃO: Links no corpo da legenda e nas imagens do Instagram NÃO são clicáveis!
+- NUNCA insira URLs cruas (como "wa.me/...", "http://...", "https://...") na legenda nem nas lâminas do carrossel.
+- As informações de canais de contato (WhatsApp, Site, etc.) devem ser usadas EXCLUSIVAMENTE para orientar o tom do Call-to-Action (CTA).
+- O CTA deve direcionar o seguidor para:
+  1. Enviar uma mensagem pelo Direct;
+  2. Ou acessar os canais / WhatsApp através do link na bio do perfil (${company.instagramHandle}).
+- Exemplo de CTA: "Quer agendar uma consulta ou tirar dúvidas? Envie um direct ou acesse os canais no link da bio!"
+
 ESTRUTURA DAS LÂMINAS (DE 1 A ${targetSlideCount}):
 - Lâmina 1 (Capa): Gancho provocativo (Hook) de alta retenção + subtítulo impactante. Se houver foto adequada do acervo, indique seu ID em "suggestedPhotoId".
 - Lâminas 2 a ${targetSlideCount - 1} (Desenvolvimento): Distribuição matemática e proporcional dos passos práticos, argumentos ou dados sobre o tema.
-- Lâmina ${targetSlideCount} (Final): Chamada para ação (CTA) persuasiva direcionando para conversa no WhatsApp ou salvamento.
+- Lâmina ${targetSlideCount} (Final): Chamada para ação (CTA) persuasiva direcionando para enviar mensagem no Direct ou acessar o link na bio (sem URLs cruas).
 
 HORÁRIO SUGERIDO DE PUBLICAÇÃO:
 Indique o melhor horário em "suggestedTime" (formato "HH:MM", ex: "09:00", "12:30", "18:30", "20:00") baseado nos melhores padrões de engajamento do nicho ${company.niche}.
@@ -133,32 +143,42 @@ Responda EXCLUSIVAMENTE em formato JSON puro, sem blocos markdown ao redor:
       "slideNumber": ${targetSlideCount},
       "title": "Chamada final",
       "bodyText": "Texto de conclusão",
-      "ctaText": "Texto do botão de ação",
+      "ctaText": "Texto do botão de ação (ex: 'Fale Conosco no Direct')",
       "suggestedPhotoId": null
     }
   ],
-  "caption": "Legenda completa do post com quebras de linha, emojis, CTA final e 5 a 8 hashtags estratégicas."
+  "caption": "Legenda completa do post com quebras de linha, emojis, CTA contextual convidando para o direct ou link na bio (SEM URLs cruas) e 5 a 8 hashtags estratégicas."
 }`;
   }
 
   /**
-   * Adiciona links de conversão oficiais (wa.me) e arroba do Instagram à legenda
+   * Formata e enriquece a legenda com CTA contextual para o Instagram e arroba oficial.
+   * Regra Mandatória: No Instagram, links em legendas NÃO são clicáveis. URLs cruas
+   * (como https://wa.me/... ou https://...) poluem a experiência visual. Por isso,
+   * os dados de WhatsApp/Site servem exclusivamente para subsidiar a redação de CTAs
+   * orientando para o Direct ou para o canal no link da Bio.
    */
   public formatCaptionWithConversion(rawCaption: string, company: CompanyProfile): string {
     let caption = rawCaption.trim();
 
-    if (company.whatsappNumber) {
-      const cleanPhone = company.whatsappNumber.replace(/\D/g, "");
-      const encodedMsg = encodeURIComponent(
-        company.whatsappDefaultMessage || `Olá! Vi o post no Instagram sobre ${company.name} e gostaria de mais informações.`
-      );
-      const waLink = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
+    // 1. Sanitização defensiva: remove URLs cruas (wa.me, http://, https://) que possam ter sido geradas
+    caption = caption
+      .replace(/https?:\/\/[^\s]+/gi, "")
+      .replace(/wa\.me\/[^\s]+/gi, "")
+      .replace(/[ \t]{2,}/g, " ")
+      .trim();
 
-      if (!caption.includes("wa.me")) {
-        caption += `\n\n📲 Converse conosco no WhatsApp: ${waLink}`;
+    // 2. Se a legenda ainda não contiver indicação de conversão para direct ou link na bio
+    const hasCta = /direct|link na bio|link da bio|link em nossa bio/i.test(caption);
+    if (!hasCta) {
+      if (company.whatsappNumber || company.websiteUrl) {
+        caption += `\n\n📲 Para conversar conosco ou saber mais, envie uma mensagem pelo Direct ou acesse os canais no link da nossa bio!`;
+      } else {
+        caption += `\n\n💬 Gostou do conteúdo? Envie um Direct para saber mais!`;
       }
     }
 
+    // 3. Garantir presença do perfil oficial do Instagram
     if (!caption.includes(company.instagramHandle)) {
       caption += `\n\nSiga ${company.instagramHandle} para mais conteúdos diários!`;
     }

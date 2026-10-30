@@ -472,6 +472,14 @@ export function CompanyTab() {
               </Badge>
             </div>
 
+            {/* Dica de boas práticas de Instagram (Links não clicáveis em legendas) */}
+            <div className="p-3 bg-slate-950/70 border border-slate-800/80 rounded-lg flex items-start gap-2.5 text-xs text-slate-300">
+              <Sparkles className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+              <div className="leading-relaxed">
+                <span className="font-semibold text-slate-200">Boas Práticas de Conversão no Instagram:</span> Links no corpo da legenda não são clicáveis. Estes canais e mensagens são utilizados pela IA <strong className="text-teal-300 font-medium">exclusivamente para redigir os CTAs</strong> da última lâmina e da legenda (ex.: <em>"Marque uma consulta pelo direct ou nos canais do link na bio!"</em>), evitando URLs cruas inoperantes.
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <Label htmlFor="company-whatsapp" className="text-xs text-slate-300">
@@ -522,6 +530,9 @@ export function CompanyTab() {
                 placeholder="Ex: Olá! Vi o post no Instagram e gostaria de saber mais."
                 className="bg-slate-950 text-slate-100 border-slate-700 text-xs h-9"
               />
+              <p className="text-[11px] text-slate-400">
+                A IA usa este texto para orientar o gancho e o objetivo da chamada de ação no post e na legenda.
+              </p>
             </div>
 
             <div className="space-y-1.5">

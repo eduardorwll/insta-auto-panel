@@ -81,7 +81,7 @@ describe("IA Generativa Agnóstica: Adapters e ML Studio API", () => {
         { slideNumber: 6, title: "Passo 5", bodyText: "Explicação 5" },
         { slideNumber: 7, title: "Conclusão", bodyText: "Resumo", ctaText: "Agende sua avaliação!" },
       ],
-      caption: "Legenda persuasiva com chamada de ação. WhatsApp: https://wa.me/5511999991234 #dentes #saude",
+      caption: "Legenda persuasiva com chamada de ação para direct ou link na bio. #dentes #saude",
     };
 
     const parsed = carouselResponseSchema.safeParse(mockOutput);
@@ -90,11 +90,11 @@ describe("IA Generativa Agnóstica: Adapters e ML Studio API", () => {
       expect(parsed.data.slides.length).toBe(7);
       expect(parsed.data.slides[0]?.slideNumber).toBe(1);
       expect(parsed.data.slides[6]?.ctaText).toBe("Agende sua avaliação!");
-      expect(parsed.data.caption).toContain("wa.me/5511999991234");
+      expect(parsed.data.caption).toContain("direct ou link na bio");
     }
   });
 
-  it("MLStudioProvider deve formatar link wa.me na legenda quando a empresa tiver WhatsApp", () => {
+  it("MLStudioProvider deve formatar CTA contextual para direct/link na bio SEM urls cruas ou wa.me", () => {
     const mlProvider = new MLStudioProvider({
       id: "global",
       provider: "mlstudio",
@@ -105,11 +105,14 @@ describe("IA Generativa Agnóstica: Adapters e ML Studio API", () => {
     });
 
     const caption = mlProvider.formatCaptionWithConversion(
-      "Dicas valiosas para seu negócio.",
+      "Dicas valiosas para seu negócio. Acesse https://wa.me/5511999991234 para falar conosco.",
       dummyCompany
     );
 
-    expect(caption).toContain("https://wa.me/5511999991234");
+    // No Instagram, links na legenda não são clicáveis
+    expect(caption).not.toContain("https://wa.me/");
+    expect(caption).not.toContain("wa.me/");
+    expect(caption).toMatch(/direct|link na bio/i);
     expect(caption).toContain(dummyCompany.instagramHandle);
   });
 });

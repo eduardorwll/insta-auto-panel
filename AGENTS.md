@@ -74,6 +74,14 @@ Este arquivo define as diretrizes operacionais inegociáveis para o **Lead Archi
 - **Ciclo Completo Unificado de Engenharia:**
   `Plan-First` ➔ `Why-First` ➔ `TDD (Red -> Green)` ➔ `Safe-Refactor` ➔ `UI Craft Triad` ➔ `Review-Before-Done (2 Eixos)` ➔ `Tokens Report`.
 
+### 2.7. Diretriz Mandatória de Copywriting, Canais de Conversão & Links no Instagram
+- **Links Não Clicáveis no Instagram:** No ecossistema do Instagram, hyperlinks no corpo da legenda e nas imagens de posts orgânicos são inertes (não clicáveis). É expressamente proibido injetar URLs cruas (`wa.me/...`, `http://`, `https://`) tanto na legenda quanto nas lâminas geradas por IA.
+- **Função dos Canais de Conversão:** Os dados cadastrais da empresa (WhatsApp Comercial, Website Oficial, Mensagem Padrão de Atendimento) destinam-se exclusivamente a **subsidiar a redação persuasiva do Call-to-Action (CTA)** no último slide e no fechamento da legenda.
+- **Direcionamento Orgânico de Tráfego:** Todo CTA gerado pela IA ou formatado pelo backend deve orientar o público para os dois canais oficiais de conversão da plataforma:
+  1. Envio de mensagem direta via **Direct**;
+  2. Acesso ao WhatsApp ou canais externos através do **link na bio** do perfil da empresa (`@handle`).
+- **Defesa em Profundidade (Sanitização no Backend):** O método `formatCaptionWithConversion` em `BaseAIProvider` deve sanitizar preventivamente qualquer URL crua remanescente e garantir a presença do CTA orgânico e da menção ao perfil oficial.
+
 ---
 
 ## 3. Herança das Regras do Sandbox (`~/Sandbox/.agents/rules/`)

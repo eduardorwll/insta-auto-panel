@@ -1,6 +1,6 @@
 {
  "url": "http://localhost:3000",
- "at": "2026-10-30T00:09:10.360Z",
+ "at": "2026-10-30T01:49:52.845Z",
  "allow": [],
  "viewports": [
   {
@@ -10,7 +10,7 @@
    "screens": 2,
    "filled": [
     0.99,
-    0.87
+    0.98
    ],
    "motion": {
     "elements": 0,
@@ -26,13 +26,13 @@
      "h": 900
     },
     "page": {
-     "height": 1797,
-     "screens": 2,
-     "words": 358,
+     "height": 1296,
+     "screens": 1.4,
+     "words": 305,
      "img": 0,
      "video": 0,
      "canvas": 0,
-     "svg": 28,
+     "svg": 22,
      "sections": 0,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
@@ -86,17 +86,17 @@
      "families": [
       {
        "family": "Instrument Sans",
-       "share": 0.85,
+       "share": 0.78,
        "mono": false
       },
       {
        "family": "ui-monospace",
-       "share": 0.14,
+       "share": 0.18,
        "mono": false
       },
       {
        "family": "-apple-system",
-       "share": 0.01,
+       "share": 0.04,
        "mono": false
       }
      ],
@@ -106,10 +106,9 @@
       12,
       14,
       16,
-      18,
-      24
+      18
      ],
-     "sizeCount": 6,
+     "sizeCount": 5,
      "notLoaded": [],
      "body": {
       "font": "Instrument Sans",
@@ -119,15 +118,15 @@
       "tracking": 0,
       "contrast": 6.8
      },
-     "measureChars": 79,
+     "measureChars": 69,
      "max": {
-      "size": 24,
-      "vw": 1.7,
+      "size": 18,
+      "vw": 1.3,
       "font": "Instrument Sans",
-      "text": "Demo Corp"
+      "text": "Planejamento Editorial Semanal"
      },
-     "monoShare": 0.14,
-     "monoProseShare": 0.14,
+     "monoShare": 0.18,
+     "monoProseShare": 0.18,
      "monoFamilies": [
       "ui-monospace"
      ],
@@ -135,16 +134,16 @@
       "PRO",
       "100% IA",
       "CSV",
-      "@democorp",
       "7 posts",
+      "0",
       "0"
      ],
      "microLabels": 0,
      "microLabelShare": 0,
      "microSamples": [],
      "upperShare": 0.03,
-     "centerShare": 0.11,
-     "smallText": 52
+     "centerShare": 0.08,
+     "smallText": 48
     },
     "eyebrows": [],
     "numbered": [],
@@ -165,37 +164,28 @@
         "s": 0.85,
         "l": 0.05
        }
-      },
-      {
-       "color": "#0f172b",
-       "top": 610,
-       "hsl": {
-        "h": 223,
-        "s": 0.48,
-        "l": 0.11
-       }
       }
      ],
      "textColors": [
       {
        "color": "#90a1b9",
-       "share": 0.34
+       "share": 0.39
       },
       {
-       "color": "#cad5e2",
+       "color": "#e2e8f0",
        "share": 0.18
       },
       {
        "color": "#ffffff",
-       "share": 0.17
-      },
-      {
-       "color": "#e2e8f0",
        "share": 0.15
       },
       {
+       "color": "#cad5e2",
+       "share": 0.11
+      },
+      {
        "color": "#46edd5",
-       "share": 0.03
+       "share": 0.06
       }
      ],
      "button": {
@@ -207,22 +197,13 @@
       },
       "fg": "#cad5e2"
      },
-     "lowContrast": [
-      {
-       "text": "Slide 1 (Capa)",
-       "ratio": 3.7,
-       "need": 4.5,
-       "size": 12,
-       "fg": "#ffffff",
-       "bg": "#009689"
-      }
-     ]
+     "lowContrast": []
     },
     "buttons": {
-     "count": 18,
-     "inHero": 14,
-     "radius": 6,
-     "height": 32,
+     "count": 14,
+     "inHero": 12,
+     "radius": 8,
+     "height": 34,
      "withShadow": 0,
      "withGradient": 0,
      "mono": 1,
@@ -243,18 +224,18 @@
      "scrims": 0,
      "gradientSamples": [],
      "gradientText": 0,
-     "hairlines": 8,
+     "hairlines": 7,
      "hairlineSamples": [
       "header.sticky.top-0 1440px",
       "aside.hidden.md:flex 256px",
       "div.p-3.border-t 255px",
-      "div.mt-4.pt-4 1086px",
-      "div.flex.flex-col 651px"
+      "div.space-y-2.pt-3 506px",
+      "div.space-y-1.5.pt-3 506px"
      ],
-     "outlinedBoxes": 14,
+     "outlinedBoxes": 12,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 14,
+     "roundedBoxes": 12,
      "boxRadius": 16,
      "squareMedia": 0,
      "roundedMedia": 0,
@@ -265,7 +246,7 @@
        "count": 7,
        "iconTopped": false,
        "rounded": true,
-       "top": 420
+       "top": 239
       }
      ]
     },
@@ -286,29 +267,29 @@
      "w": 1440,
      "h": 900
     },
-    "pageH": 1797,
+    "pageH": 1296,
     "margins": {
      "left": 12,
      "right": 45
     },
     "sections": [
      {
-      "sel": "div.rounded-xl.border",
+      "sel": "div.flex.flex-col",
       "tag": "div",
       "top": 81,
-      "height": 157,
-      "words": 17,
+      "height": 134,
+      "words": 36,
       "media": 0,
-      "middle": 510,
+      "middle": 153,
       "heading": {
-       "text": "Demo Corp",
-       "size": 24,
+       "text": "Planejamento Editorial Semanal",
+       "size": 18,
        "tag": "h2"
       },
-      "left": 305,
-      "right": 198,
-      "textLeft": 305,
-      "textRight": 198,
+      "left": 301,
+      "right": 150,
+      "textLeft": 301,
+      "textRight": 195,
       "fullBleed": false,
       "footer": false,
       "hero": true,
@@ -316,25 +297,63 @@
       "pinned": false
      },
      {
-      "sel": "div.w-full",
+      "sel": "div.grid.grid-cols-1",
       "tag": "div",
-      "top": 262,
-      "height": 1511,
-      "words": 257,
+      "top": 239,
+      "height": 182,
+      "words": 66,
       "media": 0,
-      "middle": 0,
-      "heading": {
-       "text": "Planejamento Editorial Semanal",
-       "size": 18,
-       "tag": "h2"
-      },
+      "middle": 12,
+      "heading": null,
       "left": 280,
-      "right": 22,
+      "right": 24,
       "textLeft": 293,
-      "textRight": 22,
+      "textRight": 28,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.grid.grid-cols-1",
+      "tag": "div",
+      "top": 445,
+      "height": 524,
+      "words": 76,
+      "media": 0,
+      "middle": 74,
+      "heading": {
+       "text": "Tema a definir",
+       "size": 18,
+       "tag": "h3"
+      },
+      "left": 305,
+      "right": 169,
+      "textLeft": 305,
+      "textRight": 169,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.rounded-xl.border",
+      "tag": "div",
+      "top": 993,
+      "height": 279,
+      "words": 50,
+      "media": 0,
+      "middle": 32,
+      "heading": null,
+      "left": 312,
+      "right": 45,
+      "textLeft": 312,
+      "textRight": 56,
       "fullBleed": false,
       "footer": true,
-      "hero": true,
+      "hero": false,
       "continues": false,
       "pinned": false
      }
@@ -351,31 +370,27 @@
     "edgeText": [],
     "edges": [
      {
-      "x": 305,
-      "n": 2
-     },
-     {
       "x": 66,
       "n": 1
      },
      {
-      "x": 329,
+      "x": 305,
       "n": 1
      },
      {
-      "x": 402,
+      "x": 326,
       "n": 1
      },
      {
-      "x": 982,
+      "x": 885,
       "n": 1
      },
      {
-      "x": 1067,
+      "x": 1009,
       "n": 1
      }
     ],
-    "leftBlocks": 7,
+    "leftBlocks": 5,
     "bodySize": 12,
     "stage": false,
     "explains": false,
@@ -383,9 +398,9 @@
     "voidShare": 0.08,
     "voidBox": {
      "x": 0,
-     "y": 480,
-     "w": 240,
-     "h": 420
+     "y": 540,
+     "w": 300,
+     "h": 360
     }
    },
    "app": {
@@ -398,7 +413,7 @@
     "sidebar": {
      "w": 256,
      "tag": "aside",
-     "links": 7,
+     "links": 8,
      "share": 0.18
     },
     "topbar": {
@@ -427,29 +442,24 @@
     },
     "charts": 0,
     "layout": {
-     "panels": 12,
-     "firstScreen": 11,
-     "ragged": [
-      {
-       "diff": 362,
-       "top": 610
-      }
-     ],
+     "panels": 11,
+     "firstScreen": 10,
+     "ragged": [],
      "voids": [
       {
-       "gap": 85,
-       "at": 925,
+       "gap": 98,
+       "at": 773,
        "panel": "Preview da Lâmina"
       }
      ]
     },
     "tiles": 0,
     "panels": {
-     "count": 22,
+     "count": 21,
      "radii": [
       [
        12,
-       13
+       11
       ],
       [
        16,
@@ -457,7 +467,7 @@
       ],
       [
        0,
-       1
+       2
       ]
      ],
      "heavyBorders": 1,
@@ -491,7 +501,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.78,
+     "under13": 0.87,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -499,8 +509,7 @@
       12,
       14,
       16,
-      18,
-      24
+      18
      ]
     },
     "title": {
@@ -508,7 +517,7 @@
      "size": 16,
      "top": 16
     },
-    "colourShare": 0.013
+    "colourShare": 0.01
    },
    "consoleErrors": []
   },
@@ -518,9 +527,9 @@
    "load": "load",
    "screens": 3,
    "filled": [
-    0.98,
+    0.91,
     1,
-    0.96
+    1
    ],
    "motion": {
     "elements": 0,
@@ -536,13 +545,13 @@
      "h": 1024
     },
     "page": {
-     "height": 2890,
-     "screens": 2.8,
-     "words": 358,
+     "height": 2296,
+     "screens": 2.2,
+     "words": 305,
      "img": 0,
      "video": 0,
      "canvas": 0,
-     "svg": 28,
+     "svg": 22,
      "sections": 0,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
@@ -596,17 +605,17 @@
      "families": [
       {
        "family": "Instrument Sans",
-       "share": 0.85,
+       "share": 0.78,
        "mono": false
       },
       {
        "family": "ui-monospace",
-       "share": 0.14,
+       "share": 0.18,
        "mono": false
       },
       {
        "family": "-apple-system",
-       "share": 0.01,
+       "share": 0.04,
        "mono": false
       }
      ],
@@ -616,10 +625,9 @@
       12,
       14,
       16,
-      18,
-      24
+      18
      ],
-     "sizeCount": 6,
+     "sizeCount": 5,
      "notLoaded": [],
      "body": {
       "font": "Instrument Sans",
@@ -631,13 +639,13 @@
      },
      "measureChars": 70,
      "max": {
-      "size": 24,
-      "vw": 3.1,
+      "size": 18,
+      "vw": 2.3,
       "font": "Instrument Sans",
-      "text": "Demo Corp"
+      "text": "Planejamento Editorial Semanal"
      },
-     "monoShare": 0.14,
-     "monoProseShare": 0.14,
+     "monoShare": 0.18,
+     "monoProseShare": 0.18,
      "monoFamilies": [
       "ui-monospace"
      ],
@@ -645,16 +653,16 @@
       "PRO",
       "100% IA",
       "CSV",
-      "@democorp",
       "7 posts",
+      "0",
       "0"
      ],
      "microLabels": 0,
      "microLabelShare": 0,
      "microSamples": [],
      "upperShare": 0.03,
-     "centerShare": 0.11,
-     "smallText": 52
+     "centerShare": 0.08,
+     "smallText": 48
     },
     "eyebrows": [],
     "numbered": [],
@@ -678,7 +686,7 @@
       },
       {
        "color": "#0f172b",
-       "top": 1185,
+       "top": 1006,
        "hsl": {
         "h": 223,
         "s": 0.48,
@@ -689,23 +697,23 @@
      "textColors": [
       {
        "color": "#90a1b9",
-       "share": 0.34
+       "share": 0.39
       },
       {
-       "color": "#cad5e2",
+       "color": "#e2e8f0",
        "share": 0.18
       },
       {
        "color": "#ffffff",
-       "share": 0.17
-      },
-      {
-       "color": "#e2e8f0",
        "share": 0.15
       },
       {
+       "color": "#cad5e2",
+       "share": 0.11
+      },
+      {
        "color": "#46edd5",
-       "share": 0.03
+       "share": 0.06
       }
      ],
      "button": {
@@ -717,22 +725,13 @@
       },
       "fg": "#cad5e2"
      },
-     "lowContrast": [
-      {
-       "text": "Slide 1 (Capa)",
-       "ratio": 3.7,
-       "need": 4.5,
-       "size": 12,
-       "fg": "#ffffff",
-       "bg": "#009689"
-      }
-     ]
+     "lowContrast": []
     },
     "buttons": {
-     "count": 18,
-     "inHero": 10,
-     "radius": 6,
-     "height": 32,
+     "count": 14,
+     "inHero": 12,
+     "radius": 8,
+     "height": 34,
      "withShadow": 0,
      "withGradient": 0,
      "mono": 1,
@@ -753,31 +752,24 @@
      "scrims": 0,
      "gradientSamples": [],
      "gradientText": 0,
-     "hairlines": 8,
+     "hairlines": 7,
      "hairlineSamples": [
       "header.sticky.top-0 768px",
       "aside.hidden.md:flex 256px",
       "div.p-3.border-t 255px",
-      "div.mt-4.pt-4 414px",
-      "div.flex.flex-col 462px"
+      "div.space-y-2.pt-3 414px",
+      "div.space-y-1.5.pt-3 414px"
      ],
-     "outlinedBoxes": 8,
+     "outlinedBoxes": 5,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 8,
+     "roundedBoxes": 5,
      "boxRadius": 12,
      "squareMedia": 0,
      "roundedMedia": 0,
      "mediaRadius": 0,
      "textShadow": 0,
-     "cardRows": [
-      {
-       "count": 3,
-       "iconTopped": false,
-       "rounded": true,
-       "top": 1517
-      }
-     ]
+     "cardRows": []
     },
     "heroMedia": [],
     "nav": {
@@ -796,41 +788,18 @@
      "w": 768,
      "h": 1024
     },
-    "pageH": 2890,
+    "pageH": 2296,
     "margins": {
      "left": 12,
-     "right": 31
+     "right": 32
     },
     "sections": [
      {
-      "sel": "div.rounded-xl.border",
+      "sel": "div.flex.flex-col",
       "tag": "div",
       "top": 129,
-      "height": 245,
-      "words": 17,
-      "media": 0,
-      "middle": 36,
-      "heading": {
-       "text": "Demo Corp",
-       "size": 24,
-       "tag": "h2"
-      },
-      "left": 305,
-      "right": 202,
-      "textLeft": 305,
-      "textRight": 202,
-      "fullBleed": false,
-      "footer": false,
-      "hero": true,
-      "continues": false,
-      "pinned": false
-     },
-     {
-      "sel": "div.w-full",
-      "tag": "div",
-      "top": 398,
-      "height": 2468,
-      "words": 257,
+      "height": 268,
+      "words": 36,
       "media": 0,
       "middle": 0,
       "heading": {
@@ -838,13 +807,74 @@
        "size": 18,
        "tag": "h2"
       },
+      "left": 301,
+      "right": 48,
+      "textLeft": 301,
+      "textRight": 48,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.grid.grid-cols-1",
+      "tag": "div",
+      "top": 421,
+      "height": 561,
+      "words": 66,
+      "media": 0,
+      "middle": 12,
+      "heading": null,
       "left": 280,
-      "right": 17,
+      "right": 24,
       "textLeft": 293,
-      "textRight": 17,
+      "textRight": 31,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.grid.grid-cols-1",
+      "tag": "div",
+      "top": 1006,
+      "height": 1084,
+      "words": 76,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Tema a definir",
+       "size": 18,
+       "tag": "h3"
+      },
+      "left": 305,
+      "right": 49,
+      "textLeft": 305,
+      "textRight": 56,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.rounded-xl.border",
+      "tag": "div",
+      "top": 2114,
+      "height": 159,
+      "words": 50,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 312,
+      "right": 45,
+      "textLeft": 312,
+      "textRight": 45,
       "fullBleed": false,
       "footer": true,
-      "hero": true,
+      "hero": false,
       "continues": false,
       "pinned": false
      }
@@ -862,10 +892,6 @@
     "edges": [
      {
       "x": 305,
-      "n": 3
-     },
-     {
-      "x": 393,
       "n": 2
      },
      {
@@ -875,9 +901,13 @@
      {
       "x": 326,
       "n": 1
+     },
+     {
+      "x": 383,
+      "n": 1
      }
     ],
-    "leftBlocks": 7,
+    "leftBlocks": 5,
     "bodySize": 12,
     "stage": false,
     "explains": false,
@@ -896,7 +926,7 @@
     "topbar": null,
     "canvas": {
      "left": 12,
-     "right": 24
+     "right": 31
     },
     "hero": {
      "text": "Social Panel PRO",
@@ -917,20 +947,20 @@
     },
     "charts": 0,
     "layout": {
-     "panels": 12,
+     "panels": 11,
      "firstScreen": 8,
      "ragged": [],
      "voids": [
       {
-       "gap": 85,
-       "at": 2499,
+       "gap": 98,
+       "at": 1893,
        "panel": "Preview da Lâmina"
       }
      ]
     },
     "tiles": 0,
     "panels": {
-     "count": 16,
+     "count": 14,
      "radii": [
       [
        16,
@@ -938,11 +968,11 @@
       ],
       [
        12,
-       7
+       4
       ],
       [
        0,
-       1
+       2
       ]
      ],
      "heavyBorders": 1,
@@ -976,7 +1006,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.78,
+     "under13": 0.87,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -984,8 +1014,7 @@
       12,
       14,
       16,
-      18,
-      24
+      18
      ]
     },
     "title": {
@@ -993,7 +1022,7 @@
      "size": 16,
      "top": 16
     },
-    "colourShare": 0.013
+    "colourShare": 0.011
    },
    "consoleErrors": []
   },
@@ -1001,11 +1030,10 @@
    "width": 390,
    "height": 844,
    "load": "load",
-   "screens": 5,
+   "screens": 4,
    "filled": [
     1,
-    1,
-    1,
+    0.82,
     1,
     1
    ],
@@ -1023,13 +1051,13 @@
      "h": 844
     },
     "page": {
-     "height": 4142,
-     "screens": 4.9,
-     "words": 317,
+     "height": 3329,
+     "screens": 3.9,
+     "words": 261,
      "img": 0,
      "video": 0,
      "canvas": 0,
-     "svg": 28,
+     "svg": 22,
      "sections": 0,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
@@ -1069,32 +1097,10 @@
      "size": 16,
      "font": "Instrument Sans"
     },
-    "headings": [
-     {
-      "text": "Demo Corp",
-      "words": 2,
-      "chars": 9,
-      "lines": 1,
-      "size": 24,
-      "vw": 6.2,
-      "font": "Instrument Sans",
-      "weight": 700,
-      "tracking": -0.025,
-      "leading": 1.33,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "left",
-      "widthRatio": 0.32,
-      "top": 190,
-      "tag": "h2",
-      "kind": "heading"
-     }
-    ],
+    "headings": [],
     "headingSummary": {
-     "count": 1,
-     "maxLines": 1,
+     "count": 0,
+     "maxLines": 0,
      "over2Lines": 0,
      "statements": 0,
      "centered": 0,
@@ -1105,17 +1111,17 @@
      "families": [
       {
        "family": "Instrument Sans",
-       "share": 0.84,
+       "share": 0.75,
        "mono": false
       },
       {
        "family": "ui-monospace",
-       "share": 0.15,
+       "share": 0.2,
        "mono": false
       },
       {
        "family": "-apple-system",
-       "share": 0.02,
+       "share": 0.05,
        "mono": false
       }
      ],
@@ -1125,10 +1131,9 @@
       12,
       14,
       16,
-      18,
-      24
+      18
      ],
-     "sizeCount": 6,
+     "sizeCount": 5,
      "notLoaded": [],
      "body": {
       "font": "Instrument Sans",
@@ -1140,30 +1145,30 @@
      },
      "measureChars": 53,
      "max": {
-      "size": 24,
-      "vw": 6.2,
+      "size": 18,
+      "vw": 4.6,
       "font": "Instrument Sans",
-      "text": "Demo Corp"
+      "text": "Planejamento Editorial Semanal"
      },
-     "monoShare": 0.15,
-     "monoProseShare": 0.15,
+     "monoShare": 0.2,
+     "monoProseShare": 0.2,
      "monoFamilies": [
       "ui-monospace"
      ],
      "monoSamples": [
       "PRO",
-      "@democorp",
       "7 posts",
       "0",
+      "0",
       "7",
-      "0"
+      "Semana 2026-10-27"
      ],
      "microLabels": 0,
      "microLabelShare": 0,
      "microSamples": [],
-     "upperShare": 0.02,
-     "centerShare": 0.1,
-     "smallText": 40
+     "upperShare": 0.03,
+     "centerShare": 0.08,
+     "smallText": 35
     },
     "eyebrows": [],
     "numbered": [],
@@ -1187,10 +1192,19 @@
       },
       {
        "color": "#0f172b",
-       "top": 1932,
+       "top": 165,
        "hsl": {
         "h": 223,
         "s": 0.48,
+        "l": 0.11
+       }
+      },
+      {
+       "color": "#0f172a",
+       "top": 2373,
+       "hsl": {
+        "h": 222,
+        "s": 0.47,
         "l": 0.11
        }
       }
@@ -1198,48 +1212,39 @@
      "textColors": [
       {
        "color": "#90a1b9",
-       "share": 0.28
-      },
-      {
-       "color": "#cad5e2",
-       "share": 0.19
-      },
-      {
-       "color": "#ffffff",
-       "share": 0.18
+       "share": 0.32
       },
       {
        "color": "#e2e8f0",
+       "share": 0.21
+      },
+      {
+       "color": "#ffffff",
        "share": 0.17
       },
       {
+       "color": "#cad5e2",
+       "share": 0.11
+      },
+      {
        "color": "#46edd5",
-       "share": 0.03
+       "share": 0.06
       }
      ],
      "button": {
-      "bg": "#020618",
+      "bg": "#0f172b",
       "hsl": {
-       "h": 229,
-       "s": 0.85,
-       "l": 0.05
+       "h": 223,
+       "s": 0.48,
+       "l": 0.11
       },
-      "fg": "#cad5e2"
+      "fg": "#e2e8f0"
      },
-     "lowContrast": [
-      {
-       "text": "Slide 1 (Capa)",
-       "ratio": 3.7,
-       "need": 4.5,
-       "size": 12,
-       "fg": "#ffffff",
-       "bg": "#009689"
-      }
-     ]
+     "lowContrast": []
     },
     "buttons": {
-     "count": 10,
-     "inHero": 3,
+     "count": 5,
+     "inHero": 4,
      "radius": 6,
      "height": 32,
      "withShadow": 0,
@@ -1249,7 +1254,8 @@
      "heroLabels": [
       "Demo Corp",
       "Configurar IA",
-      "Semana 2026-10-27"
+      "Semana 2026-10-27",
+      "Studio Visual (Sem Canva)"
      ]
     },
     "surfaces": {
@@ -1260,31 +1266,24 @@
      "scrims": 0,
      "gradientSamples": [],
      "gradientText": 0,
-     "hairlines": 13,
+     "hairlines": 12,
      "hairlineSamples": [
       "header.sticky.top-0 390px",
-      "div.mt-4.pt-4 308px",
+      "div.flex.items-center 332px",
       "div.flex.items-center 332px",
       "div.flex.items-center 332px",
       "div.flex.items-center 332px"
      ],
-     "outlinedBoxes": 15,
+     "outlinedBoxes": 12,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 15,
+     "roundedBoxes": 12,
      "boxRadius": 16,
      "squareMedia": 0,
      "roundedMedia": 0,
      "mediaRadius": 0,
      "textShadow": 0,
-     "cardRows": [
-      {
-       "count": 3,
-       "iconTopped": false,
-       "rounded": true,
-       "top": 2392
-      }
-     ]
+     "cardRows": []
     },
     "heroMedia": [],
     "nav": {
@@ -1303,7 +1302,7 @@
      "w": 390,
      "h": 844
     },
-    "pageH": 4142,
+    "pageH": 3329,
     "margins": {
      "left": 16,
      "right": 16
@@ -1336,13 +1335,13 @@
       "sel": "div.flex-1.flex",
       "tag": "div",
       "top": 149,
-      "height": 3993,
-      "words": 274,
+      "height": 3180,
+      "words": 228,
       "media": 0,
       "middle": 0,
       "heading": {
-       "text": "Demo Corp",
-       "size": 24,
+       "text": "Planejamento Editorial Semanal",
+       "size": 18,
        "tag": "h2"
       },
       "left": 16,
@@ -1369,26 +1368,18 @@
     "edges": [
      {
       "x": 41,
-      "n": 3
+      "n": 2
      },
      {
       "x": 58,
-      "n": 1
-     },
-     {
-      "x": 76,
-      "n": 1
+      "n": 2
      },
      {
       "x": 102,
       "n": 1
-     },
-     {
-      "x": 138,
-      "n": 1
      }
     ],
-    "leftBlocks": 7,
+    "leftBlocks": 5,
     "bodySize": 12,
     "stage": false,
     "explains": false,
@@ -1428,20 +1419,20 @@
     },
     "charts": 0,
     "layout": {
-     "panels": 12,
+     "panels": 11,
      "firstScreen": 3,
      "ragged": [],
      "voids": [
       {
-       "gap": 85,
-       "at": 3426,
+       "gap": 98,
+       "at": 2601,
        "panel": "Preview da Lâmina"
       }
      ]
     },
     "tiles": 0,
     "panels": {
-     "count": 17,
+     "count": 14,
      "radii": [
       [
        16,
@@ -1449,7 +1440,7 @@
       ],
       [
        12,
-       7
+       4
       ],
       [
        0,
@@ -1492,7 +1483,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.79,
+     "under13": 0.88,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -1500,8 +1491,7 @@
       12,
       14,
       16,
-      18,
-      24
+      18
      ]
     },
     "title": {
@@ -1509,7 +1499,7 @@
      "size": 16,
      "top": 14
     },
-    "colourShare": 0.021
+    "colourShare": 0.02
    },
    "consoleErrors": []
   }
@@ -1517,10 +1507,10 @@
  "findings": [
   {
    "level": "WARN",
-   "id": "contrast",
+   "id": "font-count",
    "width": 1440,
-   "message": "Low-contrast text: \"Slide 1 (Capa)\" 3.7:1 needs 4.5:1",
-   "fix": "Darken or lighten the text colour.",
+   "message": "3 typefaces in use (Instrument Sans, ui-monospace, -apple-system).",
+   "fix": "Two at most.",
    "alsoAt": [
     768,
     390
@@ -1530,7 +1520,7 @@
    "level": "WARN",
    "id": "tiny-text",
    "width": 1440,
-   "message": "78% of the text is under 13px.",
+   "message": "87% of the text is under 13px.",
    "fix": "Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks.",
    "alsoAt": [
     768,
@@ -1539,24 +1529,10 @@
   },
   {
    "level": "WARN",
-   "id": "ragged-row",
-   "width": 1440,
-   "message": "1 pair(s) of cards in one row end at different heights (by 362px).",
-   "fix": "Cards that share a row share a bottom edge: balance them by their content (the same number of rows, a block of similar height beside it), or stack them. In testing, ragged rows were marked down every time."
-  },
-  {
-   "level": "WARN",
    "id": "panel-void",
    "width": 1440,
-   "message": "1 card(s) hold a blank band inside: 85px in \"Preview da Lâmina\".",
+   "message": "1 card(s) hold a blank band inside: 98px in \"Preview da Lâmina\".",
    "fix": "A card stretches to its neighbour only when it has content to fill. Keep a legend or a note directly under its chart (only an action or a total may sit at a stretched card's foot), let a short card keep its own height (align-items: start), and let a filtered block shrink to its rows."
-  },
-  {
-   "level": "WARN",
-   "id": "font-count",
-   "width": 390,
-   "message": "3 typefaces in use (Instrument Sans, ui-monospace, -apple-system).",
-   "fix": "Two at most."
   }
  ],
  "images": [
