@@ -23,7 +23,29 @@ import {
   Search,
   Hash,
 } from "lucide-react";
-import type { CompanyFormData } from "@/client/types/company";
+import type { Company, CompanyFormData } from "@/client/types/company";
+
+/** Converte a empresa ativa no estado do formulário, aplicando os defaults do Brand Kit. */
+function companyToFormData(company: Company): CompanyFormData {
+  return {
+    id: company.id,
+    name: company.name,
+    instagramHandle: company.instagramHandle,
+    niche: company.niche,
+    toneOfVoice: company.toneOfVoice,
+    primaryColor: company.primaryColor || "#0D9488",
+    secondaryColor: company.secondaryColor || "#0284C7",
+    backgroundColor: company.backgroundColor || "#0F172A",
+    accentColor: company.accentColor || "#10B981",
+    whatsappNumber: company.whatsappNumber || "",
+    whatsappDefaultMessage: company.whatsappDefaultMessage || "",
+    websiteUrl: company.websiteUrl || "",
+    canvaTemplateId: company.canvaTemplateId || "",
+    seoDisplayName: company.seoDisplayName || "",
+    bioText: company.bioText || "",
+    targetKeywords: company.targetKeywords || "",
+  };
+}
 
 const COLOR_PRESETS = [
   { name: "Teal Moderno", primary: "#0D9488", secondary: "#0284C7", bg: "#0F172A", accent: "#10B981" },
@@ -61,24 +83,7 @@ export function CompanyTab() {
   // Sincronizar dados ao alternar de empresa ou carregar
   useEffect(() => {
     if (activeCompany) {
-      setFormData({
-        id: activeCompany.id,
-        name: activeCompany.name,
-        instagramHandle: activeCompany.instagramHandle,
-        niche: activeCompany.niche,
-        toneOfVoice: activeCompany.toneOfVoice,
-        primaryColor: activeCompany.primaryColor || "#0D9488",
-        secondaryColor: activeCompany.secondaryColor || "#0284C7",
-        backgroundColor: activeCompany.backgroundColor || "#0F172A",
-        accentColor: activeCompany.accentColor || "#10B981",
-        whatsappNumber: activeCompany.whatsappNumber || "",
-        whatsappDefaultMessage: activeCompany.whatsappDefaultMessage || "",
-        websiteUrl: activeCompany.websiteUrl || "",
-        canvaTemplateId: activeCompany.canvaTemplateId || "",
-        seoDisplayName: activeCompany.seoDisplayName || "",
-        bioText: activeCompany.bioText || "",
-        targetKeywords: activeCompany.targetKeywords || "",
-      });
+      setFormData(companyToFormData(activeCompany));
       setErrorMessage(null);
       setSaveSuccess(false);
     }
@@ -102,24 +107,7 @@ export function CompanyTab() {
 
   const handleReset = () => {
     if (activeCompany) {
-      setFormData({
-        id: activeCompany.id,
-        name: activeCompany.name,
-        instagramHandle: activeCompany.instagramHandle,
-        niche: activeCompany.niche,
-        toneOfVoice: activeCompany.toneOfVoice,
-        primaryColor: activeCompany.primaryColor || "#0D9488",
-        secondaryColor: activeCompany.secondaryColor || "#0284C7",
-        backgroundColor: activeCompany.backgroundColor || "#0F172A",
-        accentColor: activeCompany.accentColor || "#10B981",
-        whatsappNumber: activeCompany.whatsappNumber || "",
-        whatsappDefaultMessage: activeCompany.whatsappDefaultMessage || "",
-        websiteUrl: activeCompany.websiteUrl || "",
-        canvaTemplateId: activeCompany.canvaTemplateId || "",
-        seoDisplayName: activeCompany.seoDisplayName || "",
-        bioText: activeCompany.bioText || "",
-        targetKeywords: activeCompany.targetKeywords || "",
-      });
+      setFormData(companyToFormData(activeCompany));
       setErrorMessage(null);
       setSaveSuccess(false);
     }

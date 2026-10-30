@@ -38,6 +38,7 @@ import {
   Trash2,
 } from "lucide-react";
 import type { StudioTemplateId, StudioImageProvider } from "./DesignStudioModal";
+import { SeoChecklist } from "./SeoChecklist";
 
 interface DesignStudioTabProps {
   onSwitchToCanva?: () => void;
@@ -1145,6 +1146,12 @@ export function DesignStudioTab({
                 O algoritmo do Instagram confere se o Alt Text e a imagem correspondem à legenda. Correspondências exatas elevam o ranking de busca.
               </p>
             </div>
+
+            <SeoChecklist
+              caption={activePost?.caption}
+              altText={activePost?.altText}
+              keywordCluster={activePost?.keywordCluster}
+            />
 
             <div className="flex items-center justify-between pt-2">
               <div className="text-xs text-slate-400">

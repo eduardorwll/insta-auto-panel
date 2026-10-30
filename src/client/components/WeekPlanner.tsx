@@ -4,6 +4,7 @@ import type { Post, PostSlide } from "@/client/types/schedule";
 import type { PhotoAsset } from "@/client/types/photo";
 import { SlidePreview } from "./SlidePreview";
 import { DesignStudioModal } from "./DesignStudioModal";
+import { seoChecks, parseKeywordCluster } from "@/shared/seo-quality";
 import { Button } from "@/client/components/ui/button";
 import { Input } from "@/client/components/ui/input";
 import { Label } from "@/client/components/ui/label";
@@ -484,6 +485,27 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
                   {post.theme || "Tema a definir"}
                 </div>
               </div>
+
+              {/* Indicador SEO (somente leitura): critérios do MATCH cumpridos */}
+              {post.caption && (() => {
+                const checks = seoChecks({
+                  caption: post.caption,
+                  altText: post.altText,
+                  keywordCluster: parseKeywordCluster(post.keywordCluster),
+                });
+                const passed = checks.filter((c) => c.ok).length;
+                return (
+                  <span
+                    data-testid={`seo-score-${post.dayOfWeek}`}
+                    title={checks.filter((c) => !c.ok).map((c) => c.hint).join("\n") || "SEO completo"}
+                    className={`text-[11px] font-mono tabular-nums ${
+                      passed === checks.length ? "text-teal-300" : "text-amber-300"
+                    }`}
+                  >
+                    SEO {passed}/{checks.length}
+                  </span>
+                );
+              })()}
 
               {/* Mini-Carrossel Strip (Visualização Lâminas) */}
               <div className="w-full flex items-center gap-1 py-1">

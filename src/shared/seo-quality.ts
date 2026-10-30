@@ -57,34 +57,74 @@ export interface SeoAuditInput {
   keywordCluster?: string[] | null;
 }
 
-/** Retorna avisos legíveis; lista vazia significa que o post cumpre o MATCH. */
-export function auditPost({ caption, altText, keywordCluster }: SeoAuditInput): string[] {
-  const warnings: string[] = [];
+export interface SeoCheck {
+  id: "hashtags" | "keyword" | "length" | "alt";
+  label: string;
+  ok: boolean;
+  /** Mensagem de orientação exibida quando o critério falha. */
+  hint: string;
+}
+
+/** Aceita o JSON serializado do banco, um array ou lixo; sempre devolve string[]. */
+export function parseKeywordCluster(value: unknown): string[] {
+  let parsed: unknown = value;
+  if (typeof value === "string") {
+    try {
+      parsed = JSON.parse(value);
+    } catch {
+      return [];
+    }
+  }
+  return Array.isArray(parsed) ? parsed.filter((k): k is string => typeof k === "string") : [];
+}
+
+/** Critérios do MATCH aplicáveis ao post (keyword só existe quando há cluster). */
+export function seoChecks({ caption, altText, keywordCluster }: SeoAuditInput): SeoCheck[] {
+  const checks: SeoCheck[] = [];
 
   const hashtags = caption.match(/#[\p{L}\p{N}_]+/gu) ?? [];
-  if (hashtags.length < MIN_HASHTAGS || hashtags.length > MAX_HASHTAGS) {
-    warnings.push(
-      `Use de ${MIN_HASHTAGS} a ${MAX_HASHTAGS} hashtags de nicho (atual: ${hashtags.length}).`
-    );
-  }
+  checks.push({
+    id: "hashtags",
+    label: `${MIN_HASHTAGS}–${MAX_HASHTAGS} hashtags`,
+    ok: hashtags.length >= MIN_HASHTAGS && hashtags.length <= MAX_HASHTAGS,
+    hint: `Use de ${MIN_HASHTAGS} a ${MAX_HASHTAGS} hashtags de nicho (atual: ${hashtags.length}).`,
+  });
 
   const primary = keywordCluster?.find((k) => k.trim().length > 0);
-  if (primary && !fold(caption.slice(0, OPENING_CHARS)).includes(fold(primary.trim()))) {
-    warnings.push(
-      `A palavra-chave principal "${primary}" deveria aparecer nos primeiros ${OPENING_CHARS} caracteres da legenda.`
-    );
+  if (primary) {
+    checks.push({
+      id: "keyword",
+      label: "Palavra-chave na abertura",
+      ok: fold(caption.slice(0, OPENING_CHARS)).includes(fold(primary.trim())),
+      hint: `A palavra-chave principal "${primary}" deveria aparecer nos primeiros ${OPENING_CHARS} caracteres da legenda.`,
+    });
   }
 
   const words = caption.replace(/#[\p{L}\p{N}_]+/gu, "").split(/\s+/).filter(Boolean).length;
-  if (words < MIN_WORDS || words > MAX_WORDS) {
-    warnings.push(`Legenda com ${words} palavras; ideal entre ${MIN_WORDS} e ${MAX_WORDS}.`);
-  }
+  checks.push({
+    id: "length",
+    label: `${MIN_WORDS}–${MAX_WORDS} palavras`,
+    ok: words >= MIN_WORDS && words <= MAX_WORDS,
+    hint: `Legenda com ${words} palavras; ideal entre ${MIN_WORDS} e ${MAX_WORDS}.`,
+  });
 
-  if (!altText || !altText.trim()) {
-    warnings.push("Preencha o Alt Text da capa (Computer Vision confere imagem x legenda).");
-  } else if (primary && !fold(altText).includes(fold(primary.trim()))) {
-    warnings.push("O Alt Text deveria conter a palavra-chave principal.");
-  }
+  const hasAlt = Boolean(altText && altText.trim());
+  const altHasKeyword = !primary || (hasAlt && fold(altText as string).includes(fold(primary.trim())));
+  checks.push({
+    id: "alt",
+    label: "Alt Text com palavra-chave",
+    ok: hasAlt && altHasKeyword,
+    hint: hasAlt
+      ? "O Alt Text deveria conter a palavra-chave principal."
+      : "Preencha o Alt Text da capa (Computer Vision confere imagem x legenda).",
+  });
 
-  return warnings;
+  return checks;
+}
+
+/** Retorna avisos legíveis; lista vazia significa que o post cumpre o MATCH. */
+export function auditPost(input: SeoAuditInput): string[] {
+  return seoChecks(input)
+    .filter((check) => !check.ok)
+    .map((check) => check.hint);
 }
