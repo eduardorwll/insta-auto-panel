@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { AIProviderName } from "@/server/db/schema";
-import { normalizeCaption } from "./seo-quality";
+import { normalizeCaption } from "../../../shared/seo-quality";
 
 export interface CompanyProfile {
   name: string;

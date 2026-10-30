@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { normalizeCaption, auditPost } from "@/server/services/ai/seo-quality";
+import { normalizeCaption, auditPost } from "@/shared/seo-quality";
 
 describe("Instagram SEO Quality Gate (MATCH)", () => {
   it("normalizeCaption remove a frase inteira que contém URL, sem deixar texto quebrado", () => {

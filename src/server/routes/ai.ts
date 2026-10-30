@@ -9,7 +9,7 @@ import {
 } from "../db/schema";
 import { AIProviderFactory } from "../services/ai/factory";
 import type { AISettings } from "../services/ai/provider";
-import { auditPost } from "../services/ai/seo-quality";
+import { auditPost } from "../../shared/seo-quality";
 import { eq, asc } from "drizzle-orm";
 import { z } from "zod";
 
