@@ -1,6 +1,6 @@
-# Social Panel PRO (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente
+# Social Panel (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente
 
-> **Projeto:** Social Panel PRO — Sistema de Automação de Conteúdo Multi-Conta para Instagram  
+> **Projeto:** Social Panel — Sistema de Automação de Conteúdo Multi-Conta para Instagram  
 > **Diretório Oficial do Repositório:** `/home/eduardorwll/Sandbox/src/insta-auto-panel/`  
 > **Perímetro de Execução (Sandbox):** `/home/eduardorwll/Sandbox/`  
 > **Documentos Mestres:**  
@@ -14,13 +14,22 @@ Este arquivo define as diretrizes operacionais inegociáveis para o **Lead Archi
 ## 1. Arquitetura e Stack Obrigatória
 
 1. **Runtime & Gerenciador de Pacotes:** **Bun** (`bun run`, `bun test`, `bun install`, `Bun.serve`). É proibido substituir o Bun por `npm`/`yarn` ou SGBDs externos pesados.
-2. **Frontend & Design System:** **Vite + React 19 + TypeScript + Tailwind CSS + shadcn/ui + Lucide React + TanStack Query**.
+2. **Frontend & Design System:** **Vite + React 19 + TypeScript + Tailwind CSS + shadcn/ui + Lucide React**.
 3. **Persistência Confiável (ACID):** **SQLite nativo (`bun:sqlite`)** em modo **WAL (`PRAGMA journal_mode = WAL;`)** gerenciado via **Drizzle ORM** em `data/social_panel.db`.
-4. **Regras de Domínio Essenciais:**
-   - **Multi-Tenant (`companies`):** Isolamento estrito de dados, Brand Kit (cores Hex, tipografia, WhatsApp `wa.me`, Canva Template ID) e banco de fotos base (`photo_assets`) por empresa.
+4. **Clean Architecture e Separação em Camadas:**
+   - **Camada de Serviços (`src/server/services/`):**
+     - `schedules/schedule-service.ts`: Ciclo de vida de cronogramas semanais, cálculo de dias, sincronização dinâmica de lâminas (3 a 10) e auto-healing defensivo de lâminas.
+     - `instagram/cookies.ts`: Parser universal e normalizador de cookies de autenticação do Instagram.
+     - `ai/`: Adapters agnósticos com suporte nativo ao framework MATCH (Instagram SEO 2026: altText, keywordCluster e prompt de imagem).
+     - `design/`: Motor do Studio Visual OpenDesign 4:5 (`template-engine.ts`, `image-provider.ts`).
+     - `export/`: Enfileiramento atômico no AutoSocial (`autosocial.ts`) e exportação Canva Pro (`canva.ts`).
+   - **Camada de Transporte & Rotas (`src/server/routes/`):** Rotas HTTP desacopladas com validação estrita via schemas Zod e injeção global de headers defensivos de segurança (`applySecurityHeaders`).
+   - **Hooks Reativos (`src/client/hooks/`):** `useWeekSchedule.ts` desacopla a gestão de estado do cronograma do componente de renderização `WeekPlanner.tsx`.
+5. **Regras de Domínio Essenciais:**
+   - **Multi-Tenant (`companies`):** Isolamento estrito de dados, Brand Kit (cores Hex, tipografia, WhatsApp `wa.me`, redes sociais) e banco de fotos base (`photo_assets`) por empresa.
    - **Variável Dinâmica de Lâminas (`slide_count`):** Selecionável por post de **3 a 10 slides** (Slide 1 = Hook/Capa, Slides 2..N-1 = Desenvolvimento proporcional, Slide N = CTA).
-   - **IA Generativa Agnóstica (`AIProvider`):** Padrão Adapter em TypeScript suportando Google Gemini, OpenAI, Anthropic Claude, Groq, DeepSeek, OpenRouter e Ollama Local, com validação em runtime via **Zod** (Structured Outputs) e chaves configuráveis em escopo global ou por empresa.
-   - **Motor Gráfico & Publicação:** Exportação CSV compatível com **Canva Pro (Bulk Create)** / Canva Connect API e integração via filesystem sidecar (`.description` + mídia) na fila `queue/<company_id>/instagram/pending/` do **`Katzca/AutoSocial`**.
+   - **IA Generativa Agnóstica (`AIProvider`):** Padrão Adapter em TypeScript suportando ML Studio API local (`localhost:1234`), Google Gemini, OpenAI, Anthropic Claude, Groq, OpenRouter e Ollama, com validação em runtime via **Zod** (Structured Outputs).
+   - **Motor Gráfico & Publicação:** Studio Visual OpenDesign nativo 4:5 (1080×1350px) e integração via filesystem sidecar (`.description` + mídia) na fila `data/autosocial/queue/<company_id>/instagram/pending/` do **`Katzca/AutoSocial`**.
 
 ---
 
