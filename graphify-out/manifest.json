@@ -511,8 +511,8 @@
   },
   "drizzle/0000_loud_stature.sql": {
     "mtime": 1793307133.0513723,
-    "seen": 1793328689.1197875,
-    "ast_hash": "",
+    "seen": 1793329477.6606371,
+    "ast_hash": "b8b4e2abcbb7056ab501752d2972b4ab",
     "semantic_hash": ""
   },
   ".delegate/config.json": {

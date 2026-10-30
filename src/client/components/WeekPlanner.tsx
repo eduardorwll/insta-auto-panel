@@ -358,22 +358,22 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
 
         {/* Resumo Executivo de Métricas em Tabular-Nums */}
         <div className="flex flex-wrap items-center gap-2">
-          <div className="px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-xs flex items-center gap-2">
+          <div className="px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-xs inline-flex items-center justify-center text-center gap-2">
             <span className="text-slate-400">Total:</span>
             <span className="font-mono font-bold text-white tabular-nums">{totalCount} posts</span>
           </div>
 
-          <div className="px-3 py-1.5 rounded-xl bg-teal-950/60 border border-teal-800 text-xs flex items-center gap-2">
+          <div className="px-3 py-1.5 rounded-xl bg-teal-950/60 border border-teal-800 text-xs inline-flex items-center justify-center text-center gap-2">
             <span className="text-teal-300">Prontos:</span>
             <span className="font-mono font-bold text-teal-200 tabular-nums">{readyCount}</span>
           </div>
 
-          <div className="px-3 py-1.5 rounded-xl bg-amber-950/60 border border-amber-800 text-xs flex items-center gap-2">
+          <div className="px-3 py-1.5 rounded-xl bg-amber-950/60 border border-amber-800 text-xs inline-flex items-center justify-center text-center gap-2">
             <span className="text-amber-300">Rascunhos:</span>
             <span className="font-mono font-bold text-amber-200 tabular-nums">{draftCount}</span>
           </div>
 
-          <div className="px-3 py-1.5 rounded-xl bg-emerald-950/60 border border-emerald-800 text-xs flex items-center gap-2">
+          <div className="px-3 py-1.5 rounded-xl bg-emerald-950/60 border border-emerald-800 text-xs inline-flex items-center justify-center text-center gap-2">
             <span className="text-emerald-300">Na Fila:</span>
             <span className="font-mono font-bold text-emerald-200 tabular-nums">{queuedCount}</span>
           </div>
@@ -390,7 +390,7 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
               d.setDate(d.getDate() - 7);
               setWeekStartDate(d.toISOString().split("T")[0] || "");
             }}
-            className="h-8 w-8 p-0 text-slate-400 hover:text-white hover:bg-slate-800"
+            className="h-8 w-8 p-0 text-slate-400 hover:text-white hover:bg-slate-800 inline-flex items-center justify-center"
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
@@ -399,7 +399,7 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
             variant="outline"
             size="sm"
             onClick={() => setWeekStartDate(getMonday())}
-            className="h-8 text-xs font-mono font-medium border-slate-700 bg-slate-950 text-slate-300 hover:text-white tabular-nums"
+            className="h-8 text-xs font-mono font-medium border-slate-700 bg-slate-950 text-slate-300 hover:text-white tabular-nums inline-flex items-center justify-center text-center"
           >
             Semana {weekStartDate}
           </Button>
@@ -413,7 +413,7 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
               d.setDate(d.getDate() + 7);
               setWeekStartDate(d.toISOString().split("T")[0] || "");
             }}
-            className="h-8 w-8 p-0 text-slate-400 hover:text-white hover:bg-slate-800"
+            className="h-8 w-8 p-0 text-slate-400 hover:text-white hover:bg-slate-800 inline-flex items-center justify-center"
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
@@ -447,12 +447,12 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
               <div className="w-full flex items-center justify-between gap-1">
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs font-bold text-white tracking-wide">{fullDayName}</span>
-                  <Badge variant="outline" className="text-[11px] px-1 py-0 border-slate-700 font-mono">
+                  <Badge variant="outline" className="text-[11px] px-1 py-0 border-slate-700 font-mono inline-flex items-center justify-center text-center">
                     {shortDay}
                   </Badge>
                 </div>
                 <span
-                  className={`text-[11px] font-mono font-bold px-1.5 py-0.5 rounded border tabular-nums ${slot.badgeClass}`}
+                  className={`text-[11px] font-mono font-bold px-1.5 py-0.5 rounded border tabular-nums inline-flex items-center justify-center text-center ${slot.badgeClass}`}
                 >
                   {scheduledTime}
                 </span>
@@ -480,7 +480,7 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
                   <span
                     data-testid={`seo-score-${post.dayOfWeek}`}
                     title={checks.filter((c) => !c.ok).map((c) => c.hint).join("\n") || "SEO completo"}
-                    className={`text-[11px] font-mono tabular-nums ${
+                    className={`text-[11px] font-mono tabular-nums inline-flex items-center justify-center text-center ${
                       passed === checks.length ? "text-teal-300" : "text-amber-300"
                     }`}
                   >
@@ -507,12 +507,12 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
 
               {/* Rodapé do Card: Categoria, Lâminas e Status */}
               <div className="flex items-center justify-between pt-2 border-t border-slate-800/80 w-full gap-1">
-                <Badge variant="outline" className="text-[11px] px-1.5 py-0 tabular-nums shrink-0 font-mono">
+                <Badge variant="outline" className="text-[11px] px-1.5 py-0 tabular-nums shrink-0 font-mono inline-flex items-center justify-center text-center">
                   {post.slideCount} slides
                 </Badge>
 
                 <span
-                  className="text-[11px] font-medium px-1.5 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-1.5"
+                  className="text-[11px] font-medium px-1.5 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-300 inline-flex items-center justify-center text-center gap-1.5"
                 >
                   <span
                     className={`w-1.5 h-1.5 rounded-full ${
@@ -551,17 +551,17 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
               <div className="space-y-3">
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <div className="flex items-center gap-2">
-                    <Badge variant="outline" className="border-teal-800 bg-teal-950/40 text-teal-300 font-semibold px-2.5 py-1 text-xs flex items-center gap-1.5">
+                    <Badge variant="outline" className="border-teal-800 bg-teal-950/40 text-teal-300 font-semibold px-2.5 py-1 text-xs inline-flex items-center justify-center text-center gap-1.5">
                       <Clock className="h-3.5 w-3.5 text-teal-400" />
                       <span>{DAY_LABELS[activePost.dayOfWeek]} · {activePost.scheduledTime || "09:00"}</span>
                     </Badge>
-                    <Badge variant="outline" className="text-slate-400 border-slate-800 text-xs font-mono">
+                    <Badge variant="outline" className="text-slate-400 border-slate-800 text-xs font-mono inline-flex items-center justify-center text-center">
                       {getTimePeriod(activePost.scheduledTime || "09:00")}
                     </Badge>
                   </div>
 
                   <span
-                    className="text-xs font-medium px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-1.5"
+                    className="text-xs font-medium px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-300 inline-flex items-center justify-center text-center gap-1.5"
                   >
                     <span
                       className={`w-2 h-2 rounded-full ${
@@ -600,7 +600,7 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
               <div className="space-y-2 pt-3 border-t border-slate-800">
                 <div className="text-xs font-semibold text-slate-300 flex items-center justify-between">
                   <span>Estrutura de Lâminas (4:5):</span>
-                  <span className="text-[11px] font-mono text-slate-400 tabular-nums">
+                  <span className="text-[11px] font-mono text-slate-400 tabular-nums inline-flex items-center justify-center text-center">
                     {activeSlideNumber} de {activePost.slides.length}
                   </span>
                 </div>
@@ -618,11 +618,11 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
                         }`}
                       >
                         <span className="truncate">
-                          <span className="font-mono font-bold text-slate-400 mr-2">#{s.slideNumber}</span>
+                          <span className="font-mono font-bold text-slate-400 mr-2 inline-block text-center min-w-[20px]">#{s.slideNumber}</span>
                           {s.title || (s.slideNumber === 1 ? "Capa / Gancho" : s.slideNumber === activePost.slideCount ? "CTA" : "Slide")}
                         </span>
                         {s.ctaText && (
-                          <Badge variant="outline" className="text-[11px] border-emerald-800 text-emerald-400 shrink-0">
+                          <Badge variant="outline" className="text-[11px] border-emerald-800 text-emerald-400 shrink-0 inline-flex items-center justify-center text-center">
                             CTA
                           </Badge>
                         )}
@@ -637,7 +637,7 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
                 <div className="text-xs font-semibold text-slate-300 flex items-center justify-between">
                   <span>Legenda Agendada:</span>
                   {activePost.caption && (
-                    <span className="text-[11px] text-slate-500 font-mono">
+                    <span className="text-[11px] text-slate-500 font-mono inline-flex items-center justify-center text-center">
                       {activePost.caption.length} caracteres
                     </span>
                   )}
@@ -674,7 +674,7 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
               <CardHeader className="pb-3 border-b border-slate-800">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-base text-white">Preview da Lâmina</CardTitle>
-                  <Badge variant="outline" className="text-xs font-mono tabular-nums">
+                  <Badge variant="outline" className="text-xs font-mono tabular-nums inline-flex items-center justify-center text-center px-2 py-0.5">
                     {activeSlideNumber} / {activePost.slideCount}
                   </Badge>
                 </div>

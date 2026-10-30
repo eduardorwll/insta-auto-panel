@@ -61,13 +61,13 @@ export function SlidePreview({
         <div className="relative z-10 flex items-center justify-between">
           <Badge
             variant="outline"
-            className="text-xs font-semibold border-white/20 text-white px-2 py-0.5"
+            className="text-xs font-semibold border-white/20 text-white px-2 py-0.5 inline-flex items-center justify-center text-center"
             style={{ borderColor: primary }}
           >
             {post.category}
           </Badge>
 
-          <span className="text-xs font-mono tabular-nums text-slate-200 bg-slate-950/80 px-2 py-0.5 rounded-full border border-white/15">
+          <span className="text-xs font-mono tabular-nums text-slate-200 bg-slate-950/80 px-2 py-0.5 rounded-full border border-white/15 inline-flex items-center justify-center text-center">
             {slideNumber} / {post.slideCount}
           </span>
         </div>
