@@ -88,11 +88,8 @@ function DashboardContent() {
               <Sparkles className="h-4 w-4" />
             </div>
             <div>
-              <h1 className="text-base font-bold tracking-tight text-white flex items-center gap-2">
-                Social Panel{" "}
-                <span className="text-xs bg-teal-950 text-teal-300 border border-teal-800 px-1.5 py-0.5 rounded font-mono">
-                  PRO
-                </span>
+              <h1 className="text-base font-bold tracking-tight text-white">
+                Social Panel
               </h1>
             </div>
           </div>

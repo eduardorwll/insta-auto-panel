@@ -23,7 +23,7 @@ export const server = Bun.serve({
     if (url.pathname === "/api/health") {
       return Response.json({
         status: "ok",
-        app: "Social Panel PRO",
+        app: "Social Panel",
         timestamp: new Date().toISOString(),
       });
     }

@@ -23,7 +23,7 @@ describe("Drizzle Migrations & Seed Automatizado", () => {
 
       expect(seededCompanies.length).toBe(1);
       expect(seededCompanies[0]?.id).toBe("demo_corp");
-      expect(seededCompanies[0]?.primaryColor).toBe("#6366F1");
+      expect(seededCompanies[0]?.primaryColor).toBe("#0D9488");
 
       expect(seededAi.length).toBe(1);
       expect(seededAi[0]?.id).toBe("global");

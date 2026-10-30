@@ -27,7 +27,6 @@ import {
   Layers,
   Clock,
   Eye,
-  LayoutGrid,
   ArrowRight,
 } from "lucide-react";
 
@@ -104,7 +103,6 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
   const [isEnqueuingPost, setIsEnqueuingPost] = useState(false);
   const [enqueueSuccess, setEnqueueSuccess] = useState(false);
   const [isStudioOpen, setIsStudioOpen] = useState(false);
-  const [showFeedMockup, setShowFeedMockup] = useState(true);
 
   // Carregar cronograma da semana
   const fetchSchedule = async () => {
@@ -706,58 +704,6 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
           </div>
         </div>
       )}
-
-      {/* 4. Mockup do Feed do Instagram 3x3 da Semana */}
-      <Card className="border-slate-800 bg-slate-900 p-5 space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <LayoutGrid className="h-4 w-4 text-teal-400" />
-            <span className="text-sm font-semibold text-white">
-              Visualização Estética do Feed (Grade 3 Colunas)
-            </span>
-          </div>
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={() => setShowFeedMockup(!showFeedMockup)}
-            className="text-xs text-slate-400 hover:text-white"
-          >
-            {showFeedMockup ? "Recolher" : "Expandir Grade"}
-          </Button>
-        </div>
-
-        {showFeedMockup && (
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-2.5 pt-2">
-            {posts.map((p, idx) => {
-              const coverSlide = p.slides.find((s) => s.slideNumber === 1);
-              return (
-                <div
-                  key={p.id}
-                  className="aspect-[4/5] rounded-xl border border-slate-800 bg-slate-950 p-2.5 flex flex-col justify-between text-left relative overflow-hidden"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-mono text-teal-400 font-bold uppercase">
-                      {DAY_SHORT[p.dayOfWeek] || p.dayOfWeek.substring(0, 3)}
-                    </span>
-                    <span className="text-[11px] font-mono text-slate-400 tabular-nums">
-                      {p.scheduledTime || "09:00"}
-                    </span>
-                  </div>
-
-                  <div className="text-[11px] font-semibold text-slate-200 line-clamp-3 leading-snug">
-                    {coverSlide?.title || p.theme}
-                  </div>
-
-                  <div className="text-[11px] text-slate-400 truncate">
-                    {activeCompany?.instagramHandle || "@democorp"}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </Card>
 
       {/* Modal Legado Studio OpenDesign (se acionado internamente) */}
       {isStudioOpen && activePost && activeCompany && (

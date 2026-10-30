@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "src/client/App.tsx": {
-    "mtime": 1793323469.142399,
-    "seen": 1793323647.9557042,
-    "ast_hash": "8b07f598cb25536b2d9ab42b3dd985e0",
+    "mtime": 1793328989.7451806,
+    "seen": 1793329403.6325374,
+    "ast_hash": "81d7254a84682966e9a0d8ce8c559e4b",
     "semantic_hash": ""
   },
   "src/client/components/AISettingsModal.tsx": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "src/client/components/WeekPlanner.tsx": {
-    "mtime": 1793328404.9741268,
-    "seen": 1793328670.0764413,
-    "ast_hash": "358b4691fc2b233f0862257cc5ceb577",
+    "mtime": 1793328971.2533553,
+    "seen": 1793329403.6327758,
+    "ast_hash": "2faa1b7b2b0adce0014dc3af306fc379",
     "semantic_hash": ""
   },
   "src/client/components/ui/badge.tsx": {
@@ -198,15 +198,15 @@
     "semantic_hash": ""
   },
   "src/server/db/seed.ts": {
-    "mtime": 1793293038.738265,
-    "seen": 1793298581.3426352,
-    "ast_hash": "1bf99e95b905adc40247d5dc57a75dea",
+    "mtime": 1793329181.649717,
+    "seen": 1793329403.6331413,
+    "ast_hash": "79d38d1e7af4a9a82c6931d8c0eda994",
     "semantic_hash": ""
   },
   "src/server/index.ts": {
-    "mtime": 1793315740.3753157,
-    "seen": 1793315946.9047983,
-    "ast_hash": "8da2dc223b96ebf68270cc9289a36b67",
+    "mtime": 1793329030.8480132,
+    "seen": 1793329403.6331422,
+    "ast_hash": "c8d454c763c45de825a8aea7b046947b",
     "semantic_hash": ""
   },
   "src/server/routes/ai.ts": {
@@ -354,15 +354,15 @@
     "semantic_hash": ""
   },
   "tests/server/health.test.ts": {
-    "mtime": 1793293038.7383683,
-    "seen": 1793298581.34266,
-    "ast_hash": "25154e8f8999b3499dc2be293347285c",
+    "mtime": 1793329244.1194866,
+    "seen": 1793329403.633759,
+    "ast_hash": "f0e174376e93b0cb0960a1b7b0b66578",
     "semantic_hash": ""
   },
   "tests/server/migrations-seed.test.ts": {
-    "mtime": 1793293038.7383683,
-    "seen": 1793298581.3426607,
-    "ast_hash": "3d5d0986b2168f1a54fcd01ebd907ed4",
+    "mtime": 1793329261.777613,
+    "seen": 1793329403.6337914,
+    "ast_hash": "382444d16ab7c8e561b27f616a878cab",
     "semantic_hash": ""
   },
   "tests/server/photos-api.test.ts": {
@@ -420,9 +420,9 @@
     "semantic_hash": ""
   },
   "index.html": {
-    "mtime": 1793307133.0543725,
-    "seen": 1793307134.9428017,
-    "ast_hash": "825b6001c041cf24fb14c9ca3e2fe5b0",
+    "mtime": 1793329008.4820163,
+    "seen": 1793329403.6341348,
+    "ast_hash": "9ac489bbf5d91357bcd0a5b04b3753be",
     "semantic_hash": ""
   },
   "plano-fluxo-desenvolvimento-e-testes-vite.md": {
@@ -511,7 +511,7 @@
   },
   "drizzle/0000_loud_stature.sql": {
     "mtime": 1793307133.0513723,
-    "seen": 1793328013.377939,
+    "seen": 1793328689.1197875,
     "ast_hash": "",
     "semantic_hash": ""
   },
@@ -708,9 +708,9 @@
     "semantic_hash": ""
   },
   ".taste-skill/inspect/settings-hub-e2e.jpg": {
-    "mtime": 1793328461.7446024,
-    "seen": 1793328670.0779507,
-    "ast_hash": "3814e71f9b38ffeb961794f4db85a9b8",
+    "mtime": 1793329325.9591093,
+    "seen": 1793329403.63424,
+    "ast_hash": "7c16a0dd5acff3936df727bf038bdced",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/tablet-fold.jpg": {

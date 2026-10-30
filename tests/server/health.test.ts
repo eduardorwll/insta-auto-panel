@@ -9,7 +9,7 @@ describe("Health Check API", () => {
 
     const body = (await res.json()) as { status: string; app: string; timestamp: string };
     expect(body.status).toBe("ok");
-    expect(body.app).toBe("Social Panel PRO");
+    expect(body.app).toBe("Social Panel");
     expect(body.timestamp).toBeDefined();
   });
 
