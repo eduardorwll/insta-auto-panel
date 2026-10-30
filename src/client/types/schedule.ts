@@ -1,4 +1,5 @@
 import type { DayOfWeek, PostStatus } from "@/server/db/schema";
+export type { DayOfWeek, PostStatus };
 import type { PhotoAsset } from "./photo";
 
 export interface PostSlide {

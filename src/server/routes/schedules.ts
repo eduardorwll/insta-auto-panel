@@ -4,11 +4,23 @@ import {
   posts,
   post_slides,
   DAYS_OF_WEEK,
+  dayOfWeekSchema,
   postInsertSchema,
   type DayOfWeek,
 } from "../db/schema";
 import { eq, and, asc } from "drizzle-orm";
 import { z } from "zod";
+
+const postCreateSchema = z.object({
+  scheduleId: z.string().min(1, "scheduleId é obrigatório"),
+  companyId: z.string().min(1, "companyId é obrigatório"),
+  dayOfWeek: dayOfWeekSchema,
+  theme: z.string().optional().default("Tema a definir"),
+  category: z.string().optional().default("Dica Prática"),
+  slideCount: z.number().int().min(3).max(10).optional().default(5),
+  scheduledTime: z.string().optional().default("09:00"),
+  caption: z.string().optional().nullable(),
+});
 
 const postUpdateSchema = z.object({
   theme: z.string().min(1).optional(),
@@ -93,17 +105,14 @@ export async function handleSchedulesRoutes(req: Request, url: URL): Promise<Res
       return Response.json({ success: false, error: "Erro ao obter cronograma" }, { status: 500 });
     }
 
-    // Carregar posts e suas lâminas
+    // Carregar todos os posts e suas lâminas
     const schedulePosts = await db
       .select()
       .from(posts)
       .where(eq(posts.scheduleId, schedule.id));
 
-    // Ordenar posts de acordo com DAYS_OF_WEEK
-    const sortedPosts = await Promise.all(
-      DAYS_OF_WEEK.map(async (day) => {
-        const p = schedulePosts.find((item) => item.dayOfWeek === day);
-        if (!p) return null;
+    const postsWithSlides = await Promise.all(
+      schedulePosts.map(async (p) => {
         const slides = await db
           .select()
           .from(post_slides)
@@ -117,11 +126,27 @@ export async function handleSchedulesRoutes(req: Request, url: URL): Promise<Res
       })
     );
 
+    const dayOrder: Record<string, number> = {
+      segunda: 0,
+      terca: 1,
+      quarta: 2,
+      quinta: 3,
+      sexta: 4,
+      sabado: 5,
+      domingo: 6,
+    };
+
+    postsWithSlides.sort((a, b) => {
+      const dayDiff = (dayOrder[a.dayOfWeek] ?? 0) - (dayOrder[b.dayOfWeek] ?? 0);
+      if (dayDiff !== 0) return dayDiff;
+      return (a.scheduledTime || "09:00").localeCompare(b.scheduledTime || "09:00");
+    });
+
     return Response.json({
       success: true,
       data: {
         schedule,
-        posts: sortedPosts.filter(Boolean),
+        posts: postsWithSlides,
       },
     });
   }
@@ -261,6 +286,82 @@ export async function handleSchedulesRoutes(req: Request, url: URL): Promise<Res
       const message = err instanceof Error ? err.message : "Erro interno";
       return Response.json({ success: false, error: message }, { status: 500 });
     }
+  }
+
+  // 5. POST /api/posts (Criar novo post no cronograma)
+  if (req.method === "POST" && pathname === "/api/posts") {
+    try {
+      const body = await req.json();
+      const parsed = postCreateSchema.parse(body);
+
+      const postId = `post_${parsed.scheduleId}_${parsed.dayOfWeek}_${Date.now()}`;
+      await db.insert(posts).values({
+        id: postId,
+        scheduleId: parsed.scheduleId,
+        companyId: parsed.companyId,
+        dayOfWeek: parsed.dayOfWeek,
+        theme: parsed.theme || "Tema a definir",
+        category: parsed.category || "Dica Prática",
+        slideCount: parsed.slideCount || 5,
+        status: "draft",
+        scheduledTime: parsed.scheduledTime || "09:00",
+        caption: parsed.caption || null,
+      });
+
+      const slideCount = parsed.slideCount || 5;
+      for (let i = 1; i <= slideCount; i++) {
+        await db.insert(post_slides).values({
+          id: `slide_${postId}_${i}`,
+          postId,
+          slideNumber: i,
+          title: i === 1 ? "Capa / Gancho" : i === slideCount ? "Chamada para Ação" : `Slide ${i}`,
+          bodyText: i === 1 ? "Texto provocativo do gancho" : `Desenvolvimento do passo ${i - 1}`,
+          ctaText: i === slideCount ? "Comente ou envie mensagem no WhatsApp!" : null,
+        });
+      }
+
+      const [createdPost] = await db.select().from(posts).where(eq(posts.id, postId));
+      const slides = await db
+        .select()
+        .from(post_slides)
+        .where(eq(post_slides.postId, postId))
+        .orderBy(asc(post_slides.slideNumber));
+
+      return Response.json(
+        {
+          success: true,
+          data: {
+            ...createdPost,
+            selectedPhotoIds: [],
+            slides,
+          },
+        },
+        { status: 201 }
+      );
+    } catch (err: unknown) {
+      if (err instanceof z.ZodError) {
+        return Response.json(
+          { success: false, error: "Dados inválidos", details: err.format() },
+          { status: 400 }
+        );
+      }
+      const message = err instanceof Error ? err.message : "Erro ao criar post";
+      return Response.json({ success: false, error: message }, { status: 500 });
+    }
+  }
+
+  // 6. DELETE /api/posts/:id (Excluir post do cronograma)
+  if (req.method === "DELETE" && pathname.startsWith("/api/posts/")) {
+    const postId = pathname.replace("/api/posts/", "");
+    const [existing] = await db.select().from(posts).where(eq(posts.id, postId));
+    if (!existing) {
+      return Response.json({ success: false, error: "Post não encontrado" }, { status: 404 });
+    }
+
+    await db.delete(post_slides).where(eq(post_slides.postId, postId));
+    await db.delete(posts).where(eq(posts.id, postId));
+
+    return Response.json({ success: true, message: "Post excluído com sucesso" });
   }
 
   return null;

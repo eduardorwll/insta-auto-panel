@@ -61,6 +61,7 @@ bun-debug.log*
 # Graph Intelligence & Local Caches
 .graft/
 .graphify/
+graphify-out/cache/
 .cache/
 .temp/
 .tmp/

@@ -1,12 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useCompany } from "@/client/context/CompanyContext";
-import type { Post, PostSlide } from "@/client/types/schedule";
+import type { Post, PostSlide, DayOfWeek } from "@/client/types/schedule";
 import type { PhotoAsset } from "@/client/types/photo";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/client/components/ui/card";
 import { Button } from "@/client/components/ui/button";
 import { Input } from "@/client/components/ui/input";
 import { Label } from "@/client/components/ui/label";
 import { Badge } from "@/client/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/client/components/ui/dialog";
 import {
   Layers,
   Sparkles,
@@ -27,6 +35,7 @@ import {
   Check,
   Save,
   Calendar,
+  Trash2,
 } from "lucide-react";
 import type { StudioTemplateId, StudioImageProvider } from "./DesignStudioModal";
 
@@ -97,6 +106,16 @@ const EDITORIAL_CATEGORIES = [
 
 const TIME_PRESETS = ["09:00", "12:00", "15:00", "18:30", "20:00"];
 
+const DAYS_OF_WEEK: DayOfWeek[] = [
+  "segunda",
+  "terca",
+  "quarta",
+  "quinta",
+  "sexta",
+  "sabado",
+  "domingo",
+];
+
 const DAY_LABELS: Record<string, string> = {
   segunda: "Segunda",
   terca: "Terça",
@@ -149,6 +168,7 @@ export function DesignStudioTab({
 }: DesignStudioTabProps) {
   const { activeCompany } = useCompany();
   const [weekStartDate] = useState<string>(getMonday());
+  const [scheduleId, setScheduleId] = useState<string | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [localDayIndex, setLocalDayIndex] = useState(0);
   const selectedDayIndex = externalDayIndex !== undefined ? externalDayIndex : localDayIndex;
@@ -173,6 +193,16 @@ export function DesignStudioTab({
   const [renderedUrls, setRenderedUrls] = useState<string[]>([]);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
+  // Estados do Modal "Adicionar Post"
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isAddingPost, setIsAddingPost] = useState(false);
+  const [newPostDay, setNewPostDay] = useState<DayOfWeek>("segunda");
+  const [newPostTime, setNewPostTime] = useState("18:30");
+  const [newPostCategory, setNewPostCategory] = useState("Dica Prática");
+  const [newPostTheme, setNewPostTheme] = useState("");
+  const [newPostSlideCount, setNewPostSlideCount] = useState(5);
+  const [isDeletingPost, setIsDeletingPost] = useState(false);
+
   // Carregar cronograma da semana
   const loadSchedule = async () => {
     if (!activeCompany) return;
@@ -182,10 +212,104 @@ export function DesignStudioTab({
       );
       const json = await res.json();
       if (json.success && json.data) {
+        setScheduleId(json.data.schedule?.id || null);
         setPosts(json.data.posts || []);
       }
     } catch (err) {
       console.error("Erro ao carregar cronograma no Studio:", err);
+    }
+  };
+
+  // Criar novo post
+  const handleCreateNewPost = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!activeCompany) return;
+
+    // Garantir que temos um scheduleId válido
+    let targetScheduleId = scheduleId;
+    if (!targetScheduleId) {
+      targetScheduleId = `sched_${activeCompany.id}_${weekStartDate.replace(/-/g, "")}`;
+    }
+
+    setIsAddingPost(true);
+    setStatusMessage(null);
+    try {
+      const res = await fetch("/api/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          scheduleId: targetScheduleId,
+          companyId: activeCompany.id,
+          dayOfWeek: newPostDay,
+          scheduledTime: newPostTime,
+          category: newPostCategory,
+          theme: newPostTheme.trim() || "Tema a definir",
+          slideCount: newPostSlideCount,
+        }),
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || "Erro ao criar novo post");
+      }
+
+      // Recarrega o cronograma atualizado
+      const schedRes = await fetch(
+        `/api/schedules?companyId=${activeCompany.id}&weekStartDate=${weekStartDate}`
+      );
+      const schedJson = await schedRes.json();
+      if (schedJson.success && schedJson.data) {
+        const updatedList = schedJson.data.posts || [];
+        setPosts(updatedList);
+        const newIdx = updatedList.findIndex((p: Post) => p.id === json.data.id);
+        if (newIdx !== -1) {
+          setSelectedDayIndex(newIdx);
+        } else {
+          setSelectedDayIndex(updatedList.length - 1);
+        }
+      }
+
+      setIsAddModalOpen(false);
+      setNewPostTheme("");
+      setStatusMessage(`Novo post criado com sucesso para ${DAY_LABELS[newPostDay]} às ${newPostTime}!`);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Erro ao adicionar post";
+      setStatusMessage(`Erro: ${msg}`);
+    } finally {
+      setIsAddingPost(false);
+    }
+  };
+
+  // Excluir post ativo
+  const handleDeleteActivePost = async () => {
+    if (!activePost || posts.length <= 1) return;
+    if (!confirm(`Deseja realmente excluir o post "${activePost.theme}" agendado para ${DAY_LABELS[activePost.dayOfWeek]} às ${activePost.scheduledTime}?`)) {
+      return;
+    }
+
+    setIsDeletingPost(true);
+    setStatusMessage(null);
+    try {
+      const res = await fetch(`/api/posts/${activePost.id}`, { method: "DELETE" });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || "Erro ao excluir post");
+      }
+
+      const schedRes = await fetch(
+        `/api/schedules?companyId=${activeCompany?.id}&weekStartDate=${weekStartDate}`
+      );
+      const schedJson = await schedRes.json();
+      if (schedJson.success && schedJson.data) {
+        setPosts(schedJson.data.posts || []);
+        setSelectedDayIndex(Math.max(0, selectedDayIndex - 1));
+      }
+      setStatusMessage("Post excluído com sucesso.");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Erro ao excluir post";
+      setStatusMessage(`Erro: ${msg}`);
+    } finally {
+      setIsDeletingPost(false);
     }
   };
 
@@ -610,22 +734,34 @@ export function DesignStudioTab({
           </p>
         </div>
 
-        {onSwitchToCanva && (
+        <div className="flex items-center gap-2 flex-wrap">
           <Button
             type="button"
-            variant="outline"
             size="sm"
-            onClick={onSwitchToCanva}
-            className="border-slate-700 bg-slate-950 text-slate-300 hover:text-white cursor-pointer gap-2"
+            onClick={() => setIsAddModalOpen(true)}
+            className="border-teal-700 bg-teal-500 hover:bg-teal-400 text-slate-950 font-semibold cursor-pointer gap-1.5 active:scale-95"
           >
-            <FileSpreadsheet className="h-4 w-4 text-pink-400" />
-            <span>Mudar para Modo com Canva</span>
+            <Plus className="h-4 w-4" />
+            <span>Adicionar Post</span>
           </Button>
-        )}
+
+          {onSwitchToCanva && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={onSwitchToCanva}
+              className="border-slate-700 bg-slate-950 text-slate-300 hover:text-white cursor-pointer gap-2"
+            >
+              <FileSpreadsheet className="h-4 w-4 text-pink-400" />
+              <span>Mudar para Modo com Canva</span>
+            </Button>
+          )}
+        </div>
       </div>
 
-      {/* Seletor Rápido de Dias da Semana com Horário e Status */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+      {/* Seletor Rápido de Posts com Horário, Status e Botão Novo Post */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
         {posts.map((post, idx) => {
           const isSelected = selectedDayIndex === idx;
           const dayName = DAY_LABELS[post.dayOfWeek] || post.dayOfWeek;
@@ -669,6 +805,16 @@ export function DesignStudioTab({
             </button>
           );
         })}
+
+        {/* Botão Tile para Adicionar Novo Post */}
+        <button
+          type="button"
+          onClick={() => setIsAddModalOpen(true)}
+          className="p-2.5 rounded-xl border border-dashed border-slate-700 hover:border-teal-500 bg-slate-900/40 hover:bg-slate-900 text-slate-400 hover:text-teal-300 flex flex-col items-center justify-center gap-1 cursor-pointer transition-colors active:scale-95 min-h-[78px]"
+        >
+          <Plus className="h-4 w-4 text-teal-400" />
+          <span className="text-xs font-semibold">Novo Post</span>
+        </button>
       </div>
 
       {/* Grid Principal: Split-Workstation 60 / 40 */}
@@ -682,20 +828,37 @@ export function DesignStudioTab({
                 <Calendar className="h-4 w-4 text-teal-400" />
                 <span>1. Dados Editoriais & Horário de Publicação</span>
               </Label>
-              <Button
-                type="button"
-                size="sm"
-                onClick={handleGenerateAI}
-                disabled={isGeneratingAI || !activePost}
-                className="gap-2 bg-teal-600 hover:bg-teal-500 text-white cursor-pointer active:scale-95"
-              >
-                {isGeneratingAI ? (
-                  <RefreshCw className="h-3.5 w-3.5 animate-spin" />
-                ) : (
-                  <Sparkles className="h-3.5 w-3.5" />
+              <div className="flex items-center gap-2">
+                {posts.length > 1 && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleDeleteActivePost}
+                    disabled={isDeletingPost}
+                    className="text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-950/40 gap-1 cursor-pointer active:scale-95"
+                    title="Excluir este post do cronograma"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                    <span>Excluir</span>
+                  </Button>
                 )}
-                <span>Preencher Tudo com IA</span>
-              </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  aria-label="Gerar com IA"
+                  onClick={handleGenerateAI}
+                  disabled={isGeneratingAI || !activePost}
+                  className="gap-2 bg-teal-600 hover:bg-teal-500 text-white cursor-pointer active:scale-95"
+                >
+                  {isGeneratingAI ? (
+                    <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Sparkles className="h-3.5 w-3.5" />
+                  )}
+                  <span>Preencher Tudo com IA</span>
+                </Button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -747,15 +910,15 @@ export function DesignStudioTab({
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="studio-post-theme" className="text-xs text-slate-300">
+              <Label htmlFor="post-theme" className="text-xs text-slate-300">
                 Tema Central do Post
               </Label>
               <Input
-                id="studio-post-theme"
+                id="post-theme"
                 value={activePost?.theme || ""}
                 onChange={(e) => handleUpdateActivePost("theme", e.target.value)}
                 placeholder="Ex: 5 Dicas para Reduzir Custos Operacionais"
-                className="bg-slate-950 text-slate-100 border-slate-700"
+                className="bg-slate-950 text-slate-100 border-slate-700 text-sm h-9"
               />
             </div>
           </Card>
@@ -786,9 +949,17 @@ export function DesignStudioTab({
                   <Minus className="h-3.5 w-3.5" />
                 </Button>
 
-                <div className="w-16 text-center h-8 flex items-center justify-center rounded-md border border-slate-700 bg-slate-950 text-sm font-mono font-bold text-white tabular-nums">
-                  {activePost?.slideCount || 5}
-                </div>
+                <input
+                  id="slide-count-stepper"
+                  role="spinbutton"
+                  aria-label="Quantidade de Lâminas"
+                  type="number"
+                  min={3}
+                  max={10}
+                  value={activePost?.slideCount || 5}
+                  onChange={(e) => handleSlideCountChange(Number(e.target.value))}
+                  className="w-16 text-center h-8 rounded-md border border-slate-700 bg-slate-950 text-sm font-mono font-bold text-white tabular-nums focus:outline-none focus:ring-1 focus:ring-teal-500"
+                />
 
                 <Button
                   type="button"
@@ -814,6 +985,7 @@ export function DesignStudioTab({
                   <button
                     key={s.id || idx}
                     type="button"
+                    aria-label={isCover ? `Slide ${idx + 1} (Capa)` : isCTA ? `Slide ${idx + 1} (CTA)` : `Slide ${idx + 1}`}
                     onClick={() => setActiveSlideIndex(idx)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                       isCurrent
@@ -848,11 +1020,11 @@ export function DesignStudioTab({
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="studio-slide-title" className="text-xs text-slate-300">
+              <Label htmlFor="slide-title" className="text-xs text-slate-300">
                 Título ou Gancho
               </Label>
               <Input
-                id="studio-slide-title"
+                id="slide-title"
                 value={currentSlide?.title || ""}
                 onChange={(e) => handleUpdateSlide("title", e.target.value)}
                 placeholder="Ex: Como Economizar 40% em Software"
@@ -861,11 +1033,11 @@ export function DesignStudioTab({
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="studio-slide-body" className="text-xs text-slate-300">
+              <Label htmlFor="slide-body" className="text-xs text-slate-300">
                 Corpo do Texto / Argumento
               </Label>
               <textarea
-                id="studio-slide-body"
+                id="slide-body"
                 rows={3}
                 value={currentSlide?.bodyText || ""}
                 onChange={(e) => handleUpdateSlide("bodyText", e.target.value)}
@@ -875,11 +1047,11 @@ export function DesignStudioTab({
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="studio-slide-cta" className="text-xs text-slate-300">
+              <Label htmlFor="slide-cta" className="text-xs text-slate-300">
                 Chamada para Ação (CTA)
               </Label>
               <Input
-                id="studio-slide-cta"
+                id="slide-cta"
                 value={currentSlide?.ctaText || ""}
                 onChange={(e) => handleUpdateSlide("ctaText", e.target.value)}
                 placeholder="Ex: Envie mensagem pelo WhatsApp!"
@@ -912,7 +1084,7 @@ export function DesignStudioTab({
           {/* 4. Legenda do Instagram & Ação de Salvar */}
           <Card className="border-slate-800 bg-slate-900 p-5 space-y-3">
             <div className="flex items-center justify-between">
-              <Label htmlFor="studio-post-caption" className="text-sm font-semibold text-white">
+              <Label htmlFor="post-caption" className="text-sm font-semibold text-white">
                 4. Legenda do Post no Instagram
               </Label>
               <Button
@@ -929,7 +1101,7 @@ export function DesignStudioTab({
             </div>
 
             <textarea
-              id="studio-post-caption"
+              id="post-caption"
               rows={4}
               value={activePost?.caption || ""}
               onChange={(e) => handleUpdateActivePost("caption", e.target.value)}
@@ -945,16 +1117,16 @@ export function DesignStudioTab({
                 type="button"
                 onClick={handleSavePost}
                 disabled={isSaving || !activePost}
-                className="gap-2 bg-teal-600 hover:bg-teal-500 text-white cursor-pointer active:scale-95"
+                className="gap-2 bg-teal-500 hover:bg-teal-400 text-slate-950 font-semibold cursor-pointer active:scale-95"
               >
                 {isSaving ? (
                   <RefreshCw className="h-4 w-4 animate-spin" />
                 ) : saveSuccess ? (
-                  <CheckCircle className="h-4 w-4 text-emerald-300" />
+                  <CheckCircle className="h-4 w-4" />
                 ) : (
                   <Save className="h-4 w-4" />
                 )}
-                <span>{saveSuccess ? "Salvo com Sucesso!" : "Salvar Alterações"}</span>
+                <span>{saveSuccess ? "Salvo!" : isSaving ? "Salvando..." : "Salvar Post"}</span>
               </Button>
             </div>
           </Card>
@@ -1047,12 +1219,24 @@ export function DesignStudioTab({
           {/* Palco Canvas 1080×1350 com Proporção 4:5 */}
           <Card className="border-slate-800 bg-slate-900 p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <Label className="text-sm font-semibold text-white">
-                Palco Canvas 1080×1350 (4:5)
-              </Label>
-              <span className="text-xs text-slate-400 font-mono tabular-nums">
-                Lâmina {activeSlideIndex + 1} de {slides.length || 5}
-              </span>
+              <div>
+                <Label className="text-sm font-semibold text-white">
+                  Palco Canvas 1080×1350 (4:5)
+                </Label>
+                <div className="text-[11px] text-slate-400">
+                  Proporção Instagram 4:5
+                </div>
+              </div>
+              <div className="text-right">
+                <span className="text-xs text-slate-400 font-mono tabular-nums">
+                  Lâmina {activeSlideIndex + 1} de {slides.length || 5}
+                </span>
+                {currentSlide?.title && (
+                  <div className="text-[11px] text-teal-300 font-medium truncate max-w-[220px]">
+                    {currentSlide.title}
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="flex flex-col items-center">
@@ -1173,6 +1357,146 @@ export function DesignStudioTab({
           </div>
         </div>
       </div>
+
+      {/* Modal Dialog: Adicionar Novo Post no Studio */}
+      <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
+        <DialogContent className="max-w-md bg-slate-900 border-slate-800 text-slate-100 p-6 space-y-4">
+          <DialogHeader>
+            <DialogTitle className="text-base font-bold text-white flex items-center gap-2">
+              <Plus className="h-4 w-4 text-teal-400" />
+              <span>Adicionar Novo Post no Studio 4:5</span>
+            </DialogTitle>
+            <DialogDescription className="text-xs text-slate-400">
+              Crie um novo post agendado para o cronograma semanal. Múltiplos posts por dia e horários diferentes são suportados.
+            </DialogDescription>
+          </DialogHeader>
+
+          <form onSubmit={handleCreateNewPost} className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label htmlFor="new-post-day" className="text-xs text-slate-300">
+                  Dia da Semana
+                </Label>
+                <select
+                  id="new-post-day"
+                  value={newPostDay}
+                  onChange={(e) => setNewPostDay(e.target.value as DayOfWeek)}
+                  className="w-full h-9 rounded-md border border-slate-700 bg-slate-950 px-3 py-1 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                >
+                  {DAYS_OF_WEEK.map((d) => (
+                    <option key={d} value={d}>
+                      {DAY_LABELS[d]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="new-post-time" className="text-xs text-slate-300">
+                  Horário (HH:MM)
+                </Label>
+                <div className="flex gap-1.5">
+                  <Input
+                    id="new-post-time"
+                    type="time"
+                    value={newPostTime}
+                    onChange={(e) => setNewPostTime(e.target.value)}
+                    className="bg-slate-950 text-slate-100 border-slate-700 font-mono tabular-nums h-9 text-xs"
+                  />
+                  <select
+                    aria-label="Preset de Horário do Novo Post"
+                    value={newPostTime}
+                    onChange={(e) => setNewPostTime(e.target.value)}
+                    className="h-9 rounded-md border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-300 font-mono tabular-nums"
+                  >
+                    {TIME_PRESETS.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="new-post-category" className="text-xs text-slate-300">
+                Categoria Editorial
+              </Label>
+              <select
+                id="new-post-category"
+                value={newPostCategory}
+                onChange={(e) => setNewPostCategory(e.target.value)}
+                className="w-full h-9 rounded-md border border-slate-700 bg-slate-950 px-3 py-1 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-teal-500"
+              >
+                {EDITORIAL_CATEGORIES.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="new-post-theme" className="text-xs text-slate-300">
+                Tema Central do Post
+              </Label>
+              <Input
+                id="new-post-theme"
+                value={newPostTheme}
+                onChange={(e) => setNewPostTheme(e.target.value)}
+                placeholder="Ex: 5 Passos para um Clareamento Seguro"
+                className="bg-slate-950 text-slate-100 border-slate-700 text-xs h-9"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="new-post-slides" className="text-xs text-slate-300">
+                Quantidade de Lâminas (3 a 10)
+              </Label>
+              <div className="flex items-center gap-2">
+                <Input
+                  id="new-post-slides"
+                  type="number"
+                  min={3}
+                  max={10}
+                  value={newPostSlideCount}
+                  onChange={(e) => setNewPostSlideCount(Number(e.target.value))}
+                  className="w-20 bg-slate-950 text-slate-100 border-slate-700 font-mono tabular-nums h-9 text-xs"
+                />
+                <span className="text-xs text-slate-400">
+                  Slides dinâmicos (Capa + Conteúdo + CTA)
+                </span>
+              </div>
+            </div>
+
+            <DialogFooter className="pt-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setIsAddModalOpen(false)}
+                className="border-slate-700 text-slate-300"
+              >
+                Cancelar
+              </Button>
+              <Button
+                type="submit"
+                size="sm"
+                disabled={isAddingPost}
+                className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-semibold gap-1.5 cursor-pointer active:scale-95"
+              >
+                {isAddingPost ? (
+                  <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Plus className="h-3.5 w-3.5" />
+                )}
+                <span>{isAddingPost ? "Criando..." : "Criar Post"}</span>
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

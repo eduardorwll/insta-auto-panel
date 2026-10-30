@@ -27,16 +27,17 @@ covers:
   - src/client/components/DesignStudioModal.tsx:78-82 # const IMAGE_PROVIDER_OPTIONS
   - src/client/components/DesignStudioModal.tsx:115-149 # function wrapCanvasLines
   - src/client/components/DesignStudioModal.tsx:151-656 # function DesignStudioModal
-  - src/client/components/DesignStudioTab.tsx:1-1179
-  - src/client/components/DesignStudioTab.tsx:33-37 # interface DesignStudioTabProps
-  - src/client/components/DesignStudioTab.tsx:39-43 # const TEMPLATE_OPTIONS
-  - src/client/components/DesignStudioTab.tsx:66-70 # const IMAGE_PROVIDER_OPTIONS
-  - src/client/components/DesignStudioTab.tsx:88-96 # const EDITORIAL_CATEGORIES
-  - src/client/components/DesignStudioTab.tsx:98-98 # const TIME_PRESETS
-  - src/client/components/DesignStudioTab.tsx:100-108 # const DAY_LABELS
-  - src/client/components/DesignStudioTab.tsx:110-116 # function getMonday
-  - src/client/components/DesignStudioTab.tsx:118-143 # function wrapCanvasLines
-  - src/client/components/DesignStudioTab.tsx:145-1178 # function DesignStudioTab
+  - src/client/components/DesignStudioTab.tsx:1-1503
+  - src/client/components/DesignStudioTab.tsx:42-46 # interface DesignStudioTabProps
+  - src/client/components/DesignStudioTab.tsx:48-52 # const TEMPLATE_OPTIONS
+  - src/client/components/DesignStudioTab.tsx:75-79 # const IMAGE_PROVIDER_OPTIONS
+  - src/client/components/DesignStudioTab.tsx:97-105 # const EDITORIAL_CATEGORIES
+  - src/client/components/DesignStudioTab.tsx:107-107 # const TIME_PRESETS
+  - src/client/components/DesignStudioTab.tsx:109-117 # const DAYS_OF_WEEK
+  - src/client/components/DesignStudioTab.tsx:119-127 # const DAY_LABELS
+  - src/client/components/DesignStudioTab.tsx:129-135 # function getMonday
+  - src/client/components/DesignStudioTab.tsx:137-162 # function wrapCanvasLines
+  - src/client/components/DesignStudioTab.tsx:164-1502 # function DesignStudioTab
   - src/client/components/PhotoBank.tsx:1-295
   - src/client/components/PhotoBank.tsx:11-11 # const CATEGORIES
   - src/client/components/PhotoBank.tsx:13-294 # function PhotoBank
@@ -63,14 +64,15 @@ covers:
   - src/client/components/SlidePreview.tsx:1-157
   - src/client/components/SlidePreview.tsx:6-18 # interface SlidePreviewProps
   - src/client/components/SlidePreview.tsx:20-156 # function SlidePreview
-  - src/client/components/WeekPlanner.tsx:1-966
-  - src/client/components/WeekPlanner.tsx:32-40 # const EDITORIAL_CATEGORIES
-  - src/client/components/WeekPlanner.tsx:42-42 # const TIME_PRESETS
-  - src/client/components/WeekPlanner.tsx:44-52 # const DAY_LABELS
-  - src/client/components/WeekPlanner.tsx:54-62 # const DAY_SHORT
-  - src/client/components/WeekPlanner.tsx:65-71 # function getMonday
-  - src/client/components/WeekPlanner.tsx:73-79 # function getTimeSlotBadge
-  - src/client/components/WeekPlanner.tsx:81-965 # function WeekPlanner
+  - src/client/components/WeekPlanner.tsx:1-773
+  - src/client/components/WeekPlanner.tsx:33-41 # const EDITORIAL_CATEGORIES
+  - src/client/components/WeekPlanner.tsx:43-43 # const TIME_PRESETS
+  - src/client/components/WeekPlanner.tsx:45-51 # function getTimePeriod
+  - src/client/components/WeekPlanner.tsx:53-61 # const DAY_LABELS
+  - src/client/components/WeekPlanner.tsx:63-71 # const DAY_SHORT
+  - src/client/components/WeekPlanner.tsx:74-80 # function getMonday
+  - src/client/components/WeekPlanner.tsx:82-88 # function getTimeSlotBadge
+  - src/client/components/WeekPlanner.tsx:90-772 # function WeekPlanner
   - src/client/components/ui/badge.tsx:1-33
   - src/client/components/ui/badge.tsx:5-21 # const badgeVariants
   - src/client/components/ui/badge.tsx:24-26 # interface BadgeProps
@@ -144,10 +146,10 @@ covers:
   - src/client/types/photo.ts:3-13 # interface PhotoAsset
   - src/client/types/publication.ts:1-7
   - src/client/types/publication.ts:1-6 # interface AutoSocialQueueStatus
-  - src/client/types/schedule.ts:1-37
-  - src/client/types/schedule.ts:4-13 # interface PostSlide
-  - src/client/types/schedule.ts:15-29 # interface Post
-  - src/client/types/schedule.ts:31-36 # interface WeeklySchedule
+  - src/client/types/schedule.ts:1-38
+  - src/client/types/schedule.ts:5-14 # interface PostSlide
+  - src/client/types/schedule.ts:16-30 # interface Post
+  - src/client/types/schedule.ts:32-37 # interface WeeklySchedule
   - src/client/vite-env.d.ts:1-2
 ---
 
@@ -188,16 +190,17 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `wrapCanvasLines` (function) → `src/client/components/DesignStudioModal.tsx:115-149`
 - `DesignStudioModal` (function) → `src/client/components/DesignStudioModal.tsx:151-656`
 
-### `src/client/components/DesignStudioTab.tsx` (lines 1-1179)
-- `DesignStudioTabProps` (interface) → `src/client/components/DesignStudioTab.tsx:33-37`
-- `TEMPLATE_OPTIONS` (const) → `src/client/components/DesignStudioTab.tsx:39-43`
-- `IMAGE_PROVIDER_OPTIONS` (const) → `src/client/components/DesignStudioTab.tsx:66-70`
-- `EDITORIAL_CATEGORIES` (const) → `src/client/components/DesignStudioTab.tsx:88-96`
-- `TIME_PRESETS` (const) → `src/client/components/DesignStudioTab.tsx:98-98`
-- `DAY_LABELS` (const) → `src/client/components/DesignStudioTab.tsx:100-108`
-- `getMonday` (function) → `src/client/components/DesignStudioTab.tsx:110-116`
-- `wrapCanvasLines` (function) → `src/client/components/DesignStudioTab.tsx:118-143`
-- `DesignStudioTab` (function) → `src/client/components/DesignStudioTab.tsx:145-1178`
+### `src/client/components/DesignStudioTab.tsx` (lines 1-1503)
+- `DesignStudioTabProps` (interface) → `src/client/components/DesignStudioTab.tsx:42-46`
+- `TEMPLATE_OPTIONS` (const) → `src/client/components/DesignStudioTab.tsx:48-52`
+- `IMAGE_PROVIDER_OPTIONS` (const) → `src/client/components/DesignStudioTab.tsx:75-79`
+- `EDITORIAL_CATEGORIES` (const) → `src/client/components/DesignStudioTab.tsx:97-105`
+- `TIME_PRESETS` (const) → `src/client/components/DesignStudioTab.tsx:107-107`
+- `DAYS_OF_WEEK` (const) → `src/client/components/DesignStudioTab.tsx:109-117`
+- `DAY_LABELS` (const) → `src/client/components/DesignStudioTab.tsx:119-127`
+- `getMonday` (function) → `src/client/components/DesignStudioTab.tsx:129-135`
+- `wrapCanvasLines` (function) → `src/client/components/DesignStudioTab.tsx:137-162`
+- `DesignStudioTab` (function) → `src/client/components/DesignStudioTab.tsx:164-1502`
 
 ### `src/client/components/PhotoBank.tsx` (lines 1-295)
 - `CATEGORIES` (const) → `src/client/components/PhotoBank.tsx:11-11`
@@ -230,14 +233,15 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `SlidePreviewProps` (interface) → `src/client/components/SlidePreview.tsx:6-18`
 - `SlidePreview` (function) → `src/client/components/SlidePreview.tsx:20-156`
 
-### `src/client/components/WeekPlanner.tsx` (lines 1-966)
-- `EDITORIAL_CATEGORIES` (const) → `src/client/components/WeekPlanner.tsx:32-40`
-- `TIME_PRESETS` (const) → `src/client/components/WeekPlanner.tsx:42-42`
-- `DAY_LABELS` (const) → `src/client/components/WeekPlanner.tsx:44-52`
-- `DAY_SHORT` (const) → `src/client/components/WeekPlanner.tsx:54-62`
-- `getMonday` (function) → `src/client/components/WeekPlanner.tsx:65-71`
-- `getTimeSlotBadge` (function) → `src/client/components/WeekPlanner.tsx:73-79`
-- `WeekPlanner` (function) → `src/client/components/WeekPlanner.tsx:81-965`
+### `src/client/components/WeekPlanner.tsx` (lines 1-773)
+- `EDITORIAL_CATEGORIES` (const) → `src/client/components/WeekPlanner.tsx:33-41`
+- `TIME_PRESETS` (const) → `src/client/components/WeekPlanner.tsx:43-43`
+- `getTimePeriod` (function) → `src/client/components/WeekPlanner.tsx:45-51`
+- `DAY_LABELS` (const) → `src/client/components/WeekPlanner.tsx:53-61`
+- `DAY_SHORT` (const) → `src/client/components/WeekPlanner.tsx:63-71`
+- `getMonday` (function) → `src/client/components/WeekPlanner.tsx:74-80`
+- `getTimeSlotBadge` (function) → `src/client/components/WeekPlanner.tsx:82-88`
+- `WeekPlanner` (function) → `src/client/components/WeekPlanner.tsx:90-772`
 
 ### `src/client/components/ui/badge.tsx` (lines 1-33)
 - `badgeVariants` (const) → `src/client/components/ui/badge.tsx:5-21`
@@ -327,9 +331,9 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 ### `src/client/types/publication.ts` (lines 1-7)
 - `AutoSocialQueueStatus` (interface) → `src/client/types/publication.ts:1-6`
 
-### `src/client/types/schedule.ts` (lines 1-37)
-- `PostSlide` (interface) → `src/client/types/schedule.ts:4-13`
-- `Post` (interface) → `src/client/types/schedule.ts:15-29`
-- `WeeklySchedule` (interface) → `src/client/types/schedule.ts:31-36`
+### `src/client/types/schedule.ts` (lines 1-38)
+- `PostSlide` (interface) → `src/client/types/schedule.ts:5-14`
+- `Post` (interface) → `src/client/types/schedule.ts:16-30`
+- `WeeklySchedule` (interface) → `src/client/types/schedule.ts:32-37`
 
 ### `src/client/vite-env.d.ts` (lines 1-2)

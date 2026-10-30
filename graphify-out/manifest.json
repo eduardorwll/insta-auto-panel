@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "src/client/components/WeekPlanner.tsx": {
-    "mtime": 1793319151.3133016,
-    "seen": 1793319434.145547,
-    "ast_hash": "5468d9e4ed5cd2d6fe928478e1ca1be8",
+    "mtime": 1793321257.2522607,
+    "seen": 1793321328.980584,
+    "ast_hash": "a0c1fcaf5902590fe63bb0ff58dd5cc4",
     "semantic_hash": ""
   },
   "src/client/components/ui/badge.tsx": {
@@ -168,9 +168,9 @@
     "semantic_hash": ""
   },
   "src/client/types/schedule.ts": {
-    "mtime": 1793317689.2007165,
-    "seen": 1793319434.1458163,
-    "ast_hash": "16ce13b43edc72af6f4b10f2c70e0b44",
+    "mtime": 1793320823.7644815,
+    "seen": 1793321328.980867,
+    "ast_hash": "d220c6e41207c53cb0b8597a576673f4",
     "semantic_hash": ""
   },
   "src/client/vite-env.d.ts": {
@@ -234,9 +234,9 @@
     "semantic_hash": ""
   },
   "src/server/routes/schedules.ts": {
-    "mtime": 1793317764.3619623,
-    "seen": 1793319434.1459541,
-    "ast_hash": "4d49c8758f5b4cb602dd897acfde31d5",
+    "mtime": 1793319863.1689165,
+    "seen": 1793321328.9810758,
+    "ast_hash": "df66254e38fc2f73b1bb47de1f2a21cd",
     "semantic_hash": ""
   },
   "src/server/services/ai/factory.ts": {
@@ -282,9 +282,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/ai-generation.spec.ts": {
-    "mtime": 1793296574.4576275,
-    "seen": 1793298581.3426483,
-    "ast_hash": "1a03060362dc6a144a032088dc7376bd",
+    "mtime": 1793321088.1389387,
+    "seen": 1793321328.9812856,
+    "ast_hash": "fb143c9f3d33054ade3cb7b11a2f018d",
     "semantic_hash": ""
   },
   "tests/e2e/companies.spec.ts": {
@@ -300,9 +300,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/planner-photos.spec.ts": {
-    "mtime": 1793319192.2020547,
-    "seen": 1793319434.146169,
-    "ast_hash": "8354bff9bd3a45a4470a7fa907968ecd",
+    "mtime": 1793321038.2677786,
+    "seen": 1793321328.9813378,
+    "ast_hash": "a6ec3f71c3e845d1fa9f8de3fd4111ff",
     "semantic_hash": ""
   },
   "tests/server/ai-adapters.test.ts": {
@@ -468,39 +468,39 @@
     "semantic_hash": ""
   },
   "graft/INDEX.md": {
-    "mtime": 1793319432.7193842,
-    "seen": 1793319434.1465847,
-    "ast_hash": "81835cf5e6b9053e962089da521dd62e",
+    "mtime": 1793321327.4562988,
+    "seen": 1793321328.9818323,
+    "ast_hash": "239dbdab2ec2fc9be4ea5493d28ecfae",
     "semantic_hash": ""
   },
   "graft/client-ui.md": {
-    "mtime": 1793319432.718384,
-    "seen": 1793319434.1465862,
-    "ast_hash": "842b88317cf5fc682c6b04420534bcd3",
+    "mtime": 1793321327.455299,
+    "seen": 1793321328.9818332,
+    "ast_hash": "380851b81b6cb7e5b0bcd97574b3d90f",
     "semantic_hash": ""
   },
   "graft/server-db.md": {
-    "mtime": 1793319432.713384,
-    "seen": 1793319434.1465871,
+    "mtime": 1793321327.4502988,
+    "seen": 1793321328.9818344,
     "ast_hash": "c56fe1a097e565028cf1d788ad419624",
     "semantic_hash": ""
   },
   "graft/server-routes.md": {
-    "mtime": 1793319432.7143838,
-    "seen": 1793319434.146588,
-    "ast_hash": "0ad9566785337b11c54b9c5a2fc1b21a",
+    "mtime": 1793321327.4512987,
+    "seen": 1793321328.9818356,
+    "ast_hash": "30490671e11f73e5571950315d68d8f9",
     "semantic_hash": ""
   },
   "graft/server-services.md": {
-    "mtime": 1793319432.715384,
-    "seen": 1793319434.146589,
+    "mtime": 1793321327.4522989,
+    "seen": 1793321328.9818366,
     "ast_hash": "e780f03cc39a52600d0899aa03278a16",
     "semantic_hash": ""
   },
   "graft/tests-suite.md": {
-    "mtime": 1793319432.7193842,
-    "seen": 1793319434.14659,
-    "ast_hash": "f20234695fb6cdafb3782db91f05c883",
+    "mtime": 1793321327.4562988,
+    "seen": 1793321328.9818375,
+    "ast_hash": "88f386ea7c087746ed77b59147daaf22",
     "semantic_hash": ""
   },
   "src/server/services/ai/claude.ts": {
@@ -511,7 +511,7 @@
   },
   "drizzle/0000_loud_stature.sql": {
     "mtime": 1793307133.0513723,
-    "seen": 1793315980.0661244,
+    "seen": 1793319471.1918952,
     "ast_hash": "",
     "semantic_hash": ""
   },
@@ -708,9 +708,9 @@
     "semantic_hash": ""
   },
   ".taste-skill/inspect/settings-hub-e2e.jpg": {
-    "mtime": 1793319365.5924988,
-    "seen": 1793319434.1466498,
-    "ast_hash": "0966fb7322d130343d1fba076cbc3c00",
+    "mtime": 1793321149.2385845,
+    "seen": 1793321328.981965,
+    "ast_hash": "4d8bc8d7b7af6173537ab9a0082618af",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/tablet-fold.jpg": {
@@ -744,9 +744,9 @@
     "semantic_hash": ""
   },
   "src/client/components/DesignStudioTab.tsx": {
-    "mtime": 1793319352.2669263,
-    "seen": 1793319434.1454778,
-    "ast_hash": "1f4109b78f482800113bf627d6e6d8dd",
+    "mtime": 1793321166.942351,
+    "seen": 1793321328.9804976,
+    "ast_hash": "061e6ef0004a80accc551f7bbb23f649",
     "semantic_hash": ""
   },
   "src/client/components/SidebarNavigation.tsx": {
@@ -777,6 +777,12 @@
     "mtime": 1793318332.0295198,
     "seen": 1793319434.146421,
     "ast_hash": "0685359a3efd6c561b77dc745cf75950",
+    "semantic_hash": ""
+  },
+  "tests/server/schedules-add-posts.test.ts": {
+    "mtime": 1793320802.562562,
+    "seen": 1793321328.9816046,
+    "ast_hash": "a45617b0f53d0eca8c67ac1e10b1573e",
     "semantic_hash": ""
   }
 }

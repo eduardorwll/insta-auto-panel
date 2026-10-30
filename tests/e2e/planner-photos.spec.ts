@@ -53,12 +53,17 @@ test.describe("M3 E2E: Banco de Fotos, Planejador Semanal e Mockup 4:5", () => {
     await expect(calendarTab).toBeVisible();
     await calendarTab.click();
 
-    // 7. Selecionar o card de Quarta-feira
+    // 7. Selecionar o card de Quarta-feira no Calendário Executivo
     const quartaBtn = page.getByRole("button", { name: /QUA/i });
     await expect(quartaBtn).toBeVisible();
     await quartaBtn.click();
 
-    // 8. Ajustar a quantidade dinâmica de lâminas para 8
+    // Redirecionamento Direto: clicar para abrir e editar no Studio Visual 4:5
+    const openStudioBtn = page.getByRole("button", { name: /Abrir e Editar no Studio Visual 4:5/i });
+    await expect(openStudioBtn).toBeVisible();
+    await openStudioBtn.click();
+
+    // 8. Ajustar a quantidade dinâmica de lâminas para 8 no Studio Visual
     const stepper = page.getByRole("spinbutton", { name: /Quantidade de Lâminas/i });
     await expect(stepper).toBeVisible();
     await stepper.fill("8");

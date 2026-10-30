@@ -27,6 +27,7 @@ import {
   Clock,
   Eye,
   LayoutGrid,
+  ArrowRight,
 } from "lucide-react";
 
 const EDITORIAL_CATEGORIES = [
@@ -40,6 +41,14 @@ const EDITORIAL_CATEGORIES = [
 ];
 
 const TIME_PRESETS = ["09:00", "12:00", "15:00", "18:30", "20:00"];
+
+function getTimePeriod(timeStr?: string | null): string {
+  if (!timeStr) return "Manhã";
+  const hour = parseInt(timeStr.split(":")[0] || "9", 10);
+  if (hour < 12) return "Manhã";
+  if (hour < 18) return "Tarde";
+  return "Noite";
+}
 
 const DAY_LABELS: Record<string, string> = {
   segunda: "Segunda-feira",
@@ -375,42 +384,55 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
         </div>
 
         {/* Navegação de Semana */}
-        <div className="flex items-center gap-1.5">
-          <Button
-            variant="ghost"
-            size="sm"
-            aria-label="Semana Anterior"
-            onClick={() => {
-              const d = new Date(weekStartDate || Date.now());
-              d.setDate(d.getDate() - 7);
-              setWeekStartDate(d.toISOString().split("T")[0] || "");
-            }}
-            className="h-8 w-8 p-0 text-slate-400 hover:text-white hover:bg-slate-800"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-1.5">
+            <Button
+              variant="ghost"
+              size="sm"
+              aria-label="Semana Anterior"
+              onClick={() => {
+                const d = new Date(weekStartDate || Date.now());
+                d.setDate(d.getDate() - 7);
+                setWeekStartDate(d.toISOString().split("T")[0] || "");
+              }}
+              className="h-8 w-8 p-0 text-slate-400 hover:text-white hover:bg-slate-800"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setWeekStartDate(getMonday())}
+              className="h-8 text-xs font-mono font-medium border-slate-700 bg-slate-950 text-slate-300 hover:text-white tabular-nums"
+            >
+              Semana {weekStartDate}
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="sm"
+              aria-label="Próxima Semana"
+              onClick={() => {
+                const d = new Date(weekStartDate || Date.now());
+                d.setDate(d.getDate() + 7);
+                setWeekStartDate(d.toISOString().split("T")[0] || "");
+              }}
+              className="h-8 w-8 p-0 text-slate-400 hover:text-white hover:bg-slate-800"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
 
           <Button
+            type="button"
             variant="outline"
             size="sm"
-            onClick={() => setWeekStartDate(getMonday())}
-            className="h-8 text-xs font-mono font-medium border-slate-700 bg-slate-950 text-slate-300 hover:text-white tabular-nums"
+            onClick={() => onOpenStudio?.(selectedDayIndex)}
+            className="w-full sm:w-auto gap-1.5 border-teal-800 bg-teal-950/40 text-teal-300 hover:bg-teal-900 hover:text-white active:scale-95 text-xs font-medium cursor-pointer"
           >
-            Semana {weekStartDate}
-          </Button>
-
-          <Button
-            variant="ghost"
-            size="sm"
-            aria-label="Próxima Semana"
-            onClick={() => {
-              const d = new Date(weekStartDate || Date.now());
-              d.setDate(d.getDate() + 7);
-              setWeekStartDate(d.toISOString().split("T")[0] || "");
-            }}
-            className="h-8 w-8 p-0 text-slate-400 hover:text-white hover:bg-slate-800"
-          >
-            <ChevronRight className="h-4 w-4" />
+            <Sparkles className="h-3.5 w-3.5 text-teal-400" />
+            <span>Studio Visual (Sem Canva)</span>
           </Button>
         </div>
       </div>
@@ -513,352 +535,137 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
         })}
       </div>
 
-      {/* 3. Área de Inspeção / Edição do Post Selecionado + Preview 4:5 */}
+      {/* 3. Área de Pré-visualização do Post Agendado & Redirecionamento para o Studio */}
       {isLoading || !activePost ? (
         <div className="py-12 text-center text-slate-400">Carregando dados da semana...</div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Coluna Esquerda (7 cols): Formulário de Edição & Horário */}
-          <div className="lg:col-span-7">
-            <Card className="border-slate-800 bg-slate-900">
-              <CardHeader className="pb-4 border-b border-slate-800 space-y-3">
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-start justify-between flex-wrap gap-2">
-                    <div>
-                      <CardTitle className="text-base text-white">
-                        Editar Post — {DAY_LABELS[activePost.dayOfWeek]}
-                      </CardTitle>
-                      <CardDescription className="text-xs text-slate-400">
-                        Defina tema, categoria editorial, horário programado e quantidade de lâminas (3 a 10).
-                      </CardDescription>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          if (onOpenStudio) {
-                            onOpenStudio(selectedDayIndex);
-                          } else {
-                            setIsStudioOpen(true);
-                          }
-                        }}
-                        className="gap-1.5 border-teal-700 bg-teal-950/80 text-teal-200 hover:bg-teal-900 hover:text-white cursor-pointer active:scale-95"
-                      >
-                        <Layers className="h-3.5 w-3.5 text-teal-400" />
-                        <span>Studio Visual (Sem Canva)</span>
-                      </Button>
-                    </div>
-                  </div>
-
-                  {/* Barra de Ações: Gerar com IA, Salvar e Enfileirar */}
-                  <div className="flex flex-wrap items-center gap-2 pt-1">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={handleGenerateWithAI}
-                      disabled={isGeneratingAI || !activePost.theme}
-                      className="gap-1.5 border-teal-800 bg-teal-950/40 text-teal-200 hover:bg-teal-900/60 hover:text-white cursor-pointer active:scale-95"
-                      title={!activePost.theme ? "Defina um tema primeiro" : "Gerar slides e legenda com IA"}
-                    >
-                      {isGeneratingAI ? (
-                        <>
-                          <RefreshCw className="h-3.5 w-3.5 animate-spin text-teal-400" />
-                          <span>Gerando...</span>
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="h-3.5 w-3.5 text-teal-400" />
-                          <span>Gerar com IA</span>
-                        </>
-                      )}
-                    </Button>
-
-                    <Button
-                      onClick={handleSave}
-                      disabled={isSaving}
-                      size="sm"
-                      className="gap-1.5 cursor-pointer active:scale-95"
-                    >
-                      {saveSuccess ? (
-                        <>
-                          <CheckCircle className="h-3.5 w-3.5 text-emerald-300" />
-                          <span>Salvo!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Save className="h-3.5 w-3.5" />
-                          <span>{isSaving ? "Salvando..." : "Salvar Post"}</span>
-                        </>
-                      )}
-                    </Button>
-
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={handleEnqueueActivePost}
-                      disabled={isEnqueuingPost}
-                      className="gap-1.5 border-emerald-800 bg-emerald-950/50 text-emerald-200 hover:bg-emerald-900 hover:text-white cursor-pointer active:scale-95"
-                    >
-                      {isEnqueuingPost ? (
-                        <RefreshCw className="h-3.5 w-3.5 animate-spin text-emerald-400" />
-                      ) : enqueueSuccess ? (
-                        <Check className="h-3.5 w-3.5 text-emerald-300" />
-                      ) : (
-                        <Send className="h-3.5 w-3.5 text-emerald-400" />
-                      )}
-                      <span>{enqueueSuccess ? "Enfileirado!" : "Enviar para AutoSocial"}</span>
-                    </Button>
-                  </div>
-                </div>
-              </CardHeader>
-
-              <CardContent className="space-y-4 pt-4 flex-1">
-                {aiError && (
-                  <div className="p-3 text-xs bg-rose-950/50 border border-rose-800 rounded-md text-rose-200 flex items-center gap-2">
-                    <AlertCircle className="h-4 w-4 shrink-0 text-rose-400" />
-                    <span>{aiError}</span>
-                  </div>
-                )}
-
-                {/* 1. Categoria, Horário Programado & Tema */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div className="space-y-1.5">
-                    <Label htmlFor="post-category" className="text-xs text-slate-300">
-                      Categoria Editorial
-                    </Label>
-                    <select
-                      id="post-category"
-                      value={activePost.category}
-                      onChange={(e) => handleUpdateActivePost("category", e.target.value)}
-                      className="flex h-9 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-1 text-sm text-slate-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-500"
-                    >
-                      {EDITORIAL_CATEGORIES.map((cat) => (
-                        <option key={cat} value={cat}>
-                          {cat}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <Label htmlFor="post-scheduled-time" className="text-xs text-slate-300 flex items-center gap-1.5">
+          {/* Coluna Esquerda (6 cols): Resumo Executivo do Post Agendado */}
+          <div className="lg:col-span-6">
+            <Card className="border-slate-800 bg-slate-900 p-6 space-y-5">
+              {/* Topo do Card de Resumo */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="border-teal-800 bg-teal-950/40 text-teal-300 font-semibold px-2.5 py-1 text-xs flex items-center gap-1.5">
                       <Clock className="h-3.5 w-3.5 text-teal-400" />
-                      <span>Horário de Publicação</span>
-                    </Label>
-                    <div className="flex gap-1.5">
-                      <Input
-                        id="post-scheduled-time"
-                        type="time"
-                        value={activePost.scheduledTime || "09:00"}
-                        onChange={(e) => handleUpdateActivePost("scheduledTime", e.target.value)}
-                        className="bg-slate-950 text-slate-100 border-slate-700 font-mono tabular-nums h-9"
-                      />
-                      <select
-                        aria-label="Preset de Horário"
-                        value={activePost.scheduledTime || "09:00"}
-                        onChange={(e) => handleUpdateActivePost("scheduledTime", e.target.value)}
-                        className="flex h-9 rounded-md border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-300 font-mono tabular-nums focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-500"
-                      >
-                        {TIME_PRESETS.map((t) => (
-                          <option key={t} value={t}>
-                            {t}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                      <span>{DAY_LABELS[activePost.dayOfWeek]} · {activePost.scheduledTime || "09:00"}</span>
+                    </Badge>
+                    <Badge variant="outline" className="text-slate-400 border-slate-800 text-xs font-mono">
+                      {getTimePeriod(activePost.scheduledTime || "09:00")}
+                    </Badge>
                   </div>
 
-                  <div className="space-y-1.5">
-                    <Label htmlFor="post-theme" className="text-xs text-slate-300">
-                      Tema Central do Post
-                    </Label>
-                    <Input
-                      id="post-theme"
-                      value={activePost.theme}
-                      onChange={(e) => handleUpdateActivePost("theme", e.target.value)}
-                      placeholder="Ex: 5 Hábitos para Dentes Mais Claros"
-                      className="bg-slate-950 text-slate-100 border-slate-700 text-sm h-9"
+                  <span
+                    className="text-xs font-medium px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-1.5"
+                  >
+                    <span
+                      className={`w-2 h-2 rounded-full ${
+                        activePost.status === "queued"
+                          ? "bg-emerald-400"
+                          : activePost.status === "ready_canva"
+                          ? "bg-teal-400"
+                          : activePost.status === "ai_generated"
+                          ? "bg-sky-400"
+                          : "bg-amber-400"
+                      }`}
                     />
-                  </div>
+                    {activePost.status === "queued"
+                      ? "Na Fila do AutoSocial"
+                      : activePost.status === "ready_canva"
+                      ? "Pronto para Publicar"
+                      : activePost.status === "ai_generated"
+                      ? "Com IA"
+                      : "Rascunho"}
+                  </span>
                 </div>
 
-                {/* 2. Seletor Dinâmico de Lâminas (Stepper 3 a 10) */}
-                <div className="p-3.5 rounded-xl border border-slate-800 bg-slate-950 space-y-2">
-                  <div className="flex items-center justify-between gap-3 flex-wrap">
-                    <div>
-                      <Label htmlFor="slide-count-stepper" className="text-sm font-semibold text-white">
-                        Quantidade de Lâminas do Carrossel
-                      </Label>
-                      <p className="text-xs text-slate-400">
-                        Variável dinâmica de 3 a 10 slides (Capa + Miolo + CTA)
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        aria-label="Diminuir Lâminas"
-                        onClick={() => handleSlideCountChange(activePost.slideCount - 1)}
-                        disabled={activePost.slideCount <= 3}
-                        className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer active:scale-95"
-                      >
-                        <Minus className="h-3.5 w-3.5" />
-                      </Button>
-
-                      <input
-                        id="slide-count-stepper"
-                        role="spinbutton"
-                        aria-label="Quantidade de Lâminas"
-                        type="number"
-                        min={3}
-                        max={10}
-                        value={activePost.slideCount}
-                        onChange={(e) => handleSlideCountChange(Number(e.target.value))}
-                        className="w-14 text-center h-8 rounded-md border border-slate-700 bg-slate-900 text-sm font-mono font-bold text-white tabular-nums focus:outline-none focus:ring-1 focus:ring-teal-500"
-                      />
-
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        aria-label="Aumentar Lâminas"
-                        onClick={() => handleSlideCountChange(activePost.slideCount + 1)}
-                        disabled={activePost.slideCount >= 10}
-                        className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer active:scale-95"
-                      >
-                        <Plus className="h-3.5 w-3.5" />
-                      </Button>
-                    </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white tracking-tight">
+                    {activePost.theme || "Tema a definir"}
+                  </h3>
+                  <div className="flex items-center gap-2 text-xs text-slate-400 mt-1">
+                    <span className="text-teal-400 font-medium">{activePost.category}</span>
+                    <span>•</span>
+                    <span className="font-mono tabular-nums">{activePost.slideCount} lâminas dinâmicas</span>
                   </div>
                 </div>
+              </div>
 
-                {/* 3. Navegação Horizontal por Lâminas */}
-                <div className="flex flex-wrap gap-1.5 pt-2 border-t border-slate-800">
+              {/* Roteiro Estruturado do Post */}
+              <div className="space-y-2 pt-3 border-t border-slate-800">
+                <div className="text-xs font-semibold text-slate-300 flex items-center justify-between">
+                  <span>Estrutura de Lâminas (4:5):</span>
+                  <span className="text-[11px] font-mono text-slate-400 tabular-nums">
+                    {activeSlideNumber} de {activePost.slides.length}
+                  </span>
+                </div>
+                <div className="space-y-1.5 max-h-[170px] overflow-y-auto pr-1">
                   {activePost.slides.map((s) => {
-                    const isCurrent = s.slideNumber === activeSlideNumber;
-                    const isCover = s.slideNumber === 1;
-                    const isCTA = s.slideNumber === activePost.slideCount;
-
+                    const isSelected = s.slideNumber === activeSlideNumber;
                     return (
-                      <button
+                      <div
                         key={s.id}
-                        type="button"
                         onClick={() => setActiveSlideNumber(s.slideNumber)}
-                        className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors cursor-pointer ${
-                          isCurrent
-                            ? "bg-teal-600 text-white"
-                            : "bg-slate-950 text-slate-300 hover:bg-slate-800 hover:text-white border border-slate-800"
+                        className={`p-2 rounded-lg text-xs border flex items-center justify-between transition-colors cursor-pointer ${
+                          isSelected
+                            ? "bg-teal-950/70 border-teal-600 text-teal-200"
+                            : "bg-slate-950/70 border-slate-800 text-slate-400 hover:text-slate-200"
                         }`}
                       >
-                        {isCover
-                          ? "Slide 1 (Capa)"
-                          : isCTA
-                          ? `Slide ${s.slideNumber} (CTA)`
-                          : `Slide ${s.slideNumber}`}
-                      </button>
+                        <span className="truncate">
+                          <span className="font-mono font-bold text-slate-400 mr-2">#{s.slideNumber}</span>
+                          {s.title || (s.slideNumber === 1 ? "Capa / Gancho" : s.slideNumber === activePost.slideCount ? "CTA" : "Slide")}
+                        </span>
+                        {s.ctaText && (
+                          <Badge variant="outline" className="text-[11px] border-emerald-800 text-emerald-400 shrink-0">
+                            CTA
+                          </Badge>
+                        )}
+                      </div>
                     );
                   })}
                 </div>
+              </div>
 
-                {/* 4. Edição de Conteúdo da Lâmina Selecionada */}
-                {activeSlide && (
-                  <div className="space-y-3 p-4 rounded-xl border border-slate-800 bg-slate-950/60">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold text-teal-400">
-                        Conteúdo da Lâmina {activeSlide.slideNumber} de {activePost.slideCount}
-                      </span>
-                      <Badge variant="outline" className="text-xs text-slate-400">
-                        {activeSlide.slideNumber === 1
-                          ? "Hook / Capa"
-                          : activeSlide.slideNumber === activePost.slideCount
-                          ? "Conversão / CTA"
-                          : "Desenvolvimento"}
-                      </Badge>
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <Label htmlFor="slide-title" className="text-xs text-slate-300">
-                        Título ou Gancho
-                      </Label>
-                      <Input
-                        id="slide-title"
-                        value={activeSlide.title || ""}
-                        onChange={(e) => handleUpdateSlide("title", e.target.value)}
-                        placeholder="Título de impacto para retenção..."
-                        className="bg-slate-900 border-slate-700 text-sm"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <Label htmlFor="slide-body" className="text-xs text-slate-300">
-                        Corpo da Lâmina
-                      </Label>
-                      <textarea
-                        id="slide-body"
-                        rows={2}
-                        value={activeSlide.bodyText || ""}
-                        onChange={(e) => handleUpdateSlide("bodyText", e.target.value)}
-                        placeholder="Texto explicativo estruturado..."
-                        className="w-full rounded-md border border-slate-700 bg-slate-900 p-2 text-sm text-slate-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-500 font-sans"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <Label htmlFor="slide-cta" className="text-xs text-slate-300">
-                        Texto de Chamada para Ação (CTA)
-                      </Label>
-                      <Input
-                        id="slide-cta"
-                        value={activeSlide.ctaText || ""}
-                        onChange={(e) => handleUpdateSlide("ctaText", e.target.value)}
-                        placeholder="Ex: Entre em contato pelo WhatsApp..."
-                        className="bg-slate-900 border-slate-700 text-sm"
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {/* 5. Legenda do Instagram */}
-                <div className="space-y-2 pt-2 border-t border-slate-800">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="post-caption" className="text-xs font-semibold text-slate-300">
-                      Legenda da Publicação
-                    </Label>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={handleCopyCaption}
-                      disabled={!activePost.caption}
-                      className="h-7 text-xs gap-1 border-slate-700 text-slate-300 hover:text-white cursor-pointer active:scale-95"
-                    >
-                      {copiedCaption ? <Check className="h-3 w-3 text-teal-400" /> : <Copy className="h-3 w-3" />}
-                      <span>{copiedCaption ? "Copiado!" : "Copiar Legenda"}</span>
-                    </Button>
-                  </div>
-
-                  <textarea
-                    id="post-caption"
-                    rows={3}
-                    value={activePost.caption || ""}
-                    onChange={(e) => handleUpdateActivePost("caption", e.target.value)}
-                    placeholder="Legenda gerada pela IA ou personalizada..."
-                    className="w-full rounded-md border border-slate-700 bg-slate-950 p-2 text-xs text-slate-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-500 font-sans"
-                  />
+              {/* Legenda Resumida */}
+              <div className="space-y-1.5 pt-3 border-t border-slate-800">
+                <div className="text-xs font-semibold text-slate-300 flex items-center justify-between">
+                  <span>Legenda Agendada:</span>
+                  {activePost.caption && (
+                    <span className="text-[11px] text-slate-500 font-mono">
+                      {activePost.caption.length} caracteres
+                    </span>
+                  )}
                 </div>
-              </CardContent>
+                <p className="text-xs text-slate-400 line-clamp-3 bg-slate-950 p-2.5 rounded-lg border border-slate-800 font-sans">
+                  {activePost.caption || "Nenhuma legenda gerada ainda. Abra o Studio Visual para gerar com IA."}
+                </p>
+              </div>
+
+              {/* REDIRECIONAMENTO DIRETO PARA O STUDIO VISUAL */}
+              <div className="pt-2">
+                <Button
+                  type="button"
+                  onClick={() => {
+                    if (onOpenStudio) {
+                      onOpenStudio(selectedDayIndex);
+                    } else {
+                      setIsStudioOpen(true);
+                    }
+                  }}
+                  className="w-full gap-2 bg-teal-500 hover:bg-teal-400 text-slate-950 font-semibold text-sm cursor-pointer active:scale-95 transition-colors shadow-none"
+                >
+                  <Sparkles className="h-4 w-4" />
+                  <span>Abrir e Editar no Studio Visual 4:5</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </div>
             </Card>
           </div>
 
-          {/* Coluna Direita (5 cols): Preview Mockup 4:5 */}
-          <div className="lg:col-span-5">
+          {/* Coluna Direita (6 cols): Preview da Lâmina 4:5 */}
+          <div className="lg:col-span-6">
             <Card className="border-slate-800 bg-slate-900">
               <CardHeader className="pb-3 border-b border-slate-800">
                 <div className="flex items-center justify-between">
@@ -872,8 +679,8 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
                 </CardDescription>
               </CardHeader>
 
-              <CardContent className="pt-4 flex-1 flex flex-col items-center justify-center">
-                <div className="w-full max-w-[280px]">
+              <CardContent className="pt-4 flex flex-col items-center justify-center">
+                <div className="w-full max-w-[300px]">
                   <SlidePreview
                     post={activePost}
                     slideNumber={activeSlideNumber}

@@ -17,9 +17,10 @@ covers:
   - src/server/routes/export.ts:8-91 # function handleExportRoutes
   - src/server/routes/photos.ts:1-131
   - src/server/routes/photos.ts:7-130 # function handlePhotosRoutes
-  - src/server/routes/schedules.ts:1-268
-  - src/server/routes/schedules.ts:13-21 # const postUpdateSchema
-  - src/server/routes/schedules.ts:23-267 # function handleSchedulesRoutes
+  - src/server/routes/schedules.ts:1-369
+  - src/server/routes/schedules.ts:14-23 # const postCreateSchema
+  - src/server/routes/schedules.ts:25-33 # const postUpdateSchema
+  - src/server/routes/schedules.ts:35-368 # function handleSchedulesRoutes
   - src/server/routes/settings.ts:1-467
   - src/server/routes/settings.ts:12-21 # interface CookieEntry
   - src/server/routes/settings.ts:27-132 # function parseInstagramCookiesInput
@@ -54,9 +55,10 @@ Handles HTTP REST endpoints for multi-tenant companies, photo bank uploads, week
 ### `src/server/routes/photos.ts` (lines 1-131)
 - `handlePhotosRoutes` (function) → `src/server/routes/photos.ts:7-130`
 
-### `src/server/routes/schedules.ts` (lines 1-268)
-- `postUpdateSchema` (const) → `src/server/routes/schedules.ts:13-21`
-- `handleSchedulesRoutes` (function) → `src/server/routes/schedules.ts:23-267`
+### `src/server/routes/schedules.ts` (lines 1-369)
+- `postCreateSchema` (const) → `src/server/routes/schedules.ts:14-23`
+- `postUpdateSchema` (const) → `src/server/routes/schedules.ts:25-33`
+- `handleSchedulesRoutes` (function) → `src/server/routes/schedules.ts:35-368`
 
 ### `src/server/routes/settings.ts` (lines 1-467)
 - `CookieEntry` (interface) → `src/server/routes/settings.ts:12-21`

@@ -89,7 +89,12 @@ test.describe("M4 E2E: IA Generativa Agnóstica, ML Studio API e Geração de Ca
     await expect(segBtn).toBeVisible();
     await segBtn.click();
 
-    // Definir tema central
+    // Redirecionamento Direto: clicar para abrir e editar no Studio Visual 4:5
+    const openStudioBtn = page.getByRole("button", { name: /Abrir e Editar no Studio Visual 4:5/i });
+    await expect(openStudioBtn).toBeVisible();
+    await openStudioBtn.click();
+
+    // Definir tema central no Studio Visual
     const themeInput = page.locator("#post-theme");
     await themeInput.fill("5 Dicas de Clareamento Dental");
 
@@ -160,8 +165,8 @@ test.describe("M4 E2E: IA Generativa Agnóstica, ML Studio API e Geração de Ca
       });
     });
 
-    // Clicar em "Gerar com IA"
-    const generateBtn = page.getByRole("button", { name: /Gerar com IA/i });
+    // Clicar em "Gerar com IA" / "Preencher Tudo com IA"
+    const generateBtn = page.getByRole("button", { name: /Preencher Tudo com IA|Gerar com IA/i });
     await expect(generateBtn).toBeVisible();
     await generateBtn.click();
 
