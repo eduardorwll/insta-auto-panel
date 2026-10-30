@@ -57,19 +57,18 @@ export function SlidePreview({
           </div>
         )}
 
-        {/* Topo do Slide */}
+        {/* Topo do Slide com Alinhamento Vertical Perfeito */}
         <div className="relative z-10 flex items-center justify-between">
-          <Badge
-            variant="outline"
-            className="text-xs font-semibold border-white/20 text-white px-2 py-0.5 inline-flex items-center justify-center text-center"
+          <div
+            className="h-6 px-2.5 pt-[1px] rounded-md border text-xs font-semibold inline-flex items-center justify-center leading-none text-white"
             style={{ borderColor: primary }}
           >
             {post.category}
-          </Badge>
+          </div>
 
-          <span className="text-xs font-mono tabular-nums text-slate-200 bg-slate-950/80 px-2 py-0.5 rounded-full border border-white/15 inline-flex items-center justify-center text-center">
+          <div className="h-6 px-2.5 pt-[1px] rounded-full border border-white/15 bg-slate-950/80 text-xs font-semibold font-sans tabular-nums text-slate-200 inline-flex items-center justify-center leading-none">
             {slideNumber} / {post.slideCount}
-          </span>
+          </div>
         </div>
 
         {/* Miolo do Slide (Conteúdo Tipográfico) */}
@@ -77,7 +76,7 @@ export function SlidePreview({
           {isCover ? (
             <>
               <div
-                className="inline-block max-w-full text-xs font-bold px-2 py-0.5 rounded truncate"
+                className="inline-flex items-center justify-center h-5 px-2 pt-[1px] rounded text-xs font-bold leading-none max-w-full truncate"
                 title={post.theme}
                 style={{ backgroundColor: accent, color: "#090d16" }}
               >
@@ -117,7 +116,10 @@ export function SlidePreview({
             </>
           ) : (
             <>
-              <div className="text-xs font-bold tabular-nums" style={{ color: secondary }}>
+              <div
+                className="h-5 px-2 pt-[1px] rounded border border-white/10 bg-slate-950/50 text-xs font-bold font-sans tabular-nums inline-flex items-center justify-center leading-none"
+                style={{ color: secondary }}
+              >
                 Passo {slideNumber - 1} de {post.slideCount - 2}
               </div>
               <h3 className="text-base font-bold text-white leading-tight break-words line-clamp-3">
@@ -148,7 +150,7 @@ export function SlidePreview({
         </div>
       </div>
 
-      <span className="text-xs text-slate-400 mt-2 font-mono tabular-nums">
+      <span className="text-xs text-slate-400 mt-2 font-sans tabular-nums inline-flex items-center justify-center leading-none">
         Proporção Instagram 4:5 (1080×1350px)
       </span>
     </div>
