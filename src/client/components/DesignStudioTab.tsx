@@ -500,7 +500,11 @@ export function DesignStudioTab({
       bgImg.onload = () => {
         ctx.save();
         ctx.globalAlpha = 0.35;
-        ctx.drawImage(bgImg, 0, 0, width, height);
+        // Corte "cover": provedores sem 4:5 exato (3:4, 2:3) não podem ser esticados
+        const scale = Math.max(width / bgImg.width, height / bgImg.height);
+        const drawW = bgImg.width * scale;
+        const drawH = bgImg.height * scale;
+        ctx.drawImage(bgImg, (width - drawW) / 2, (height - drawH) / 2, drawW, drawH);
         ctx.restore();
         drawTypographyLayers();
       };
@@ -645,7 +649,7 @@ export function DesignStudioTab({
           theme: activePost?.theme || "Instagram 4:5 Post",
           brandPrimaryColor: activeCompany?.primaryColor,
           brandSecondaryColor: activeCompany?.secondaryColor,
-          offlineFallback: true,
+          companyId: activeCompany?.id,
         }),
       });
 
@@ -658,7 +662,13 @@ export function DesignStudioTab({
       setStatusMessage(
         `Background IA (${json.provider}) aplicado · Custo estimado: $${(json.costEstimateUsd || 0).toFixed(
           3
-        )}${json.isFallback ? " (Modo Fallback Seguro)" : ""}`
+        )}${
+          json.isFallback
+            ? selectedProvider === "pollinations" || selectedProvider === "comfyui-local"
+              ? " (Modo Fallback Seguro)"
+              : " (Fallback local: configure a chave deste provedor em Configurações para gerar com IA)"
+            : ""
+        }`
       );
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Erro ao gerar background";

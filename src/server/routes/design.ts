@@ -1,6 +1,7 @@
 import { db } from "../db/client";
 import {
   companies,
+  company_settings,
   posts,
   post_slides,
   designTemplateSchema,
@@ -8,7 +9,7 @@ import {
   type DesignTemplateId,
 } from "../db/schema";
 import { eq, asc } from "drizzle-orm";
-import { ImageProviderFactory } from "../services/design/image-provider";
+import { ImageProviderFactory, buildImagePrompt } from "../services/design/image-provider";
 import {
   renderOpenDesignSlideSvg,
   renderSlidePngBuffer,
@@ -32,6 +33,8 @@ export async function handleDesignRoutes(
       const body = (await req.json()) as {
         provider?: string;
         prompt?: string;
+        theme?: string;
+        companyId?: string;
         apiKey?: string;
         baseUrl?: string;
         modelName?: string;
@@ -47,20 +50,51 @@ export async function handleDesignRoutes(
         ? parsedProvider.data
         : "pollinations";
 
+      // A chave nunca trafega pelo navegador: é lida server-side das configurações da empresa
+      // (Settings Hub), e só vale para o provedor que a empresa configurou como preferido.
+      let apiKey = body.apiKey || null;
+      let baseUrl = body.baseUrl || null;
+      let niche: string | null = null;
+      if (body.companyId) {
+        const [settings] = await db
+          .select()
+          .from(company_settings)
+          .where(eq(company_settings.companyId, body.companyId));
+        if (settings && settings.preferredImageProvider === providerName) {
+          apiKey = apiKey || settings.imageProviderApiKey || null;
+          baseUrl = baseUrl || settings.imageProviderBaseUrl || null;
+        }
+        const [tenant] = await db
+          .select()
+          .from(companies)
+          .where(eq(companies.id, body.companyId));
+        niche = tenant?.niche ?? null;
+      }
+
       const adapter = ImageProviderFactory.create({
         provider: providerName,
-        apiKey: body.apiKey || null,
-        baseUrl: body.baseUrl || null,
+        apiKey,
+        baseUrl,
         modelName: body.modelName || null,
       });
 
+      const primary = body.brandPrimaryColor || "#0D9488";
       const result = await adapter.generateBackground({
-        prompt: body.prompt || "Editorial background 4:5",
+        prompt: buildImagePrompt({
+          theme: body.theme,
+          niche,
+          userPrompt: body.prompt || "Editorial background 4:5",
+          brandPrimaryColor: primary,
+        }),
         width: 1080,
         height: 1350,
-        brandPrimaryColor: body.brandPrimaryColor || "#6366F1",
-        brandSecondaryColor: body.brandSecondaryColor || "#EC4899",
-        offlineFallback: body.offlineFallback ?? true,
+        brandPrimaryColor: primary,
+        brandSecondaryColor: body.brandSecondaryColor || "#0284C7",
+        // Pollinations/ComfyUI não usam chave (mantém modo offline por padrão); provedores
+        // pagos chamam a API real assim que existir uma chave configurada.
+        offlineFallback:
+          body.offlineFallback ??
+          (providerName === "pollinations" || providerName === "comfyui-local" || !apiKey),
       });
 
       return Response.json({ success: true, ...result });
@@ -146,8 +180,8 @@ export async function handleDesignRoutes(
           brandKit: {
             companyName: company.name,
             instagramHandle: company.instagramHandle,
-            primaryColor: company.primaryColor || "#6366F1",
-            secondaryColor: company.secondaryColor || "#EC4899",
+            primaryColor: company.primaryColor || "#0D9488",
+            secondaryColor: company.secondaryColor || "#0284C7",
             backgroundColor: company.backgroundColor || "#0F172A",
             accentColor: company.accentColor || "#10B981",
           },

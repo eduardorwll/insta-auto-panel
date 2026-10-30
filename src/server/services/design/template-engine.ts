@@ -93,8 +93,8 @@ export function renderOpenDesignSlideSvg(fields: OpenDesignSlideFields): string 
       : fields.brandKit.backgroundColor || "#0F172A";
   const textPrimary = isEditorialLight ? "#0F172A" : "#F8FAFC";
   const textSecondary = isEditorialLight ? "#334155" : "#CBD5E1";
-  const primary = fields.brandKit.primaryColor || "#6366F1";
-  const secondary = fields.brandKit.secondaryColor || "#EC4899";
+  const primary = fields.brandKit.primaryColor || "#0D9488";
+  const secondary = fields.brandKit.secondaryColor || "#0284C7";
   const accent = fields.brandKit.accentColor || "#10B981";
 
   const headlineLines = wrapEditorialLines(fields.headline || "Título da Lâmina", 28, 4);
@@ -251,7 +251,7 @@ function makePngChunk(type: string, data: Uint8Array): Buffer {
 }
 
 function hexToRgb(hex: string): [number, number, number] {
-  const clean = (hex || "#6366F1").replace("#", "").trim();
+  const clean = (hex || "#0D9488").replace("#", "").trim();
   if (clean.length !== 6) return [99, 102, 241];
   const num = Number.parseInt(clean, 16);
   if (Number.isNaN(num)) return [99, 102, 241];
@@ -276,7 +276,7 @@ export function renderSlidePngBuffer(fields: OpenDesignSlideFields): Buffer {
   const w = 216;
   const h = 270;
   const [r1, g1, b1] = hexToRgb(fields.brandKit.backgroundColor || "#0F172A");
-  const [r2, g2, b2] = hexToRgb(fields.brandKit.primaryColor || "#6366F1");
+  const [r2, g2, b2] = hexToRgb(fields.brandKit.primaryColor || "#0D9488");
 
   const rawScanlines = Buffer.alloc(h * (1 + w * 4));
   for (let y = 0; y < h; y++) {

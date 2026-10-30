@@ -35,8 +35,8 @@ export interface ImageProvider {
  */
 export function buildEditorialBackdropDataUri(
   prompt: string,
-  primaryColor = "#6366F1",
-  secondaryColor = "#EC4899",
+  primaryColor = "#0D9488",
+  secondaryColor = "#0284C7",
   width = 1080,
   height = 1350
 ): string {
@@ -193,28 +193,99 @@ export class FalFluxImageProvider implements ImageProvider {
   }
 }
 
+/** Tempo máximo por chamada a APIs de imagem antes de cair no fallback SVG local. */
+const IMAGE_REQUEST_TIMEOUT_MS = 60_000;
+
+/**
+ * Prompt de fundo coerente com tema, nicho e marca (MATCH — Confirm: o visual precisa
+ * reforçar o tema da legenda para o Computer Vision do Instagram). Sem texto na imagem,
+ * pois a tipografia é aplicada depois pelos templates 4:5 determinísticos.
+ */
+export function buildImagePrompt(input: {
+  theme?: string | null;
+  niche?: string | null;
+  userPrompt?: string | null;
+  brandPrimaryColor?: string | null;
+}): string {
+  const subject = input.userPrompt?.trim() || input.theme?.trim() || "editorial background";
+  const context = [input.theme?.trim(), input.niche?.trim()].filter(Boolean).join(" — ");
+  const palette = input.brandPrimaryColor ? `, color palette harmonizing with ${input.brandPrimaryColor}` : "";
+  return (
+    `${subject}${context ? `. Context: ${context}` : ""}. ` +
+    `Clean editorial photography, minimal composition with generous negative space for a headline overlay, ` +
+    `soft natural lighting${palette}. No text, no letters, no logos, no watermarks, no close-up faces. ` +
+    `4:5 vertical composition.`
+  );
+}
+
+function svgFallback(
+  provider: ImageProviderName,
+  model: string,
+  costEstimateUsd: number,
+  params: GenerateBackgroundParams
+): GenerateBackgroundResult {
+  return {
+    provider,
+    model,
+    imageUrl: buildEditorialBackdropDataUri(
+      params.prompt,
+      params.brandPrimaryColor,
+      params.brandSecondaryColor,
+      params.width ?? 1080,
+      params.height ?? 1350
+    ),
+    costEstimateUsd,
+    isFallback: true,
+  };
+}
+
+/** POST JSON com timeout; qualquer falha (rede, HTTP != 2xx, JSON inválido) devolve null. */
+async function postJson(url: string, headers: Record<string, string>, body: unknown): Promise<unknown | null> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), IMAGE_REQUEST_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...headers },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/** Só chama a API paga quando há chave configurada e o modo offline não foi pedido. */
+function canCallApi(config: ImageProviderConfig, params: GenerateBackgroundParams): boolean {
+  return Boolean(config.apiKey) && !params.offlineFallback;
+}
+
 export class OpenRouterImageProvider implements ImageProvider {
   readonly providerName = "openrouter-image" as const;
   constructor(private readonly config: ImageProviderConfig) {}
 
   async generateBackground(params: GenerateBackgroundParams): Promise<GenerateBackgroundResult> {
-    const width = params.width ?? 1080;
-    const height = params.height ?? 1350;
-    const model = this.config.modelName || "black-forest-labs/flux-1-schnell";
+    const model = this.config.modelName || "google/gemini-2.5-flash-image";
+    const cost = 0.04;
+    if (!canCallApi(this.config, params)) return svgFallback("openrouter-image", model, cost, params);
 
-    return {
-      provider: "openrouter-image",
-      model,
-      imageUrl: buildEditorialBackdropDataUri(
-        params.prompt,
-        params.brandPrimaryColor,
-        params.brandSecondaryColor,
-        width,
-        height
-      ),
-      costEstimateUsd: 0.003,
-      isFallback: !this.config.apiKey || Boolean(params.offlineFallback),
-    };
+    const data = (await postJson(
+      "https://openrouter.ai/api/v1/chat/completions",
+      { Authorization: `Bearer ${this.config.apiKey}` },
+      {
+        model,
+        modalities: ["image", "text"],
+        messages: [{ role: "user", content: params.prompt }],
+      }
+    )) as { choices?: Array<{ message?: { images?: Array<{ image_url?: { url?: string } }> } }> } | null;
+
+    const imageUrl = data?.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+    if (!imageUrl) return svgFallback("openrouter-image", model, cost, params);
+    return { provider: "openrouter-image", model, imageUrl, costEstimateUsd: cost };
   }
 }
 
@@ -223,22 +294,27 @@ export class GeminiImagenProvider implements ImageProvider {
   constructor(private readonly config: ImageProviderConfig) {}
 
   async generateBackground(params: GenerateBackgroundParams): Promise<GenerateBackgroundResult> {
-    const width = params.width ?? 1080;
-    const height = params.height ?? 1350;
     const model = this.config.modelName || "imagen-3.0-generate-002";
+    const cost = 0.03;
+    if (!canCallApi(this.config, params)) return svgFallback("gemini-imagen", model, cost, params);
 
+    // Imagen não oferece 4:5; 3:4 é o mais próximo e o canvas aplica corte "cover".
+    const data = (await postJson(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:predict`,
+      { "x-goog-api-key": String(this.config.apiKey) },
+      {
+        instances: [{ prompt: params.prompt }],
+        parameters: { sampleCount: 1, aspectRatio: "3:4" },
+      }
+    )) as { predictions?: Array<{ bytesBase64Encoded?: string; mimeType?: string }> } | null;
+
+    const prediction = data?.predictions?.[0];
+    if (!prediction?.bytesBase64Encoded) return svgFallback("gemini-imagen", model, cost, params);
     return {
       provider: "gemini-imagen",
       model,
-      imageUrl: buildEditorialBackdropDataUri(
-        params.prompt,
-        params.brandPrimaryColor,
-        params.brandSecondaryColor,
-        width,
-        height
-      ),
-      costEstimateUsd: 0.02,
-      isFallback: !this.config.apiKey || Boolean(params.offlineFallback),
+      imageUrl: `data:${prediction.mimeType || "image/png"};base64,${prediction.bytesBase64Encoded}`,
+      costEstimateUsd: cost,
     };
   }
 }
@@ -248,23 +324,21 @@ export class OpenAIImageProvider implements ImageProvider {
   constructor(private readonly config: ImageProviderConfig) {}
 
   async generateBackground(params: GenerateBackgroundParams): Promise<GenerateBackgroundResult> {
-    const width = params.width ?? 1080;
-    const height = params.height ?? 1350;
     const model = this.config.modelName || "gpt-image-1";
+    const cost = 0.02;
+    if (!canCallApi(this.config, params)) return svgFallback("openai-image", model, cost, params);
 
-    return {
-      provider: "openai-image",
-      model,
-      imageUrl: buildEditorialBackdropDataUri(
-        params.prompt,
-        params.brandPrimaryColor,
-        params.brandSecondaryColor,
-        width,
-        height
-      ),
-      costEstimateUsd: 0.04,
-      isFallback: !this.config.apiKey || Boolean(params.offlineFallback),
-    };
+    // gpt-image-1 sempre devolve base64 (não aceita response_format); 1024x1536 é o mais próximo de 4:5.
+    const data = (await postJson(
+      "https://api.openai.com/v1/images/generations",
+      { Authorization: `Bearer ${this.config.apiKey}` },
+      { model, prompt: params.prompt, n: 1, size: "1024x1536", quality: "low" }
+    )) as { data?: Array<{ b64_json?: string; url?: string }> } | null;
+
+    const item = data?.data?.[0];
+    const imageUrl = item?.b64_json ? `data:image/png;base64,${item.b64_json}` : item?.url;
+    if (!imageUrl) return svgFallback("openai-image", model, cost, params);
+    return { provider: "openai-image", model, imageUrl, costEstimateUsd: cost };
   }
 }
 
