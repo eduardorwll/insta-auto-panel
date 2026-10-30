@@ -1,7 +1,7 @@
 # Graph Report - insta-auto-panel  (2026-10-29)
 
 ## Corpus Check
-- 114 files · ~210,786 words
+- 114 files · ~210,670 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 9 file(s) not represented in the graph (top: (none) 4, .toml 3, .lock 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `de5afe9e`
+- Built from commit: `26a8c7c9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -27,11 +27,11 @@
 - compilerOptions
 - devDependencies
 - Social Panel PRO (insta-auto-panel)
+- main.tsx
 - graft.ts
 - seo-quality.ts
 - Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram
 - @playwright/test
-- main.tsx
 - prowl
 - design.ts
 
@@ -108,6 +108,10 @@ Nodes (28): devDependencies, autoprefixer@^10.6.2, drizzle-kit@^0.31.11, @playwr
 Cohesion: 0.13
 Nodes (14): 1. Clonar o Repositório e Instalar Dependências, 1. Testes Unitários e de Integração (Bun Test), 2. Checagem Estática de Tipos (TypeScript), 2. Executar o Servidor de Desenvolvimento, 3. Build de Produção, 3. Testes Ponta a Ponta E2E (Playwright), 🚀 Arquitetura & Stack Tecnológica, 📁 Estrutura de Diretórios (+6 more)
 
+### Community 11 - "main.tsx"
+Cohesion: 0.40
+Nodes (3): react-dom@^19.3.1, react-dom, rootElement
+
 ### Community 12 - "graft.ts"
 Cohesion: 0.10
 Nodes (16): cavemanCompressMarkdown(), compressProseLine(), loadTelemetry(), recordTelemetry(), REPO_ROOT, TELEMETRY_PATH, TelemetryEntry, TelemetryStore (+8 more)
@@ -119,10 +123,6 @@ Nodes (39): 1. Arquitetura e Stack Obrigatória, 2.1. Regra de Commits Atômicos
 ### Community 15 - "Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram"
 Cohesion: 0.07
 Nodes (27): 1. Visão Geral e Filosofia do Sistema, 2. O Que Está Explicitamente DESCARTADO, 3.1. Arquitetura de Sessões Persistentes (`.profiles/`), 3.2. Máquina de Filas em Filesystem (`queue/`), 3.3. O Padrão Sidecar (`.description`), 3.4. Mecanismos de Disparo e Agendamento, 3. Pesquisa Profunda: `Katzca/AutoSocial` como Backbone de Automação, 4.1. Stack Tecnológica (+19 more)
-
-### Community 24 - "main.tsx"
-Cohesion: 0.40
-Nodes (3): react-dom@^19.3.1, react-dom, rootElement
 
 ### Community 28 - "design.ts"
 Cohesion: 0.06

@@ -10,11 +10,11 @@
   "8": "compilerOptions",
   "9": "devDependencies",
   "10": "Social Panel PRO (insta-auto-panel)",
+  "11": "main.tsx",
   "12": "graft.ts",
   "13": "seo-quality.ts",
   "15": "Documento de Requisitos e Planejamento: Sistema de Automação de Conteúdo no Instagram",
   "16": "@playwright/test",
-  "24": "main.tsx",
   "26": "prowl",
   "28": "design.ts",
   "43": "vite-env.d.ts"

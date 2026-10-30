@@ -519,22 +519,6 @@ export function CompanyTab() {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="company-whatsapp-msg" className="text-xs text-slate-300">
-                Mensagem Padrão de WhatsApp para CTAs
-              </Label>
-              <Input
-                id="company-whatsapp-msg"
-                value={formData.whatsappDefaultMessage || ""}
-                onChange={(e) => handleChange("whatsappDefaultMessage", e.target.value)}
-                placeholder="Ex: Olá! Vi o post no Instagram e gostaria de saber mais."
-                className="bg-slate-950 text-slate-100 border-slate-700 text-xs h-9"
-              />
-              <p className="text-[11px] text-slate-400">
-                A IA usa este texto para orientar o gancho e o objetivo da chamada de ação no post e na legenda.
-              </p>
-            </div>
-
-            <div className="space-y-1.5">
               <Label htmlFor="company-canva-id" className="text-xs text-slate-300 flex items-center gap-1.5">
                 <FileSpreadsheet className="h-3.5 w-3.5 text-sky-400" />
                 <span>Canva Template ID (Bulk Create CSV)</span>

@@ -352,9 +352,6 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
             <h2 className="text-lg font-bold text-white tracking-tight">
               Planejamento Editorial Semanal
             </h2>
-            <Badge variant="outline" className="text-xs border-teal-800 text-teal-300">
-              Executive Dashboard (Operate Mode)
-            </Badge>
           </div>
           <p className="text-xs text-slate-400 mt-1">
             Monitore o pipeline da semana, audite horários de publicação e abra posts no Studio Visual 4:5.
@@ -384,56 +381,43 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
           </div>
         </div>
 
-        {/* Navegação de Semana */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5">
-            <Button
-              variant="ghost"
-              size="sm"
-              aria-label="Semana Anterior"
-              onClick={() => {
-                const d = new Date(weekStartDate || Date.now());
-                d.setDate(d.getDate() - 7);
-                setWeekStartDate(d.toISOString().split("T")[0] || "");
-              }}
-              className="h-8 w-8 p-0 text-slate-400 hover:text-white hover:bg-slate-800"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setWeekStartDate(getMonday())}
-              className="h-8 text-xs font-mono font-medium border-slate-700 bg-slate-950 text-slate-300 hover:text-white tabular-nums"
-            >
-              Semana {weekStartDate}
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="sm"
-              aria-label="Próxima Semana"
-              onClick={() => {
-                const d = new Date(weekStartDate || Date.now());
-                d.setDate(d.getDate() + 7);
-                setWeekStartDate(d.toISOString().split("T")[0] || "");
-              }}
-              className="h-8 w-8 p-0 text-slate-400 hover:text-white hover:bg-slate-800"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
+        {/* Navegação de Semana Alinhada à Direita */}
+        <div className="flex items-center gap-1.5 lg:ml-auto">
+          <Button
+            variant="ghost"
+            size="sm"
+            aria-label="Semana Anterior"
+            onClick={() => {
+              const d = new Date(weekStartDate || Date.now());
+              d.setDate(d.getDate() - 7);
+              setWeekStartDate(d.toISOString().split("T")[0] || "");
+            }}
+            className="h-8 w-8 p-0 text-slate-400 hover:text-white hover:bg-slate-800"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
 
           <Button
-            type="button"
             variant="outline"
             size="sm"
-            onClick={() => onOpenStudio?.(selectedDayIndex)}
-            className="w-full sm:w-auto gap-1.5 border-teal-800 bg-teal-950/40 text-teal-300 hover:bg-teal-900 hover:text-white active:scale-95 text-xs font-medium cursor-pointer"
+            onClick={() => setWeekStartDate(getMonday())}
+            className="h-8 text-xs font-mono font-medium border-slate-700 bg-slate-950 text-slate-300 hover:text-white tabular-nums"
           >
-            <Sparkles className="h-3.5 w-3.5 text-teal-400" />
-            <span>Studio Visual (Sem Canva)</span>
+            Semana {weekStartDate}
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            aria-label="Próxima Semana"
+            onClick={() => {
+              const d = new Date(weekStartDate || Date.now());
+              d.setDate(d.getDate() + 7);
+              setWeekStartDate(d.toISOString().split("T")[0] || "");
+            }}
+            className="h-8 w-8 p-0 text-slate-400 hover:text-white hover:bg-slate-800"
+          >
+            <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
       </div>

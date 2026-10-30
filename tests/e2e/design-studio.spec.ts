@@ -20,9 +20,9 @@ test.describe("M6 E2E: Studio Visual Autônomo Sem Canva (OpenDesign 4:5 + Varia
       page.getByRole("heading", { name: /Social Panel/i })
     ).toBeVisible();
 
-    // 1. Abrir Studio Visual (Sem Canva) no WeekPlanner
+    // 1. Abrir Studio Visual 4:5 pelo redirecionamento do WeekPlanner
     const studioBtn = page.getByRole("button", {
-      name: /Studio Visual \(Sem Canva\)/i,
+      name: /Abrir e Editar no Studio Visual 4:5/i,
     });
     await expect(studioBtn).toBeVisible();
     await studioBtn.click();

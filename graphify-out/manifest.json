@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "src/client/components/WeekPlanner.tsx": {
-    "mtime": 1793327379.9616523,
-    "seen": 1793327720.9857104,
-    "ast_hash": "c4770d27fab37d3c0b52f9b260597970",
+    "mtime": 1793328404.9741268,
+    "seen": 1793328670.0764413,
+    "ast_hash": "358b4691fc2b233f0862257cc5ceb577",
     "semantic_hash": ""
   },
   "src/client/components/ui/badge.tsx": {
@@ -264,9 +264,9 @@
     "semantic_hash": ""
   },
   "src/server/services/ai/provider.ts": {
-    "mtime": 1793327337.3614793,
-    "seen": 1793327339.4447489,
-    "ast_hash": "d1b23c76908a20806244ac6f60f7465a",
+    "mtime": 1793328359.2591333,
+    "seen": 1793328670.0770476,
+    "ast_hash": "5df47eb4f90f5b6b1d9cfac07bdfdcf8",
     "semantic_hash": ""
   },
   "src/server/services/export/autosocial.ts": {
@@ -511,7 +511,7 @@
   },
   "drizzle/0000_loud_stature.sql": {
     "mtime": 1793307133.0513723,
-    "seen": 1793326641.4244616,
+    "seen": 1793328013.377939,
     "ast_hash": "",
     "semantic_hash": ""
   },
@@ -642,9 +642,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/design-studio.spec.ts": {
-    "mtime": 1793314774.8864334,
-    "seen": 1793315010.59487,
-    "ast_hash": "7e064db78a4f39ce1a3ba1bbe1389e2a",
+    "mtime": 1793328418.3097084,
+    "seen": 1793328670.0771673,
+    "ast_hash": "887aac670ecd9cb92282c79cb9374879",
     "semantic_hash": ""
   },
   "public/architecture.html": {
@@ -708,9 +708,9 @@
     "semantic_hash": ""
   },
   ".taste-skill/inspect/settings-hub-e2e.jpg": {
-    "mtime": 1793327926.0822442,
-    "seen": 1793327997.2988403,
-    "ast_hash": "cc55f5054c9aee0159b3f95ef031987c",
+    "mtime": 1793328461.7446024,
+    "seen": 1793328670.0779507,
+    "ast_hash": "3814e71f9b38ffeb961794f4db85a9b8",
     "semantic_hash": ""
   },
   ".taste-skill/inspect/tablet-fold.jpg": {
@@ -786,9 +786,9 @@
     "semantic_hash": ""
   },
   "src/client/components/CompanyTab.tsx": {
-    "mtime": 1793327391.426655,
-    "seen": 1793327720.9856992,
-    "ast_hash": "4622b0686c36d4f283ca9c5ab7a568f4",
+    "mtime": 1793328374.0467782,
+    "seen": 1793328670.0763059,
+    "ast_hash": "d8851c7893bf77a624ac3c1877580506",
     "semantic_hash": ""
   },
   "tests/server/seo-quality.test.ts": {

@@ -123,7 +123,6 @@ ${company.seoDisplayName ? `- Nome de Busca (Display Name SEO): "${f(company.seo
 ${company.bioText ? `- Bio do Perfil: "${f(company.bioText, 300)}"` : ""}
 ${company.targetKeywords ? `- Palavras-Chave Prioritárias da Marca: "${f(company.targetKeywords, 200)}"` : ""}
 ${company.whatsappNumber ? `- WhatsApp de Atendimento: "${f(company.whatsappNumber, 30)}"` : ""}
-${company.whatsappDefaultMessage ? `- Assunto / Intenção de Contato: "${f(company.whatsappDefaultMessage, 160)}"` : ""}
 ${company.websiteUrl ? `- Site / Canal: "${f(company.websiteUrl, 120)}"` : ""}
 ${params.usedKeywords?.length ? `- Palavras-chave principais já usadas nesta semana (NÃO repetir como principal): ${params.usedKeywords.map((k) => `"${f(k, 60)}"`).join(", ")}` : ""}
 
