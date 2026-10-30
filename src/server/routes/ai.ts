@@ -4,6 +4,7 @@ import {
   companies,
   posts,
   post_slides,
+  photo_assets,
   aiProviderSettingsInsertSchema,
 } from "../db/schema";
 import { AIProviderFactory } from "../services/ai/factory";
@@ -145,24 +146,62 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
         return Response.json({ success: false, error: "Empresa não encontrada" }, { status: 404 });
       }
 
+      // Buscar acervo de fotos EXCLUSIVO da empresa ativa (Isolamento Estrito de Tenants)
+      const companyPhotos = await db
+        .select()
+        .from(photo_assets)
+        .where(eq(photo_assets.companyId, company.id));
+
+      const photosPayload = companyPhotos.map((p) => {
+        let parsedTags: string[] = [];
+        if (p.tags) {
+          try {
+            parsedTags = JSON.parse(p.tags);
+          } catch {}
+        }
+        return {
+          id: p.id,
+          originalName: p.originalName,
+          category: p.category,
+          tags: parsedTags,
+        };
+      });
+
       // Resolver o provedor de IA ativo
       const provider = await AIProviderFactory.getForCompany(company.id);
 
-      // Chamar geração agnóstica
+      const targetTheme = body.theme || post.theme;
+      const targetCategory = body.category || post.category;
+      const targetSlideCount = body.slideCount || post.slideCount;
+
+      // Chamar geração agnóstica calibrada com dados do tenant e fotos
       const generated = await provider.generate({
-        theme: post.theme,
-        category: post.category,
-        slideCount: post.slideCount,
+        theme: targetTheme,
+        category: targetCategory,
+        slideCount: targetSlideCount,
         company,
+        photos: photosPayload,
       });
 
-      // Atualizar o post no SQLite
+      // Atualizar o post no SQLite com sugestões da IA
+      const postUpdates: Record<string, unknown> = {
+        caption: generated.caption,
+        status: "ai_generated",
+      };
+
+      if (generated.suggestedTime) {
+        postUpdates.scheduledTime = generated.suggestedTime;
+      }
+      if (generated.suggestedTheme && (!post.theme || post.theme === "Tema a definir")) {
+        postUpdates.theme = generated.suggestedTheme;
+      }
+      if (generated.suggestedCategory && (!post.category || post.category === "Dica Prática")) {
+        postUpdates.category = generated.suggestedCategory;
+      }
+
       await db
         .update(posts)
-        .set({
-          caption: generated.caption,
-          status: "ai_generated",
-        })
+        .set(postUpdates)
         .where(eq(posts.id, postId));
 
       // Atualizar ou criar lâminas
@@ -172,7 +211,13 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
         .where(eq(post_slides.postId, postId))
         .orderBy(asc(post_slides.slideNumber));
 
+      const validPhotoIds = new Set(companyPhotos.map((p) => p.id));
+
       for (const genSlide of generated.slides) {
+        const assignedPhoto = genSlide.suggestedPhotoId && validPhotoIds.has(genSlide.suggestedPhotoId)
+          ? genSlide.suggestedPhotoId
+          : null;
+
         const existingSlide = currentSlides.find((s) => s.slideNumber === genSlide.slideNumber);
         if (existingSlide) {
           await db
@@ -181,6 +226,7 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
               title: genSlide.title,
               bodyText: genSlide.bodyText,
               ctaText: genSlide.ctaText || null,
+              ...(assignedPhoto ? { assignedPhotoId: assignedPhoto } : {}),
             })
             .where(eq(post_slides.id, existingSlide.id));
         } else {
@@ -191,6 +237,7 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
             title: genSlide.title,
             bodyText: genSlide.bodyText,
             ctaText: genSlide.ctaText || null,
+            assignedPhotoId: assignedPhoto,
           });
         }
       }

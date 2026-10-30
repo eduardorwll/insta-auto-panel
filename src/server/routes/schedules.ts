@@ -16,6 +16,7 @@ const postUpdateSchema = z.object({
   slideCount: z.number().int().min(3).max(10).optional(),
   status: z.enum(["draft", "ai_generated", "ready_canva", "queued", "posted"]).optional(),
   caption: z.string().optional().nullable(),
+  scheduledTime: z.string().optional().nullable(),
   selectedPhotoIds: z.array(z.string()).optional().nullable(),
 });
 
@@ -65,6 +66,7 @@ export async function handleSchedulesRoutes(req: Request, url: URL): Promise<Res
           category: "Dica Prática",
           slideCount: 5,
           status: "draft",
+          scheduledTime: "09:00",
         });
 
         // 5 lâminas por padrão
@@ -142,6 +144,7 @@ export async function handleSchedulesRoutes(req: Request, url: URL): Promise<Res
       if (parsed.category !== undefined) updateValues.category = parsed.category;
       if (parsed.status !== undefined) updateValues.status = parsed.status;
       if (parsed.caption !== undefined) updateValues.caption = parsed.caption;
+      if (parsed.scheduledTime !== undefined) updateValues.scheduledTime = parsed.scheduledTime;
       if (parsed.selectedPhotoIds !== undefined) {
         updateValues.selectedPhotoIds = JSON.stringify(parsed.selectedPhotoIds);
       }

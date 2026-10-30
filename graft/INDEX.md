@@ -8,6 +8,6 @@
 - **[server-routes](./server-routes.md)** — HTTP REST API Routes (Bun.serve Endpoints) (8 files)
 - **[server-services](./server-services.md)** — Domain Services & AI Provider Adapters (10 files)
 - **[client-ui](./client-ui.md)** — React 19 + Tailwind v4 + shadcn/ui Frontend Portal (30 files)
-- **[tests-suite](./tests-suite.md)** — Automated Test Suite (Bun Unit/Integration + Playwright E2E) (25 files)
+- **[tests-suite](./tests-suite.md)** — Automated Test Suite (Bun Unit/Integration + Playwright E2E) (27 files)
 
-Total indexed files: 78 | Total symbols: 218
+Total indexed files: 80 | Total symbols: 224

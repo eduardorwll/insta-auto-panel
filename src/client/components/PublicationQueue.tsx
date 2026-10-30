@@ -403,6 +403,10 @@ export function PublicationQueue() {
                       <Badge variant="outline" className={`text-xs border ${statusCfg.color}`}>
                         {statusCfg.label}
                       </Badge>
+                      <Badge variant="outline" className="text-xs text-teal-300 border-teal-800 font-mono tabular-nums flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        {post.scheduledTime || "09:00"}
+                      </Badge>
                       <Badge variant="outline" className="text-xs text-slate-400 border-slate-700 tabular-nums">
                         {post.slideCount} slides
                       </Badge>

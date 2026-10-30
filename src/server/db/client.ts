@@ -40,8 +40,9 @@ export function createDatabaseConnection(
       const migrationsFolder = path.resolve(import.meta.dirname, "../../../drizzle");
       migrate(db, { migrationsFolder });
     } catch {}
-    // Garante colunas do Marco 6 (OpenDesign Studio) e tabela do Marco 7 (company_settings) em bancos pré-existentes
+    // Garante colunas do Marco 6 (OpenDesign Studio), Marco 7 (company_settings) e Separação por Horário em bancos pré-existentes
     for (const alterSql of [
+      "ALTER TABLE posts ADD COLUMN scheduled_time text DEFAULT '09:00';",
       "ALTER TABLE post_slides ADD COLUMN template_id text DEFAULT 'modern-bold';",
       "ALTER TABLE post_slides ADD COLUMN rendered_image_url text;",
       "ALTER TABLE post_slides ADD COLUMN image_prompt text;",

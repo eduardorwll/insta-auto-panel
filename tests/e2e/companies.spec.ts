@@ -66,7 +66,7 @@ test.describe("M2 E2E: Navegação, Company Switcher e Cadastro de Empresa", () 
     createdSlug = testSlug;
     await page.getByLabel(/Nome Fantasia/i).fill("Alpha Odonto E2E");
     await page.getByLabel(/Slug do Identificador/i).fill(testSlug);
-    await page.getByLabel(/Instagram/i).fill("@alphaodonto");
+    await page.getByLabel(/Instagram \(@arroba\)/i).fill("@alphaodonto");
     await page.getByLabel(/Nicho de Mercado/i).fill("Odontologia Estética");
     await page.getByLabel(/Tom de Voz/i).fill("Especialista e Acolhedor");
     await page.getByLabel(/WhatsApp/i).fill("5511999998888");

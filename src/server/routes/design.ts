@@ -63,7 +63,7 @@ export async function handleDesignRoutes(
         offlineFallback: body.offlineFallback ?? true,
       });
 
-      return Response.json(result);
+      return Response.json({ success: true, ...result });
     } catch (err) {
       return Response.json(
         {

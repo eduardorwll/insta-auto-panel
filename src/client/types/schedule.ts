@@ -22,6 +22,7 @@ export interface Post {
   slideCount: number; // 3 a 10 lâminas
   status: PostStatus;
   caption?: string | null;
+  scheduledTime?: string | null;
   selectedPhotoIds?: string[];
   createdAt?: string | number | null;
   slides: PostSlide[];

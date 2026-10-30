@@ -286,7 +286,7 @@ if (cmd === "grep") {
 if (cmd === "ask") {
   const nIdx = rest.indexOf("-n");
   const limit = nIdx !== -1 && rest[nIdx + 1] ? Number(rest[nIdx + 1]) : 8;
-  const query = rest.find((a, idx) => !a.startsWith("-") && idx !== nIdx + 1);
+  const query = rest.find((a, idx) => !a.startsWith("-") && (nIdx === -1 || idx !== nIdx + 1));
   if (!query) {
     console.error('Usage: graft ask "<question>" [--source] [-n N]');
     process.exit(1);

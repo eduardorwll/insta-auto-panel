@@ -48,12 +48,14 @@ export async function enqueuePostForAutoSocial(postId: string): Promise<{ succes
   // 2. Garantir diretórios da fila
   const dirs = await ensureQueueDirs(post.companyId);
 
-  // 3. Gerar sidecar .description
+  // 3. Gerar sidecar .description com metadados de horário programado
   const timestamp = Date.now();
   const filePrefix = `${timestamp}_${post.dayOfWeek}_${post.id}`;
   const descFilePath = path.join(dirs.pending, `${filePrefix}.description`);
 
-  const captionContent = post.caption || `Post sobre ${post.theme}\n\n#socialpanel #instagram`;
+  const scheduledTimeTag = post.scheduledTime ? `[SCHEDULED_TIME: ${post.scheduledTime}]\n` : "";
+  const rawCaption = post.caption || `Post sobre ${post.theme}\n\n#socialpanel #instagram`;
+  const captionContent = `${scheduledTimeTag}${rawCaption}`;
   await Bun.write(descFilePath, captionContent);
 
   const createdFiles: string[] = [descFilePath];

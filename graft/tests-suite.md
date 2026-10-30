@@ -12,6 +12,7 @@ covers:
   - tests/server/ai-adapters.test.ts:1-116
   - tests/server/ai-routes.test.ts:1-124
   - tests/server/ai-settings.test.ts:1-102
+  - tests/server/ai-tenant-photos-time.test.ts:1-163
   - tests/server/autosocial-queue.test.ts:1-160
   - tests/server/canva-export.test.ts:1-135
   - tests/server/companies-api.test.ts:1-125
@@ -23,7 +24,8 @@ covers:
   - tests/server/migrations-seed.test.ts:1-43
   - tests/server/photos-api.test.ts:1-109
   - tests/server/schedules-api.test.ts:1-127
-  - tests/server/schedules-posts-slides.test.ts:1-218
+  - tests/server/schedules-posts-slides.test.ts:1-219
+  - tests/server/schedules-scheduled-time.test.ts:1-146
   - tests/server/security-hardening.test.ts:1-85
   - tests/server/settings-api.test.ts:1-161
   - tests/server/zero-leakage.test.ts:1-47
@@ -55,6 +57,8 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 
 ### `tests/server/ai-settings.test.ts` (lines 1-102)
 
+### `tests/server/ai-tenant-photos-time.test.ts` (lines 1-163)
+
 ### `tests/server/autosocial-queue.test.ts` (lines 1-160)
 
 ### `tests/server/canva-export.test.ts` (lines 1-135)
@@ -77,7 +81,9 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 
 ### `tests/server/schedules-api.test.ts` (lines 1-127)
 
-### `tests/server/schedules-posts-slides.test.ts` (lines 1-218)
+### `tests/server/schedules-posts-slides.test.ts` (lines 1-219)
+
+### `tests/server/schedules-scheduled-time.test.ts` (lines 1-146)
 
 ### `tests/server/security-hardening.test.ts` (lines 1-85)
 

@@ -146,6 +146,7 @@ export const posts = sqliteTable("posts", {
   slideCount: integer("slide_count").notNull().default(5), // Variável dinâmica (3 a 10 lâminas)
   status: text("status").default("draft"),
   caption: text("caption"),
+  scheduledTime: text("scheduled_time").default("09:00"),
   selectedPhotoIds: text("selected_photo_ids"), // JSON array serializado
   createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`),
 });
@@ -278,6 +279,7 @@ export const postInsertSchema = z.object({
   slideCount: z.number().int().min(3, "Mínimo de 3 lâminas").max(10, "Máximo de 10 lâminas").default(5),
   status: postStatusSchema.default("draft"),
   caption: z.string().optional().nullable(),
+  scheduledTime: z.string().optional().default("09:00"),
   selectedPhotoIds: z.array(z.string()).optional().nullable(),
 });
 

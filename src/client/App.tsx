@@ -46,6 +46,7 @@ function DashboardContent() {
     }
   });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [selectedStudioDay, setSelectedStudioDay] = useState<number>(0);
 
   const handleToggleSidebar = () => {
     setIsSidebarCollapsed((prev) => {
@@ -82,8 +83,8 @@ function DashboardContent() {
           </Button>
 
           <div className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-lg bg-teal-600 flex items-center justify-center">
-              <Sparkles className="h-4 w-4 text-white" />
+            <div className="h-8 w-8 rounded-lg border border-slate-800 bg-slate-900 flex items-center justify-center text-teal-400">
+              <Sparkles className="h-4 w-4" />
             </div>
             <div>
               <h1 className="text-base font-bold tracking-tight text-white flex items-center gap-2">
@@ -244,11 +245,20 @@ function DashboardContent() {
             {/* Módulos do Sistema (Navegação via Barra Lateral Categorizada — Operate Mode) */}
             <Tabs value={currentTab} onValueChange={(val) => setCurrentTab(val as NavTabId)} className="w-full">
               <TabsContent value="calendar" className="mt-0 focus-visible:outline-none">
-                <WeekPlanner onOpenStudio={() => setCurrentTab("studio")} />
+                <WeekPlanner
+                  onOpenStudio={(dayIdx?: number) => {
+                    if (dayIdx !== undefined) setSelectedStudioDay(dayIdx);
+                    setCurrentTab("studio");
+                  }}
+                />
               </TabsContent>
 
               <TabsContent value="studio" className="mt-0 focus-visible:outline-none">
-                <DesignStudioTab onSwitchToCanva={() => setCurrentTab("canva")} />
+                <DesignStudioTab
+                  selectedDayIndex={selectedStudioDay}
+                  onSelectDayIndex={setSelectedStudioDay}
+                  onSwitchToCanva={() => setCurrentTab("canva")}
+                />
               </TabsContent>
 
               <TabsContent value="canva" className="mt-0 focus-visible:outline-none">

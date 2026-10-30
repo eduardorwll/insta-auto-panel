@@ -13,14 +13,15 @@ covers:
   - src/server/services/ai/mlstudio.ts:12-98 # class MLStudioProvider
   - src/server/services/ai/openai.ts:1-102
   - src/server/services/ai/openai.ts:8-101 # class OpenAIProvider
-  - src/server/services/ai/provider.ts:1-131
+  - src/server/services/ai/provider.ts:1-169
   - src/server/services/ai/provider.ts:4-12 # interface CompanyProfile
   - src/server/services/ai/provider.ts:14-22 # interface AISettings
-  - src/server/services/ai/provider.ts:24-29 # const carouselSlideSchema
-  - src/server/services/ai/provider.ts:31-34 # const carouselResponseSchema
-  - src/server/services/ai/provider.ts:36-36 # type CarouselSlidesResponse
-  - src/server/services/ai/provider.ts:38-43 # interface GeneratePostParams
-  - src/server/services/ai/provider.ts:45-49 # interface AIProvider
+  - src/server/services/ai/provider.ts:24-29 # interface TenantPhotoSummary
+  - src/server/services/ai/provider.ts:31-37 # const carouselSlideSchema
+  - src/server/services/ai/provider.ts:39-45 # const carouselResponseSchema
+  - src/server/services/ai/provider.ts:47-47 # type CarouselSlidesResponse
+  - src/server/services/ai/provider.ts:49-55 # interface GeneratePostParams
+  - src/server/services/ai/provider.ts:57-61 # interface AIProvider
   - src/server/services/design/image-provider.ts:1-317
   - src/server/services/design/image-provider.ts:3-8 # interface ImageProviderConfig
   - src/server/services/design/image-provider.ts:10-17 # interface GenerateBackgroundParams
@@ -45,16 +46,16 @@ covers:
   - src/server/services/design/template-engine.ts:243-251 # function makePngChunk
   - src/server/services/design/template-engine.ts:253-259 # function hexToRgb
   - src/server/services/design/template-engine.ts:266-321 # function renderSlidePngBuffer
-  - src/server/services/export/autosocial.ts:1-164
+  - src/server/services/export/autosocial.ts:1-166
   - src/server/services/export/autosocial.ts:13-13 # const BASE_QUEUE_DIR
   - src/server/services/export/autosocial.ts:14-14 # const UPLOADS_DIR
   - src/server/services/export/autosocial.ts:15-15 # const RENDERS_DIR
   - src/server/services/export/autosocial.ts:17-22 # interface QueueStatusResult
   - src/server/services/export/autosocial.ts:24-31 # function getCompanyQueueDirs
   - src/server/services/export/autosocial.ts:33-39 # function ensureQueueDirs
-  - src/server/services/export/autosocial.ts:41-117 # function enqueuePostForAutoSocial
-  - src/server/services/export/autosocial.ts:119-139 # function enqueueScheduleForAutoSocial
-  - src/server/services/export/autosocial.ts:141-163 # function getAutoSocialQueueStatus
+  - src/server/services/export/autosocial.ts:41-119 # function enqueuePostForAutoSocial
+  - src/server/services/export/autosocial.ts:121-141 # function enqueueScheduleForAutoSocial
+  - src/server/services/export/autosocial.ts:143-165 # function getAutoSocialQueueStatus
   - src/server/services/export/canva.ts:1-122
   - src/server/services/export/canva.ts:11-18 # function escapeCsvCell
   - src/server/services/export/canva.ts:20-121 # function generateCanvaCsv
@@ -82,14 +83,15 @@ Implements the Agnostic AI Adapter Pattern (ML Studio API, Gemini, OpenAI, Claud
 ### `src/server/services/ai/openai.ts` (lines 1-102)
 - `OpenAIProvider` (class) → `src/server/services/ai/openai.ts:8-101`
 
-### `src/server/services/ai/provider.ts` (lines 1-131)
+### `src/server/services/ai/provider.ts` (lines 1-169)
 - `CompanyProfile` (interface) → `src/server/services/ai/provider.ts:4-12`
 - `AISettings` (interface) → `src/server/services/ai/provider.ts:14-22`
-- `carouselSlideSchema` (const) → `src/server/services/ai/provider.ts:24-29`
-- `carouselResponseSchema` (const) → `src/server/services/ai/provider.ts:31-34`
-- `CarouselSlidesResponse` (type) → `src/server/services/ai/provider.ts:36-36`
-- `GeneratePostParams` (interface) → `src/server/services/ai/provider.ts:38-43`
-- `AIProvider` (interface) → `src/server/services/ai/provider.ts:45-49`
+- `TenantPhotoSummary` (interface) → `src/server/services/ai/provider.ts:24-29`
+- `carouselSlideSchema` (const) → `src/server/services/ai/provider.ts:31-37`
+- `carouselResponseSchema` (const) → `src/server/services/ai/provider.ts:39-45`
+- `CarouselSlidesResponse` (type) → `src/server/services/ai/provider.ts:47-47`
+- `GeneratePostParams` (interface) → `src/server/services/ai/provider.ts:49-55`
+- `AIProvider` (interface) → `src/server/services/ai/provider.ts:57-61`
 
 ### `src/server/services/design/image-provider.ts` (lines 1-317)
 - `ImageProviderConfig` (interface) → `src/server/services/design/image-provider.ts:3-8`
@@ -117,16 +119,16 @@ Implements the Agnostic AI Adapter Pattern (ML Studio API, Gemini, OpenAI, Claud
 - `hexToRgb` (function) → `src/server/services/design/template-engine.ts:253-259`
 - `renderSlidePngBuffer` (function) → `src/server/services/design/template-engine.ts:266-321`
 
-### `src/server/services/export/autosocial.ts` (lines 1-164)
+### `src/server/services/export/autosocial.ts` (lines 1-166)
 - `BASE_QUEUE_DIR` (const) → `src/server/services/export/autosocial.ts:13-13`
 - `UPLOADS_DIR` (const) → `src/server/services/export/autosocial.ts:14-14`
 - `RENDERS_DIR` (const) → `src/server/services/export/autosocial.ts:15-15`
 - `QueueStatusResult` (interface) → `src/server/services/export/autosocial.ts:17-22`
 - `getCompanyQueueDirs` (function) → `src/server/services/export/autosocial.ts:24-31`
 - `ensureQueueDirs` (function) → `src/server/services/export/autosocial.ts:33-39`
-- `enqueuePostForAutoSocial` (function) → `src/server/services/export/autosocial.ts:41-117`
-- `enqueueScheduleForAutoSocial` (function) → `src/server/services/export/autosocial.ts:119-139`
-- `getAutoSocialQueueStatus` (function) → `src/server/services/export/autosocial.ts:141-163`
+- `enqueuePostForAutoSocial` (function) → `src/server/services/export/autosocial.ts:41-119`
+- `enqueueScheduleForAutoSocial` (function) → `src/server/services/export/autosocial.ts:121-141`
+- `getAutoSocialQueueStatus` (function) → `src/server/services/export/autosocial.ts:143-165`
 
 ### `src/server/services/export/canva.ts` (lines 1-122)
 - `escapeCsvCell` (function) → `src/server/services/export/canva.ts:11-18`

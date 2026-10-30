@@ -76,7 +76,7 @@ test.describe("M3 E2E: Banco de Fotos, Planejador Semanal e Mockup 4:5", () => {
     await expect(page.getByText(/Salvo!/i)).toBeVisible();
 
     // 11. Conferir se o Mockup 4:5 exibe os dados atualizados
-    await expect(page.getByText("1 / 8")).toBeVisible();
+    await expect(page.getByText("1 / 8").first()).toBeVisible();
     await expect(page.getByText("8 Passos para um Clareamento Seguro").first()).toBeVisible();
     await expect(page.getByText(/Proporção Instagram 4:5/i)).toBeVisible();
 
