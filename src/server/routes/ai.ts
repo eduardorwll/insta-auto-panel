@@ -175,8 +175,22 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
       const targetCategory = body.category || post.category;
       const targetSlideCount = body.slideCount || post.slideCount;
 
+      // Keywords principais já usadas em outros posts da mesma semana (diversidade de busca)
+      const siblingPosts = await db.select().from(posts).where(eq(posts.scheduleId, post.scheduleId));
+      const usedKeywords = siblingPosts
+        .filter((p) => p.id !== postId && p.keywordCluster)
+        .flatMap((p) => {
+          try {
+            const parsed: unknown = JSON.parse(p.keywordCluster as string);
+            return Array.isArray(parsed) ? parsed.filter((k): k is string => typeof k === "string") : [];
+          } catch {
+            return [];
+          }
+        });
+
       // Chamar geração agnóstica calibrada com dados do tenant e fotos
       const generated = await provider.generate({
+        usedKeywords,
         theme: targetTheme,
         category: targetCategory,
         slideCount: targetSlideCount,
@@ -192,6 +206,9 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
 
       if (generated.altText) {
         postUpdates.altText = generated.altText;
+      }
+      if (generated.keywordCluster?.length) {
+        postUpdates.keywordCluster = JSON.stringify(generated.keywordCluster);
       }
       if (generated.suggestedTime) {
         postUpdates.scheduledTime = generated.suggestedTime;

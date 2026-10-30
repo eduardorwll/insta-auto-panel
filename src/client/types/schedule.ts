@@ -24,6 +24,7 @@ export interface Post {
   status: PostStatus;
   caption?: string | null;
   altText?: string | null;
+  keywordCluster?: string | null; // JSON array serializado
   scheduledTime?: string | null;
   selectedPhotoIds?: string[];
   createdAt?: string | number | null;

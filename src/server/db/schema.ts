@@ -150,6 +150,7 @@ export const posts = sqliteTable("posts", {
   status: text("status").default("draft"),
   caption: text("caption"),
   altText: text("alt_text"),
+  keywordCluster: text("keyword_cluster"), // JSON array serializado (cluster de busca do post)
   scheduledTime: text("scheduled_time").default("09:00"),
   selectedPhotoIds: text("selected_photo_ids"), // JSON array serializado
   createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`),

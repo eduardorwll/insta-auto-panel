@@ -74,6 +74,7 @@ describe("Schema e Integridade: Calendário, Posts Dinâmicos (3 a 10 Slides) e 
         status TEXT DEFAULT 'draft',
         caption TEXT,
         alt_text TEXT,
+        keyword_cluster TEXT,
         scheduled_time TEXT DEFAULT '09:00',
         selected_photo_ids TEXT,
         created_at INTEGER

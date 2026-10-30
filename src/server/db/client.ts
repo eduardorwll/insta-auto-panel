@@ -44,6 +44,7 @@ export function createDatabaseConnection(
     for (const alterSql of [
       "ALTER TABLE posts ADD COLUMN scheduled_time text DEFAULT '09:00';",
       "ALTER TABLE posts ADD COLUMN alt_text text;",
+      "ALTER TABLE posts ADD COLUMN keyword_cluster text;",
       "ALTER TABLE post_slides ADD COLUMN template_id text DEFAULT 'modern-bold';",
       "ALTER TABLE post_slides ADD COLUMN rendered_image_url text;",
       "ALTER TABLE post_slides ADD COLUMN image_prompt text;",
