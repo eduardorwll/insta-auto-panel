@@ -113,11 +113,32 @@ export async function handleSchedulesRoutes(req: Request, url: URL): Promise<Res
 
     const postsWithSlides = await Promise.all(
       schedulePosts.map(async (p) => {
-        const slides = await db
+        let slides = await db
           .select()
           .from(post_slides)
           .where(eq(post_slides.postId, p.id))
           .orderBy(asc(post_slides.slideNumber));
+
+        // Auto-healing defensivo: se um post estiver sem lâminas, restabelece a quantidade necessária
+        if (slides.length === 0) {
+          const count = p.slideCount || 5;
+          for (let i = 1; i <= count; i++) {
+            await db.insert(post_slides).values({
+              id: `slide_${p.id}_${i}`,
+              postId: p.id,
+              slideNumber: i,
+              title: i === 1 ? "Capa / Gancho" : i === count ? "Chamada para Ação" : `Slide ${i}`,
+              bodyText: i === 1 ? "Texto provocativo do gancho" : `Desenvolvimento do passo ${i - 1}`,
+              ctaText: i === count ? "Comente ou envie mensagem no WhatsApp!" : null,
+            });
+          }
+          slides = await db
+            .select()
+            .from(post_slides)
+            .where(eq(post_slides.postId, p.id))
+            .orderBy(asc(post_slides.slideNumber));
+        }
+
         return {
           ...p,
           selectedPhotoIds: p.selectedPhotoIds ? JSON.parse(p.selectedPhotoIds) : [],

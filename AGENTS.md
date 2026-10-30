@@ -58,6 +58,22 @@ Este arquivo define as diretrizes operacionais inegociáveis para o **Lead Archi
   3. **`impeccable` (v4.8.0):** Classificação explícita de superfície: modo **Operate** para painéis/dashboards/studios de gestão de conteúdo (alta densidade, velocidade, zero distração) e modo **Persuade** para os templates 4:5 de conversão/slides.
   4. **Conferência Visual Obrigatória:** Toda alteração de UI deve abrir os screenshots gerados em `.taste-skill/inspect/*.jpg` via `read_file` para inspecionar alinhamentos, quebras, contrastes e bordas antes de dar a tarefa por concluída.
 
+### 2.6. Regra Mandatória do Paradigma Why-First & Rotina de Refatoração Contínua
+- **Paradigma Why-First Mandatório:** Nenhuma modificação de código, ajuste de esquema ou refatoração pode ser executada sem prévia justificativa técnica:
+  1. **Justificativa Técnica Explícita:** Fundamentar a razão técnica da escolha (Clean Architecture, SOLID, acoplamento, coesão, performance).
+  2. **Análise Formal de Trade-offs:** Documentar os ganhos reais e custos/compromissos técnicos conscientemente assumidos.
+  3. **Alternativas Descartadas:** Registrar expressamente quais abordagens alternativas foram cogitadas e por que foram rejeitadas.
+  4. **Preservação Documental:** Preservar rigorosamente comentários existentes, docstrings e ADRs sem remoção silenciosa.
+  5. **Links Clicáveis:** Citar sempre arquivos e símbolos através de links Markdown clicáveis com esquema `file://` e números de linhas (`file:///path#Lxx-Lyy` ou [`Symbol`](file:///path#Lxx)).
+- **Rotina Mandatória de Refatoração de Código (`safe-refactor` + `refactoring` + `refactoring-guru`):**
+  1. **Preservação Comportamental Estrita:** Isolar estruturalmente refatoração de qualquer adição de feature ou correção de bug. O comportamento observável deve permanecer 100% inalterado durante refatorações.
+  2. **Diagnóstico Prévio de Smells (`refactoring-guru`):** Classificar e nomear formalmente o code smell antes de escolher o tratamento (Bloaters, OO Abusers, Change Preventers, Dispensables, Couplers).
+  3. **Menor Tratamento Suficiente & Regra de Três (`refactoring`):** Aplicar o menor movimento atômico capaz de eliminar o smell (`Extract Function`, `Inline Temp`, `Extract Class`, `Parameter Object`, `Guard Clauses`). Tolerar duplicação até a 2ª ocorrência; na 3ª, unificar a responsabilidade.
+  4. **Rede de Proteção com Testes de Caracterização (`working-effectively-with-legacy-code`):** Executar os testes antes e garantir 100% de êxito; caso faltem testes, travar o comportamento atual com testes de caracterização antes da intervenção. Proibido enfraquecer testes para concluir refatorações.
+  5. **Condição de Parada Rígida:** Interromper a limpeza assim que o smell for sanado, evitando qualquer engenharia especulativa ou redesign prematuro.
+- **Ciclo Completo Unificado de Engenharia:**
+  `Plan-First` ➔ `Why-First` ➔ `TDD (Red -> Green)` ➔ `Safe-Refactor` ➔ `UI Craft Triad` ➔ `Review-Before-Done (2 Eixos)` ➔ `Tokens Report`.
+
 ---
 
 ## 3. Herança das Regras do Sandbox (`~/Sandbox/.agents/rules/`)
@@ -65,7 +81,7 @@ Este arquivo define as diretrizes operacionais inegociáveis para o **Lead Archi
 Todos os agentes operando neste repositório estão simultaneamente submetidos a:
 - **Confinamento Estrito (`boundaries.md`):** Nenhuma leitura de segredos do host (`~/.ssh`, `~/.gnupg`) nem escrita fora de `/home/eduardorwll/Sandbox/` (ou `/tmp/`).
 - **Prática TDD (`tdd.md`):** Ciclo obrigatório **Red -> Green -> Refactor**. Testes unitários sempre precedem a implementação de regras de negócio, schemas e serviços.
-- **Planejamento Mandatório (`planning.md`) & Explicação Técnica (`explanation.md`):** Nenhuma modificação estrutural sem plano prévio, mapeamento de *blast radius* e justificativa técnica (*Why-First*).
+- **Planejamento Mandatório (`planning.md`), Explicação Técnica Why-First (`explanation.md`) & Refatoração Contínua (`refactoring.md`):** Nenhuma modificação estrutural sem plano prévio, mapeamento de *blast radius*, justificativa técnica explícita (*Why-First*), análise de trade-offs, alternativas descartadas e isolamento comportamental.
 - **Inteligência em Grafos & Os 4 Token Savers Mandatórios (`graph-intelligence.md`):**
   1. **`graphify` (Macro AST):** `bun run graphify query "<pergunta>"`, `bun run graphify path "<A>" "<B>"`, `bun run graphify update .` (e hooks Git automáticos).
   2. **`graft` + `prowl` (Micro Context):** `bun run graft skeleton <arquivo>`, `bun run graft callers <símbolo> --depth all`, `bun run graft ask "<pergunta>" --source`.

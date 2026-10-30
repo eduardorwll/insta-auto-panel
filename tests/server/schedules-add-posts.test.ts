@@ -9,7 +9,10 @@ describe("REST API: Adicionar Posts no Cronograma (/api/posts)", () => {
   const weekStartDate = "2026-11-02";
 
   beforeAll(async () => {
-    await db.delete(post_slides);
+    const existingPosts = await db.select({ id: posts.id }).from(posts).where(eq(posts.companyId, companyId));
+    for (const p of existingPosts) {
+      await db.delete(post_slides).where(eq(post_slides.postId, p.id));
+    }
     await db.delete(posts).where(eq(posts.companyId, companyId));
     await db.delete(weekly_schedules).where(eq(weekly_schedules.companyId, companyId));
     await db.delete(companies).where(eq(companies.id, companyId));
@@ -25,7 +28,10 @@ describe("REST API: Adicionar Posts no Cronograma (/api/posts)", () => {
   });
 
   afterAll(async () => {
-    await db.delete(post_slides);
+    const existingPosts = await db.select({ id: posts.id }).from(posts).where(eq(posts.companyId, companyId));
+    for (const p of existingPosts) {
+      await db.delete(post_slides).where(eq(post_slides.postId, p.id));
+    }
     await db.delete(posts).where(eq(posts.companyId, companyId));
     await db.delete(weekly_schedules).where(eq(weekly_schedules.companyId, companyId));
     await db.delete(companies).where(eq(companies.id, companyId));
