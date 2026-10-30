@@ -1,11 +1,30 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test, beforeAll, afterAll } from "bun:test";
 import { server } from "@/server/index";
+import { db } from "@/server/db/client";
+import { companies } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 
 describe("Auditoria de Segurança & Security Hardening (OWASP Top 10 + ASVS)", () => {
   const baseUrl = `http://localhost:${server.port}`;
+  const testCompanyId = "sec_test_corp";
+
+  beforeAll(async () => {
+    // Insere empresa temporária para os testes de segurança
+    await db.insert(companies).values({
+      id: testCompanyId,
+      name: "Security Test Corp",
+      instagramHandle: "@sectest",
+      niche: "Segurança",
+      toneOfVoice: "Formal",
+    }).onConflictDoNothing();
+  });
+
+  afterAll(async () => {
+    await db.delete(companies).where(eq(companies.id, testCompanyId));
+  });
 
   test("OWASP A02: GET /api/settings deve mascarar e não vazar cookies de sessão do Instagram em plaintext", async () => {
-    const res = await fetch(`${baseUrl}/api/settings?companyId=demo_corp`);
+    const res = await fetch(`${baseUrl}/api/settings?companyId=${testCompanyId}`);
     expect(res.status).toBe(200);
     const body = (await res.json()) as {
       success: boolean;
@@ -14,7 +33,7 @@ describe("Auditoria de Segurança & Security Hardening (OWASP Top 10 + ASVS)", (
 
     expect(body.success).toBe(true);
     // Deve conter identificadores seguros
-    expect(body.data.companyId).toBe("demo_corp");
+    expect(body.data.companyId).toBe(testCompanyId);
     expect(body.data.hasSessionCookie).toBeDefined();
 
     // NÃO deve conter o sessionid completo em plaintext ou o array de cookies bruto
