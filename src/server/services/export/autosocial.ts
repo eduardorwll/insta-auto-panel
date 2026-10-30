@@ -6,7 +6,7 @@ import {
   post_slides,
   photo_assets,
 } from "../../db/schema";
-import { eq, inArray } from "drizzle-orm";
+import { eq, inArray, and } from "drizzle-orm";
 import fs from "fs/promises";
 import path from "path";
 
@@ -91,10 +91,11 @@ export async function enqueuePostForAutoSocial(postId: string): Promise<{ succes
 
   // Buscar fotos no banco
   if (photoIds.length > 0) {
+    // Buscar exclusivamente fotos pertencentes a esta empresa (Isolamento Estrito de Tenants)
     const photos = await db
       .select()
       .from(photo_assets)
-      .where(inArray(photo_assets.id, photoIds));
+      .where(and(inArray(photo_assets.id, photoIds), eq(photo_assets.companyId, post.companyId)));
 
     for (const [idx, photo] of photos.entries()) {
       if (!photo) continue;
