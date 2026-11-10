@@ -5,6 +5,8 @@ import { handleAIRoutes } from "./routes/ai";
 import { handleExportRoutes } from "./routes/export";
 import { handleDesignRoutes } from "./routes/design";
 import { handleSettingsRoutes } from "./routes/settings";
+import { handleAuthRoutes } from "./routes/auth";
+import { extractSessionFromRequest, isAuthEnforced } from "./services/auth/session";
 import path from "path";
 
 export function applySecurityHeaders(res: Response): Response {
@@ -25,6 +27,25 @@ async function handleRequest(req: Request): Promise<Response> {
       app: "Social Panel",
       timestamp: new Date().toISOString(),
     });
+  }
+
+  // 1.5. Rotas de Autenticação Home Server (/api/auth/*)
+  const authResponse = await handleAuthRoutes(req, url);
+  if (authResponse) return authResponse;
+
+  // Guard de Autenticação Home Server (SEC-01) para rotas protegidas
+  const isProtectedPath =
+    url.pathname.startsWith("/api/") ||
+    url.pathname.startsWith("/uploads/") ||
+    url.pathname.startsWith("/renders/");
+  if (isProtectedPath && isAuthEnforced(req)) {
+    const session = extractSessionFromRequest(req);
+    if (!session.valid) {
+      return Response.json(
+        { success: false, error: "Autenticação necessária para acessar o Home Server." },
+        { status: 401 }
+      );
+    }
   }
 
   // 2. Rotas de Empresas (/api/companies)
@@ -96,9 +117,11 @@ async function handleRequest(req: Request): Promise<Response> {
       const contentType = filePath.endsWith(".svg")
         ? "image/svg+xml"
         : "image/png";
-      return new Response(file, {
-        headers: { "Content-Type": contentType },
-      });
+      const headers: Record<string, string> = { "Content-Type": contentType };
+      if (filePath.endsWith(".svg")) {
+        headers["Content-Security-Policy"] = "default-src 'none'; style-src 'unsafe-inline'; sandbox";
+      }
+      return new Response(file, { headers });
     }
     return new Response("Render não encontrado", { status: 404 });
   }
@@ -107,7 +130,10 @@ async function handleRequest(req: Request): Promise<Response> {
   if (!url.pathname.startsWith("/api/")) {
     const distDir = path.resolve(import.meta.dirname, "../../dist");
     const relativePath = url.pathname === "/" ? "index.html" : url.pathname.slice(1);
-    const filePath = path.join(distDir, relativePath);
+    const filePath = path.resolve(distDir, relativePath);
+    if (!filePath.startsWith(distDir + path.sep) && filePath !== path.join(distDir, "index.html")) {
+      return new Response("Acesso negado", { status: 403 });
+    }
     const file = Bun.file(filePath);
 
     if (await file.exists()) {

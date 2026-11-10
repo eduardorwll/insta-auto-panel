@@ -10,8 +10,8 @@ import { eq, inArray, and } from "drizzle-orm";
 import fs from "fs/promises";
 import path from "path";
 
-const BASE_QUEUE_DIR = path.resolve(import.meta.dirname, "../../../data/autosocial/queue");
-const UPLOADS_DIR = path.resolve(import.meta.dirname, "../../../data/uploads");
+const BASE_QUEUE_DIR = path.resolve(import.meta.dirname, "../../../../data/autosocial/queue");
+const UPLOADS_DIR = path.resolve(import.meta.dirname, "../../../../data/uploads");
 const RENDERS_DIR = path.resolve(import.meta.dirname, "../../../../data/renders");
 
 export interface QueueStatusResult {

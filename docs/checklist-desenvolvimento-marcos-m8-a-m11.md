@@ -1,0 +1,91 @@
+# 📋 Checklist Mestre de Desenvolvimento por Etapas (Marcos M8 a M11)
+
+> **Contrato Base:** [AGENTS.md](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/AGENTS.md) & [relatorio-completo-engenharia-e-plano-negocio.md](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/docs/relatorio-completo-engenharia-e-plano-negocio.md)  
+> **Metodologia Obrigatória em Cada Ticket:** `Plan-First` ➔ `Why-First` ➔ `TDD (Red -> Green)` ➔ `Safe-Refactor` ➔ `UI Craft Triad` ➔ `Commit Semântico Atômico` ➔ `Checkpoint HITL entre Marcos`.
+
+> [!IMPORTANT]
+> **⚖️ CLÁUSULA PÉTREA DE GOVERNANÇA (PERGUNTAR SEMPRE ETAPA POR ETAPA):**
+> 1. É terminantemente proibido avançar de uma etapa para a próxima sem **perguntar antes e receber confirmação explícita do usuário**.
+> 2. Ao término de cada etapa, este documento e o relatório técnico devem ser **atualizados com o registro exato de todas as modificações feitas** (arquivos alterados, testes criados, resultados de validação e commits).
+
+---
+
+## ✅ Etapa de Desenvolvimento 1 — Marco M8: Hardening de Segurança, Correções Críticas & Login Local (Home Server) [CONCLUÍDO]
+
+*Objetivo: Eliminar os 3 riscos críticos de segurança (`SEC-01`, `SEC-02`, `SEC-03`), corrigir o bug de diretório da fila do AutoSocial (`ENG-01`) e proteger o acesso ao painel no seu servidor doméstico com Login simples.*
+
+- [x] **Ticket M8-T1 (TDD — Correção `SEC-02`, `SEC-04`, `SEC-08` & `SEC-09` em Settings e Static Files):**
+  - Criado teste unitário em [`tests/server/settings-api.test.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/tests/server/settings-api.test.ts#L161-L205) garantindo que `PUT /api/settings/app` nunca retorne `instagramSessionId`, `instagramCookiesJson` ou `imageProviderApiKey` em texto aberto, além de bloquear path traversal em `companyId`.
+  - Extraída função [`sanitizeCompanySettings()`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/settings.ts#L20-L34) e [`isValidCompanyId()`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/settings.ts#L12-L14) em [`src/server/routes/settings.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/settings.ts), aplicada permissão `mode: 0o600` nos arquivos `cookies.json`/`storageState.json` (`SEC-09`), adicionado `Content-Security-Policy` restritivo em `/renders/*.svg` (`SEC-08`) e travado path traversal no servimento de `dist/` em [`src/server/index.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/index.ts#L118-L135).
+- [x] **Ticket M8-T2 (TDD — Correção `SEC-03`, `SEC-05`, `SEC-06` e `SEC-07` nos Provedores de IA e Uploads):**
+  - Criado validador anti-SSRF [`assertSafeOutboundUrl(rawUrl, provider)`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/provider.ts#L80-L121) bloqueando varredura de IPs privados da LAN (`192.168.*`, `10.*`, `169.254.*`, `127.*`) para provedores remotos (`gemini`, `openai`, `claude`, `openrouter`).
+  - Movida a chave do [`GeminiProvider`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/gemini.ts#L14-L28) da query string `?key=` para o header `x-goog-api-key` (`SEC-06`) e adicionado `AbortSignal.timeout()` em todos os adapters de texto (`SEC-07`: [`gemini.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/gemini.ts), [`openai.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/openai.ts), [`claude.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/claude.ts), [`mlstudio.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/mlstudio.ts)).
+  - Adicionado limite de 10 MB (`413`) e inspeção de assinatura contra uploads de `<script`/`<svg`/`<html` disfarçados de PNG em [`src/server/routes/photos.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/photos.ts#L46-L86), validado em [`tests/server/photos-api.test.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/tests/server/photos-api.test.ts#L109-L139) e [`tests/server/ai-adapters.test.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/tests/server/ai-adapters.test.ts#L146-L191).
+- [x] **Ticket M8-T3 (TDD — Correção `ENG-01`, `ENG-02`, `ENG-04` e `ENG-05`):**
+  - Corrigidos os caminhos `BASE_QUEUE_DIR` e `UPLOADS_DIR` em [`src/server/services/export/autosocial.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/export/autosocial.ts#L13-L15) de `../../../data/...` para `../../../../data/...` (resolvendo corretamente para `<repo>/data/...` e copiando as mídias do `PhotoBank` para a fila do AutoSocial), validado em [`tests/server/autosocial-queue.test.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/tests/server/autosocial-queue.test.ts#L106-L120).
+  - Unificado o tipo `PostStatus` em [`src/server/services/schedules/schedule-service.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/schedules/schedule-service.ts#L49) (eliminando o `as any` de [`src/server/routes/schedules.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/schedules.ts#L73)), atualizado o CTA default para `"Envie uma mensagem no Direct ou acesse o link na bio!"` (`ENG-04`, validado em [`tests/server/schedules-api.test.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/tests/server/schedules-api.test.ts#L43-L48)) e corrigidos os paths relativos em [`package.json`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/package.json#L23-L25) (`ENG-05`).
+- [x] **Ticket M8-T4 (TDD Backend — Autenticação Simples Home Server `SEC-01`):**
+  - Criados [`src/server/services/auth/session.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/auth/session.ts) e [`src/server/routes/auth.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/auth.ts) (`POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`) usando `Bun.password` (`argon2id`) + cookie `HttpOnly; SameSite=Strict` assinado via HMAC-SHA256 + rate-limit de 5 tentativas falhas/15min por IP (`429 Too Many Requests`).
+  - Plugado guard de autenticação em [`src/server/index.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/index.ts#L32-L49) e validado com suíte dedicada [`tests/server/auth-api.test.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/tests/server/auth-api.test.ts) (`4 pass, 0 fail`).
+- [x] **Ticket M8-T5 (UI Craft — Página de Login `LoginScreen.tsx` & Botão de Logout):**
+  - Construído [`src/client/components/LoginScreen.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/LoginScreen.tsx) no padrão **Operate** (`taste-skill` + `emil-design-eng` com feedback tátil `active:scale-[0.97]`), integrado estado de bloqueio/sessão e botão **"Sair"** no header do [`src/client/App.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/App.tsx#L133-L143), e validado com `taste-skill lint` (`0 FAIL`), `bun test` (`99 pass, 0 fail` em 27 suítes) e `bun run typecheck` (`0 errors`).
+- [x] 🛑 **Checkpoint HITL do Marco M8:** Relatório de modificações e testes apresentado abaixo. **Aguardando sua confirmação explícita antes de iniciar a Etapa 2 (Marco M9).**
+
+---
+
+## 🧹 Etapa de Desenvolvimento 2 — Marco M9: Remoção Completa do Canva, Abstração Multi-Formato (Feed + Stories) & Modularização do Studio
+
+*Objetivo: Retirar 100% da integração legada com o Canva, preparar o contrato agnóstico de formato (`FormatSpec` para Carrosséis e futuros Stories) e quebrar o componente monolítico `DesignStudioTab.tsx` (`ENG-03`).*
+
+- [ ] **Ticket M9-T1 (TDD & Safe-Refactor — Remoção do Canva no Backend e Banco):**
+  - Remover [`src/server/services/export/canva.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/export/canva.ts), remover a rota `GET /api/export/canva` em [`src/server/routes/export.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/export.ts) e atualizar testes correspondentes.
+  - Migrar o status `"ready_canva"` para `"ready_design"` no schema e banco SQLite.
+- [ ] **Ticket M9-T2 (UI Craft — Remoção do Canva no Frontend):**
+  - Remover [`src/client/components/CanvaExportTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/CanvaExportTab.tsx), retirar o item `"canva"` de [`SidebarNavigation.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/SidebarNavigation.tsx) e [`App.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/App.tsx), e limpar campos `canvaTemplateId` dos formulários de empresa.
+- [ ] **Ticket M9-T3 (TDD — Abstração Multi-Formato `PostFormatRegistry` para Carrosséis e Stories):**
+  - Criar `src/shared/post-formats.ts` definindo `FormatSpec` (`carousel_feed` 4:5, `carousel_square` 1:1 e `story_vertical` 9:16 com `safeZones` de topo/base) e desacoplar as dimensões fixas de [`template-engine.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/design/template-engine.ts), deixando a arquitetura pronta para plugar o módulo de Stories.
+- [ ] **Ticket M9-T4 (Safe-Refactor — Extração de `useOpenDesignCanvas.ts`):**
+  - Extrair a lógica imperativa de desenho em Canvas 2D (`drawTypographyLayers` e `wrapCanvasLines`) de [`DesignStudioTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/DesignStudioTab.tsx) para `src/client/hooks/useOpenDesignCanvas.ts`, preservando 100% do comportamento visual.
+- [ ] 🛑 **Checkpoint HITL do Marco M9:** Apresentar evidências e aguardar sua aprovação antes de iniciar o M10.
+
+---
+
+## 🌐 Etapa de Desenvolvimento 3 — Marco M10: Integração Oficial `@openrouter/sdk`, Limites/Quotas de API & Prompt Inspector
+
+*Objetivo: Instalar o `@openrouter/sdk`, conectar a seleção dinâmica de modelos e saldo da conta na UI, criar o controle explícito de limites/orçamento de API e lançar o modal de Preview Editável de Prompt.*
+
+- [ ] **Ticket M10-T1 (TDD — Instalação do `@openrouter/sdk` & Serviços de Catálogo/Saldo):**
+  - Instalar `@openrouter/sdk` via Bun (`bun add @openrouter/sdk`) e criar `src/server/services/ai/openrouter-client.ts`.
+  - Criar endpoints `GET /api/ai/openrouter/models` (buscando e cacheando `/api/v1/models` e `/api/v1/images/models` com preços e modalidades reais) e `GET /api/ai/openrouter/key-status` (consultando `GET /api/v1/key` e `openRouter.credits.getCredits()`).
+  - Atualizar `OpenRouterImageProvider` para usar `POST /api/v1/images` e chat multimodal com salvamento automático em disco e cache por hash `SHA-256`.
+- [ ] **Ticket M10-T2 (TDD — Motor de Regras, Rate Limits e Quotas de Uso de API `SEC-05`):**
+  - Criar tabelas `api_usage_rules` (RPM máximo, quota diária de texto/imagem por empresa, teto mensal em USD `maxMonthlyBudgetUsd`, `maxOutputTokens`) e `api_usage_logs` (histórico de chamadas com custo real extraído do objeto `usage` da OpenRouter) em [`src/server/db/schema.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/db/schema.ts).
+  - Criar guardião `enforceApiQuotaAndRateLimit()` acionado antes de qualquer chamada paga, com fallback gracioso para SVG gratuito quando atingir 100% do orçamento.
+- [ ] **Ticket M10-T3 (TDD Backend — Endpoints Dry-Run do `Prompt Inspector`):**
+  - Criar `POST /api/ai/preview-prompt` e `POST /api/design/preview-payloads` que montam e retornam (a custo US$ 0,00) os **3 payloads reais enriquecidos com os dados da empresa ativa**:
+    1. Prompt completo de Roteiro & Copy SEO MATCH;
+    2. Prompt e parâmetros de geração de imagem que serão enviados à OpenRouter + estimativa de custo em USD;
+    3. Payload JSON `OpenDesignSlideFields` que controla o motor OpenDesign.
+- [ ] **Ticket M10-T4 (UI Craft — `PromptInspectorModal.tsx` & Painel de Modelos/Quotas no `SettingsHub.tsx`):**
+  - Construir o `PromptInspectorModal.tsx` permitindo visualizar, editar manualmente o prompt/payload antes do envio e disparar a geração.
+  - Atualizar [`SettingsHub.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/SettingsHub.tsx) com os seletores dinâmicos de modelos da OpenRouter (exibindo preços reais por 1M tokens / por imagem), medidor de saldo da chave e formulário de configuração explícita de Quotas/Rate Limits + badge de consumo na topbar.
+- [ ] 🛑 **Checkpoint HITL do Marco M10:** Apresentar evidências e aguardar sua aprovação antes de iniciar o M11.
+
+---
+
+## 🧬 Etapa de Desenvolvimento 4 — Marco M11: Style Blueprints por Empresa (Visão IA) & Composição Generalizada Multi-Camadas
+
+*Objetivo: Permitir que cada empresa cadastre tipos de post (ou envie imagens de exemplo como o carrossel de referência), a IA extraia o Mapa Detalhado do Post (`Style Blueprint`) e use esse mapa nos prompts e na renderização de todos os próximos posts.*
+
+- [ ] **Ticket M11-T1 (TDD — Schema `company_post_types` & Extrator Multimodal `Vision-to-Blueprint`):**
+  - Adicionar tabela `company_post_types` em [`src/server/db/schema.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/db/schema.ts) (`id`, `companyId`, `name`, `formatId`, `referenceImageUrls`, `styleBlueprintJson`, `isDefault`) e coluna opcional `postTypeId` em `posts`.
+  - Criar serviço e rota `POST /api/ai/extract-post-blueprint` que recebe imagens de referência ou descrição de estilo da empresa, analisa via modelo de Visão na OpenRouter (`openRouter.chat.send`) e gera o **Mapa Detalhado do Tipo de Post** validado via Zod (`visualMood`, `layoutGrid`, `typographyPairing`, `slideArchetypes` [Capa, Meio com Bullets/Ícones, Final com Card de Contato] e `immutableStylePrompt`).
+- [ ] **Ticket M11-T2 (TDD — Compilador de Prompt de 3 Camadas & Renderizador Dinâmico de Blueprints):**
+  - Atualizar o compilador de prompts de texto (`provider.ts`) e de imagem (`image-provider.ts`) para injetar automaticamente o `styleBlueprintJson` do Tipo de Post selecionado + foto do `PhotoBank` (`assignedPhotoId`) + referência multimodal para manter consistência entre lâminas.
+  - Evoluir [`template-engine.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/design/template-engine.ts) e `useOpenDesignCanvas.ts` para renderizar dinamicamente os arquétipos declarados no Blueprint da empresa (enquadramento da foto da especialista/produto, pareamento tipográfico Serif/Sans, listas com ícones/bullets nos slides intermediários e card estruturado de endereço/agendamento no slide final).
+- [ ] **Ticket M11-T3 (UI Craft — Gestão de Tipos de Post na `CompanyTab.tsx` e Seletor no `WeekPlanner.tsx`):**
+  - Adicionar na aba **Dados da Empresa** ([`CompanyTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/CompanyTab.tsx)) a interface para cadastrar Tipos de Post, enviar imagens de exemplo, acionar **"Gerar Mapa Detalhado com IA"** e inspecionar/editar o Blueprint gerado.
+  - Adicionar no [`WeekPlanner.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/WeekPlanner.tsx) e no Studio a seleção do **Tipo de Post** da empresa para cada publicação do cronograma.
+- [ ] **Ticket M11-T4 (Ciclo Final de Qualidade, Documentação Archify & Relatório de Tokens):**
+  - Executar `bun run verify:cycle`, `bun run test:e2e`, `bun run archify` (atualizando o diagrama interativo `/architecture`) e `bun run tokens:report`.
+- [ ] 🛑 **Checkpoint HITL Final do Marco M11:** Revisão completa em 2 eixos (**Spec Match** + **Standards & Quality**).

@@ -157,4 +157,50 @@ describe("M7-T1: REST API Hub de Configurações & Cookies Instagram por Empresa
     expect(body.data.imageProviderBaseUrl).toBe("http://localhost:8188");
     expect(body.data.defaultTemplateId).toBe("editorial-clean");
   });
+
+  test("SEC-02 & SEC-04: PUT /api/settings/app NUNCA deve vazar segredos em texto aberto e deve bloquear companyId com path traversal", async () => {
+    // 1. Primeiro salvar cookies e uma API key na empresa appCfgCompanyId
+    await fetch(`${baseUrl}/api/settings/instagram-cookies`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        companyId: appCfgCompanyId,
+        sessionId: "999888%3AsecretSessionValue123456",
+        csrfToken: "csrf_secret_999",
+      }),
+    });
+
+    const res = await fetch(`${baseUrl}/api/settings/app`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        companyId: appCfgCompanyId,
+        preferredImageProvider: "openrouter-image",
+        imageProviderApiKey: "sk-or-v1-supersecretkey987654321",
+        defaultTemplateId: "modern-bold",
+      }),
+    });
+
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as {
+      success: boolean;
+      data: Record<string, unknown>;
+    };
+
+    expect(body.success).toBe(true);
+    // Segredos brutos não podem existir na resposta JSON
+    expect(body.data.instagramSessionId).toBeUndefined();
+    expect(body.data.instagramCookiesJson).toBeUndefined();
+    expect(body.data.imageProviderApiKey).toBeUndefined();
+    // Mas flags booleanas/mascaradas devem estar presentes
+    expect(body.data.hasSessionCookie).toBe(true);
+    expect(body.data.hasImageApiKey).toBe(true);
+    expect(String(body.data.instagramSessionIdMasked)).toContain("...");
+
+    // 2. Testar bloqueio de Path Traversal em companyId (SEC-04)
+    const traversalRes = await fetch(
+      `${baseUrl}/api/settings?companyId=${encodeURIComponent("../../etc")}`
+    );
+    expect(traversalRes.status).toBe(400);
+  });
 });

@@ -43,7 +43,18 @@ export async function handlePhotosRoutes(req: Request, url: URL): Promise<Respon
         return Response.json({ success: false, error: "Arquivo de imagem obrigatório" }, { status: 400 });
       }
 
-      // Validação estrita de extensão e MIME type contra uploads maliciosos (OWASP A04)
+      // Validação estrita de tamanho (máx 10 MB), extensão, MIME type e assinatura contra uploads maliciosos (SEC-05 / OWASP A04)
+      const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+      if (file.size === 0) {
+        return Response.json({ success: false, error: "Arquivo vazio não permitido." }, { status: 400 });
+      }
+      if (file.size > MAX_UPLOAD_BYTES) {
+        return Response.json(
+          { success: false, error: "Arquivo excede o limite máximo de 10 MB." },
+          { status: 413 }
+        );
+      }
+
       const ALLOWED_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp"]);
       const ALLOWED_MIME_TYPES = new Set(["image/png", "image/jpeg", "image/webp"]);
 
@@ -52,6 +63,25 @@ export async function handlePhotosRoutes(req: Request, url: URL): Promise<Respon
       if (!ALLOWED_EXTENSIONS.has(ext) || (file.type && !ALLOWED_MIME_TYPES.has(file.type))) {
         return Response.json(
           { success: false, error: "Formato de arquivo não permitido. Use apenas PNG, JPG ou WebP." },
+          { status: 400 }
+        );
+      }
+
+      const arrayBuffer = await file.arrayBuffer();
+      const headText = new TextDecoder("utf-8", { fatal: false })
+        .decode(arrayBuffer.slice(0, 256))
+        .trimStart()
+        .toLowerCase();
+      if (
+        headText.startsWith("<script") ||
+        headText.startsWith("<!doctype") ||
+        headText.startsWith("<html") ||
+        headText.startsWith("<svg") ||
+        headText.startsWith("<?xml") ||
+        headText.startsWith("<?php")
+      ) {
+        return Response.json(
+          { success: false, error: "Conteúdo de arquivo inválido ou potencialmente malicioso detectado." },
           { status: 400 }
         );
       }
@@ -78,7 +108,6 @@ export async function handlePhotosRoutes(req: Request, url: URL): Promise<Respon
       const diskPath = path.join(uploadsDir, filename);
 
       // Gravar arquivo em disco usando Bun.write
-      const arrayBuffer = await file.arrayBuffer();
       await Bun.write(diskPath, arrayBuffer);
 
       // Inserir registro no SQLite

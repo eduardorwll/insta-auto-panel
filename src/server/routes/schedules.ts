@@ -70,7 +70,7 @@ export async function handleSchedulesRoutes(req: Request, url: URL): Promise<Res
       const updated = await updatePostWithSlides(postId, {
         theme: parsed.theme,
         category: parsed.category,
-        status: parsed.status as any,
+        status: parsed.status,
         caption: parsed.caption ?? undefined,
         altText: parsed.altText ?? undefined,
         scheduledTime: parsed.scheduledTime ?? undefined,

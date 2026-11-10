@@ -77,6 +77,50 @@ export function sanitizeTenantField(value: string | null | undefined, maxLength 
     .slice(0, maxLength);
 }
 
+const LOCAL_PROVIDERS = new Set(["mlstudio", "lmstudio", "ollama", "comfyui-local"]);
+
+/**
+ * Valida URLs de saída contra SSRF na rede local (SEC-03 / OWASP A10).
+ * Bloqueia IPs privados (10.*, 172.16-31.*, 192.168.*), link-local (169.254.*) e loopback
+ * para provedores de nuvem, permitindo localhost apenas para provedores explicitamente locais.
+ */
+export function assertSafeOutboundUrl(rawUrl: string, provider?: string): string {
+  const parsed = new URL(rawUrl.trim());
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+    throw new Error(`Esquema de URL bloqueado por segurança (SSRF): ${parsed.protocol}`);
+  }
+
+  const host = parsed.hostname.toLowerCase();
+  const isLoopback =
+    host === "localhost" ||
+    host === "127.0.0.1" ||
+    host === "::1" ||
+    host === "[::1]" ||
+    host.startsWith("127.");
+
+  const isPrivateLanOrMetadata =
+    host.startsWith("10.") ||
+    host.startsWith("192.168.") ||
+    host.startsWith("169.254.") ||
+    /^172\.(1[6-9]|2\d|3[0-1])\./.test(host) ||
+    host === "0.0.0.0";
+
+  if (isPrivateLanOrMetadata) {
+    throw new Error(
+      `Endereço de rede privada/interna bloqueado contra SSRF: ${host}`
+    );
+  }
+
+  const isTestEnv = process.env.NODE_ENV === "test";
+  if (isLoopback && !LOCAL_PROVIDERS.has(provider || "") && !isTestEnv) {
+    throw new Error(
+      `Loopback local (${host}) bloqueado contra SSRF para o provedor remoto "${provider}".`
+    );
+  }
+
+  return rawUrl.trim();
+}
+
 export interface AIProvider {
   settings: AISettings;
   generate(params: GeneratePostParams): Promise<CarouselSlidesResponse>;

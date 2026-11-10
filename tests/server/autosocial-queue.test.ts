@@ -106,11 +106,13 @@ describe("Motor de Publicação Autônoma AutoSocial (Filesystem Queue)", () => 
   it("deve enfileirar um post individual gerando arquivo .description e copiando mídia em queue/.../pending/", async () => {
     const result = await enqueuePostForAutoSocial(postId1);
     expect(result.success).toBe(true);
-    expect(result.files.length).toBeGreaterThanOrEqual(1);
+    // ENG-01: Deve conter o arquivo .description E a imagem copiada de data/uploads/
+    expect(result.files.length).toBe(2);
 
-    // Verificar se o arquivo .description foi criado
+    // Verificar se o arquivo .description foi criado em <repo>/data/autosocial/queue (e não src/data)
     const descFile = result.files.find((f) => f.endsWith(".description"));
     expect(descFile).toBeDefined();
+    expect(descFile).not.toContain("/src/data/");
 
     const descContent = await Bun.file(descFile!).text();
     expect(descContent).toContain("Aprenda a cuidar da sua pele antes de dormir!");

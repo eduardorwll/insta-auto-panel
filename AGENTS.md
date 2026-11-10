@@ -20,16 +20,16 @@ Este arquivo define as diretrizes operacionais inegociáveis para o **Lead Archi
    - **Camada de Serviços (`src/server/services/`):**
      - `schedules/schedule-service.ts`: Ciclo de vida de cronogramas semanais, cálculo de dias, sincronização dinâmica de lâminas (3 a 10) e auto-healing defensivo de lâminas.
      - `instagram/cookies.ts`: Parser universal e normalizador de cookies de autenticação do Instagram.
-     - `ai/`: Adapters agnósticos com suporte nativo ao framework MATCH (Instagram SEO 2026: altText, keywordCluster e prompt de imagem).
-     - `design/`: Motor do Studio Visual OpenDesign 4:5 (`template-engine.ts`, `image-provider.ts`).
-     - `export/`: Enfileiramento atômico no AutoSocial (`autosocial.ts`) e exportação Canva Pro (`canva.ts`).
-   - **Camada de Transporte & Rotas (`src/server/routes/`):** Rotas HTTP desacopladas com validação estrita via schemas Zod e injeção global de headers defensivos de segurança (`applySecurityHeaders`).
+     - `ai/`: Integração oficial prioritária via `@openrouter/sdk` (e adapters locais) com suporte ao framework MATCH, extração multimodal de *Style Blueprints* e descoberta dinâmica de modelos (`/api/v1/models`, `/api/v1/images/models`) e saldo (`/api/v1/key`).
+     - `design/`: Motor generalizado multi-formato do Studio Visual OpenDesign (`template-engine.ts`, `image-provider.ts`), guiado por *Style Blueprints* por empresa e desacoplado de dimensões fixas (suportando Carrosséis de Feed e expansão modular para Stories 9:16).
+     - `export/`: Enfileiramento atômico no AutoSocial (`autosocial.ts`). *(A antiga integração CSV com Canva está descontinuada e deve ser removida).*
+   - **Camada de Transporte & Rotas (`src/server/routes/`):** Rotas HTTP desacopladas com validação estrita via schemas Zod, autenticação local para Home Server, controle de quotas de API e injeção global de headers defensivos de segurança (`applySecurityHeaders`).
    - **Hooks Reativos (`src/client/hooks/`):** `useWeekSchedule.ts` desacopla a gestão de estado do cronograma do componente de renderização `WeekPlanner.tsx`.
 5. **Regras de Domínio Essenciais:**
-   - **Multi-Tenant (`companies`):** Isolamento estrito de dados, Brand Kit (cores Hex, tipografia, WhatsApp `wa.me`, redes sociais) e banco de fotos base (`photo_assets`) por empresa.
+   - **Multi-Tenant & Style Blueprints (`companies` + `company_post_types`):** Isolamento estrito de dados, Brand Kit, banco de fotos base (`photo_assets`) e **Mapas Detalhados de Tipo de Post (`Style Blueprints`)** gerados por IA para cada empresa. É proibido "chumbar" (*hardcode*) cores, fontes ou formatos específicos de um cliente como constantes globais do sistema.
    - **Variável Dinâmica de Lâminas (`slide_count`):** Selecionável por post de **3 a 10 slides** (Slide 1 = Hook/Capa, Slides 2..N-1 = Desenvolvimento proporcional, Slide N = CTA).
-   - **IA Generativa Agnóstica (`AIProvider`):** Padrão Adapter em TypeScript suportando ML Studio API local (`localhost:1234`), Google Gemini, OpenAI, Anthropic Claude, Groq, OpenRouter e Ollama, com validação em runtime via **Zod** (Structured Outputs).
-   - **Motor Gráfico & Publicação:** Studio Visual OpenDesign nativo 4:5 (1080×1350px) e integração via filesystem sidecar (`.description` + mídia) na fila `data/autosocial/queue/<company_id>/instagram/pending/` do **`Katzca/AutoSocial`**.
+   - **Integração Unificada OpenRouter (`@openrouter/sdk`):** Uso prioritário do SDK oficial `@openrouter/sdk` para geração de roteiros/visão (`openRouter.chat.send`), geração de imagens (`POST /api/v1/images` e multimodal chat), listagem dinâmica de modelos com preços na UI e monitoramento de créditos/limites (`GET /api/v1/key`), mantendo validação estrita em runtime via **Zod**.
+   - **Motor Gráfico Multi-Formato OpenDesign & Publicação (Zero Canva):** Studio Visual OpenDesign nativo agnóstico de formato (`FormatSpec` para Carrosséis de Feed e futura expansão para Stories 9:16), com **Preview Editável de Prompt (`Prompt Inspector`)** antes do disparo para a API e integração via filesystem sidecar (`.description` + mídia) na fila `data/autosocial/queue/<company_id>/instagram/pending/` do **`Katzca/AutoSocial`**.
 
 ---
 
@@ -54,11 +54,11 @@ Este arquivo define as diretrizes operacionais inegociáveis para o **Lead Archi
 - **Validação Autônoma de UI:** O subagente de QA (`playwright-tester`) deve subir o servidor local, conectar o **Playwright** em modo headless e exercitar os fluxos reais da interface usando seletores semânticos acessíveis (`getByRole`, `getByLabel`, `getByText`).
 - **Tolerância Zero a Erros de Console:** Todo teste Playwright deve anexar ouvintes para `page.on('console')` (tipo `error`) e `page.on('pageerror')`. Qualquer exceção não tratada do React/JS ou falha de requisição invalida imediatamente a aprovação da task.
 
-### 2.4. Regra de Checkpoints Humanos Obrigatórios (HITL — Human-in-the-Loop)
-- **Pausa Obrigatória entre Etapas/Marcos:** Nenhuma etapa ou marco (Milestone M1 a M5) avança para o próximo sem:
-  1. Apresentação do relatório consolidado de evidências (arquivos criados/modificados, resultados de `bun test`, `tsc --noEmit`, testes Playwright e histórico de commits da branch).
-  2. Revisão em Dois Eixos (**Spec Match** + **Standards & Quality**).
-  3. **Autorização explícita do usuário humano** para prosseguir.
+### 2.4. Regra de Checkpoints Humanos Obrigatórios (HITL — Human-in-the-Loop) & Cláusula Pétrea de Execução Etapa por Etapa
+- **CLÁUSULA PÉTREA INEGOCIÁVEL (Perguntar SEMPRE antes de avançar de etapa):** O agente **NUNCA** deve executar múltiplas etapas/marcos seguidos de forma autônoma. Ao concluir cada etapa (ou sub-etapa acordada), o agente **DEVE OBRIGATORIAMENTE**:
+  1. Atualizar imediatamente o artefato de checklist ([`checklist-desenvolvimento-marcos-m8-a-m11.md`](file:///home/eduardorwll/.gemini/antigravity-cli/brain/757854e4-20e4-4e99-b83c-6cf81f56ce37/checklist-desenvolvimento-marcos-m8-a-m11.md)) e a documentação registrando exatamente as modificações feitas naquela parte (arquivos, linhas, diffs, testes e commits).
+  2. Apresentar a Revisão em Dois Eixos (**Spec Match** + **Standards & Quality**: resultados de `bun test`, `tsc --noEmit` e testes Playwright quando aplicável).
+  3. **PARAR IMEDIATAMENTE e perguntar explícita e formalmente ao usuário humano** se pode prosseguir para a próxima etapa.
 
 ### 2.5. Regra Mandatória de UI/UX Engineering para Toda Mudança de Interface
 - **Aplicação Mandatória do Kit de Skills Especializadas:** Qualquer adição, refatoração, migração ou modificação em componentes visuais, abas, modais, formulários ou painéis deve utilizar e cumprir rigorosamente o kit especializado de engenharia UI/UX:
@@ -105,6 +105,12 @@ Este arquivo define as diretrizes operacionais inegociáveis para o **Lead Archi
 - **Quality Gate no Backend & UI:**
   - O módulo `src/shared/seo-quality.ts` provê as funções canônicas `normalizeCaption`, `auditPost` e `seoChecks`.
   - A interface web no Studio Visual 4:5 e no Planejador Semanal exibe em tempo real o componente `SeoChecklist` e os selos de conformidade SEO no modo Operate.
+
+### 2.9. Diretriz Mandatória de Generalização de Estilo (Style Blueprints), OpenRouter SDK, Preview de Prompt e Home Server
+- **Proibição de Hardcoding Visual Global:** Nenhuma cor, tipografia, ornamento ou dimensão de post deve ser tratada como global. Toda personalização visual reside no Brand Kit da empresa e nos **Tipos de Post (`Style Blueprints`)** mapeados por IA para aquela empresa, mantendo a arquitetura desacoplada de formato (`FormatSpec`) para atender tanto **Carrosséis de Feed** quanto módulos futuros de **Stories (`9:16`)**.
+- **Padrão Oficial OpenRouter (`@openrouter/sdk`):** A integração com a OpenRouter deve usar o pacote `@openrouter/sdk`, alimentar os seletores da UI dinamicamente via `/api/v1/models` e `/api/v1/images/models`, gerar imagens via `/api/v1/images` (ou chat multimodal com cache local em disco por hash `SHA-256`) e consultar saldo/limites reais via `/api/v1/key`.
+- **Transparência de Prompt (`Prompt Inspector`) & Quotas de API:** O painel deve oferecer **Preview Editável do Prompt** (mostrando os dados da empresa e o *Style Blueprint* injetados tanto para a API de imagem quanto para o motor OpenDesign antes do gasto de tokens) e respeitar os limites explícitos de uso/orçamento configurados na interface.
+- **Segurança de Home Server:** Todas as rotas protegidas devem exigir autenticação local (`Bun.password` + cookie `HttpOnly`), sanitizar credenciais em respostas de leitura/escrita (`GET`/`PUT`) e validar URLs de saída contra SSRF na rede local.
 
 ---
 
@@ -159,11 +165,11 @@ there; the CLI needs no server and is the first choice.
 
 Auto-generated from the Prowl index, refreshed on each `overview`/`init`. Prefer retrieving from Prowl (and reading the cited files) over grepping or relying on training memory; this is the current shape of the repo.
 
-- size: 91 files, 2229 symbols, 356 edges (resolved 219, external deps 128, unresolved 9)
-- languages: typescript:56 tsx:20 json:7 markdown:6 css:1 toml:1
-- subsystems: src/client(27,tsx) · src/server(22,typescript) · tests/server(16,typescript) · scripts(2,typescript)
-- entrypoints: src/server/index.ts · src/client/main.tsx · src/server/db/seed.ts · scripts/graft.ts · src/server/db/migrate.ts
-- central files (most depended-on): src/server/db/schema.ts · src/client/lib/utils.ts · src/server/db/client.ts · src/server/services/ai/provider.ts · src/server/index.ts
+- size: 113 files, 2366 symbols, 464 edges (resolved 284, external deps 171, unresolved 9)
+- languages: typescript:73 tsx:25 json:7 markdown:6 css:1 toml:1
+- subsystems: src/client(33,tsx) · tests/server(26,typescript) · src/server(25,typescript) · scripts(2,typescript)
+- entrypoints: src/server/index.ts · src/server/db/sanitize.ts · src/client/main.tsx · scripts/graft.ts · src/server/db/migrate.ts
+- central files (most depended-on): src/server/db/schema.ts · src/server/db/client.ts · src/client/lib/utils.ts · src/server/services/ai/provider.ts · src/shared/seo-quality.ts
 - read these guides first: README.md · AGENTS.md
 
 Depth on demand: `prowl find|def|outline|references <name>`, `search <text>`, `context search "<question>"`, `sketch <ui>`.

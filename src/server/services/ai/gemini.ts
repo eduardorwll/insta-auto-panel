@@ -17,14 +17,18 @@ export class GeminiProvider extends BaseAIProvider {
 
     try {
       const model = this.settings.modelName || "gemini-2.5-flash";
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
       const res = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": key,
+        },
         body: JSON.stringify({
           contents: [{ parts: [{ text: "Ping: responda OK" }] }],
         }),
+        signal: AbortSignal.timeout(15_000),
       });
 
       if (!res.ok) {
@@ -46,7 +50,7 @@ export class GeminiProvider extends BaseAIProvider {
     }
 
     const model = this.settings.modelName || "gemini-2.5-flash";
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
     const prompt = this.buildPrompt(params);
 
     const payload = {
@@ -59,8 +63,12 @@ export class GeminiProvider extends BaseAIProvider {
 
     const res = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": key,
+      },
       body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(60_000),
     });
 
     if (!res.ok) {

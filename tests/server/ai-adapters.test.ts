@@ -4,7 +4,7 @@ import { MLStudioProvider } from "@/server/services/ai/mlstudio";
 import { GeminiProvider } from "@/server/services/ai/gemini";
 import { OpenAIProvider } from "@/server/services/ai/openai";
 import { ClaudeProvider } from "@/server/services/ai/claude";
-import { carouselResponseSchema } from "@/server/services/ai/provider";
+import { carouselResponseSchema, assertSafeOutboundUrl } from "@/server/services/ai/provider";
 
 describe("IA Generativa Agnóstica: Adapters e ML Studio API", () => {
   const dummyCompany = {
@@ -140,6 +140,53 @@ describe("IA Generativa Agnóstica: Adapters e ML Studio API", () => {
       expect(parsed.data.suggestedImagePrompt).toBeDefined();
       expect(parsed.data.keywordCluster?.length).toBe(4);
       expect(parsed.data.slides.length).toBe(3);
+    }
+  });
+
+  it("SEC-03 & SEC-06: assertSafeOutboundUrl deve bloquear SSRF em IPs privados para provedores remotos e GeminiProvider deve enviar x-goog-api-key no header (sem ?key na URL)", async () => {
+    // 1. Provedor remoto (openai / openrouter / claude) apontando para IP interno da LAN ou metadata AWS deve lançar erro SSRF
+    expect(() =>
+      assertSafeOutboundUrl("http://192.168.1.1/admin", "openrouter")
+    ).toThrow(/SSRF|bloqueado|privado/i);
+    expect(() =>
+      assertSafeOutboundUrl("http://169.254.169.254/latest/meta-data", "openai")
+    ).toThrow(/SSRF|bloqueado|privado/i);
+    expect(() =>
+      assertSafeOutboundUrl("http://10.0.0.5:8080/v1", "claude")
+    ).toThrow(/SSRF|bloqueado|privado/i);
+
+    // 2. Provedor explicitamente local (mlstudio / lmstudio / ollama) permite localhost nas portas padrão
+    expect(assertSafeOutboundUrl("http://localhost:1234/v1", "mlstudio")).toBe(
+      "http://localhost:1234/v1"
+    );
+
+    // 3. SEC-06: GeminiProvider deve usar header x-goog-api-key e NÃO ?key= na URL
+    const originalFetch = globalThis.fetch;
+    let capturedUrl = "";
+    let capturedHeaders: Record<string, string> = {};
+    globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
+      capturedUrl = String(input);
+      capturedHeaders = (init?.headers as Record<string, string>) || {};
+      return new Response(
+        JSON.stringify({ candidates: [{ content: { parts: [{ text: "OK" }] } }] }),
+        { status: 200 }
+      );
+    }) as typeof fetch;
+
+    try {
+      const gemini = new GeminiProvider({
+        id: "global",
+        provider: "gemini",
+        apiKey: "AIzaSecretGeminiKey123",
+        modelName: "gemini-2.5-flash",
+      });
+      const res = await gemini.testConnection();
+      expect(res.success).toBe(true);
+      expect(capturedUrl).not.toContain("AIzaSecretGeminiKey123");
+      expect(capturedUrl).not.toContain("?key=");
+      expect(capturedHeaders["x-goog-api-key"]).toBe("AIzaSecretGeminiKey123");
+    } finally {
+      globalThis.fetch = originalFetch;
     }
   });
 });

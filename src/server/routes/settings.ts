@@ -48,6 +48,39 @@ async function ensureCompanySettingsRow(companyId: string) {
   return defaultRow;
 }
 
+const SAFE_COMPANY_ID_REGEX = /^[a-z0-9_-]+$/;
+
+function isValidCompanyId(companyId: string | undefined | null): companyId is string {
+  return Boolean(companyId && SAFE_COMPANY_ID_REGEX.test(companyId));
+}
+
+function sanitizeCompanySettings(
+  row: NonNullable<Awaited<ReturnType<typeof ensureCompanySettingsRow>>>,
+  companyId: string
+) {
+  const profileDir = path.resolve(
+    import.meta.dirname,
+    `../../../data/autosocial/.profiles/${companyId}/instagram`
+  );
+
+  const {
+    instagramSessionId,
+    instagramCookiesJson,
+    imageProviderApiKey,
+    ...safeRow
+  } = row;
+
+  return {
+    ...safeRow,
+    hasSessionCookie: Boolean(instagramSessionId),
+    instagramSessionIdMasked: instagramSessionId
+      ? `${instagramSessionId.slice(0, 6)}...${instagramSessionId.slice(-4)}`
+      : null,
+    hasImageApiKey: Boolean(imageProviderApiKey),
+    profileDir,
+  };
+}
+
 export async function handleSettingsRoutes(
   req: Request,
   url: URL
@@ -59,9 +92,9 @@ export async function handleSettingsRoutes(
   // 1. GET /api/settings?companyId=...
   if (req.method === "GET" && url.pathname === "/api/settings") {
     const companyId = url.searchParams.get("companyId");
-    if (!companyId) {
+    if (!isValidCompanyId(companyId)) {
       return Response.json(
-        { success: false, error: "Parâmetro companyId é obrigatório" },
+        { success: false, error: "Parâmetro companyId é obrigatório e deve ser um slug válido" },
         { status: 400 }
       );
     }
@@ -74,29 +107,9 @@ export async function handleSettingsRoutes(
       );
     }
 
-    const profileDir = path.resolve(
-      import.meta.dirname,
-      `../../../data/autosocial/.profiles/${companyId}/instagram`
-    );
-
-    const {
-      instagramSessionId,
-      instagramCookiesJson,
-      imageProviderApiKey,
-      ...safeRow
-    } = row;
-
     return Response.json({
       success: true,
-      data: {
-        ...safeRow,
-        hasSessionCookie: Boolean(row.instagramSessionId),
-        instagramSessionIdMasked: row.instagramSessionId
-          ? `${row.instagramSessionId.slice(0, 6)}...${row.instagramSessionId.slice(-4)}`
-          : null,
-        hasImageApiKey: Boolean(row.imageProviderApiKey),
-        profileDir,
-      },
+      data: sanitizeCompanySettings(row, companyId),
     });
   }
 
@@ -111,9 +124,9 @@ export async function handleSettingsRoutes(
         dsUserId?: string;
       };
 
-      if (!body.companyId) {
+      if (!isValidCompanyId(body.companyId)) {
         return Response.json(
-          { success: false, error: "companyId é obrigatório" },
+          { success: false, error: "companyId é obrigatório e deve ser um slug válido" },
           { status: 400 }
         );
       }
@@ -168,8 +181,8 @@ export async function handleSettingsRoutes(
         2
       );
 
-      await fs.writeFile(cookiesFilePath, serializedCookies, "utf-8");
-      await fs.writeFile(storageStatePath, playwrightStorageState, "utf-8");
+      await fs.writeFile(cookiesFilePath, serializedCookies, { encoding: "utf-8", mode: 0o600 });
+      await fs.writeFile(storageStatePath, playwrightStorageState, { encoding: "utf-8", mode: 0o600 });
 
       const now = new Date();
       await db
@@ -213,9 +226,9 @@ export async function handleSettingsRoutes(
     url.pathname === "/api/settings/instagram-browser-profile"
   ) {
     const body = (await req.json()) as { companyId?: string };
-    if (!body.companyId) {
+    if (!isValidCompanyId(body.companyId)) {
       return Response.json(
-        { success: false, error: "companyId é obrigatório" },
+        { success: false, error: "companyId é obrigatório e deve ser um slug válido" },
         { status: 400 }
       );
     }
@@ -272,9 +285,9 @@ export async function handleSettingsRoutes(
         autosocialQueuePath?: string;
       };
 
-      if (!body.companyId) {
+      if (!isValidCompanyId(body.companyId)) {
         return Response.json(
-          { success: false, error: "companyId é obrigatório" },
+          { success: false, error: "companyId é obrigatório e deve ser um slug válido" },
           { status: 400 }
         );
       }
@@ -323,9 +336,15 @@ export async function handleSettingsRoutes(
         .where(eq(company_settings.companyId, body.companyId));
 
       const updated = await ensureCompanySettingsRow(body.companyId);
+      if (!updated) {
+        return Response.json(
+          { success: false, error: "Erro ao recuperar configuração atualizada" },
+          { status: 500 }
+        );
+      }
       return Response.json({
         success: true,
-        data: updated,
+        data: sanitizeCompanySettings(updated, body.companyId),
       });
     } catch (error) {
       return Response.json(

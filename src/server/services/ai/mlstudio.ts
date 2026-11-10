@@ -1,5 +1,6 @@
 import {
   BaseAIProvider,
+  assertSafeOutboundUrl,
   type GeneratePostParams,
   type CarouselSlidesResponse,
 } from "./provider";
@@ -10,7 +11,10 @@ import {
  */
 export class MLStudioProvider extends BaseAIProvider {
   private getEndpoint(): string {
-    const raw = this.settings.baseUrl?.trim() || "http://localhost:1234/v1";
+    const raw = assertSafeOutboundUrl(
+      this.settings.baseUrl?.trim() || "http://localhost:1234/v1",
+      this.settings.provider || "mlstudio"
+    );
     return raw.endsWith("/") ? `${raw}chat/completions` : `${raw}/chat/completions`;
   }
 
@@ -30,6 +34,7 @@ export class MLStudioProvider extends BaseAIProvider {
           messages: [{ role: "user", content: "Ping: responda OK" }],
           max_tokens: 10,
         }),
+        signal: AbortSignal.timeout(15_000),
       });
 
       if (!res.ok) {
@@ -73,6 +78,7 @@ export class MLStudioProvider extends BaseAIProvider {
       method: "POST",
       headers,
       body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(60_000),
     });
 
     if (!res.ok) {

@@ -1,6 +1,6 @@
 import { and, asc, eq } from "drizzle-orm";
 import { db } from "../../db/client";
-import { post_slides, posts, weekly_schedules } from "../../db/schema";
+import { post_slides, posts, weekly_schedules, type PostStatus } from "../../db/schema";
 
 export const DAYS_OF_WEEK = [
   "segunda",
@@ -46,7 +46,7 @@ export interface CreatePostParams {
 export interface UpdatePostParams {
   theme?: string;
   category?: string;
-  status?: "draft" | "ready" | "scheduled" | "published";
+  status?: PostStatus;
   caption?: string;
   altText?: string;
   scheduledTime?: string;
@@ -108,7 +108,7 @@ export async function getOrCreateWeeklySchedule(
           slideNumber: i,
           title: i === 1 ? "Capa / Gancho" : i === 5 ? "Chamada para Ação" : `Slide ${i}`,
           bodyText: i === 1 ? "Texto provocativo do gancho" : `Desenvolvimento do passo ${i - 1}`,
-          ctaText: i === 5 ? "Comente ou envie mensagem no WhatsApp!" : null,
+          ctaText: i === 5 ? "Envie uma mensagem no Direct ou acesse o link na bio!" : null,
         });
       }
     }
@@ -146,7 +146,7 @@ export async function getOrCreateWeeklySchedule(
             slideNumber: i,
             title: i === 1 ? "Capa / Gancho" : i === count ? "Chamada para Ação" : `Slide ${i}`,
             bodyText: i === 1 ? "Texto provocativo do gancho" : `Desenvolvimento do passo ${i - 1}`,
-            ctaText: i === count ? "Comente ou envie mensagem no WhatsApp!" : null,
+            ctaText: i === count ? "Envie uma mensagem no Direct ou acesse o link na bio!" : null,
           });
         }
         slides = await db
@@ -211,7 +211,7 @@ export async function updatePostWithSlides(
           slideNumber: i,
           title: i === params.slideCount ? "Chamada para Ação" : `Slide ${i}`,
           bodyText: `Conteúdo da lâmina ${i}`,
-          ctaText: i === params.slideCount ? "Entre em contato pelo WhatsApp!" : null,
+          ctaText: i === params.slideCount ? "Envie uma mensagem no Direct ou acesse o link na bio!" : null,
         });
       }
     } else if (params.slideCount < currentSlides.length) {
@@ -307,7 +307,7 @@ export async function createSchedulePost(
       slideNumber: i,
       title: i === 1 ? "Capa / Gancho" : i === slideCount ? "Chamada para Ação" : `Slide ${i}`,
       bodyText: i === 1 ? "Texto provocativo do gancho" : `Desenvolvimento do passo ${i - 1}`,
-      ctaText: i === slideCount ? "Comente ou envie mensagem no WhatsApp!" : null,
+      ctaText: i === slideCount ? "Envie uma mensagem no Direct ou acesse o link na bio!" : null,
     });
   }
 

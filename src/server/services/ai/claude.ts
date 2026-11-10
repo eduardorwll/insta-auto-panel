@@ -1,5 +1,6 @@
 import {
   BaseAIProvider,
+  assertSafeOutboundUrl,
   type CarouselSlidesResponse,
   type GeneratePostParams,
 } from "./provider";
@@ -16,7 +17,9 @@ interface AnthropicMessagesResponse {
  */
 export class ClaudeProvider extends BaseAIProvider {
   private getBaseUrl(): string {
-    const raw = this.settings.baseUrl?.trim() || "https://api.anthropic.com/v1";
+    const raw = this.settings.baseUrl?.trim()
+      ? assertSafeOutboundUrl(this.settings.baseUrl.trim(), "claude")
+      : "https://api.anthropic.com/v1";
     return raw.replace(/\/+$/, "");
   }
 
@@ -83,6 +86,7 @@ export class ClaudeProvider extends BaseAIProvider {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(60_000),
     });
 
     if (!res.ok) {

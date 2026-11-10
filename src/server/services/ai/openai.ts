@@ -1,5 +1,6 @@
 import {
   BaseAIProvider,
+  assertSafeOutboundUrl,
   type GeneratePostParams,
   type CarouselSlidesResponse,
 } from "./provider";
@@ -7,7 +8,7 @@ import {
 export class OpenAIProvider extends BaseAIProvider {
   private getEndpoint(): string {
     if (this.settings.baseUrl) {
-      const raw = this.settings.baseUrl.trim();
+      const raw = assertSafeOutboundUrl(this.settings.baseUrl.trim(), this.settings.provider);
       return raw.endsWith("/") ? `${raw}chat/completions` : `${raw}/chat/completions`;
     }
     // Endpoints padrão conforme o provedor
@@ -37,6 +38,7 @@ export class OpenAIProvider extends BaseAIProvider {
           messages: [{ role: "user", content: "Ping: responda OK" }],
           max_tokens: 10,
         }),
+        signal: AbortSignal.timeout(15_000),
       });
 
       if (!res.ok) {
@@ -78,6 +80,7 @@ export class OpenAIProvider extends BaseAIProvider {
         Authorization: `Bearer ${this.settings.apiKey || ""}`,
       },
       body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(60_000),
     });
 
     if (!res.ok) {

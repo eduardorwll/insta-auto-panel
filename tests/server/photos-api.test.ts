@@ -105,4 +105,37 @@ describe("REST API: Banco de Fotos Base (/api/photos)", () => {
     const [check] = await db.select().from(photo_assets).where(eq(photo_assets.id, uploadedPhotoId));
     expect(check).toBeUndefined();
   });
+
+  it("SEC-05: POST /api/photos/upload deve rejeitar arquivos acima de 10MB ou payloads HTML/SVG disfarçados de PNG", async () => {
+    // 1. Payload HTML/XSS disfarçado de .png
+    const xssForm = new FormData();
+    const xssBlob = new Blob(["<script>alert('xss')</script>"], { type: "image/png" });
+    xssForm.append("file", xssBlob, "malicious.png");
+    xssForm.append("companyId", testCompanyId);
+    xssForm.append("category", "Especialista");
+
+    const xssRes = await server.fetch(
+      new Request(`http://localhost:${server.port}/api/photos/upload`, {
+        method: "POST",
+        body: xssForm,
+      })
+    );
+    expect(xssRes.status).toBe(400);
+
+    // 2. Arquivo acima de 10MB (10.5 MB)
+    const oversizedForm = new FormData();
+    const oversizedBytes = new Uint8Array(10 * 1024 * 1024 + 512 * 1024);
+    const oversizedBlob = new Blob([oversizedBytes], { type: "image/png" });
+    oversizedForm.append("file", oversizedBlob, "huge.png");
+    oversizedForm.append("companyId", testCompanyId);
+    oversizedForm.append("category", "Especialista");
+
+    const oversizedRes = await server.fetch(
+      new Request(`http://localhost:${server.port}/api/photos/upload`, {
+        method: "POST",
+        body: oversizedForm,
+      })
+    );
+    expect(oversizedRes.status).toBe(413);
+  });
 });

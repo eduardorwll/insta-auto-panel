@@ -40,9 +40,11 @@ describe("REST API: Cronograma Semanal, Posts e Lâminas Dinâmicas (/api/schedu
     const days = body.data.posts.map((p: any) => p.dayOfWeek);
     expect(days).toEqual(["segunda", "terca", "quarta", "quinta", "sexta", "sabado", "domingo"]);
 
-    // Valida que cada post possui 5 slides por padrão
+    // Valida que cada post possui 5 slides por padrão e CTA orgânico (Direct / link na bio - ENG-04)
     expect(body.data.posts[0].slideCount).toBe(5);
     expect(body.data.posts[0].slides.length).toBe(5);
+    expect(body.data.posts[0].slides[4].ctaText).toContain("Direct");
+    expect(body.data.posts[0].slides[4].ctaText).toContain("link na bio");
   });
 
   it("PUT /api/posts/:id deve atualizar tema, categoria e sincronizar slideCount de 3 a 10", async () => {

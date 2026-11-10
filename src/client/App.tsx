@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CompanyProvider, useCompany } from "@/client/context/CompanyContext";
 import { CompanySwitcher } from "@/client/components/CompanySwitcher";
 import { CompanyModal } from "@/client/components/CompanyModal";
@@ -11,6 +11,7 @@ import { PublicationQueue } from "@/client/components/PublicationQueue";
 import { SettingsHub } from "@/client/components/SettingsHub";
 import { CompanyTab } from "@/client/components/CompanyTab";
 import { SidebarNavigation, NavTabId } from "@/client/components/SidebarNavigation";
+import { LoginScreen } from "@/client/components/LoginScreen";
 import { Button } from "@/client/components/ui/button";
 import { Card, CardContent } from "@/client/components/ui/card";
 import { Badge } from "@/client/components/ui/badge";
@@ -31,9 +32,10 @@ import {
   X,
   Menu,
   FileSpreadsheet,
+  LogOut,
 } from "lucide-react";
 
-function DashboardContent() {
+function DashboardContent({ onLockSession }: { onLockSession: () => void }) {
   const { activeCompany, isLoading } = useCompany();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
@@ -127,6 +129,18 @@ function DashboardContent() {
             <span className="h-2 w-2 rounded-full bg-emerald-500" />
             Bun + SQLite WAL
           </Badge>
+
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={onLockSession}
+            className="gap-1.5 border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white active:scale-[0.97]"
+            title="Bloquear sessão do Home Server"
+          >
+            <LogOut className="h-3.5 w-3.5 text-slate-400" />
+            <span className="hidden sm:inline">Sair</span>
+          </Button>
         </div>
       </header>
 
@@ -262,9 +276,47 @@ function DashboardContent() {
 }
 
 export default function App() {
+  const [isLocked, setIsLocked] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem("social_panel_locked") === "1";
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => res.json())
+      .then((body: { data?: { authenticated?: boolean; authRequired?: boolean } }) => {
+        if (body.data?.authRequired && !body.data?.authenticated) {
+          setIsLocked(true);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleLockSession = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      localStorage.setItem("social_panel_locked", "1");
+    } catch {}
+    setIsLocked(true);
+  };
+
+  const handleUnlockSession = () => {
+    try {
+      localStorage.removeItem("social_panel_locked");
+    } catch {}
+    setIsLocked(false);
+  };
+
+  if (isLocked) {
+    return <LoginScreen onLoginSuccess={handleUnlockSession} />;
+  }
+
   return (
     <CompanyProvider>
-      <DashboardContent />
+      <DashboardContent onLockSession={handleLockSession} />
     </CompanyProvider>
   );
 }
