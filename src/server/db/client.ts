@@ -89,6 +89,20 @@ export function createDatabaseConnection(
         estimated_cost_usd real NOT NULL DEFAULT 0,
         created_at integer DEFAULT (unixepoch())
       );`,
+      "ALTER TABLE posts ADD COLUMN post_type_id text;",
+      `CREATE TABLE IF NOT EXISTS company_post_types (
+        id text PRIMARY KEY NOT NULL,
+        company_id text NOT NULL,
+        name text NOT NULL,
+        format_id text NOT NULL DEFAULT 'carousel_feed',
+        style_description text,
+        reference_image_urls text,
+        style_blueprint_json text NOT NULL,
+        is_default integer NOT NULL DEFAULT 0,
+        created_at integer DEFAULT (unixepoch()),
+        updated_at integer DEFAULT (unixepoch()),
+        FOREIGN KEY (company_id) REFERENCES companies(id) ON UPDATE no action ON DELETE cascade
+      );`,
     ]) {
       try {
         sqlite.run(alterSql);

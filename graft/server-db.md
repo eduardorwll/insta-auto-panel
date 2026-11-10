@@ -2,18 +2,18 @@
 node: server-db
 title: "Database Layer (SQLite WAL + Drizzle Schema & Migrations)"
 covers:
-  - src/server/db/client.ts:1-132
+  - src/server/db/client.ts:1-146
   - src/server/db/client.ts:8-11 # interface DatabaseConnection
-  - src/server/db/client.ts:20-100 # function createDatabaseConnection
-  - src/server/db/client.ts:105-110 # function createTestDb
-  - src/server/db/client.ts:114-119 # function getDatabase
-  - src/server/db/client.ts:121-125 # const db
-  - src/server/db/client.ts:127-131 # const sqlite
+  - src/server/db/client.ts:20-114 # function createDatabaseConnection
+  - src/server/db/client.ts:119-124 # function createTestDb
+  - src/server/db/client.ts:128-133 # function getDatabase
+  - src/server/db/client.ts:135-139 # const db
+  - src/server/db/client.ts:141-145 # const sqlite
   - src/server/db/migrate.ts:1-22
   - src/server/db/migrate.ts:5-8 # function runMigrations
   - src/server/db/sanitize.ts:1-78
   - src/server/db/sanitize.ts:14-64 # function sanitizeDatabase
-  - src/server/db/schema.ts:1-369
+  - src/server/db/schema.ts:1-422
   - src/server/db/schema.ts:8-8 # const PHOTO_CATEGORIES
   - src/server/db/schema.ts:9-9 # type PhotoCategory
   - src/server/db/schema.ts:10-10 # const photoCategorySchema
@@ -35,23 +35,26 @@ covers:
   - src/server/db/schema.ts:86-104 # const companies
   - src/server/db/schema.ts:109-121 # const photo_assets
   - src/server/db/schema.ts:126-133 # const weekly_schedules
-  - src/server/db/schema.ts:138-157 # const posts
-  - src/server/db/schema.ts:162-177 # const post_slides
-  - src/server/db/schema.ts:183-192 # const ai_provider_settings
-  - src/server/db/schema.ts:197-201 # const companiesRelations
-  - src/server/db/schema.ts:203-208 # const photoAssetsRelations
-  - src/server/db/schema.ts:210-216 # const weeklySchedulesRelations
-  - src/server/db/schema.ts:218-228 # const postsRelations
-  - src/server/db/schema.ts:230-239 # const postSlidesRelations
-  - src/server/db/schema.ts:244-261 # const companyInsertSchema
-  - src/server/db/schema.ts:263-272 # const photoAssetInsertSchema
-  - src/server/db/schema.ts:274-278 # const weeklyScheduleInsertSchema
-  - src/server/db/schema.ts:280-293 # const postInsertSchema
-  - src/server/db/schema.ts:295-306 # const postSlideInsertSchema
-  - src/server/db/schema.ts:308-316 # const aiProviderSettingsInsertSchema
-  - src/server/db/schema.ts:321-337 # const company_settings
-  - src/server/db/schema.ts:342-351 # const api_usage_rules
-  - src/server/db/schema.ts:356-366 # const api_usage_logs
+  - src/server/db/schema.ts:138-158 # const posts
+  - src/server/db/schema.ts:163-178 # const post_slides
+  - src/server/db/schema.ts:184-193 # const ai_provider_settings
+  - src/server/db/schema.ts:198-202 # const companiesRelations
+  - src/server/db/schema.ts:204-209 # const photoAssetsRelations
+  - src/server/db/schema.ts:211-217 # const weeklySchedulesRelations
+  - src/server/db/schema.ts:219-229 # const postsRelations
+  - src/server/db/schema.ts:231-240 # const postSlidesRelations
+  - src/server/db/schema.ts:245-262 # const companyInsertSchema
+  - src/server/db/schema.ts:264-273 # const photoAssetInsertSchema
+  - src/server/db/schema.ts:275-279 # const weeklyScheduleInsertSchema
+  - src/server/db/schema.ts:281-295 # const postInsertSchema
+  - src/server/db/schema.ts:297-308 # const postSlideInsertSchema
+  - src/server/db/schema.ts:310-318 # const aiProviderSettingsInsertSchema
+  - src/server/db/schema.ts:323-339 # const company_settings
+  - src/server/db/schema.ts:344-353 # const api_usage_rules
+  - src/server/db/schema.ts:358-368 # const api_usage_logs
+  - src/server/db/schema.ts:373-398 # const styleBlueprintSchema
+  - src/server/db/schema.ts:400-400 # type StyleBlueprint
+  - src/server/db/schema.ts:405-418 # const company_post_types
   - src/server/db/seed.ts:1-508
   - src/server/db/seed.ts:15-21 # function getMonday
   - src/server/db/seed.ts:23-69 # const SEEDED_POSTS_DATA
@@ -65,13 +68,13 @@ Manages ACID persistence in SQLite with WAL mode, schema definitions (companies,
 
 ## Covered Files & Symbols
 
-### `src/server/db/client.ts` (lines 1-132)
+### `src/server/db/client.ts` (lines 1-146)
 - `DatabaseConnection` (interface) → `src/server/db/client.ts:8-11`
-- `createDatabaseConnection` (function) → `src/server/db/client.ts:20-100`
-- `createTestDb` (function) → `src/server/db/client.ts:105-110`
-- `getDatabase` (function) → `src/server/db/client.ts:114-119`
-- `db` (const) → `src/server/db/client.ts:121-125`
-- `sqlite` (const) → `src/server/db/client.ts:127-131`
+- `createDatabaseConnection` (function) → `src/server/db/client.ts:20-114`
+- `createTestDb` (function) → `src/server/db/client.ts:119-124`
+- `getDatabase` (function) → `src/server/db/client.ts:128-133`
+- `db` (const) → `src/server/db/client.ts:135-139`
+- `sqlite` (const) → `src/server/db/client.ts:141-145`
 
 ### `src/server/db/migrate.ts` (lines 1-22)
 - `runMigrations` (function) → `src/server/db/migrate.ts:5-8`
@@ -79,7 +82,7 @@ Manages ACID persistence in SQLite with WAL mode, schema definitions (companies,
 ### `src/server/db/sanitize.ts` (lines 1-78)
 - `sanitizeDatabase` (function) → `src/server/db/sanitize.ts:14-64`
 
-### `src/server/db/schema.ts` (lines 1-369)
+### `src/server/db/schema.ts` (lines 1-422)
 - `PHOTO_CATEGORIES` (const) → `src/server/db/schema.ts:8-8`
 - `PhotoCategory` (type) → `src/server/db/schema.ts:9-9`
 - `photoCategorySchema` (const) → `src/server/db/schema.ts:10-10`
@@ -101,23 +104,26 @@ Manages ACID persistence in SQLite with WAL mode, schema definitions (companies,
 - `companies` (const) → `src/server/db/schema.ts:86-104`
 - `photo_assets` (const) → `src/server/db/schema.ts:109-121`
 - `weekly_schedules` (const) → `src/server/db/schema.ts:126-133`
-- `posts` (const) → `src/server/db/schema.ts:138-157`
-- `post_slides` (const) → `src/server/db/schema.ts:162-177`
-- `ai_provider_settings` (const) → `src/server/db/schema.ts:183-192`
-- `companiesRelations` (const) → `src/server/db/schema.ts:197-201`
-- `photoAssetsRelations` (const) → `src/server/db/schema.ts:203-208`
-- `weeklySchedulesRelations` (const) → `src/server/db/schema.ts:210-216`
-- `postsRelations` (const) → `src/server/db/schema.ts:218-228`
-- `postSlidesRelations` (const) → `src/server/db/schema.ts:230-239`
-- `companyInsertSchema` (const) → `src/server/db/schema.ts:244-261`
-- `photoAssetInsertSchema` (const) → `src/server/db/schema.ts:263-272`
-- `weeklyScheduleInsertSchema` (const) → `src/server/db/schema.ts:274-278`
-- `postInsertSchema` (const) → `src/server/db/schema.ts:280-293`
-- `postSlideInsertSchema` (const) → `src/server/db/schema.ts:295-306`
-- `aiProviderSettingsInsertSchema` (const) → `src/server/db/schema.ts:308-316`
-- `company_settings` (const) → `src/server/db/schema.ts:321-337`
-- `api_usage_rules` (const) → `src/server/db/schema.ts:342-351`
-- `api_usage_logs` (const) → `src/server/db/schema.ts:356-366`
+- `posts` (const) → `src/server/db/schema.ts:138-158`
+- `post_slides` (const) → `src/server/db/schema.ts:163-178`
+- `ai_provider_settings` (const) → `src/server/db/schema.ts:184-193`
+- `companiesRelations` (const) → `src/server/db/schema.ts:198-202`
+- `photoAssetsRelations` (const) → `src/server/db/schema.ts:204-209`
+- `weeklySchedulesRelations` (const) → `src/server/db/schema.ts:211-217`
+- `postsRelations` (const) → `src/server/db/schema.ts:219-229`
+- `postSlidesRelations` (const) → `src/server/db/schema.ts:231-240`
+- `companyInsertSchema` (const) → `src/server/db/schema.ts:245-262`
+- `photoAssetInsertSchema` (const) → `src/server/db/schema.ts:264-273`
+- `weeklyScheduleInsertSchema` (const) → `src/server/db/schema.ts:275-279`
+- `postInsertSchema` (const) → `src/server/db/schema.ts:281-295`
+- `postSlideInsertSchema` (const) → `src/server/db/schema.ts:297-308`
+- `aiProviderSettingsInsertSchema` (const) → `src/server/db/schema.ts:310-318`
+- `company_settings` (const) → `src/server/db/schema.ts:323-339`
+- `api_usage_rules` (const) → `src/server/db/schema.ts:344-353`
+- `api_usage_logs` (const) → `src/server/db/schema.ts:358-368`
+- `styleBlueprintSchema` (const) → `src/server/db/schema.ts:373-398`
+- `StyleBlueprint` (type) → `src/server/db/schema.ts:400-400`
+- `company_post_types` (const) → `src/server/db/schema.ts:405-418`
 
 ### `src/server/db/seed.ts` (lines 1-508)
 - `getMonday` (function) → `src/server/db/seed.ts:15-21`

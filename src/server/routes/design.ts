@@ -22,6 +22,7 @@ import {
   enforceApiQuotaAndRateLimit,
   recordApiUsage,
 } from "../services/ai/quota-guard";
+import { resolvePostStyleBlueprint } from "../services/design/blueprint-extractor";
 import { getFormatSpec, type PostFormatId } from "../../shared/post-formats";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -199,6 +200,10 @@ export async function handleDesignRoutes(
       }> = [];
 
       const totalSlides = Math.max(slides.length, post.slideCount || 5);
+      const styleBlueprint = await resolvePostStyleBlueprint({
+        companyId: company.id,
+        postTypeId: post.postTypeId,
+      });
 
       for (const slide of slides) {
         const slidePad = String(slide.slideNumber).padStart(2, "0");
@@ -220,6 +225,7 @@ export async function handleDesignRoutes(
             backgroundColor: company.backgroundColor || "#0F172A",
             accentColor: company.accentColor || "#10B981",
           },
+          styleBlueprint,
           clientCanvasDataUrl: body.clientSlidePngs?.[slide.slideNumber] || null,
         };
 
@@ -337,6 +343,10 @@ export async function handleDesignRoutes(
         : "modern-bold";
 
       const format = getFormatSpec(body.formatId);
+      const styleBlueprint = await resolvePostStyleBlueprint({
+        companyId: company.id,
+        postTypeId: targetPost?.postTypeId,
+      });
 
       // 1. Prompt de Texto/Roteiro
       const aiProvider = await AIProviderFactory.getForCompany(company.id);
@@ -345,6 +355,7 @@ export async function handleDesignRoutes(
         category: targetPost?.category || "Dica Prática",
         slideCount: targetPost?.slideCount || format.defaultSlides,
         company,
+        styleBlueprint,
       });
 
       // 2. Payload da API de Imagem
@@ -358,6 +369,7 @@ export async function handleDesignRoutes(
           targetSlide?.imagePrompt ||
           `Fundo editorial para ${company.name}`,
         brandPrimaryColor: company.primaryColor || "#0D9488",
+        styleBlueprint,
       });
       const curatedImg = CURATED_OPENROUTER_IMAGE_MODELS.find((m) => m.id === imageModel);
       const estimatedImageCostUsd =
@@ -405,6 +417,7 @@ export async function handleDesignRoutes(
           backgroundColor: company.backgroundColor || "#0F172A",
           accentColor: company.accentColor || "#10B981",
         },
+        styleBlueprint,
       };
 
       const svgPreview = renderOpenDesignSlideSvg(openDesignEnginePayload);
@@ -416,6 +429,7 @@ export async function handleDesignRoutes(
           imageApiPayload,
           openDesignEnginePayload,
           svgPreview,
+          styleBlueprint,
         },
       });
     } catch (err) {

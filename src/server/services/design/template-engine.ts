@@ -1,5 +1,5 @@
 import zlib from "node:zlib";
-import type { DesignTemplateId } from "../../db/schema";
+import type { DesignTemplateId, StyleBlueprint } from "../../db/schema";
 import { getFormatSpec, type PostFormatId } from "../../../shared/post-formats";
 
 export interface OpenDesignBrandKit {
@@ -20,7 +20,16 @@ export interface OpenDesignSlideFields {
   bodyText: string;
   ctaText?: string | null;
   backgroundImageUrl?: string | null;
-  brandKit: OpenDesignBrandKit;
+  subjectPhotoUrl?: string | null;
+  brandKit?: OpenDesignBrandKit;
+  brandName?: string;
+  instagramHandle?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  backgroundColor?: string;
+  accentColor?: string;
+  fontFamily?: string;
+  styleBlueprint?: StyleBlueprint | null;
   clientCanvasDataUrl?: string | null;
 }
 
@@ -91,21 +100,43 @@ export function renderOpenDesignSlideSvg(fields: OpenDesignSlideFields): string 
     fields.totalSlides
   ).padStart(2, "0")}`;
 
-  const isEditorialLight = fields.templateId === "editorial-clean";
-  const surfaceBg = isEditorialLight
-    ? "#F8FAFC"
-    : fields.templateId === "dark-neon"
-      ? "#070A12"
-      : fields.brandKit.backgroundColor || "#0F172A";
-  const textPrimary = isEditorialLight ? "#0F172A" : "#F8FAFC";
-  const textSecondary = isEditorialLight ? "#334155" : "#CBD5E1";
-  const primary = fields.brandKit.primaryColor || "#0D9488";
-  const secondary = fields.brandKit.secondaryColor || "#0284C7";
-  const accent = fields.brandKit.accentColor || "#10B981";
+  const resolvedBrand: OpenDesignBrandKit = fields.brandKit ?? {
+    companyName: fields.brandName || "Marca",
+    instagramHandle: fields.instagramHandle || "@perfil",
+    primaryColor: fields.primaryColor || "#0D9488",
+    secondaryColor: fields.secondaryColor || "#0284C7",
+    backgroundColor: fields.backgroundColor || "#0F172A",
+    accentColor: fields.accentColor || "#10B981",
+  };
 
-  const headlineLines = wrapEditorialLines(fields.headline || "Título da Lâmina", 28, 4);
-  const bodyLines = wrapEditorialLines(fields.bodyText || "", 38, 6);
-  const ctaLine = wrapEditorialLines(fields.ctaText || "", 42, 1)[0] || "";
+  const isEditorialLight = fields.templateId === "editorial-clean";
+  const surfaceBg = fields.styleBlueprint
+    ? resolvedBrand.backgroundColor || "#F5ECE2"
+    : isEditorialLight
+      ? "#F8FAFC"
+      : fields.templateId === "dark-neon"
+        ? "#070A12"
+        : resolvedBrand.backgroundColor || "#0F172A";
+  const textPrimary = isEditorialLight || Boolean(fields.styleBlueprint) ? "#2D3324" : "#F8FAFC";
+  const textSecondary = isEditorialLight || Boolean(fields.styleBlueprint) ? "#475569" : "#CBD5E1";
+  const primary = resolvedBrand.primaryColor || "#0D9488";
+  const secondary = resolvedBrand.secondaryColor || "#0284C7";
+  const accent = resolvedBrand.accentColor || "#10B981";
+  const headlineFont =
+    fields.fontFamily ||
+    (fields.styleBlueprint?.typographyPairing.headlineStyle === "serif-editorial"
+      ? "Cormorant Garamond, Georgia, serif"
+      : "Inter, system-ui, sans-serif");
+
+  const headlineLines = wrapEditorialLines(fields.headline || "Título da Lâmina", 26, 4);
+  const rawBodyParagraphs = (fields.bodyText || "").split("\n").map((l) => l.trim()).filter(Boolean);
+  const bodyLines =
+    rawBodyParagraphs.length > 1
+      ? rawBodyParagraphs.flatMap((p) => wrapEditorialLines(p, 36, 2)).slice(0, 6)
+      : wrapEditorialLines(fields.bodyText || "", 38, 6);
+  const ctaParts = (fields.ctaText || "").split("|").map((p) => p.trim()).filter(Boolean);
+  const ctaLine = wrapEditorialLines(ctaParts[0] || fields.ctaText || "", 48, 1)[0] || "";
+  const ctaSecondLine = ctaParts[1] ? wrapEditorialLines(ctaParts[1], 52, 1)[0] || "" : "";
 
   const headlineTspans = headlineLines
     .map(
@@ -114,11 +145,10 @@ export function renderOpenDesignSlideSvg(fields: OpenDesignSlideFields): string 
     )
     .join("");
 
-  const bodyStartY = 470 + headlineLines.length * 74;
   const bodyTspans = bodyLines
     .map(
       (line, idx) =>
-        `<tspan x="96" dy="${idx === 0 ? 0 : 48}">${escapeXml(line)}</tspan>`
+        `<tspan x="96" dy="${idx === 0 ? 0 : 52}">${escapeXml(line)}</tspan>`
     )
     .join("");
 
@@ -134,6 +164,22 @@ export function renderOpenDesignSlideSvg(fields: OpenDesignSlideFields): string 
         }"/>`
     : "";
 
+  const subjectPhotoLayer = fields.subjectPhotoUrl
+    ? `<g class="subject-arch-layer">
+        <path d="M ${Math.round(width * 0.56)} 0 L ${width} 0 L ${width} ${height} L ${Math.round(width * 0.6)} ${height} C ${Math.round(width * 0.48)} ${Math.round(height * 0.65)}, ${Math.round(width * 0.48)} ${Math.round(height * 0.25)}, ${Math.round(width * 0.58)} 0 Z" fill="${escapeXml(primary)}" fill-opacity="0.14" stroke="${escapeXml(primary)}" stroke-width="2"/>
+        <image href="${escapeXml(fields.subjectPhotoUrl)}" x="${Math.round(width * 0.54)}" y="40" width="${Math.round(width * 0.46)}" height="${height - 120}" preserveAspectRatio="xMidYMid slice"/>
+      </g>`
+    : "";
+
+  const ornamentLayer =
+    fields.styleBlueprint?.visualMood.ornamentStyle === "botanical-line-art"
+      ? `<g class="botanical-ornament" stroke="${escapeXml(secondary)}" stroke-width="2" fill="none" opacity="0.65">
+          <path d="M 30 ${height - 230} Q 120 ${height - 280} 210 ${height - 190}" />
+          <path d="M 90 ${height - 255} C 75 ${height - 310}, 125 ${height - 320}, 115 ${height - 255} Z" />
+          <path d="M 140 ${height - 235} C 135 ${height - 295}, 185 ${height - 295}, 165 ${height - 230} Z" />
+        </g>`
+      : "";
+
   const headlineStartY =
     fields.templateId === "split-photo"
       ? topSafe + 594
@@ -143,7 +189,7 @@ export function renderOpenDesignSlideSvg(fields: OpenDesignSlideFields): string 
       ? headlineStartY + 20 + headlineLines.length * 68
       : headlineStartY + 80 + headlineLines.length * 74;
 
-  const ctaY = bottomSafe - 152;
+  const ctaY = bottomSafe - 168;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <defs>
@@ -163,13 +209,15 @@ export function renderOpenDesignSlideSvg(fields: OpenDesignSlideFields): string 
   <rect width="${width}" height="${height}" fill="${escapeXml(surfaceBg)}"/>
   <rect width="${width}" height="${height}" fill="url(#ambientGlow)"/>
   ${bgImageLayer}
+  ${subjectPhotoLayer}
+  ${ornamentLayer}
 
   <!-- Top Editorial Header (Impeccable Persuade Hierarchy) -->
   <rect x="96" y="${topSafe}" width="888" height="4" fill="url(#accentBar)" rx="2"/>
   <text x="96" y="${topSafe + 52}" fill="${escapeXml(
     textPrimary
-  )}" font-family="Inter, system-ui, sans-serif" font-size="26" font-weight="700" letter-spacing="0.5">
-    ${escapeXml(fields.brandKit.companyName)}
+  )}" font-family="${escapeXml(headlineFont)}" font-size="26" font-weight="700" letter-spacing="0.5">
+    ${escapeXml(resolvedBrand.companyName)}
   </text>
   <text x="984" y="${topSafe + 52}" text-anchor="end" fill="${escapeXml(
     primary
@@ -192,25 +240,35 @@ export function renderOpenDesignSlideSvg(fields: OpenDesignSlideFields): string 
   <!-- Focal Headline -->
   <text x="96" y="${headlineStartY}" fill="${escapeXml(
     textPrimary
-  )}" font-family="Inter, system-ui, sans-serif" font-size="${
-    fields.templateId === "split-photo" ? "54" : "62"
-  }" font-weight="800" letter-spacing="-1.2">
+  )}" font-family="${escapeXml(headlineFont)}" font-size="${
+    fields.templateId === "split-photo" ? "54" : "60"
+  }" font-weight="800" letter-spacing="-1.0">
     ${headlineTspans}
   </text>
 
-  <!-- Body Copy -->
+  <!-- Body Copy / Bulleted Archetype -->
   <text x="96" y="${adjustedBodyStartY}" fill="${escapeXml(
     textSecondary
   )}" font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="400">
     ${bodyTspans}
   </text>
 
-  <!-- Bottom CTA & Handle Bar -->
+  <!-- Bottom CTA & Structured Contact Card -->
   ${
     ctaLine
-      ? `<rect x="96" y="${ctaY}" width="888" height="84" rx="18" fill="${escapeXml(
-          primary
-        )}"/>
+      ? ctaSecondLine
+        ? `<rect x="76" y="${ctaY - 24}" width="928" height="142" rx="24" fill="${escapeXml(
+            surfaceBg
+          )}" fill-opacity="0.94" stroke="${escapeXml(primary)}" stroke-width="2"/>
+  <text x="116" y="${ctaY + 26}" fill="${escapeXml(textPrimary)}" font-family="Inter, system-ui, sans-serif" font-size="25" font-weight="700">
+    📍 ${escapeXml(ctaLine)}
+  </text>
+  <text x="116" y="${ctaY + 76}" fill="${escapeXml(secondary)}" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600">
+    📲 ${escapeXml(ctaSecondLine)}
+  </text>`
+        : `<rect x="96" y="${ctaY}" width="888" height="84" rx="18" fill="${escapeXml(
+            primary
+          )}"/>
   <text x="540" y="${ctaY + 52}" text-anchor="middle" fill="#FFFFFF" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700">
     ${escapeXml(ctaLine)}
   </text>`
@@ -220,7 +278,7 @@ export function renderOpenDesignSlideSvg(fields: OpenDesignSlideFields): string 
   <text x="96" y="${bottomSafe}" fill="${escapeXml(
     textSecondary
   )}" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600">
-    ${escapeXml(fields.brandKit.instagramHandle)}
+    ${escapeXml(resolvedBrand.instagramHandle)}
   </text>
   <circle cx="968" cy="${bottomSafe - 8}" r="14" fill="${escapeXml(accent)}"/>
 </svg>`;
@@ -286,8 +344,12 @@ export function renderSlidePngBuffer(fields: OpenDesignSlideFields): Buffer {
   // Gera PNG determinístico 4:5 com gradiente da marca e embute o SVG completo em chunk tEXt
   const w = 216;
   const h = 270;
-  const [r1, g1, b1] = hexToRgb(fields.brandKit.backgroundColor || "#0F172A");
-  const [r2, g2, b2] = hexToRgb(fields.brandKit.primaryColor || "#0D9488");
+  const [r1, g1, b1] = hexToRgb(
+    fields.brandKit?.backgroundColor || fields.backgroundColor || "#0F172A"
+  );
+  const [r2, g2, b2] = hexToRgb(
+    fields.brandKit?.primaryColor || fields.primaryColor || "#0D9488"
+  );
 
   const rawScanlines = Buffer.alloc(h * (1 + w * 4));
   for (let y = 0; y < h; y++) {

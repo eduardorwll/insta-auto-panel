@@ -43,11 +43,12 @@ covers:
   - tests/server/post-formats.test.ts:1-56
   - tests/server/schedules-add-posts.test.ts:1-131
   - tests/server/schedules-api.test.ts:1-129
-  - tests/server/schedules-posts-slides.test.ts:1-224
+  - tests/server/schedules-posts-slides.test.ts:1-225
   - tests/server/schedules-scheduled-time.test.ts:1-146
   - tests/server/security-hardening.test.ts:1-104
   - tests/server/seo-quality.test.ts:1-73
   - tests/server/settings-api.test.ts:1-207
+  - tests/server/style-blueprints-m11.test.ts:1-214
   - tests/server/zero-leakage.test.ts:1-54
 ---
 
@@ -128,7 +129,7 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 
 ### `tests/server/schedules-api.test.ts` (lines 1-129)
 
-### `tests/server/schedules-posts-slides.test.ts` (lines 1-224)
+### `tests/server/schedules-posts-slides.test.ts` (lines 1-225)
 
 ### `tests/server/schedules-scheduled-time.test.ts` (lines 1-146)
 
@@ -137,5 +138,7 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 ### `tests/server/seo-quality.test.ts` (lines 1-73)
 
 ### `tests/server/settings-api.test.ts` (lines 1-207)
+
+### `tests/server/style-blueprints-m11.test.ts` (lines 1-214)
 
 ### `tests/server/zero-leakage.test.ts` (lines 1-54)

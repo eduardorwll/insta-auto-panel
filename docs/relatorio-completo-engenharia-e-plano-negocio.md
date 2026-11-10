@@ -362,3 +362,21 @@ flowchart TD
    - `bun run typecheck` (`tsc --noEmit`): **0 erros**.
    - `taste-skill lint`: **0 FAIL**.
    - `vite build`: **Sucesso (216ms)**.
+
+### ✅ Etapa 4 (Marco M11): Style Blueprints por Empresa (Visão IA) & Motor de Composição Multi-Camadas — CONCLUÍDA
+
+1. **Arquivos Criados:**
+   - [`src/server/services/design/blueprint-extractor.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/design/blueprint-extractor.ts): Serviço de extração e persistência de **Mapas Detalhados de Tipo de Post (`Style Blueprints`)** por empresa (`extractStyleBlueprint`, `listCompanyPostTypes`, `resolvePostStyleBlueprint`), validados via `styleBlueprintSchema`.
+   - [`tests/server/style-blueprints-m11.test.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/tests/server/style-blueprints-m11.test.ts): Suíte TDD validando a extração do Style Blueprint, persistência em `company_post_types`, injeção automática nos prompts de texto/imagem e renderização SVG multi-camadas nos 3 arquétipos do carrossel de referência (Capa com foto da especialista em moldura curva à direita + Meio com bullets e ícones + Final com card estruturado de endereço/agendamento).
+2. **Arquivos Modificados:**
+   - [`src/server/db/schema.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/db/schema.ts#L156-L418) & [`src/server/db/client.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/db/client.ts#L92-L105): Adicionada tabela `company_post_types`, `styleBlueprintSchema` e coluna `postTypeId` na tabela `posts`.
+   - [`src/server/routes/companies.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/companies.ts#L21-L62): Adicionado sub-recurso `GET /api/companies/:id/post-types`, `POST /api/companies/:id/post-types` e `DELETE /api/companies/:id/post-types/:typeId`.
+   - [`src/server/routes/ai.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/ai.ts#L54-L401): Adicionada rota `POST /api/ai/extract-post-blueprint` e injeção de `styleBlueprint` em `POST /api/ai/preview-prompt` e `POST /api/ai/generate-post`.
+   - [`src/server/services/ai/provider.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/provider.ts#L186-L197) & [`src/server/services/design/image-provider.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/design/image-provider.ts#L204-L223): Compilador de prompts de 3 camadas enriquecido com o `StyleBlueprint` da empresa.
+   - [`src/server/services/design/template-engine.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/design/template-engine.ts#L92-L280) & [`src/server/routes/design.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/design.ts#L202-L426): Renderizador multi-camadas com suporte a `subjectPhotoUrl` em moldura curva orgânica à direita, ornamentos vetoriais (`botanical-line-art`), listas com ícones/bullets e card estruturado de localização/agendamento.
+   - [`src/client/components/CompanyTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/CompanyTab.tsx#L888-L988): Adicionada interface de cadastro e extração de **Tipos de Post & Style Blueprints (IA)** nas configurações da empresa.
+3. **Validação Executada:**
+   - `bun test`: **103 pass, 0 fail** (29 arquivos de teste, 550 `expect()` calls).
+   - `bun run typecheck` (`tsc --noEmit`): **0 erros**.
+   - `taste-skill lint`: **0 FAIL**.
+   - `vite build`: **Sucesso (225ms)**.

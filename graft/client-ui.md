@@ -15,10 +15,10 @@ covers:
   - src/client/components/CompanySwitcher.tsx:1-147
   - src/client/components/CompanySwitcher.tsx:16-18 # interface CompanySwitcherProps
   - src/client/components/CompanySwitcher.tsx:20-146 # function CompanySwitcher
-  - src/client/components/CompanyTab.tsx:1-829
+  - src/client/components/CompanyTab.tsx:1-996
   - src/client/components/CompanyTab.tsx:29-48 # function companyToFormData
   - src/client/components/CompanyTab.tsx:50-51 # const COLOR_PRESETS
-  - src/client/components/CompanyTab.tsx:57-828 # function CompanyTab
+  - src/client/components/CompanyTab.tsx:57-995 # function CompanyTab
   - src/client/components/DesignStudioModal.tsx:1-657
   - src/client/components/DesignStudioModal.tsx:19-23 # type StudioTemplateId
   - src/client/components/DesignStudioModal.tsx:25-31 # type StudioImageProvider
@@ -190,10 +190,10 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `CompanySwitcherProps` (interface) → `src/client/components/CompanySwitcher.tsx:16-18`
 - `CompanySwitcher` (function) → `src/client/components/CompanySwitcher.tsx:20-146`
 
-### `src/client/components/CompanyTab.tsx` (lines 1-829)
+### `src/client/components/CompanyTab.tsx` (lines 1-996)
 - `companyToFormData` (function) → `src/client/components/CompanyTab.tsx:29-48`
 - `COLOR_PRESETS` (const) → `src/client/components/CompanyTab.tsx:50-51`
-- `CompanyTab` (function) → `src/client/components/CompanyTab.tsx:57-828`
+- `CompanyTab` (function) → `src/client/components/CompanyTab.tsx:57-995`
 
 ### `src/client/components/DesignStudioModal.tsx` (lines 1-657)
 - `StudioTemplateId` (type) → `src/client/components/DesignStudioModal.tsx:19-23`

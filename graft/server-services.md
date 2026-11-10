@@ -23,18 +23,18 @@ covers:
   - src/server/services/ai/openrouter-client.ts:145-150 # function createOpenRouterSdkClient
   - src/server/services/ai/openrouter-client.ts:156-225 # function fetchOpenRouterCatalog
   - src/server/services/ai/openrouter-client.ts:230-289 # function fetchOpenRouterKeyStatus
-  - src/server/services/ai/provider.ts:1-285
+  - src/server/services/ai/provider.ts:1-298
   - src/server/services/ai/provider.ts:5-16 # interface CompanyProfile
   - src/server/services/ai/provider.ts:18-26 # interface AISettings
   - src/server/services/ai/provider.ts:28-33 # interface TenantPhotoSummary
   - src/server/services/ai/provider.ts:35-41 # const carouselSlideSchema
   - src/server/services/ai/provider.ts:43-52 # const carouselResponseSchema
   - src/server/services/ai/provider.ts:54-54 # type CarouselSlidesResponse
-  - src/server/services/ai/provider.ts:56-66 # interface GeneratePostParams
-  - src/server/services/ai/provider.ts:73-80 # function sanitizeTenantField
-  - src/server/services/ai/provider.ts:82-82 # const LOCAL_PROVIDERS
-  - src/server/services/ai/provider.ts:89-124 # function assertSafeOutboundUrl
-  - src/server/services/ai/provider.ts:126-131 # interface AIProvider
+  - src/server/services/ai/provider.ts:56-68 # interface GeneratePostParams
+  - src/server/services/ai/provider.ts:75-82 # function sanitizeTenantField
+  - src/server/services/ai/provider.ts:84-84 # const LOCAL_PROVIDERS
+  - src/server/services/ai/provider.ts:91-126 # function assertSafeOutboundUrl
+  - src/server/services/ai/provider.ts:128-133 # interface AIProvider
   - src/server/services/ai/quota-guard.ts:1-269
   - src/server/services/ai/quota-guard.ts:5-5 # type ApiOperationType
   - src/server/services/ai/quota-guard.ts:7-15 # interface ApiUsageRuleConfig
@@ -68,7 +68,12 @@ covers:
   - src/server/services/auth/session.ts:125-128 # function buildSessionCookieHeader
   - src/server/services/auth/session.ts:130-132 # function buildLogoutCookieHeader
   - src/server/services/auth/session.ts:134-138 # function isAuthEnforced
-  - src/server/services/design/image-provider.ts:1-391
+  - src/server/services/design/blueprint-extractor.ts:1-221
+  - src/server/services/design/blueprint-extractor.ts:11-19 # interface ExtractBlueprintInput
+  - src/server/services/design/blueprint-extractor.ts:26-156 # function extractStyleBlueprint
+  - src/server/services/design/blueprint-extractor.ts:158-192 # function listCompanyPostTypes
+  - src/server/services/design/blueprint-extractor.ts:194-220 # function resolvePostStyleBlueprint
+  - src/server/services/design/image-provider.ts:1-395
   - src/server/services/design/image-provider.ts:3-8 # interface ImageProviderConfig
   - src/server/services/design/image-provider.ts:10-17 # interface GenerateBackgroundParams
   - src/server/services/design/image-provider.ts:19-25 # interface GenerateBackgroundResult
@@ -77,26 +82,26 @@ covers:
   - src/server/services/design/image-provider.ts:86-120 # class PollinationsImageProvider
   - src/server/services/design/image-provider.ts:122-194 # class FalFluxImageProvider
   - src/server/services/design/image-provider.ts:197-197 # const IMAGE_REQUEST_TIMEOUT_MS
-  - src/server/services/design/image-provider.ts:204-219 # function buildImagePrompt
-  - src/server/services/design/image-provider.ts:221-240 # function svgFallback
-  - src/server/services/design/image-provider.ts:243-260 # function postJson
-  - src/server/services/design/image-provider.ts:263-265 # function canCallApi
-  - src/server/services/design/image-provider.ts:267-290 # class OpenRouterImageProvider
-  - src/server/services/design/image-provider.ts:292-320 # class GeminiImagenProvider
-  - src/server/services/design/image-provider.ts:322-343 # class OpenAIImageProvider
-  - src/server/services/design/image-provider.ts:345-369 # class ComfyUILocalProvider
-  - src/server/services/design/image-provider.ts:371-390 # class ImageProviderFactory
-  - src/server/services/design/template-engine.ts:1-333
+  - src/server/services/design/image-provider.ts:204-223 # function buildImagePrompt
+  - src/server/services/design/image-provider.ts:225-244 # function svgFallback
+  - src/server/services/design/image-provider.ts:247-264 # function postJson
+  - src/server/services/design/image-provider.ts:267-269 # function canCallApi
+  - src/server/services/design/image-provider.ts:271-294 # class OpenRouterImageProvider
+  - src/server/services/design/image-provider.ts:296-324 # class GeminiImagenProvider
+  - src/server/services/design/image-provider.ts:326-347 # class OpenAIImageProvider
+  - src/server/services/design/image-provider.ts:349-373 # class ComfyUILocalProvider
+  - src/server/services/design/image-provider.ts:375-394 # class ImageProviderFactory
+  - src/server/services/design/template-engine.ts:1-395
   - src/server/services/design/template-engine.ts:5-12 # interface OpenDesignBrandKit
-  - src/server/services/design/template-engine.ts:14-25 # interface OpenDesignSlideFields
-  - src/server/services/design/template-engine.ts:27-34 # function escapeXml
-  - src/server/services/design/template-engine.ts:40-77 # function wrapEditorialLines
-  - src/server/services/design/template-engine.ts:83-227 # function renderOpenDesignSlideSvg
-  - src/server/services/design/template-engine.ts:232-242 # const CRC_TABLE
-  - src/server/services/design/template-engine.ts:244-252 # function crc32
-  - src/server/services/design/template-engine.ts:254-262 # function makePngChunk
-  - src/server/services/design/template-engine.ts:264-270 # function hexToRgb
-  - src/server/services/design/template-engine.ts:277-332 # function renderSlidePngBuffer
+  - src/server/services/design/template-engine.ts:14-34 # interface OpenDesignSlideFields
+  - src/server/services/design/template-engine.ts:36-43 # function escapeXml
+  - src/server/services/design/template-engine.ts:49-86 # function wrapEditorialLines
+  - src/server/services/design/template-engine.ts:92-285 # function renderOpenDesignSlideSvg
+  - src/server/services/design/template-engine.ts:290-300 # const CRC_TABLE
+  - src/server/services/design/template-engine.ts:302-310 # function crc32
+  - src/server/services/design/template-engine.ts:312-320 # function makePngChunk
+  - src/server/services/design/template-engine.ts:322-328 # function hexToRgb
+  - src/server/services/design/template-engine.ts:335-394 # function renderSlidePngBuffer
   - src/server/services/export/autosocial.ts:1-168
   - src/server/services/export/autosocial.ts:13-13 # const BASE_QUEUE_DIR
   - src/server/services/export/autosocial.ts:14-14 # const UPLOADS_DIR
@@ -161,18 +166,18 @@ Implements the Agnostic AI Adapter Pattern (ML Studio API, Gemini, OpenAI, Claud
 - `fetchOpenRouterCatalog` (function) → `src/server/services/ai/openrouter-client.ts:156-225`
 - `fetchOpenRouterKeyStatus` (function) → `src/server/services/ai/openrouter-client.ts:230-289`
 
-### `src/server/services/ai/provider.ts` (lines 1-285)
+### `src/server/services/ai/provider.ts` (lines 1-298)
 - `CompanyProfile` (interface) → `src/server/services/ai/provider.ts:5-16`
 - `AISettings` (interface) → `src/server/services/ai/provider.ts:18-26`
 - `TenantPhotoSummary` (interface) → `src/server/services/ai/provider.ts:28-33`
 - `carouselSlideSchema` (const) → `src/server/services/ai/provider.ts:35-41`
 - `carouselResponseSchema` (const) → `src/server/services/ai/provider.ts:43-52`
 - `CarouselSlidesResponse` (type) → `src/server/services/ai/provider.ts:54-54`
-- `GeneratePostParams` (interface) → `src/server/services/ai/provider.ts:56-66`
-- `sanitizeTenantField` (function) → `src/server/services/ai/provider.ts:73-80`
-- `LOCAL_PROVIDERS` (const) → `src/server/services/ai/provider.ts:82-82`
-- `assertSafeOutboundUrl` (function) → `src/server/services/ai/provider.ts:89-124`
-- `AIProvider` (interface) → `src/server/services/ai/provider.ts:126-131`
+- `GeneratePostParams` (interface) → `src/server/services/ai/provider.ts:56-68`
+- `sanitizeTenantField` (function) → `src/server/services/ai/provider.ts:75-82`
+- `LOCAL_PROVIDERS` (const) → `src/server/services/ai/provider.ts:84-84`
+- `assertSafeOutboundUrl` (function) → `src/server/services/ai/provider.ts:91-126`
+- `AIProvider` (interface) → `src/server/services/ai/provider.ts:128-133`
 
 ### `src/server/services/ai/quota-guard.ts` (lines 1-269)
 - `ApiOperationType` (type) → `src/server/services/ai/quota-guard.ts:5-5`
@@ -209,7 +214,13 @@ Implements the Agnostic AI Adapter Pattern (ML Studio API, Gemini, OpenAI, Claud
 - `buildLogoutCookieHeader` (function) → `src/server/services/auth/session.ts:130-132`
 - `isAuthEnforced` (function) → `src/server/services/auth/session.ts:134-138`
 
-### `src/server/services/design/image-provider.ts` (lines 1-391)
+### `src/server/services/design/blueprint-extractor.ts` (lines 1-221)
+- `ExtractBlueprintInput` (interface) → `src/server/services/design/blueprint-extractor.ts:11-19`
+- `extractStyleBlueprint` (function) → `src/server/services/design/blueprint-extractor.ts:26-156`
+- `listCompanyPostTypes` (function) → `src/server/services/design/blueprint-extractor.ts:158-192`
+- `resolvePostStyleBlueprint` (function) → `src/server/services/design/blueprint-extractor.ts:194-220`
+
+### `src/server/services/design/image-provider.ts` (lines 1-395)
 - `ImageProviderConfig` (interface) → `src/server/services/design/image-provider.ts:3-8`
 - `GenerateBackgroundParams` (interface) → `src/server/services/design/image-provider.ts:10-17`
 - `GenerateBackgroundResult` (interface) → `src/server/services/design/image-provider.ts:19-25`
@@ -218,27 +229,27 @@ Implements the Agnostic AI Adapter Pattern (ML Studio API, Gemini, OpenAI, Claud
 - `PollinationsImageProvider` (class) → `src/server/services/design/image-provider.ts:86-120`
 - `FalFluxImageProvider` (class) → `src/server/services/design/image-provider.ts:122-194`
 - `IMAGE_REQUEST_TIMEOUT_MS` (const) → `src/server/services/design/image-provider.ts:197-197`
-- `buildImagePrompt` (function) → `src/server/services/design/image-provider.ts:204-219`
-- `svgFallback` (function) → `src/server/services/design/image-provider.ts:221-240`
-- `postJson` (function) → `src/server/services/design/image-provider.ts:243-260`
-- `canCallApi` (function) → `src/server/services/design/image-provider.ts:263-265`
-- `OpenRouterImageProvider` (class) → `src/server/services/design/image-provider.ts:267-290`
-- `GeminiImagenProvider` (class) → `src/server/services/design/image-provider.ts:292-320`
-- `OpenAIImageProvider` (class) → `src/server/services/design/image-provider.ts:322-343`
-- `ComfyUILocalProvider` (class) → `src/server/services/design/image-provider.ts:345-369`
-- `ImageProviderFactory` (class) → `src/server/services/design/image-provider.ts:371-390`
+- `buildImagePrompt` (function) → `src/server/services/design/image-provider.ts:204-223`
+- `svgFallback` (function) → `src/server/services/design/image-provider.ts:225-244`
+- `postJson` (function) → `src/server/services/design/image-provider.ts:247-264`
+- `canCallApi` (function) → `src/server/services/design/image-provider.ts:267-269`
+- `OpenRouterImageProvider` (class) → `src/server/services/design/image-provider.ts:271-294`
+- `GeminiImagenProvider` (class) → `src/server/services/design/image-provider.ts:296-324`
+- `OpenAIImageProvider` (class) → `src/server/services/design/image-provider.ts:326-347`
+- `ComfyUILocalProvider` (class) → `src/server/services/design/image-provider.ts:349-373`
+- `ImageProviderFactory` (class) → `src/server/services/design/image-provider.ts:375-394`
 
-### `src/server/services/design/template-engine.ts` (lines 1-333)
+### `src/server/services/design/template-engine.ts` (lines 1-395)
 - `OpenDesignBrandKit` (interface) → `src/server/services/design/template-engine.ts:5-12`
-- `OpenDesignSlideFields` (interface) → `src/server/services/design/template-engine.ts:14-25`
-- `escapeXml` (function) → `src/server/services/design/template-engine.ts:27-34`
-- `wrapEditorialLines` (function) → `src/server/services/design/template-engine.ts:40-77`
-- `renderOpenDesignSlideSvg` (function) → `src/server/services/design/template-engine.ts:83-227`
-- `CRC_TABLE` (const) → `src/server/services/design/template-engine.ts:232-242`
-- `crc32` (function) → `src/server/services/design/template-engine.ts:244-252`
-- `makePngChunk` (function) → `src/server/services/design/template-engine.ts:254-262`
-- `hexToRgb` (function) → `src/server/services/design/template-engine.ts:264-270`
-- `renderSlidePngBuffer` (function) → `src/server/services/design/template-engine.ts:277-332`
+- `OpenDesignSlideFields` (interface) → `src/server/services/design/template-engine.ts:14-34`
+- `escapeXml` (function) → `src/server/services/design/template-engine.ts:36-43`
+- `wrapEditorialLines` (function) → `src/server/services/design/template-engine.ts:49-86`
+- `renderOpenDesignSlideSvg` (function) → `src/server/services/design/template-engine.ts:92-285`
+- `CRC_TABLE` (const) → `src/server/services/design/template-engine.ts:290-300`
+- `crc32` (function) → `src/server/services/design/template-engine.ts:302-310`
+- `makePngChunk` (function) → `src/server/services/design/template-engine.ts:312-320`
+- `hexToRgb` (function) → `src/server/services/design/template-engine.ts:322-328`
+- `renderSlidePngBuffer` (function) → `src/server/services/design/template-engine.ts:335-394`
 
 ### `src/server/services/export/autosocial.ts` (lines 1-168)
 - `BASE_QUEUE_DIR` (const) → `src/server/services/export/autosocial.ts:13-13`

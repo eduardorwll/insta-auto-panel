@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { AIProviderName } from "@/server/db/schema";
+import type { AIProviderName, StyleBlueprint } from "@/server/db/schema";
 import { normalizeCaption } from "../../../shared/seo-quality";
 
 export interface CompanyProfile {
@@ -63,6 +63,8 @@ export interface GeneratePostParams {
   usedKeywords?: string[];
   /** Sobrescrita manual de prompt vinda do Prompt Inspector (Marco M10). */
   customPromptOverride?: string;
+  /** Mapa detalhado de estilo do tipo de post da empresa (Style Blueprint — Marco M11). */
+  styleBlueprint?: StyleBlueprint | null;
 }
 
 /**
@@ -182,7 +184,18 @@ ${params.usedKeywords?.length ? `- Palavras-chave principais já usadas nesta se
 
 ACERVO DE FOTOS DA EMPRESA (SEPARAÇÃO ESTRITA — USE APENAS ESSES IDs):
 ${photosCatalog}
-
+${
+  params.styleBlueprint
+    ? `
+MAPA DE ESTILO DO TIPO DE POST (STYLE BLUEPRINT DA EMPRESA):
+- Atmosfera Visual: ${params.styleBlueprint.visualMood.backgroundStyle} (${params.styleBlueprint.visualMood.lighting})
+- Arquétipo Lâmina 1 (Capa): ${params.styleBlueprint.slideArchetypes.cover}
+- Arquétipo Lâminas Intermediárias: ${params.styleBlueprint.slideArchetypes.middle}
+- Arquétipo Lâmina Final (CTA): ${params.styleBlueprint.slideArchetypes.closingCta}
+- Prompt Imutável de Estilo (Camada 1): ${params.styleBlueprint.immutableStylePrompt}
+`
+    : ""
+}
 POST A SER CRIADO:
 - Tema Central: "${targetTheme}"
 - Categoria Editorial: "${targetCategory}"

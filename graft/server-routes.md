@@ -6,18 +6,18 @@ covers:
   - src/server/index.ts:12-18 # function applySecurityHeaders
   - src/server/index.ts:20-153 # function handleRequest
   - src/server/index.ts:155-161 # const server
-  - src/server/routes/ai.ts:1-464
-  - src/server/routes/ai.ts:24-463 # function handleAIRoutes
+  - src/server/routes/ai.ts:1-515
+  - src/server/routes/ai.ts:28-514 # function handleAIRoutes
   - src/server/routes/auth.ts:1-123
   - src/server/routes/auth.ts:14-17 # const loginSchema
   - src/server/routes/auth.ts:19-25 # function getClientIp
   - src/server/routes/auth.ts:27-122 # function handleAuthRoutes
-  - src/server/routes/companies.ts:1-90
-  - src/server/routes/companies.ts:6-6 # const companyUpdateSchema
-  - src/server/routes/companies.ts:8-89 # function handleCompaniesRoutes
-  - src/server/routes/design.ts:1-434
-  - src/server/routes/design.ts:29-29 # const RENDERS_DIR
-  - src/server/routes/design.ts:31-433 # function handleDesignRoutes
+  - src/server/routes/companies.ts:1-141
+  - src/server/routes/companies.ts:10-10 # const companyUpdateSchema
+  - src/server/routes/companies.ts:12-140 # function handleCompaniesRoutes
+  - src/server/routes/design.ts:1-448
+  - src/server/routes/design.ts:30-30 # const RENDERS_DIR
+  - src/server/routes/design.ts:32-447 # function handleDesignRoutes
   - src/server/routes/export.ts:1-63
   - src/server/routes/export.ts:7-62 # function handleExportRoutes
   - src/server/routes/photos.ts:1-160
@@ -45,21 +45,21 @@ Handles HTTP REST endpoints for multi-tenant companies, photo bank uploads, week
 - `handleRequest` (function) → `src/server/index.ts:20-153`
 - `server` (const) → `src/server/index.ts:155-161`
 
-### `src/server/routes/ai.ts` (lines 1-464)
-- `handleAIRoutes` (function) → `src/server/routes/ai.ts:24-463`
+### `src/server/routes/ai.ts` (lines 1-515)
+- `handleAIRoutes` (function) → `src/server/routes/ai.ts:28-514`
 
 ### `src/server/routes/auth.ts` (lines 1-123)
 - `loginSchema` (const) → `src/server/routes/auth.ts:14-17`
 - `getClientIp` (function) → `src/server/routes/auth.ts:19-25`
 - `handleAuthRoutes` (function) → `src/server/routes/auth.ts:27-122`
 
-### `src/server/routes/companies.ts` (lines 1-90)
-- `companyUpdateSchema` (const) → `src/server/routes/companies.ts:6-6`
-- `handleCompaniesRoutes` (function) → `src/server/routes/companies.ts:8-89`
+### `src/server/routes/companies.ts` (lines 1-141)
+- `companyUpdateSchema` (const) → `src/server/routes/companies.ts:10-10`
+- `handleCompaniesRoutes` (function) → `src/server/routes/companies.ts:12-140`
 
-### `src/server/routes/design.ts` (lines 1-434)
-- `RENDERS_DIR` (const) → `src/server/routes/design.ts:29-29`
-- `handleDesignRoutes` (function) → `src/server/routes/design.ts:31-433`
+### `src/server/routes/design.ts` (lines 1-448)
+- `RENDERS_DIR` (const) → `src/server/routes/design.ts:30-30`
+- `handleDesignRoutes` (function) → `src/server/routes/design.ts:32-447`
 
 ### `src/server/routes/export.ts` (lines 1-63)
 - `handleExportRoutes` (function) → `src/server/routes/export.ts:7-62`

@@ -1,7 +1,11 @@
 import { db } from "../db/client";
-import { companies, companyInsertSchema } from "../db/schema";
-import { eq, desc } from "drizzle-orm";
+import { companies, company_post_types, companyInsertSchema } from "../db/schema";
+import { eq, and, desc } from "drizzle-orm";
 import { z } from "zod";
+import {
+  extractStyleBlueprint,
+  listCompanyPostTypes,
+} from "../services/design/blueprint-extractor";
 
 const companyUpdateSchema = companyInsertSchema.partial().omit({ id: true });
 
@@ -11,6 +15,53 @@ export async function handleCompaniesRoutes(req: Request, url: URL): Promise<Res
   if (pathname === "/api/companies" || pathname.startsWith("/api/companies/")) {
     const parts = pathname.split("/").filter(Boolean);
     const companyId = parts[2]; // /api/companies/:id
+    const subResource = parts[3]; // 'post-types'
+    const subResourceId = parts[4]; // ':typeId'
+
+    // Sub-recurso Marco M11: /api/companies/:id/post-types
+    if (companyId && subResource === "post-types") {
+      if (req.method === "GET") {
+        const types = await listCompanyPostTypes(companyId);
+        return Response.json({ success: true, data: types });
+      }
+      if (req.method === "POST") {
+        try {
+          const body = (await req.json()) as {
+            name?: string;
+            formatId?: string;
+            styleDescription?: string;
+            referenceImageUrls?: string[];
+            isDefault?: boolean;
+          };
+          const extracted = await extractStyleBlueprint({
+            companyId,
+            name: body.name || "Carrossel Editorial Padrão",
+            formatId: body.formatId || "carousel_feed",
+            styleDescription: body.styleDescription,
+            referenceImageUrls: body.referenceImageUrls,
+            saveAsPostType: true,
+            isDefault: Boolean(body.isDefault),
+          });
+          return Response.json({ success: true, data: extracted.postType }, { status: 201 });
+        } catch (err) {
+          return Response.json(
+            { success: false, error: err instanceof Error ? err.message : "Erro ao criar tipo de post" },
+            { status: 400 }
+          );
+        }
+      }
+      if (req.method === "DELETE" && subResourceId) {
+        await db
+          .delete(company_post_types)
+          .where(
+            and(
+              eq(company_post_types.id, subResourceId),
+              eq(company_post_types.companyId, companyId)
+            )
+          );
+        return Response.json({ success: true });
+      }
+    }
 
     // 1. GET /api/companies
     if (req.method === "GET" && !companyId) {

@@ -17,6 +17,10 @@ import {
   enforceApiQuotaAndRateLimit,
   recordApiUsage,
 } from "../services/ai/quota-guard";
+import {
+  extractStyleBlueprint,
+  resolvePostStyleBlueprint,
+} from "../services/design/blueprint-extractor";
 import { auditPost } from "../../shared/seo-quality";
 import { eq, asc } from "drizzle-orm";
 import { z } from "zod";
@@ -45,6 +49,42 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
     const apiKey = setting?.apiKey || globalSetting?.apiKey || null;
     const status = await fetchOpenRouterKeyStatus(apiKey);
     return Response.json({ success: true, data: status });
+  }
+
+  // 0.25. POST /api/ai/extract-post-blueprint (Marco M11 — Vision-to-Blueprint Extractor)
+  if (req.method === "POST" && pathname === "/api/ai/extract-post-blueprint") {
+    try {
+      const body = (await req.json()) as {
+        companyId?: string;
+        name?: string;
+        formatId?: string;
+        styleDescription?: string;
+        referenceImageUrls?: string[];
+        saveAsPostType?: boolean;
+        isDefault?: boolean;
+      };
+      if (!body.companyId) {
+        return Response.json({ success: false, error: "companyId é obrigatório" }, { status: 400 });
+      }
+      const extracted = await extractStyleBlueprint({
+        companyId: body.companyId,
+        name: body.name || "Carrossel Editorial Especialista",
+        formatId: body.formatId || "carousel_feed",
+        styleDescription: body.styleDescription,
+        referenceImageUrls: body.referenceImageUrls,
+        saveAsPostType: body.saveAsPostType ?? true,
+        isDefault: Boolean(body.isDefault),
+      });
+      return Response.json({ success: true, data: extracted });
+    } catch (err) {
+      return Response.json(
+        {
+          success: false,
+          error: err instanceof Error ? err.message : "Erro ao extrair Style Blueprint",
+        },
+        { status: 500 }
+      );
+    }
   }
 
   // 0.3. POST /api/ai/preview-prompt (Prompt Inspector Dry-Run — US$ 0.00)
@@ -121,6 +161,10 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
           });
       }
 
+      const styleBlueprint = await resolvePostStyleBlueprint({
+        companyId: company.id,
+      });
+
       const provider = await AIProviderFactory.getForCompany(company.id);
       const prompt = provider.buildPreviewPrompt({
         theme: targetTheme,
@@ -130,6 +174,7 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
         photos: photosPayload,
         usedKeywords,
         customPromptOverride: body.customPromptOverride,
+        styleBlueprint,
       });
 
       return Response.json({
@@ -338,7 +383,12 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
         );
       }
 
-      // Chamar geração agnóstica calibrada com dados do tenant e fotos
+      const styleBlueprint = await resolvePostStyleBlueprint({
+        companyId: company.id,
+        postTypeId: post.postTypeId,
+      });
+
+      // Chamar geração agnóstica calibrada com dados do tenant, fotos e Style Blueprint
       const generated = await provider.generate({
         usedKeywords,
         theme: targetTheme,
@@ -347,6 +397,7 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
         company,
         photos: photosPayload,
         customPromptOverride: body.customPromptOverride,
+        styleBlueprint,
       });
 
       await recordApiUsage({

@@ -77,6 +77,7 @@ describe("Schema e Integridade: Calendário, Posts Dinâmicos (3 a 10 Slides) e 
         keyword_cluster TEXT,
         scheduled_time TEXT DEFAULT '09:00',
         selected_photo_ids TEXT,
+        post_type_id TEXT,
         created_at INTEGER
       );
     `);

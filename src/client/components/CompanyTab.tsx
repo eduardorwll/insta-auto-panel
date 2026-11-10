@@ -80,14 +80,80 @@ export function CompanyTab() {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // Marco M11: Tipos de Post & Style Blueprints por Empresa
+  const [postTypes, setPostTypes] = useState<
+    Array<{
+      id: string;
+      name: string;
+      formatId: string;
+      styleDescription: string | null;
+      isDefault: boolean;
+      styleBlueprint: {
+        visualMood: { backgroundStyle: string; ornamentStyle: string };
+        layoutGrid: { negativeSpaceSide: string; subjectFraming: string };
+        slideArchetypes: { cover: string; middle: string; closingCta: string };
+        immutableStylePrompt: string;
+      };
+    }>
+  >([]);
+  const [newBlueprintName, setNewBlueprintName] = useState("Carrossel Editorial Especialista (4:5)");
+  const [newBlueprintFormat, setNewBlueprintFormat] = useState("carousel_feed");
+  const [newBlueprintDesc, setNewBlueprintDesc] = useState(
+    "Fundo editorial suave com espaço negativo à esquerda, foto da especialista à direita em moldura curva, ornamentos botânicos line-art, bullets com ícones nos slides intermediários e card de contato no slide final."
+  );
+  const [isExtractingBlueprint, setIsExtractingBlueprint] = useState(false);
+  const [blueprintMsg, setBlueprintMsg] = useState<string | null>(null);
+
+  const loadPostTypes = async (compId: string) => {
+    try {
+      const res = await fetch(`/api/companies/${compId}/post-types`);
+      const json = await res.json();
+      if (json.success && Array.isArray(json.data)) {
+        setPostTypes(json.data);
+      }
+    } catch {}
+  };
+
   // Sincronizar dados ao alternar de empresa ou carregar
   useEffect(() => {
     if (activeCompany) {
       setFormData(companyToFormData(activeCompany));
       setErrorMessage(null);
       setSaveSuccess(false);
+      loadPostTypes(activeCompany.id);
     }
   }, [activeCompany?.id]);
+
+  const handleExtractAndSaveBlueprint = async () => {
+    if (!activeCompany) return;
+    setIsExtractingBlueprint(true);
+    setBlueprintMsg(null);
+    try {
+      const res = await fetch("/api/ai/extract-post-blueprint", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          companyId: activeCompany.id,
+          name: newBlueprintName.trim() || "Carrossel Editorial Padrão",
+          formatId: newBlueprintFormat,
+          styleDescription: newBlueprintDesc.trim(),
+          saveAsPostType: true,
+          isDefault: postTypes.length === 0,
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || "Erro ao gerar Style Blueprint");
+      }
+      setBlueprintMsg("Mapa Detalhado do Tipo de Post (Style Blueprint) gerado e salvo para esta empresa!");
+      await loadPostTypes(activeCompany.id);
+      setTimeout(() => setBlueprintMsg(null), 5000);
+    } catch (err) {
+      setBlueprintMsg(err instanceof Error ? err.message : "Erro ao gerar Style Blueprint");
+    } finally {
+      setIsExtractingBlueprint(false);
+    }
+  };
 
   const handleChange = (field: keyof CompanyFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -768,7 +834,7 @@ export function CompanyTab() {
                   <Search className="h-3.5 w-3.5 text-teal-400" />
                   <span>Instagram Search Preview</span>
                 </span>
-                <Badge variant="outline" className="text-[10px] text-teal-300 border-teal-800">
+                <Badge variant="outline" className="text-[11px] text-teal-300 border-teal-800">
                   Como o público encontra
                 </Badge>
               </div>
@@ -811,7 +877,7 @@ export function CompanyTab() {
                       .map((kw) => (
                         <span
                           key={kw}
-                          className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-teal-300 border border-teal-900/50"
+                          className="px-1.5 py-0.5 rounded text-[11px] font-medium bg-slate-800 text-teal-300 border border-teal-900/50"
                         >
                           #{kw}
                         </span>
@@ -819,6 +885,107 @@ export function CompanyTab() {
                   </div>
                 )}
               </div>
+            </div>
+
+            {/* Card 5 (Marco M11): Tipos de Post & Mapas Detalhados de Estilo (Style Blueprints) */}
+            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3 text-xs" data-testid="company-style-blueprints">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <span className="font-semibold text-white flex items-center gap-1.5">
+                  <Layers className="h-4 w-4 text-teal-400" />
+                  <span>Tipos de Post & Style Blueprints (IA)</span>
+                </span>
+                <Badge variant="outline" className="text-[11px] border-teal-800 text-teal-300 font-mono tabular-nums">
+                  {postTypes.length} mapeado(s)
+                </Badge>
+              </div>
+
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Cadastre um tipo de post e gere com IA o <strong>Mapa Detalhado (Style Blueprint)</strong> que será injetado automaticamente nos próximos carrosséis e stories desta empresa.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="space-y-1">
+                  <Label htmlFor="bp-name" className="text-[11px] text-slate-300">
+                    Nome do Tipo de Post
+                  </Label>
+                  <Input
+                    id="bp-name"
+                    value={newBlueprintName}
+                    onChange={(e) => setNewBlueprintName(e.target.value)}
+                    className="h-8 text-xs bg-slate-900 border-slate-800"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="bp-format" className="text-[11px] text-slate-300">
+                    Formato Modular
+                  </Label>
+                  <select
+                    id="bp-format"
+                    value={newBlueprintFormat}
+                    onChange={(e) => setNewBlueprintFormat(e.target.value)}
+                    className="flex h-8 w-full rounded-md border border-slate-800 bg-slate-900 px-2.5 text-xs text-slate-100"
+                  >
+                    <option value="carousel_feed">Carrossel Feed 4:5 (1080×1350)</option>
+                    <option value="carousel_square">Carrossel Quadrado 1:1 (1080×1080)</option>
+                    <option value="story_vertical">Story Vertical 9:16 (1080×1920)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="bp-desc" className="text-[11px] text-slate-300">
+                  Descrição Visual ou Padrão das Imagens de Referência
+                </Label>
+                <textarea
+                  id="bp-desc"
+                  rows={3}
+                  value={newBlueprintDesc}
+                  onChange={(e) => setNewBlueprintDesc(e.target.value)}
+                  className="w-full rounded-md border border-slate-800 bg-slate-900 p-2 text-xs text-slate-200"
+                />
+              </div>
+
+              <Button
+                type="button"
+                size="sm"
+                disabled={isExtractingBlueprint}
+                onClick={handleExtractAndSaveBlueprint}
+                className="w-full gap-1.5 bg-teal-600 hover:bg-teal-500 text-white active:scale-[0.97]"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                <span>
+                  {isExtractingBlueprint
+                    ? "Extraindo Mapa Detalhado com IA..."
+                    : "Gerar Mapa Detalhado do Post (Style Blueprint)"}
+                </span>
+              </Button>
+
+              {blueprintMsg && (
+                <div className="p-2.5 rounded-lg bg-teal-950/40 border border-teal-800 text-[11px] text-teal-200">
+                  {blueprintMsg}
+                </div>
+              )}
+
+              {postTypes.length > 0 && (
+                <div className="space-y-2 pt-2 border-t border-slate-800">
+                  {postTypes.map((pt) => (
+                    <div
+                      key={pt.id}
+                      className="p-2.5 rounded-lg bg-slate-900 border border-slate-800 space-y-1"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs font-semibold text-white">{pt.name}</span>
+                        <Badge variant="secondary" className="text-[11px] font-mono">
+                          {pt.formatId}
+                        </Badge>
+                      </div>
+                      <p className="text-[11px] text-slate-400">
+                        <strong>Prompt Imutável:</strong> {pt.styleBlueprint.immutableStylePrompt}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </Card>
         </div>

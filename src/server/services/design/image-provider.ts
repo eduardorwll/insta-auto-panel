@@ -206,14 +206,18 @@ export function buildImagePrompt(input: {
   niche?: string | null;
   userPrompt?: string | null;
   brandPrimaryColor?: string | null;
+  styleBlueprint?: { immutableStylePrompt?: string } | null;
 }): string {
   const subject = input.userPrompt?.trim() || input.theme?.trim() || "editorial background";
   const context = [input.theme?.trim(), input.niche?.trim()].filter(Boolean).join(" — ");
   const palette = input.brandPrimaryColor ? `, color palette harmonizing with ${input.brandPrimaryColor}` : "";
+  const blueprintSpec = input.styleBlueprint?.immutableStylePrompt
+    ? ` Style Blueprint: ${input.styleBlueprint.immutableStylePrompt}`
+    : "";
   return (
     `${subject}${context ? `. Context: ${context}` : ""}. ` +
     `Clean editorial photography, minimal composition with generous negative space for a headline overlay, ` +
-    `soft natural lighting${palette}. No text, no letters, no logos, no watermarks, no close-up faces. ` +
+    `soft natural lighting${palette}.${blueprintSpec} No text, no letters, no logos, no watermarks, no close-up faces. ` +
     `4:5 vertical composition.`
   );
 }

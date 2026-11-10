@@ -153,6 +153,7 @@ export const posts = sqliteTable("posts", {
   keywordCluster: text("keyword_cluster"), // JSON array serializado (cluster de busca do post)
   scheduledTime: text("scheduled_time").default("09:00"),
   selectedPhotoIds: text("selected_photo_ids"), // JSON array serializado
+  postTypeId: text("post_type_id"), // Referência opcional para company_post_types (Marco M11)
   createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`),
 });
 
@@ -290,6 +291,7 @@ export const postInsertSchema = z.object({
   altText: z.string().optional().nullable(),
   scheduledTime: z.string().optional().default("09:00"),
   selectedPhotoIds: z.array(z.string()).optional().nullable(),
+  postTypeId: z.string().optional().nullable(),
 });
 
 export const postSlideInsertSchema = z.object({
@@ -364,5 +366,56 @@ export const api_usage_logs = sqliteTable("api_usage_logs", {
   estimatedCostUsd: real("estimated_cost_usd").notNull().default(0),
   createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`),
 });
+
+/**
+ * Schema Zod para o Mapa Detalhado de Tipo de Post (Style Blueprint — Marco 11)
+ */
+export const styleBlueprintSchema = z.object({
+  visualMood: z.object({
+    backgroundStyle: z.string().default("Fundo editorial fosco suave com espaço negativo"),
+    lighting: z.string().default("Luz natural difusa quente"),
+    ornamentStyle: z.enum(["botanical-line-art", "minimal-geometric", "tech-grid", "none"]).default("botanical-line-art"),
+  }),
+  layoutGrid: z.object({
+    negativeSpaceSide: z.enum(["left", "right", "top", "bottom"]).default("left"),
+    negativeSpaceRatio: z.number().min(0.3).max(0.8).default(0.55),
+    subjectFraming: z.enum(["arch-right", "split-right", "circle-badge", "full-bleed-gradient", "none"]).default("arch-right"),
+    headerMonogram: z.boolean().default(true),
+  }),
+  typographyPairing: z.object({
+    headlineStyle: z.enum(["serif-editorial", "sans-bold", "display-modern"]).default("serif-editorial"),
+    bodyStyle: z.enum(["sans-clean", "serif-humanist"]).default("sans-clean"),
+    highlightKeywordsInBold: z.boolean().default(true),
+  }),
+  slideArchetypes: z.object({
+    cover: z.string().default("Monograma de topo + Headline Serifada em caixa alta + Subtítulo curto + Foto do especialista à direita com moldura curva"),
+    middle: z.string().default("Parágrafo introdutório com palavras-chave em negrito + Lista de 3 itens com ícones/bullets alinhados verticalmente"),
+    closingCta: z.string().default("Frase de impacto emocional + Chamada imperativa + Card inferior bordado com localização, endereço e canais de agendamento"),
+  }),
+  immutableStylePrompt: z.string().default(
+    "Warm matte editorial background, generous negative space on the left 55% for typography, soft natural daylight, subtle organic arch frame on the right, clean luxury aesthetic, strictly NO text, NO letters, NO watermarks."
+  ),
+});
+
+export type StyleBlueprint = z.infer<typeof styleBlueprintSchema>;
+
+/**
+ * Tabela de Tipos de Post & Mapas Detalhados de Estilo por Empresa (Marco 11)
+ */
+export const company_post_types = sqliteTable("company_post_types", {
+  id: text("id").primaryKey(),
+  companyId: text("company_id")
+    .notNull()
+    .references(() => companies.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  formatId: text("format_id").notNull().default("carousel_feed"), // 'carousel_feed' | 'carousel_square' | 'story_vertical'
+  styleDescription: text("style_description"),
+  referenceImageUrls: text("reference_image_urls"), // JSON array serializado
+  styleBlueprintJson: text("style_blueprint_json").notNull(), // StyleBlueprint serializado
+  isDefault: integer("is_default").notNull().default(0),
+  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).default(sql`(unixepoch())`),
+});
+
 
 
