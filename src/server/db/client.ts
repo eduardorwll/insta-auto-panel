@@ -68,6 +68,27 @@ export function createDatabaseConnection(
         updated_at integer DEFAULT (unixepoch()),
         FOREIGN KEY (company_id) REFERENCES companies(id) ON UPDATE no action ON DELETE cascade
       );`,
+      `CREATE TABLE IF NOT EXISTS api_usage_rules (
+        company_id text PRIMARY KEY NOT NULL,
+        max_rpm integer NOT NULL DEFAULT 15,
+        max_daily_text_requests integer NOT NULL DEFAULT 100,
+        max_daily_image_requests integer NOT NULL DEFAULT 50,
+        max_monthly_budget_usd real NOT NULL DEFAULT 10.0,
+        max_output_tokens integer NOT NULL DEFAULT 2500,
+        fallback_to_svg_when_exceeded integer NOT NULL DEFAULT 1,
+        updated_at integer DEFAULT (unixepoch())
+      );`,
+      `CREATE TABLE IF NOT EXISTS api_usage_logs (
+        id text PRIMARY KEY NOT NULL,
+        company_id text NOT NULL,
+        operation_type text NOT NULL,
+        provider text NOT NULL,
+        model_name text NOT NULL,
+        prompt_tokens integer NOT NULL DEFAULT 0,
+        completion_tokens integer NOT NULL DEFAULT 0,
+        estimated_cost_usd real NOT NULL DEFAULT 0,
+        created_at integer DEFAULT (unixepoch())
+      );`,
     ]) {
       try {
         sqlite.run(alterSql);

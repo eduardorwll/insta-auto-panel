@@ -2,18 +2,18 @@
 node: server-db
 title: "Database Layer (SQLite WAL + Drizzle Schema & Migrations)"
 covers:
-  - src/server/db/client.ts:1-111
+  - src/server/db/client.ts:1-132
   - src/server/db/client.ts:8-11 # interface DatabaseConnection
-  - src/server/db/client.ts:20-79 # function createDatabaseConnection
-  - src/server/db/client.ts:84-89 # function createTestDb
-  - src/server/db/client.ts:93-98 # function getDatabase
-  - src/server/db/client.ts:100-104 # const db
-  - src/server/db/client.ts:106-110 # const sqlite
+  - src/server/db/client.ts:20-100 # function createDatabaseConnection
+  - src/server/db/client.ts:105-110 # function createTestDb
+  - src/server/db/client.ts:114-119 # function getDatabase
+  - src/server/db/client.ts:121-125 # const db
+  - src/server/db/client.ts:127-131 # const sqlite
   - src/server/db/migrate.ts:1-22
   - src/server/db/migrate.ts:5-8 # function runMigrations
   - src/server/db/sanitize.ts:1-78
   - src/server/db/sanitize.ts:14-64 # function sanitizeDatabase
-  - src/server/db/schema.ts:1-339
+  - src/server/db/schema.ts:1-369
   - src/server/db/schema.ts:8-8 # const PHOTO_CATEGORIES
   - src/server/db/schema.ts:9-9 # type PhotoCategory
   - src/server/db/schema.ts:10-10 # const photoCategorySchema
@@ -50,6 +50,8 @@ covers:
   - src/server/db/schema.ts:295-306 # const postSlideInsertSchema
   - src/server/db/schema.ts:308-316 # const aiProviderSettingsInsertSchema
   - src/server/db/schema.ts:321-337 # const company_settings
+  - src/server/db/schema.ts:342-351 # const api_usage_rules
+  - src/server/db/schema.ts:356-366 # const api_usage_logs
   - src/server/db/seed.ts:1-508
   - src/server/db/seed.ts:15-21 # function getMonday
   - src/server/db/seed.ts:23-69 # const SEEDED_POSTS_DATA
@@ -63,13 +65,13 @@ Manages ACID persistence in SQLite with WAL mode, schema definitions (companies,
 
 ## Covered Files & Symbols
 
-### `src/server/db/client.ts` (lines 1-111)
+### `src/server/db/client.ts` (lines 1-132)
 - `DatabaseConnection` (interface) → `src/server/db/client.ts:8-11`
-- `createDatabaseConnection` (function) → `src/server/db/client.ts:20-79`
-- `createTestDb` (function) → `src/server/db/client.ts:84-89`
-- `getDatabase` (function) → `src/server/db/client.ts:93-98`
-- `db` (const) → `src/server/db/client.ts:100-104`
-- `sqlite` (const) → `src/server/db/client.ts:106-110`
+- `createDatabaseConnection` (function) → `src/server/db/client.ts:20-100`
+- `createTestDb` (function) → `src/server/db/client.ts:105-110`
+- `getDatabase` (function) → `src/server/db/client.ts:114-119`
+- `db` (const) → `src/server/db/client.ts:121-125`
+- `sqlite` (const) → `src/server/db/client.ts:127-131`
 
 ### `src/server/db/migrate.ts` (lines 1-22)
 - `runMigrations` (function) → `src/server/db/migrate.ts:5-8`
@@ -77,7 +79,7 @@ Manages ACID persistence in SQLite with WAL mode, schema definitions (companies,
 ### `src/server/db/sanitize.ts` (lines 1-78)
 - `sanitizeDatabase` (function) → `src/server/db/sanitize.ts:14-64`
 
-### `src/server/db/schema.ts` (lines 1-339)
+### `src/server/db/schema.ts` (lines 1-369)
 - `PHOTO_CATEGORIES` (const) → `src/server/db/schema.ts:8-8`
 - `PhotoCategory` (type) → `src/server/db/schema.ts:9-9`
 - `photoCategorySchema` (const) → `src/server/db/schema.ts:10-10`
@@ -114,6 +116,8 @@ Manages ACID persistence in SQLite with WAL mode, schema definitions (companies,
 - `postSlideInsertSchema` (const) → `src/server/db/schema.ts:295-306`
 - `aiProviderSettingsInsertSchema` (const) → `src/server/db/schema.ts:308-316`
 - `company_settings` (const) → `src/server/db/schema.ts:321-337`
+- `api_usage_rules` (const) → `src/server/db/schema.ts:342-351`
+- `api_usage_logs` (const) → `src/server/db/schema.ts:356-366`
 
 ### `src/server/db/seed.ts` (lines 1-508)
 - `getMonday` (function) → `src/server/db/seed.ts:15-21`

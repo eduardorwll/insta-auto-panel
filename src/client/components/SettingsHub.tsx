@@ -165,6 +165,39 @@ export function SettingsHub({ onOpenLegacyAIModal }: SettingsHubProps) {
   const [isSavingApp, setIsSavingApp] = useState(false);
   const [appSavedMsg, setAppSavedMsg] = useState<string | null>(null);
 
+  // 4. Catálogo OpenRouter (@openrouter/sdk) & Quotas de Uso de API (M10)
+  const [openRouterModels, setOpenRouterModels] = useState<
+    Array<{
+      id: string;
+      name: string;
+      category: string;
+      tierLabel: string;
+      promptPriceUsdPerMillion?: number;
+      completionPriceUsdPerMillion?: number;
+      imagePriceUsd?: number;
+      description: string;
+    }>
+  >([]);
+  const [quotaForm, setQuotaForm] = useState({
+    maxRpm: 15,
+    maxDailyTextRequests: 200,
+    maxDailyImageRequests: 100,
+    maxMonthlyBudgetUsd: 15.0,
+    alertThresholdPct: 80,
+    hardStopOnQuota: 1,
+  });
+  const [quotaUsage, setQuotaUsage] = useState<{
+    dailyTextCount: number;
+    dailyImageCount: number;
+    monthlyCostUsd: number;
+  }>({
+    dailyTextCount: 0,
+    dailyImageCount: 0,
+    monthlyCostUsd: 0,
+  });
+  const [isSavingQuotas, setIsSavingQuotas] = useState(false);
+  const [quotaSavedMsg, setQuotaSavedMsg] = useState<string | null>(null);
+
   const loadCompanySettings = async () => {
     if (!activeCompany) return;
     try {
@@ -208,10 +241,74 @@ export function SettingsHub({ onOpenLegacyAIModal }: SettingsHubProps) {
     }
   };
 
+  const loadOpenRouterAndQuotas = async () => {
+    if (!activeCompany) return;
+    try {
+      const [modelsRes, quotasRes] = await Promise.all([
+        fetch("/api/ai/openrouter/models"),
+        fetch(`/api/settings/quotas?companyId=${activeCompany.id}`),
+      ]);
+      const modelsJson = await modelsRes.json();
+      if (modelsJson.success && modelsJson.data?.models) {
+        setOpenRouterModels(modelsJson.data.models);
+      }
+      const quotasJson = await quotasRes.json();
+      if (quotasJson.success && quotasJson.data) {
+        if (quotasJson.data.rules) {
+          setQuotaForm({
+            maxRpm: quotasJson.data.rules.maxRpm ?? 15,
+            maxDailyTextRequests: quotasJson.data.rules.maxDailyTextRequests ?? 200,
+            maxDailyImageRequests: quotasJson.data.rules.maxDailyImageRequests ?? 100,
+            maxMonthlyBudgetUsd: quotasJson.data.rules.maxMonthlyBudgetUsd ?? 15.0,
+            alertThresholdPct: quotasJson.data.rules.alertThresholdPct ?? 80,
+            hardStopOnQuota: quotasJson.data.rules.hardStopOnQuota ?? 1,
+          });
+        }
+        if (quotasJson.data.usage) {
+          setQuotaUsage(quotasJson.data.usage);
+        }
+      }
+    } catch (err) {
+      console.error("Erro ao carregar catálogo OpenRouter / Quotas:", err);
+    }
+  };
+
   useEffect(() => {
     loadCompanySettings();
     loadLlmSettings(llmScope);
+    loadOpenRouterAndQuotas();
   }, [activeCompany?.id, llmScope]);
+
+  const handleSaveQuotas = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!activeCompany) return;
+    setIsSavingQuotas(true);
+    setQuotaSavedMsg(null);
+    try {
+      const res = await fetch("/api/settings/quotas", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: activeCompany.id,
+          ...quotaForm,
+          maxRpm: Number(quotaForm.maxRpm),
+          maxDailyTextRequests: Number(quotaForm.maxDailyTextRequests),
+          maxDailyImageRequests: Number(quotaForm.maxDailyImageRequests),
+          maxMonthlyBudgetUsd: Number(quotaForm.maxMonthlyBudgetUsd),
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || "Falha ao salvar quotas de uso");
+      }
+      setQuotaSavedMsg("Regras de limite e orçamento de API salvas com sucesso!");
+      setTimeout(() => setQuotaSavedMsg(null), 4000);
+    } catch (err) {
+      setQuotaSavedMsg(err instanceof Error ? err.message : "Erro ao salvar quotas");
+    } finally {
+      setIsSavingQuotas(false);
+    }
+  };
 
   const handleSaveInstagramCookies = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -841,6 +938,183 @@ export function SettingsHub({ onOpenLegacyAIModal }: SettingsHubProps) {
           </form>
         </CardContent>
       </Card>
+
+      {/* SEÇÃO 5 (M10): Catálogo Oficial OpenRouter (@openrouter/sdk) & Quotas de Uso de API */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <Card className="lg:col-span-7 border-slate-800 bg-slate-900 flex flex-col justify-between">
+          <CardHeader className="pb-3 border-b border-slate-800">
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <CardTitle className="text-base text-white flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-teal-400" />
+                <span>Catálogo Oficial OpenRouter SDK (Preços Abril 2026)</span>
+              </CardTitle>
+              <Badge variant="outline" className="text-xs border-teal-800 text-teal-300 font-mono">
+                @openrouter/sdk
+              </Badge>
+            </div>
+            <CardDescription className="text-xs text-slate-400">
+              Clique em um modelo de texto/visão para aplicá-lo diretamente no seletor de LLM com chave unificada.
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="p-5 space-y-2.5 max-h-[360px] overflow-y-auto">
+            {openRouterModels.map((m) => (
+              <div
+                key={m.id}
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-2.5 rounded-lg border border-slate-800 bg-slate-950/70 hover:border-teal-800 transition-colors"
+              >
+                <div className="min-w-0 space-y-0.5">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xs font-semibold text-white">{m.name}</span>
+                    <Badge variant="secondary" className="text-[11px] bg-slate-900 text-teal-300">
+                      {m.tierLabel}
+                    </Badge>
+                  </div>
+                  <p className="text-[11px] font-mono text-slate-400 truncate">{m.id}</p>
+                  <p className="text-[11px] text-slate-500">{m.description}</p>
+                </div>
+
+                <div className="flex items-center gap-2.5 shrink-0">
+                  <div className="text-right font-mono tabular-nums text-[11px] text-slate-300">
+                    {m.category === "image" ? (
+                      <span className="text-amber-300">${(m.imagePriceUsd ?? 0).toFixed(3)} / img</span>
+                    ) : (
+                      <span>
+                        In: ${(m.promptPriceUsdPerMillion ?? 0).toFixed(2)}/M · Out: $
+                        {(m.completionPriceUsdPerMillion ?? 0).toFixed(2)}/M
+                      </span>
+                    )}
+                  </div>
+                  {m.category !== "image" && (
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      onClick={() =>
+                        setLlmForm((prev) => ({
+                          ...prev,
+                          provider: "openrouter",
+                          modelName: m.id,
+                          baseUrl: "https://openrouter.ai/api/v1",
+                        }))
+                      }
+                      className="h-7 px-2.5 text-xs border-slate-700 bg-slate-900 text-teal-300 hover:bg-teal-950 hover:text-white active:scale-[0.97]"
+                    >
+                      Usar Modelo
+                    </Button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card className="lg:col-span-5 border-slate-800 bg-slate-900 flex flex-col justify-between">
+          <CardHeader className="pb-3 border-b border-slate-800">
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <CardTitle className="text-base text-white flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                <span>Regras de Limite & Orçamento de API</span>
+              </CardTitle>
+              <Badge variant="secondary" className="text-xs font-mono tabular-nums">
+                Mês: ${(quotaUsage.monthlyCostUsd || 0).toFixed(3)} / ${quotaForm.maxMonthlyBudgetUsd.toFixed(2)}
+              </Badge>
+            </div>
+            <CardDescription className="text-xs text-slate-400">
+              Proteja seu saldo contra loops ou gastos excessivos por empresa ({activeCompany.name}).
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="p-5">
+            <form onSubmit={handleSaveQuotas} className="space-y-3.5" data-testid="api-quotas-form">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <Label htmlFor="quota-rpm" className="text-xs text-slate-300">
+                    Limite RPM (Req/Min)
+                  </Label>
+                  <Input
+                    id="quota-rpm"
+                    type="number"
+                    min={1}
+                    max={300}
+                    value={quotaForm.maxRpm}
+                    onChange={(e) => setQuotaForm({ ...quotaForm, maxRpm: Number(e.target.value) })}
+                    className="h-9 text-xs font-mono tabular-nums"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="quota-budget" className="text-xs text-slate-300">
+                    Teto Mensal (USD)
+                  </Label>
+                  <Input
+                    id="quota-budget"
+                    type="number"
+                    step="0.5"
+                    min={0.5}
+                    value={quotaForm.maxMonthlyBudgetUsd}
+                    onChange={(e) =>
+                      setQuotaForm({ ...quotaForm, maxMonthlyBudgetUsd: Number(e.target.value) })
+                    }
+                    className="h-9 text-xs font-mono tabular-nums"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="quota-daily-text" className="text-xs text-slate-300">
+                    Roteiros IA / Dia ({quotaUsage.dailyTextCount} hoje)
+                  </Label>
+                  <Input
+                    id="quota-daily-text"
+                    type="number"
+                    min={1}
+                    value={quotaForm.maxDailyTextRequests}
+                    onChange={(e) =>
+                      setQuotaForm({ ...quotaForm, maxDailyTextRequests: Number(e.target.value) })
+                    }
+                    className="h-9 text-xs font-mono tabular-nums"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="quota-daily-img" className="text-xs text-slate-300">
+                    Imagens IA / Dia ({quotaUsage.dailyImageCount} hoje)
+                  </Label>
+                  <Input
+                    id="quota-daily-img"
+                    type="number"
+                    min={1}
+                    value={quotaForm.maxDailyImageRequests}
+                    onChange={(e) =>
+                      setQuotaForm({ ...quotaForm, maxDailyImageRequests: Number(e.target.value) })
+                    }
+                    className="h-9 text-xs font-mono tabular-nums"
+                  />
+                </div>
+              </div>
+
+              {quotaSavedMsg && (
+                <div className="p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-800 text-xs text-emerald-200 flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0" />
+                  <span>{quotaSavedMsg}</span>
+                </div>
+              )}
+
+              <div className="flex items-center justify-end pt-2 border-t border-slate-800">
+                <Button
+                  type="submit"
+                  size="sm"
+                  disabled={isSavingQuotas}
+                  className="bg-teal-600 hover:bg-teal-500 text-white gap-1.5 active:scale-[0.97]"
+                >
+                  <ShieldCheck className="h-4 w-4" />
+                  <span>{isSavingQuotas ? "Salvando..." : "Salvar Limites de API"}</span>
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

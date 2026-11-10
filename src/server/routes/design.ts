@@ -16,6 +16,13 @@ import {
   type OpenDesignSlideFields,
 } from "../services/design/template-engine";
 import { enqueuePostForAutoSocial } from "../services/export/autosocial";
+import { AIProviderFactory } from "../services/ai/factory";
+import { CURATED_OPENROUTER_IMAGE_MODELS } from "../services/ai/openrouter-client";
+import {
+  enforceApiQuotaAndRateLimit,
+  recordApiUsage,
+} from "../services/ai/quota-guard";
+import { getFormatSpec, type PostFormatId } from "../../shared/post-formats";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -79,6 +86,23 @@ export async function handleDesignRoutes(
       });
 
       const primary = body.brandPrimaryColor || "#0D9488";
+      const quotaCompanyId = body.companyId || "global";
+      let forceSvgByQuota = false;
+
+      if (providerName !== "pollinations" && providerName !== "comfyui-local") {
+        const quotaCheck = await enforceApiQuotaAndRateLimit(quotaCompanyId, "image_generation");
+        if (!quotaCheck.allowed) {
+          if (quotaCheck.fallbackToSvg) {
+            forceSvgByQuota = true;
+          } else {
+            return Response.json(
+              { error: quotaCheck.reason || "Limite de geração de imagem atingido." },
+              { status: 429 }
+            );
+          }
+        }
+      }
+
       const result = await adapter.generateBackground({
         prompt: buildImagePrompt({
           theme: body.theme,
@@ -93,9 +117,20 @@ export async function handleDesignRoutes(
         // Pollinations/ComfyUI não usam chave (mantém modo offline por padrão); provedores
         // pagos chamam a API real assim que existir uma chave configurada.
         offlineFallback:
-          body.offlineFallback ??
-          (providerName === "pollinations" || providerName === "comfyui-local" || !apiKey),
+          forceSvgByQuota ||
+          (body.offlineFallback ??
+            (providerName === "pollinations" || providerName === "comfyui-local" || !apiKey)),
       });
+
+      if (!result.isFallback && result.costEstimateUsd > 0) {
+        await recordApiUsage({
+          companyId: quotaCompanyId,
+          operationType: "image_generation",
+          provider: result.provider,
+          modelName: result.model,
+          estimatedCostUsd: result.costEstimateUsd,
+        });
+      }
 
       return Response.json({ success: true, ...result });
     } catch (err) {
@@ -241,6 +276,153 @@ export async function handleDesignRoutes(
         {
           error: "Falha ao renderizar carrossel no Studio OpenDesign",
           details: err instanceof Error ? err.message : String(err),
+        },
+        { status: 500 }
+      );
+    }
+  }
+
+  // 3. POST /api/design/preview-payloads (Prompt Inspector Dry-Run — US$ 0.00)
+  if (url.pathname === "/api/design/preview-payloads" && req.method === "POST") {
+    try {
+      const body = (await req.json()) as {
+        postId?: string;
+        companyId?: string;
+        slideNumber?: number;
+        templateId?: string;
+        formatId?: PostFormatId;
+        imageProvider?: string;
+        imageModel?: string;
+        userImagePrompt?: string;
+        headline?: string;
+        bodyText?: string;
+        ctaText?: string | null;
+      };
+
+      let targetCompanyId = body.companyId;
+      let targetPost: typeof posts.$inferSelect | undefined;
+
+      if (body.postId) {
+        const [found] = await db.select().from(posts).where(eq(posts.id, body.postId));
+        if (!found) {
+          return Response.json({ success: false, error: "Post não encontrado" }, { status: 404 });
+        }
+        targetPost = found;
+        targetCompanyId = found.companyId;
+      }
+
+      if (!targetCompanyId) {
+        return Response.json({ success: false, error: "postId ou companyId é obrigatório" }, { status: 400 });
+      }
+
+      const [company] = await db.select().from(companies).where(eq(companies.id, targetCompanyId));
+      if (!company) {
+        return Response.json({ success: false, error: "Empresa não encontrada" }, { status: 404 });
+      }
+
+      const slides = targetPost
+        ? await db
+            .select()
+            .from(post_slides)
+            .where(eq(post_slides.postId, targetPost.id))
+            .orderBy(asc(post_slides.slideNumber))
+        : [];
+
+      const slideNum = body.slideNumber || 1;
+      const targetSlide = slides.find((s) => s.slideNumber === slideNum) || slides[0];
+
+      const parsedTemplate = designTemplateSchema.safeParse(body.templateId || "modern-bold");
+      const templateId: DesignTemplateId = parsedTemplate.success
+        ? parsedTemplate.data
+        : "modern-bold";
+
+      const format = getFormatSpec(body.formatId);
+
+      // 1. Prompt de Texto/Roteiro
+      const aiProvider = await AIProviderFactory.getForCompany(company.id);
+      const textPromptPreview = aiProvider.buildPreviewPrompt({
+        theme: targetPost?.theme || "Tema editorial",
+        category: targetPost?.category || "Dica Prática",
+        slideCount: targetPost?.slideCount || format.defaultSlides,
+        company,
+      });
+
+      // 2. Payload da API de Imagem
+      const imageProvider = body.imageProvider || "openrouter-image";
+      const imageModel = body.imageModel || "black-forest-labs/flux.2-klein-4b";
+      const compiledImagePrompt = buildImagePrompt({
+        theme: targetPost?.theme,
+        niche: company.niche,
+        userPrompt:
+          body.userImagePrompt ||
+          targetSlide?.imagePrompt ||
+          `Fundo editorial para ${company.name}`,
+        brandPrimaryColor: company.primaryColor || "#0D9488",
+      });
+      const curatedImg = CURATED_OPENROUTER_IMAGE_MODELS.find((m) => m.id === imageModel);
+      const estimatedImageCostUsd =
+        imageProvider === "pollinations" || imageProvider === "comfyui-local"
+          ? 0
+          : curatedImg?.pricePerImageUsd ?? 0.03;
+
+      const imageApiPayload = {
+        provider: imageProvider,
+        model: imageModel,
+        endpoint:
+          imageProvider === "openrouter-image"
+            ? "https://openrouter.ai/api/v1/chat/completions"
+            : imageProvider === "gemini-imagen"
+              ? `https://generativelanguage.googleapis.com/v1beta/models/${imageModel}:predict`
+              : "https://api.openai.com/v1/images/generations",
+        compiledPrompt: compiledImagePrompt,
+        aspectRatio: format.aspectRatio,
+        width: format.width,
+        height: format.height,
+        estimatedCostUsd: estimatedImageCostUsd,
+      };
+
+      // 3. Payload do Motor OpenDesign
+      const openDesignEnginePayload: OpenDesignSlideFields = {
+        templateId,
+        formatId: format.id,
+        slideNumber: slideNum,
+        totalSlides: targetPost?.slideCount || Math.max(slides.length, 5),
+        headline:
+          body.headline ||
+          targetSlide?.title ||
+          targetPost?.theme ||
+          "Título Principal da Lâmina",
+        bodyText:
+          body.bodyText ||
+          targetSlide?.bodyText ||
+          `Desenvolvimento editorial para ${company.name}.`,
+        ctaText: body.ctaText !== undefined ? body.ctaText : targetSlide?.ctaText || null,
+        brandKit: {
+          companyName: company.seoDisplayName || company.name,
+          instagramHandle: company.instagramHandle,
+          primaryColor: company.primaryColor || "#0D9488",
+          secondaryColor: company.secondaryColor || "#0284C7",
+          backgroundColor: company.backgroundColor || "#0F172A",
+          accentColor: company.accentColor || "#10B981",
+        },
+      };
+
+      const svgPreview = renderOpenDesignSlideSvg(openDesignEnginePayload);
+
+      return Response.json({
+        success: true,
+        data: {
+          textPromptPreview,
+          imageApiPayload,
+          openDesignEnginePayload,
+          svgPreview,
+        },
+      });
+    } catch (err) {
+      return Response.json(
+        {
+          success: false,
+          error: err instanceof Error ? err.message : "Erro ao gerar preview de payloads",
         },
         { status: 500 }
       );

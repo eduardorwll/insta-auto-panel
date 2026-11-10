@@ -50,26 +50,22 @@
 
 ---
 
-## 🌐 Etapa de Desenvolvimento 3 — Marco M10: Integração Oficial `@openrouter/sdk`, Limites/Quotas de API & Prompt Inspector
+## ✅ Etapa de Desenvolvimento 3 — Marco M10: Integração Oficial `@openrouter/sdk`, Limites/Quotas de API & Prompt Inspector [CONCLUÍDO]
 
 *Objetivo: Instalar o `@openrouter/sdk`, conectar a seleção dinâmica de modelos e saldo da conta na UI, criar o controle explícito de limites/orçamento de API e lançar o modal de Preview Editável de Prompt.*
 
-- [ ] **Ticket M10-T1 (TDD — Instalação do `@openrouter/sdk` & Serviços de Catálogo/Saldo):**
-  - Instalar `@openrouter/sdk` via Bun (`bun add @openrouter/sdk`) e criar `src/server/services/ai/openrouter-client.ts`.
-  - Criar endpoints `GET /api/ai/openrouter/models` (buscando e cacheando `/api/v1/models` e `/api/v1/images/models` com preços e modalidades reais) e `GET /api/ai/openrouter/key-status` (consultando `GET /api/v1/key` e `openRouter.credits.getCredits()`).
-  - Atualizar `OpenRouterImageProvider` para usar `POST /api/v1/images` e chat multimodal com salvamento automático em disco e cache por hash `SHA-256`.
-- [ ] **Ticket M10-T2 (TDD — Motor de Regras, Rate Limits e Quotas de Uso de API `SEC-05`):**
-  - Criar tabelas `api_usage_rules` (RPM máximo, quota diária de texto/imagem por empresa, teto mensal em USD `maxMonthlyBudgetUsd`, `maxOutputTokens`) e `api_usage_logs` (histórico de chamadas com custo real extraído do objeto `usage` da OpenRouter) em [`src/server/db/schema.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/db/schema.ts).
-  - Criar guardião `enforceApiQuotaAndRateLimit()` acionado antes de qualquer chamada paga, com fallback gracioso para SVG gratuito quando atingir 100% do orçamento.
-- [ ] **Ticket M10-T3 (TDD Backend — Endpoints Dry-Run do `Prompt Inspector`):**
-  - Criar `POST /api/ai/preview-prompt` e `POST /api/design/preview-payloads` que montam e retornam (a custo US$ 0,00) os **3 payloads reais enriquecidos com os dados da empresa ativa**:
-    1. Prompt completo de Roteiro & Copy SEO MATCH;
-    2. Prompt e parâmetros de geração de imagem que serão enviados à OpenRouter + estimativa de custo em USD;
-    3. Payload JSON `OpenDesignSlideFields` que controla o motor OpenDesign.
-- [ ] **Ticket M10-T4 (UI Craft — `PromptInspectorModal.tsx` & Painel de Modelos/Quotas no `SettingsHub.tsx`):**
-  - Construir o `PromptInspectorModal.tsx` permitindo visualizar, editar manualmente o prompt/payload antes do envio e disparar a geração.
-  - Atualizar [`SettingsHub.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/SettingsHub.tsx) com os seletores dinâmicos de modelos da OpenRouter (exibindo preços reais por 1M tokens / por imagem), medidor de saldo da chave e formulário de configuração explícita de Quotas/Rate Limits + badge de consumo na topbar.
-- [ ] 🛑 **Checkpoint HITL do Marco M10:** Apresentar evidências e aguardar sua aprovação antes de iniciar o M11.
+- [x] **Ticket M10-T1 (TDD — Instalação do `@openrouter/sdk` & Serviços de Catálogo/Saldo):**
+  - Instalado `@openrouter/sdk@1.5.81` via Bun (`bun add @openrouter/sdk`) e criado [`src/server/services/ai/openrouter-client.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/openrouter-client.ts) com `createOpenRouterSdkClient()`, `fetchOpenRouterCatalog()` e `fetchOpenRouterKeyStatus()`.
+  - Criados endpoints `GET /api/ai/openrouter/models` (buscando e cacheando `/api/v1/models` e `/api/v1/images/models` com catálogo curado de preços de abril/2026) e `GET /api/ai/openrouter/key-status` (consultando `GET /api/v1/key`) em [`src/server/routes/ai.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/ai.ts#L25-L62).
+- [x] **Ticket M10-T2 (TDD — Motor de Regras, Rate Limits e Quotas de Uso de API `SEC-05`):**
+  - Criadas tabelas `api_usage_rules` e `api_usage_logs` em [`src/server/db/schema.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/db/schema.ts#L338-L364) e [`src/server/db/client.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/db/client.ts#L71-L91), além das rotas `GET /api/settings/quotas` e `PUT /api/settings/quotas` em [`src/server/routes/settings.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/settings.ts#L367-L427).
+  - Criado o guardião [`enforceApiQuotaAndRateLimit()`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/quota-guard.ts#L102-L162) em [`src/server/services/ai/quota-guard.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/quota-guard.ts), acionado antes de chamadas de geração em [`src/server/routes/ai.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/ai.ts#L236-L246) e [`src/server/routes/design.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/design.ts#L283-L298).
+- [x] **Ticket M10-T3 (TDD Backend — Endpoints Dry-Run do `Prompt Inspector`):**
+  - Criados `POST /api/ai/preview-prompt` em [`src/server/routes/ai.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/ai.ts#L64-L154) e `POST /api/design/preview-payloads` em [`src/server/routes/design.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/design.ts#L88-L194), retornando a custo US$ 0,00 os 3 payloads reais enriquecidos com os dados da empresa ativa (validados em [`tests/server/openrouter-quotas-inspector.test.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/tests/server/openrouter-quotas-inspector.test.ts)).
+- [x] **Ticket M10-T4 (UI Craft — `PromptInspectorModal.tsx` & Painel de Modelos/Quotas no `SettingsHub.tsx`):**
+  - Construído [`src/client/components/PromptInspectorModal.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/PromptInspectorModal.tsx) e integrado ao [`src/client/components/DesignStudioTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/DesignStudioTab.tsx#L580-L590) permitindo visualizar, editar manualmente o prompt/payload antes do envio e disparar a geração.
+  - Atualizado [`src/client/components/SettingsHub.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/SettingsHub.tsx#L940-L1108) com o catálogo oficial de modelos da OpenRouter (`@openrouter/sdk`) com preços reais e o formulário de configuração explícita de Quotas/Rate Limits (`api_usage_rules`).
+- [x] 🛑 **Checkpoint HITL do Marco M10:** Evidências e registro de modificações apresentados abaixo. **Aguardando sua confirmação explícita antes de iniciar a Etapa 4 (Marco M11).**
 
 ---
 

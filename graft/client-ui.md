@@ -28,22 +28,26 @@ covers:
   - src/client/components/DesignStudioModal.tsx:78-82 # const IMAGE_PROVIDER_OPTIONS
   - src/client/components/DesignStudioModal.tsx:115-149 # function wrapCanvasLines
   - src/client/components/DesignStudioModal.tsx:151-656 # function DesignStudioModal
-  - src/client/components/DesignStudioTab.tsx:1-1357
-  - src/client/components/DesignStudioTab.tsx:44-47 # interface DesignStudioTabProps
-  - src/client/components/DesignStudioTab.tsx:49-53 # const TEMPLATE_OPTIONS
-  - src/client/components/DesignStudioTab.tsx:76-80 # const IMAGE_PROVIDER_OPTIONS
-  - src/client/components/DesignStudioTab.tsx:98-106 # const EDITORIAL_CATEGORIES
-  - src/client/components/DesignStudioTab.tsx:108-108 # const TIME_PRESETS
-  - src/client/components/DesignStudioTab.tsx:110-118 # const DAYS_OF_WEEK
-  - src/client/components/DesignStudioTab.tsx:120-128 # const DAY_LABELS
-  - src/client/components/DesignStudioTab.tsx:130-136 # function getMonday
-  - src/client/components/DesignStudioTab.tsx:138-1356 # function DesignStudioTab
+  - src/client/components/DesignStudioTab.tsx:1-1393
+  - src/client/components/DesignStudioTab.tsx:46-49 # interface DesignStudioTabProps
+  - src/client/components/DesignStudioTab.tsx:51-55 # const TEMPLATE_OPTIONS
+  - src/client/components/DesignStudioTab.tsx:78-82 # const IMAGE_PROVIDER_OPTIONS
+  - src/client/components/DesignStudioTab.tsx:100-108 # const EDITORIAL_CATEGORIES
+  - src/client/components/DesignStudioTab.tsx:110-110 # const TIME_PRESETS
+  - src/client/components/DesignStudioTab.tsx:112-120 # const DAYS_OF_WEEK
+  - src/client/components/DesignStudioTab.tsx:122-130 # const DAY_LABELS
+  - src/client/components/DesignStudioTab.tsx:132-138 # function getMonday
+  - src/client/components/DesignStudioTab.tsx:140-1392 # function DesignStudioTab
   - src/client/components/LoginScreen.tsx:1-145
   - src/client/components/LoginScreen.tsx:8-10 # interface LoginScreenProps
   - src/client/components/LoginScreen.tsx:12-144 # function LoginScreen
   - src/client/components/PhotoBank.tsx:1-295
   - src/client/components/PhotoBank.tsx:11-11 # const CATEGORIES
   - src/client/components/PhotoBank.tsx:13-294 # function PhotoBank
+  - src/client/components/PromptInspectorModal.tsx:1-309
+  - src/client/components/PromptInspectorModal.tsx:15-30 # interface PromptInspectorModalProps
+  - src/client/components/PromptInspectorModal.tsx:32-46 # interface PreviewPayloadsResponse
+  - src/client/components/PromptInspectorModal.tsx:48-308 # function PromptInspectorModal
   - src/client/components/PublicationQueue.tsx:1-391
   - src/client/components/PublicationQueue.tsx:20-28 # const DAY_LABELS
   - src/client/components/PublicationQueue.tsx:30-30 # const DEFAULT_STATUS
@@ -53,13 +57,13 @@ covers:
   - src/client/components/SeoChecklist.tsx:1-58
   - src/client/components/SeoChecklist.tsx:4-9 # interface SeoChecklistProps
   - src/client/components/SeoChecklist.tsx:15-57 # function SeoChecklist
-  - src/client/components/SettingsHub.tsx:1-847
+  - src/client/components/SettingsHub.tsx:1-1121
   - src/client/components/SettingsHub.tsx:25-27 # interface SettingsHubProps
   - src/client/components/SettingsHub.tsx:29-45 # interface CompanySettingsData
   - src/client/components/SettingsHub.tsx:47-52 # const LLM_PROVIDER_OPTIONS
   - src/client/components/SettingsHub.tsx:93-97 # const IMAGE_PROVIDER_OPTIONS
   - src/client/components/SettingsHub.tsx:120-121 # const TEMPLATE_OPTIONS
-  - src/client/components/SettingsHub.tsx:127-846 # function SettingsHub
+  - src/client/components/SettingsHub.tsx:127-1120 # function SettingsHub
   - src/client/components/SidebarNavigation.tsx:1-240
   - src/client/components/SidebarNavigation.tsx:18-18 # type NavTabId
   - src/client/components/SidebarNavigation.tsx:20-27 # interface NavItem
@@ -201,16 +205,16 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `wrapCanvasLines` (function) → `src/client/components/DesignStudioModal.tsx:115-149`
 - `DesignStudioModal` (function) → `src/client/components/DesignStudioModal.tsx:151-656`
 
-### `src/client/components/DesignStudioTab.tsx` (lines 1-1357)
-- `DesignStudioTabProps` (interface) → `src/client/components/DesignStudioTab.tsx:44-47`
-- `TEMPLATE_OPTIONS` (const) → `src/client/components/DesignStudioTab.tsx:49-53`
-- `IMAGE_PROVIDER_OPTIONS` (const) → `src/client/components/DesignStudioTab.tsx:76-80`
-- `EDITORIAL_CATEGORIES` (const) → `src/client/components/DesignStudioTab.tsx:98-106`
-- `TIME_PRESETS` (const) → `src/client/components/DesignStudioTab.tsx:108-108`
-- `DAYS_OF_WEEK` (const) → `src/client/components/DesignStudioTab.tsx:110-118`
-- `DAY_LABELS` (const) → `src/client/components/DesignStudioTab.tsx:120-128`
-- `getMonday` (function) → `src/client/components/DesignStudioTab.tsx:130-136`
-- `DesignStudioTab` (function) → `src/client/components/DesignStudioTab.tsx:138-1356`
+### `src/client/components/DesignStudioTab.tsx` (lines 1-1393)
+- `DesignStudioTabProps` (interface) → `src/client/components/DesignStudioTab.tsx:46-49`
+- `TEMPLATE_OPTIONS` (const) → `src/client/components/DesignStudioTab.tsx:51-55`
+- `IMAGE_PROVIDER_OPTIONS` (const) → `src/client/components/DesignStudioTab.tsx:78-82`
+- `EDITORIAL_CATEGORIES` (const) → `src/client/components/DesignStudioTab.tsx:100-108`
+- `TIME_PRESETS` (const) → `src/client/components/DesignStudioTab.tsx:110-110`
+- `DAYS_OF_WEEK` (const) → `src/client/components/DesignStudioTab.tsx:112-120`
+- `DAY_LABELS` (const) → `src/client/components/DesignStudioTab.tsx:122-130`
+- `getMonday` (function) → `src/client/components/DesignStudioTab.tsx:132-138`
+- `DesignStudioTab` (function) → `src/client/components/DesignStudioTab.tsx:140-1392`
 
 ### `src/client/components/LoginScreen.tsx` (lines 1-145)
 - `LoginScreenProps` (interface) → `src/client/components/LoginScreen.tsx:8-10`
@@ -219,6 +223,11 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 ### `src/client/components/PhotoBank.tsx` (lines 1-295)
 - `CATEGORIES` (const) → `src/client/components/PhotoBank.tsx:11-11`
 - `PhotoBank` (function) → `src/client/components/PhotoBank.tsx:13-294`
+
+### `src/client/components/PromptInspectorModal.tsx` (lines 1-309)
+- `PromptInspectorModalProps` (interface) → `src/client/components/PromptInspectorModal.tsx:15-30`
+- `PreviewPayloadsResponse` (interface) → `src/client/components/PromptInspectorModal.tsx:32-46`
+- `PromptInspectorModal` (function) → `src/client/components/PromptInspectorModal.tsx:48-308`
 
 ### `src/client/components/PublicationQueue.tsx` (lines 1-391)
 - `DAY_LABELS` (const) → `src/client/components/PublicationQueue.tsx:20-28`
@@ -231,13 +240,13 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `SeoChecklistProps` (interface) → `src/client/components/SeoChecklist.tsx:4-9`
 - `SeoChecklist` (function) → `src/client/components/SeoChecklist.tsx:15-57`
 
-### `src/client/components/SettingsHub.tsx` (lines 1-847)
+### `src/client/components/SettingsHub.tsx` (lines 1-1121)
 - `SettingsHubProps` (interface) → `src/client/components/SettingsHub.tsx:25-27`
 - `CompanySettingsData` (interface) → `src/client/components/SettingsHub.tsx:29-45`
 - `LLM_PROVIDER_OPTIONS` (const) → `src/client/components/SettingsHub.tsx:47-52`
 - `IMAGE_PROVIDER_OPTIONS` (const) → `src/client/components/SettingsHub.tsx:93-97`
 - `TEMPLATE_OPTIONS` (const) → `src/client/components/SettingsHub.tsx:120-121`
-- `SettingsHub` (function) → `src/client/components/SettingsHub.tsx:127-846`
+- `SettingsHub` (function) → `src/client/components/SettingsHub.tsx:127-1120`
 
 ### `src/client/components/SidebarNavigation.tsx` (lines 1-240)
 - `NavTabId` (type) → `src/client/components/SidebarNavigation.tsx:18-18`

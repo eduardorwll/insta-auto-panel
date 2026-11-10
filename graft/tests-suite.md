@@ -38,6 +38,7 @@ covers:
   - tests/server/instagram-cookies.test.ts:1-56
   - tests/server/migrations-seed.test.ts:1-43
   - tests/server/multi-tenant-atomic-isolation.test.ts:1-304
+  - tests/server/openrouter-quotas-inspector.test.ts:1-192
   - tests/server/photos-api.test.ts:1-142
   - tests/server/post-formats.test.ts:1-56
   - tests/server/schedules-add-posts.test.ts:1-131
@@ -116,6 +117,8 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 ### `tests/server/migrations-seed.test.ts` (lines 1-43)
 
 ### `tests/server/multi-tenant-atomic-isolation.test.ts` (lines 1-304)
+
+### `tests/server/openrouter-quotas-inspector.test.ts` (lines 1-192)
 
 ### `tests/server/photos-api.test.ts` (lines 1-142)
 

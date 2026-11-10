@@ -61,6 +61,8 @@ export interface GeneratePostParams {
   photos?: TenantPhotoSummary[];
   /** Palavras-chave principais já usadas em outros posts da semana (evita repetição). */
   usedKeywords?: string[];
+  /** Sobrescrita manual de prompt vinda do Prompt Inspector (Marco M10). */
+  customPromptOverride?: string;
 }
 
 /**
@@ -125,6 +127,7 @@ export interface AIProvider {
   settings: AISettings;
   generate(params: GeneratePostParams): Promise<CarouselSlidesResponse>;
   testConnection(): Promise<{ success: boolean; message: string }>;
+  buildPreviewPrompt(params: GeneratePostParams): string;
 }
 
 export abstract class BaseAIProvider implements AIProvider {
@@ -133,10 +136,17 @@ export abstract class BaseAIProvider implements AIProvider {
   abstract generate(params: GeneratePostParams): Promise<CarouselSlidesResponse>;
   abstract testConnection(): Promise<{ success: boolean; message: string }>;
 
+  public buildPreviewPrompt(params: GeneratePostParams): string {
+    return this.buildPrompt(params);
+  }
+
   /**
    * Constrói o prompt de engenharia adaptativo calibrado para N slides, acervo do tenant e horários
    */
   protected buildPrompt(params: GeneratePostParams): string {
+    if (params.customPromptOverride?.trim()) {
+      return params.customPromptOverride.trim();
+    }
     const { company, photos } = params;
     const f = sanitizeTenantField;
     const targetSlideCount = params.slideCount || 5;

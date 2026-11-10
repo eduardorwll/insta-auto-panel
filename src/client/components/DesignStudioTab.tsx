@@ -36,9 +36,11 @@ import {
   Save,
   Calendar,
   Trash2,
+  Eye,
 } from "lucide-react";
 import type { StudioTemplateId, StudioImageProvider } from "./DesignStudioModal";
 import { SeoChecklist } from "./SeoChecklist";
+import { PromptInspectorModal } from "./PromptInspectorModal";
 import { useOpenDesignCanvas } from "../hooks/useOpenDesignCanvas";
 
 interface DesignStudioTabProps {
@@ -175,6 +177,7 @@ export function DesignStudioTab({
   const [newPostTheme, setNewPostTheme] = useState("");
   const [newPostSlideCount, setNewPostSlideCount] = useState(5);
   const [isDeletingPost, setIsDeletingPost] = useState(false);
+  const [isInspectorOpen, setIsInspectorOpen] = useState(false);
 
   // Carregar cronograma da semana
   const loadSchedule = async () => {
@@ -410,7 +413,7 @@ export function DesignStudioTab({
   };
 
   // Geração completa com IA (multi-tenant com acervo de fotos da empresa)
-  const handleGenerateAI = async () => {
+  const handleGenerateAI = async (customPromptOverride?: string) => {
     if (!activePost) return;
     setIsGeneratingAI(true);
     setStatusMessage(null);
@@ -423,6 +426,7 @@ export function DesignStudioTab({
           theme: activePost.theme,
           category: activePost.category,
           slideCount: activePost.slideCount,
+          customPromptOverride,
         }),
       });
 
@@ -575,6 +579,18 @@ export function DesignStudioTab({
         <div className="flex items-center gap-2 flex-wrap">
           <Button
             type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => setIsInspectorOpen(true)}
+            disabled={!activePost}
+            data-testid="open-prompt-inspector-btn"
+            className="border-slate-700 bg-slate-950 text-slate-200 hover:bg-slate-800 hover:text-white cursor-pointer gap-1.5 active:scale-[0.97]"
+          >
+            <Eye className="h-4 w-4 text-teal-400" />
+            <span>Inspecionar Prompt (Preview)</span>
+          </Button>
+          <Button
+            type="button"
             size="sm"
             onClick={() => setIsAddModalOpen(true)}
             className="border-teal-700 bg-teal-500 hover:bg-teal-400 text-slate-950 font-semibold cursor-pointer gap-1.5 active:scale-95"
@@ -672,7 +688,7 @@ export function DesignStudioTab({
                   type="button"
                   size="sm"
                   aria-label="Gerar com IA"
-                  onClick={handleGenerateAI}
+                  onClick={() => handleGenerateAI()}
                   disabled={isGeneratingAI || !activePost}
                   className="gap-2 bg-teal-600 hover:bg-teal-500 text-white cursor-pointer active:scale-95"
                 >
@@ -1351,6 +1367,26 @@ export function DesignStudioTab({
           </form>
         </DialogContent>
       </Dialog>
+
+      <PromptInspectorModal
+        isOpen={isInspectorOpen}
+        onClose={() => setIsInspectorOpen(false)}
+        postId={activePost?.id}
+        companyId={activeCompany?.id}
+        slideNumber={activeSlideIndex + 1}
+        templateId={selectedTemplate}
+        imageProvider={selectedProvider}
+        userImagePrompt={imagePrompt}
+        headline={currentSlide?.title || activePost?.theme || "Título do Slide"}
+        bodyText={currentSlide?.bodyText || ""}
+        ctaText={currentSlide?.ctaText}
+        onConfirmGenerateText={(customPrompt) => {
+          handleGenerateAI(customPrompt);
+        }}
+        onConfirmGenerateImage={(editedImgPrompt) => {
+          setImagePrompt(editedImgPrompt);
+        }}
+      />
     </div>
   );
 }

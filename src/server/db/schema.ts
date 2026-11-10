@@ -336,3 +336,33 @@ export const company_settings = sqliteTable("company_settings", {
   updatedAt: integer("updated_at", { mode: "timestamp" }).default(sql`(unixepoch())`),
 });
 
+/**
+ * Tabela de Regras e Limites Explícitos de Uso de API por Empresa/Global (Marco 10 — SEC-05)
+ */
+export const api_usage_rules = sqliteTable("api_usage_rules", {
+  companyId: text("company_id").primaryKey(), // 'global' ou slug da empresa
+  maxRpm: integer("max_rpm").notNull().default(15),
+  maxDailyTextRequests: integer("max_daily_text_requests").notNull().default(100),
+  maxDailyImageRequests: integer("max_daily_image_requests").notNull().default(50),
+  maxMonthlyBudgetUsd: real("max_monthly_budget_usd").notNull().default(10.0),
+  maxOutputTokens: integer("max_output_tokens").notNull().default(2500),
+  fallbackToSvgWhenExceeded: integer("fallback_to_svg_when_exceeded").notNull().default(1),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).default(sql`(unixepoch())`),
+});
+
+/**
+ * Tabela de Auditoria de Consumo e Custos Reais de API (Marco 10)
+ */
+export const api_usage_logs = sqliteTable("api_usage_logs", {
+  id: text("id").primaryKey(),
+  companyId: text("company_id").notNull(),
+  operationType: text("operation_type").notNull(), // 'text_generation' | 'image_generation' | 'vision_blueprint'
+  provider: text("provider").notNull(),
+  modelName: text("model_name").notNull(),
+  promptTokens: integer("prompt_tokens").notNull().default(0),
+  completionTokens: integer("completion_tokens").notNull().default(0),
+  estimatedCostUsd: real("estimated_cost_usd").notNull().default(0),
+  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`),
+});
+
+

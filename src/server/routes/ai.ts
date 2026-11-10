@@ -9,12 +9,150 @@ import {
 } from "../db/schema";
 import { AIProviderFactory } from "../services/ai/factory";
 import type { AISettings } from "../services/ai/provider";
+import {
+  fetchOpenRouterCatalog,
+  fetchOpenRouterKeyStatus,
+} from "../services/ai/openrouter-client";
+import {
+  enforceApiQuotaAndRateLimit,
+  recordApiUsage,
+} from "../services/ai/quota-guard";
 import { auditPost } from "../../shared/seo-quality";
 import { eq, asc } from "drizzle-orm";
 import { z } from "zod";
 
 export async function handleAIRoutes(req: Request, url: URL): Promise<Response | null> {
   const pathname = url.pathname;
+
+  // 0.1. GET /api/ai/openrouter/models
+  if (req.method === "GET" && pathname === "/api/ai/openrouter/models") {
+    const forceRefresh = url.searchParams.get("refresh") === "1";
+    const catalog = await fetchOpenRouterCatalog({ forceRefresh });
+    return Response.json({ success: true, data: catalog });
+  }
+
+  // 0.2. GET /api/ai/openrouter/key-status?companyId=...
+  if (req.method === "GET" && pathname === "/api/ai/openrouter/key-status") {
+    const companyId = url.searchParams.get("companyId") || "global";
+    const [setting] = await db
+      .select()
+      .from(ai_provider_settings)
+      .where(eq(ai_provider_settings.id, companyId));
+    const [globalSetting] = await db
+      .select()
+      .from(ai_provider_settings)
+      .where(eq(ai_provider_settings.id, "global"));
+    const apiKey = setting?.apiKey || globalSetting?.apiKey || null;
+    const status = await fetchOpenRouterKeyStatus(apiKey);
+    return Response.json({ success: true, data: status });
+  }
+
+  // 0.3. POST /api/ai/preview-prompt (Prompt Inspector Dry-Run — US$ 0.00)
+  if (req.method === "POST" && pathname === "/api/ai/preview-prompt") {
+    try {
+      const body = (await req.json()) as {
+        postId?: string;
+        companyId?: string;
+        theme?: string;
+        category?: string;
+        slideCount?: number;
+        customPromptOverride?: string;
+      };
+
+      let targetCompanyId = body.companyId;
+      let targetTheme = body.theme;
+      let targetCategory = body.category;
+      let targetSlideCount = body.slideCount || 5;
+      let scheduleId: string | null = null;
+
+      if (body.postId) {
+        const [post] = await db.select().from(posts).where(eq(posts.id, body.postId));
+        if (!post) {
+          return Response.json({ success: false, error: "Post não encontrado" }, { status: 404 });
+        }
+        targetCompanyId = post.companyId;
+        targetTheme = targetTheme || post.theme;
+        targetCategory = targetCategory || post.category;
+        targetSlideCount = body.slideCount || post.slideCount || 5;
+        scheduleId = post.scheduleId;
+      }
+
+      if (!targetCompanyId) {
+        return Response.json({ success: false, error: "postId ou companyId é obrigatório" }, { status: 400 });
+      }
+
+      const [company] = await db.select().from(companies).where(eq(companies.id, targetCompanyId));
+      if (!company) {
+        return Response.json({ success: false, error: "Empresa não encontrada" }, { status: 404 });
+      }
+
+      const companyPhotos = await db
+        .select()
+        .from(photo_assets)
+        .where(eq(photo_assets.companyId, company.id));
+
+      const photosPayload = companyPhotos.map((p) => {
+        let parsedTags: string[] = [];
+        if (p.tags) {
+          try {
+            parsedTags = JSON.parse(p.tags);
+          } catch {}
+        }
+        return {
+          id: p.id,
+          originalName: p.originalName,
+          category: p.category,
+          tags: parsedTags,
+        };
+      });
+
+      let usedKeywords: string[] = [];
+      if (scheduleId) {
+        const siblingPosts = await db.select().from(posts).where(eq(posts.scheduleId, scheduleId));
+        usedKeywords = siblingPosts
+          .filter((p) => p.id !== body.postId && p.keywordCluster)
+          .flatMap((p) => {
+            try {
+              const parsed: unknown = JSON.parse(p.keywordCluster as string);
+              return Array.isArray(parsed) ? parsed.filter((k): k is string => typeof k === "string") : [];
+            } catch {
+              return [];
+            }
+          });
+      }
+
+      const provider = await AIProviderFactory.getForCompany(company.id);
+      const prompt = provider.buildPreviewPrompt({
+        theme: targetTheme,
+        category: targetCategory,
+        slideCount: targetSlideCount,
+        company,
+        photos: photosPayload,
+        usedKeywords,
+        customPromptOverride: body.customPromptOverride,
+      });
+
+      return Response.json({
+        success: true,
+        data: {
+          prompt,
+          companyName: company.name,
+          companyId: company.id,
+          provider: provider.settings.provider,
+          modelName: provider.settings.modelName,
+          estimatedCostUsd: 0.0028,
+        },
+      });
+    } catch (err) {
+      return Response.json(
+        {
+          success: false,
+          error: err instanceof Error ? err.message : "Erro ao gerar preview do prompt",
+        },
+        { status: 500 }
+      );
+    }
+  }
 
   // 1. GET /api/ai/settings?companyId=...
   if (req.method === "GET" && pathname === "/api/ai/settings") {
@@ -188,6 +326,18 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
           }
         });
 
+      // Validar Quotas e Rate Limits da empresa antes do gasto de tokens (SEC-05 / Marco M10)
+      const quotaCheck = await enforceApiQuotaAndRateLimit(company.id, "text_generation");
+      if (!quotaCheck.allowed) {
+        return Response.json(
+          {
+            success: false,
+            error: quotaCheck.reason || "Limite de uso de API atingido.",
+          },
+          { status: 429 }
+        );
+      }
+
       // Chamar geração agnóstica calibrada com dados do tenant e fotos
       const generated = await provider.generate({
         usedKeywords,
@@ -196,6 +346,15 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
         slideCount: targetSlideCount,
         company,
         photos: photosPayload,
+        customPromptOverride: body.customPromptOverride,
+      });
+
+      await recordApiUsage({
+        companyId: company.id,
+        operationType: "text_generation",
+        provider: provider.settings.provider,
+        modelName: provider.settings.modelName,
+        estimatedCostUsd: 0.0028,
       });
 
       // Atualizar o post no SQLite com sugestões da IA

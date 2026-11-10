@@ -13,18 +13,39 @@ covers:
   - src/server/services/ai/mlstudio.ts:12-96 # class MLStudioProvider
   - src/server/services/ai/openai.ts:1-98
   - src/server/services/ai/openai.ts:8-97 # class OpenAIProvider
-  - src/server/services/ai/provider.ts:1-275
+  - src/server/services/ai/openrouter-client.ts:1-290
+  - src/server/services/ai/openrouter-client.ts:3-11 # interface OpenRouterTextModelItem
+  - src/server/services/ai/openrouter-client.ts:13-19 # interface OpenRouterImageModelItem
+  - src/server/services/ai/openrouter-client.ts:21-26 # interface OpenRouterCatalogResult
+  - src/server/services/ai/openrouter-client.ts:28-36 # interface OpenRouterKeyStatus
+  - src/server/services/ai/openrouter-client.ts:38-47 # const CURATED_OPENROUTER_TEXT_MODELS
+  - src/server/services/ai/openrouter-client.ts:95-102 # const CURATED_OPENROUTER_IMAGE_MODELS
+  - src/server/services/ai/openrouter-client.ts:145-150 # function createOpenRouterSdkClient
+  - src/server/services/ai/openrouter-client.ts:156-225 # function fetchOpenRouterCatalog
+  - src/server/services/ai/openrouter-client.ts:230-289 # function fetchOpenRouterKeyStatus
+  - src/server/services/ai/provider.ts:1-285
   - src/server/services/ai/provider.ts:5-16 # interface CompanyProfile
   - src/server/services/ai/provider.ts:18-26 # interface AISettings
   - src/server/services/ai/provider.ts:28-33 # interface TenantPhotoSummary
   - src/server/services/ai/provider.ts:35-41 # const carouselSlideSchema
   - src/server/services/ai/provider.ts:43-52 # const carouselResponseSchema
   - src/server/services/ai/provider.ts:54-54 # type CarouselSlidesResponse
-  - src/server/services/ai/provider.ts:56-64 # interface GeneratePostParams
-  - src/server/services/ai/provider.ts:71-78 # function sanitizeTenantField
-  - src/server/services/ai/provider.ts:80-80 # const LOCAL_PROVIDERS
-  - src/server/services/ai/provider.ts:87-122 # function assertSafeOutboundUrl
-  - src/server/services/ai/provider.ts:124-128 # interface AIProvider
+  - src/server/services/ai/provider.ts:56-66 # interface GeneratePostParams
+  - src/server/services/ai/provider.ts:73-80 # function sanitizeTenantField
+  - src/server/services/ai/provider.ts:82-82 # const LOCAL_PROVIDERS
+  - src/server/services/ai/provider.ts:89-124 # function assertSafeOutboundUrl
+  - src/server/services/ai/provider.ts:126-131 # interface AIProvider
+  - src/server/services/ai/quota-guard.ts:1-269
+  - src/server/services/ai/quota-guard.ts:5-5 # type ApiOperationType
+  - src/server/services/ai/quota-guard.ts:7-15 # interface ApiUsageRuleConfig
+  - src/server/services/ai/quota-guard.ts:17-23 # interface ApiUsageSummary
+  - src/server/services/ai/quota-guard.ts:25-25 # const rpmSlidingWindow
+  - src/server/services/ai/quota-guard.ts:27-51 # function ensureQuotaTablesExist
+  - src/server/services/ai/quota-guard.ts:53-81 # function getApiUsageRules
+  - src/server/services/ai/quota-guard.ts:83-84 # function upsertApiUsageRules
+  - src/server/services/ai/quota-guard.ts:129-171 # function getApiUsageSummary
+  - src/server/services/ai/quota-guard.ts:173-193 # function recordApiUsage
+  - src/server/services/ai/quota-guard.ts:195-268 # function enforceApiQuotaAndRateLimit
   - src/server/services/auth/session.ts:1-139
   - src/server/services/auth/session.ts:3-3 # const SESSION_COOKIE_NAME
   - src/server/services/auth/session.ts:4-5 # const SESSION_TTL_SECONDS
@@ -129,18 +150,41 @@ Implements the Agnostic AI Adapter Pattern (ML Studio API, Gemini, OpenAI, Claud
 ### `src/server/services/ai/openai.ts` (lines 1-98)
 - `OpenAIProvider` (class) → `src/server/services/ai/openai.ts:8-97`
 
-### `src/server/services/ai/provider.ts` (lines 1-275)
+### `src/server/services/ai/openrouter-client.ts` (lines 1-290)
+- `OpenRouterTextModelItem` (interface) → `src/server/services/ai/openrouter-client.ts:3-11`
+- `OpenRouterImageModelItem` (interface) → `src/server/services/ai/openrouter-client.ts:13-19`
+- `OpenRouterCatalogResult` (interface) → `src/server/services/ai/openrouter-client.ts:21-26`
+- `OpenRouterKeyStatus` (interface) → `src/server/services/ai/openrouter-client.ts:28-36`
+- `CURATED_OPENROUTER_TEXT_MODELS` (const) → `src/server/services/ai/openrouter-client.ts:38-47`
+- `CURATED_OPENROUTER_IMAGE_MODELS` (const) → `src/server/services/ai/openrouter-client.ts:95-102`
+- `createOpenRouterSdkClient` (function) → `src/server/services/ai/openrouter-client.ts:145-150`
+- `fetchOpenRouterCatalog` (function) → `src/server/services/ai/openrouter-client.ts:156-225`
+- `fetchOpenRouterKeyStatus` (function) → `src/server/services/ai/openrouter-client.ts:230-289`
+
+### `src/server/services/ai/provider.ts` (lines 1-285)
 - `CompanyProfile` (interface) → `src/server/services/ai/provider.ts:5-16`
 - `AISettings` (interface) → `src/server/services/ai/provider.ts:18-26`
 - `TenantPhotoSummary` (interface) → `src/server/services/ai/provider.ts:28-33`
 - `carouselSlideSchema` (const) → `src/server/services/ai/provider.ts:35-41`
 - `carouselResponseSchema` (const) → `src/server/services/ai/provider.ts:43-52`
 - `CarouselSlidesResponse` (type) → `src/server/services/ai/provider.ts:54-54`
-- `GeneratePostParams` (interface) → `src/server/services/ai/provider.ts:56-64`
-- `sanitizeTenantField` (function) → `src/server/services/ai/provider.ts:71-78`
-- `LOCAL_PROVIDERS` (const) → `src/server/services/ai/provider.ts:80-80`
-- `assertSafeOutboundUrl` (function) → `src/server/services/ai/provider.ts:87-122`
-- `AIProvider` (interface) → `src/server/services/ai/provider.ts:124-128`
+- `GeneratePostParams` (interface) → `src/server/services/ai/provider.ts:56-66`
+- `sanitizeTenantField` (function) → `src/server/services/ai/provider.ts:73-80`
+- `LOCAL_PROVIDERS` (const) → `src/server/services/ai/provider.ts:82-82`
+- `assertSafeOutboundUrl` (function) → `src/server/services/ai/provider.ts:89-124`
+- `AIProvider` (interface) → `src/server/services/ai/provider.ts:126-131`
+
+### `src/server/services/ai/quota-guard.ts` (lines 1-269)
+- `ApiOperationType` (type) → `src/server/services/ai/quota-guard.ts:5-5`
+- `ApiUsageRuleConfig` (interface) → `src/server/services/ai/quota-guard.ts:7-15`
+- `ApiUsageSummary` (interface) → `src/server/services/ai/quota-guard.ts:17-23`
+- `rpmSlidingWindow` (const) → `src/server/services/ai/quota-guard.ts:25-25`
+- `ensureQuotaTablesExist` (function) → `src/server/services/ai/quota-guard.ts:27-51`
+- `getApiUsageRules` (function) → `src/server/services/ai/quota-guard.ts:53-81`
+- `upsertApiUsageRules` (function) → `src/server/services/ai/quota-guard.ts:83-84`
+- `getApiUsageSummary` (function) → `src/server/services/ai/quota-guard.ts:129-171`
+- `recordApiUsage` (function) → `src/server/services/ai/quota-guard.ts:173-193`
+- `enforceApiQuotaAndRateLimit` (function) → `src/server/services/ai/quota-guard.ts:195-268`
 
 ### `src/server/services/auth/session.ts` (lines 1-139)
 - `SESSION_COOKIE_NAME` (const) → `src/server/services/auth/session.ts:3-3`

@@ -339,3 +339,26 @@ flowchart TD
    - `bun run typecheck` (`tsc --noEmit`): **0 erros**.
    - `taste-skill lint`: **0 FAIL** (e redução de warnings de 79 para 75).
    - `vite build`: **Sucesso (220ms)**.
+
+### ✅ Etapa 3 (Marco M10): Integração Oficial `@openrouter/sdk`, Limites/Quotas de API & Prompt Inspector — CONCLUÍDA
+
+1. **Dependências Instaladas:**
+   - `@openrouter/sdk@1.5.81` instalada via `bun add @openrouter/sdk` em [`package.json`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/package.json).
+2. **Arquivos Criados:**
+   - [`src/server/services/ai/openrouter-client.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/openrouter-client.ts): Wrapper oficial para `@openrouter/sdk` (`createOpenRouterSdkClient`), catálogo dinâmico + curado de modelos de texto/visão e imagem com preços de Abril/2026 (`fetchOpenRouterCatalog`) e consulta de saldo/limites de chave (`fetchOpenRouterKeyStatus`).
+   - [`src/server/services/ai/quota-guard.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/quota-guard.ts): Motor de governança de uso de API (`getApiUsageRules`, `upsertApiUsageRules`, `getApiUsageSummary`, `recordApiUsage`, `enforceApiQuotaAndRateLimit`) com controle de RPM, quota diária de texto/imagem e teto mensal em USD (`429 Too Many Requests`).
+   - [`src/client/components/PromptInspectorModal.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/PromptInspectorModal.tsx): Modal de Preview Editável de Prompt em 3 abas (1. Roteiro & Copy SEO MATCH, 2. Prompt da API de Imagem com estimativa de custo em USD, 3. Payload JSON `OpenDesignSlideFields` a US$ 0,00).
+   - [`tests/server/openrouter-quotas-inspector.test.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/tests/server/openrouter-quotas-inspector.test.ts): Suíte TDD cobrindo `@openrouter/sdk`, bloqueio de orçamento em `/api/settings/quotas` e endpoints Dry-Run `/api/ai/preview-prompt` e `/api/design/preview-payloads`.
+3. **Arquivos Modificados:**
+   - [`src/server/db/schema.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/db/schema.ts#L338-L364) & [`src/server/db/client.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/db/client.ts#L71-L91): Adicionadas tabelas `api_usage_rules` e `api_usage_logs`.
+   - [`src/server/services/ai/provider.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/provider.ts#L56-L150): Adicionado método público `buildPreviewPrompt()` e suporte a `customPromptOverride` em `generatePostContent()`.
+   - [`src/server/routes/ai.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/ai.ts#L25-L246): Adicionadas rotas `GET /api/ai/openrouter/models`, `GET /api/ai/openrouter/key-status`, `POST /api/ai/preview-prompt` e aplicação de `enforceApiQuotaAndRateLimit()` + `recordApiUsage()` em `POST /api/ai/generate-post`.
+   - [`src/server/routes/design.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/design.ts#L88-L418): Adicionada rota `POST /api/design/preview-payloads` e aplicação de `enforceApiQuotaAndRateLimit()` nas rotas de geração de imagem com IA.
+   - [`src/server/routes/settings.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/settings.ts#L367-L427): Adicionadas rotas `GET /api/settings/quotas` e `PUT /api/settings/quotas`.
+   - [`src/client/components/DesignStudioTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/DesignStudioTab.tsx#L580-L590): Adicionado botão **"Inspecionar Prompt (Preview)"** e conectado o `PromptInspectorModal` à geração de roteiros e imagens.
+   - [`src/client/components/SettingsHub.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/SettingsHub.tsx#L940-L1108): Adicionado card do Catálogo Oficial OpenRouter (`@openrouter/sdk`) com preços reais e formulário de Regras de Limite & Orçamento de API.
+4. **Validação Executada:**
+   - `bun test`: **101 pass, 0 fail** (28 arquivos de teste, 526 `expect()` calls).
+   - `bun run typecheck` (`tsc --noEmit`): **0 erros**.
+   - `taste-skill lint`: **0 FAIL**.
+   - `vite build`: **Sucesso (216ms)**.

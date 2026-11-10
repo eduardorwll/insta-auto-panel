@@ -9,6 +9,11 @@ import {
 import fs from "node:fs/promises";
 import path from "node:path";
 import { parseInstagramCookiesInput } from "../services/instagram/cookies";
+import {
+  getApiUsageRules,
+  getApiUsageSummary,
+  upsertApiUsageRules,
+} from "../services/ai/quota-guard";
 
 /**
  * Garante registro padrão em company_settings para uma empresa existente
@@ -354,6 +359,69 @@ export async function handleSettingsRoutes(
             error instanceof Error
               ? error.message
               : "Erro ao salvar configurações da aplicação",
+        },
+        { status: 400 }
+      );
+    }
+  }
+
+  // 4. GET /api/settings/quotas?companyId=...
+  if (url.pathname === "/api/settings/quotas" && req.method === "GET") {
+    const companyId = url.searchParams.get("companyId") || "global";
+    if (!isValidCompanyId(companyId)) {
+      return Response.json(
+        { success: false, error: "companyId possui formato inválido" },
+        { status: 400 }
+      );
+    }
+    const rules = await getApiUsageRules(companyId);
+    const summary = await getApiUsageSummary(companyId);
+    return Response.json({
+      success: true,
+      data: { rules, summary },
+    });
+  }
+
+  // 5. PUT /api/settings/quotas
+  if (url.pathname === "/api/settings/quotas" && req.method === "PUT") {
+    try {
+      const body = (await req.json()) as {
+        companyId?: string;
+        maxRpm?: number;
+        maxDailyTextRequests?: number;
+        maxDailyImageRequests?: number;
+        maxMonthlyBudgetUsd?: number;
+        maxOutputTokens?: number;
+        fallbackToSvgWhenExceeded?: boolean;
+      };
+      const companyId = body.companyId || "global";
+      if (!isValidCompanyId(companyId)) {
+        return Response.json(
+          { success: false, error: "companyId possui formato inválido" },
+          { status: 400 }
+        );
+      }
+
+      const rules = await upsertApiUsageRules({
+        companyId,
+        maxRpm: body.maxRpm,
+        maxDailyTextRequests: body.maxDailyTextRequests,
+        maxDailyImageRequests: body.maxDailyImageRequests,
+        maxMonthlyBudgetUsd: body.maxMonthlyBudgetUsd,
+        maxOutputTokens: body.maxOutputTokens,
+        fallbackToSvgWhenExceeded: body.fallbackToSvgWhenExceeded,
+      });
+      const summary = await getApiUsageSummary(companyId);
+
+      return Response.json({
+        success: true,
+        data: { rules, summary },
+      });
+    } catch (err) {
+      return Response.json(
+        {
+          success: false,
+          error: err instanceof Error ? err.message : "Erro ao salvar quotas de API",
         },
         { status: 400 }
       );
