@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("M5 E2E: Exportação Canva Pro (Bulk Create) e Fila AutoSocial", () => {
-  test("deve baixar CSV do Canva com UTF-8 BOM, enfileirar posts no AutoSocial e exibir contadores sem erros no console", async ({
+test.describe("M5/M9 E2E: Publicação Autônoma e Fila AutoSocial (Zero Canva)", () => {
+  test("deve enfileirar posts no AutoSocial e exibir contadores sem erros no console", async ({
     page,
   }) => {
     const consoleErrors: string[] = [];
@@ -36,30 +36,11 @@ test.describe("M5 E2E: Exportação Canva Pro (Bulk Create) e Fila AutoSocial", 
     await expect(queueTab).toBeVisible();
     await queueTab.click();
 
-    // 5. Validar cards de controle
-    await expect(page.getByRole("heading", { name: /Criar em Lote no Canva/i })).toBeVisible();
+    // 5. Validar cards de controle (Zero Canva)
     await expect(page.getByRole("heading", { name: /Fila no Sistema de Arquivos/i })).toBeVisible();
     await expect(page.getByRole("heading", { name: /Publicação Autônoma/i })).toBeVisible();
 
-    // 6. Testar download do CSV do Canva Pro Bulk Create
-    const canvaDownloadBtn = page.getByRole("button", { name: /Baixar CSV Canva Pro/i });
-    await expect(canvaDownloadBtn).toBeVisible();
-
-    const [download] = await Promise.all([
-      page.waitForEvent("download"),
-      canvaDownloadBtn.click(),
-    ]);
-
-    const suggestedName = download.suggestedFilename();
-    expect(suggestedName).toContain("canva_bulk_create_");
-    expect(suggestedName).toContain(".csv");
-
-    // Validar mensagem de sucesso na tela
-    await expect(
-      page.getByText(/Arquivo CSV para Canva Bulk Create gerado e baixado com sucesso/i)
-    ).toBeVisible();
-
-    // 7. Enfileirar post individual na fila do AutoSocial
+    // 6. Enfileirar post individual na fila do AutoSocial
     const firstEnqueueBtn = page.getByRole("button", { name: /Enfileirar Post/i }).first();
     await expect(firstEnqueueBtn).toBeVisible();
     await firstEnqueueBtn.click();

@@ -216,10 +216,10 @@ export async function handleDesignRoutes(
         });
       }
 
-      // Atualiza status do post para 'ready_canva' (ou 'queued' se enqueueImmediately for true)
+      // Atualiza status do post para 'ready_design' (ou 'queued' se enqueueImmediately for true)
       await db
         .update(posts)
-        .set({ status: "ready_canva" })
+        .set({ status: "ready_design" })
         .where(eq(posts.id, post.id));
 
       let queuedFiles: string[] = [];

@@ -32,7 +32,7 @@ const DEFAULT_STATUS = { label: "Rascunho", color: "bg-slate-800 text-slate-300 
 const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   draft: DEFAULT_STATUS,
   ai_generated: { label: "Gerado com IA", color: "bg-teal-950/60 text-teal-300 border-teal-800" },
-  ready_canva: { label: "Pronto Studio / Canva", color: "bg-sky-950/60 text-sky-300 border-sky-800" },
+  ready_design: { label: "Pronto Studio OpenDesign", color: "bg-sky-950/60 text-sky-300 border-sky-800" },
   queued: { label: "Enfileirado AutoSocial", color: "bg-amber-950/60 text-amber-300 border-amber-800" },
   posted: { label: "Publicado no Instagram", color: "bg-emerald-950/60 text-emerald-300 border-emerald-800" },
 };
@@ -57,7 +57,6 @@ export function PublicationQueue() {
     pendingFiles: [],
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [isExportingCanva, setIsExportingCanva] = useState(false);
   const [isEnqueueingAll, setIsEnqueueingAll] = useState(false);
   const [enqueueingPostId, setEnqueueingPostId] = useState<string | null>(null);
   const [message, setMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
@@ -101,37 +100,6 @@ export function PublicationQueue() {
     fetchSchedule();
     fetchQueueStatus();
   }, [activeCompany?.id, weekStartDate]);
-
-  // Exportar Canva Bulk Create CSV
-  const handleExportCanva = async () => {
-    const targetSchedId =
-      scheduleId ||
-      posts[0]?.scheduleId ||
-      `sched_${activeCompany?.id}_${weekStartDate.replace(/-/g, "")}`;
-    if (!activeCompany || !targetSchedId) return;
-    setIsExportingCanva(true);
-    setMessage(null);
-
-    try {
-      const downloadUrl = `/api/export/canva?scheduleId=${targetSchedId}&companyId=${activeCompany.id}`;
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.setAttribute("download", `canva_bulk_create_${activeCompany.id}_${weekStartDate}.csv`);
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-
-      setMessage({
-        text: "Arquivo CSV para Canva Bulk Create gerado e baixado com sucesso!",
-        type: "success",
-      });
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Falha na exportação para o Canva";
-      setMessage({ text: msg, type: "error" });
-    } finally {
-      setIsExportingCanva(false);
-    }
-  };
 
   // Enfileirar semana completa no AutoSocial
   const handleEnqueueAll = async () => {
@@ -235,44 +203,7 @@ export function PublicationQueue() {
       )}
 
       {/* Grid de Ações Principais e Status do AutoSocial */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
-        {/* Card Canva Pro */}
-        <Card className="border-slate-800 bg-slate-900 p-5 space-y-4 flex flex-col justify-between">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-sky-400 flex items-center gap-1.5">
-                <FileSpreadsheet className="h-4 w-4" />
-                Canva Pro (Bulk Create)
-              </span>
-              <Badge variant="outline" className="text-xs text-sky-300 border-sky-800">
-                UTF-8 BOM
-              </Badge>
-            </div>
-            <h3 className="text-base font-bold text-white">Criar em Lote no Canva</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Exporte todos os textos, lâminas e cores do Brand Kit em formato CSV compatível com o aplicativo Bulk Create do Canva Pro.
-            </p>
-          </div>
-
-          <Button
-            onClick={handleExportCanva}
-            disabled={isExportingCanva}
-            className="w-full gap-2 bg-sky-600 hover:bg-sky-500 text-white"
-          >
-            {isExportingCanva ? (
-              <>
-                <RefreshCw className="h-4 w-4 animate-spin" />
-                <span>Gerando CSV...</span>
-              </>
-            ) : (
-              <>
-                <FileSpreadsheet className="h-4 w-4" />
-                <span>Baixar CSV Canva Pro</span>
-              </>
-            )}
-          </Button>
-        </Card>
-
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
         {/* Card Fila AutoSocial Status */}
         <Card className="border-slate-800 bg-slate-900 p-5 space-y-4 flex flex-col justify-between">
           <div className="space-y-2">

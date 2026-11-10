@@ -15,7 +15,7 @@ import {
   Building2,
 } from "lucide-react";
 
-export type NavTabId = "calendar" | "studio" | "canva" | "photos" | "queue" | "ai" | "company";
+export type NavTabId = "calendar" | "studio" | "photos" | "queue" | "ai" | "company";
 
 export interface NavItem {
   id: NavTabId;
@@ -43,19 +43,11 @@ export const NAV_GROUPS: NavGroup[] = [
       },
       {
         id: "studio",
-        label: "Studio Visual 4:5",
+        label: "Studio Visual OpenDesign",
         shortLabel: "Studio",
         icon: Layers,
         badge: "100% IA",
         badgeColor: "bg-teal-950 text-teal-300 border-teal-800",
-      },
-      {
-        id: "canva",
-        label: "Exportar Canva Pro",
-        shortLabel: "Canva CSV",
-        icon: FileSpreadsheet,
-        badge: "CSV",
-        badgeColor: "bg-sky-950 text-sky-300 border-sky-800",
       },
     ],
   },

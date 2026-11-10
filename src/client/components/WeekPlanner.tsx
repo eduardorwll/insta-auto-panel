@@ -245,7 +245,7 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
                     className={`w-1.5 h-1.5 rounded-full shrink-0 ${
                       post.status === "queued"
                         ? "bg-emerald-400"
-                        : post.status === "ready_canva"
+                        : post.status === "ready_design"
                         ? "bg-teal-400"
                         : post.status === "ai_generated"
                         ? "bg-sky-400"
@@ -255,7 +255,7 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
                   <span className="leading-none">
                     {post.status === "queued"
                       ? "Na Fila"
-                      : post.status === "ready_canva"
+                      : post.status === "ready_design"
                       ? "Pronto"
                       : post.status === "ai_generated"
                       ? "Com IA"
@@ -296,7 +296,7 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
                       className={`w-2 h-2 rounded-full shrink-0 ${
                         activePost.status === "queued"
                           ? "bg-emerald-400"
-                          : activePost.status === "ready_canva"
+                          : activePost.status === "ready_design"
                           ? "bg-teal-400"
                           : activePost.status === "ai_generated"
                           ? "bg-sky-400"
@@ -306,7 +306,7 @@ export function WeekPlanner({ onOpenStudio }: { onOpenStudio?: (dayIdx?: number)
                     <span className="leading-none">
                       {activePost.status === "queued"
                         ? "Na Fila do AutoSocial"
-                        : activePost.status === "ready_canva"
+                        : activePost.status === "ready_design"
                         ? "Pronto para Publicar"
                         : activePost.status === "ai_generated"
                         ? "Com IA"

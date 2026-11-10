@@ -3,13 +3,13 @@ node: tests-suite
 title: "Automated Test Suite (Bun Unit/Integration + Playwright E2E)"
 covers:
   - tests/e2e/ai-generation.spec.ts:1-191
-  - tests/e2e/companies.spec.ts:1-101
+  - tests/e2e/companies.spec.ts:1-100
   - tests/e2e/design-studio.spec.ts:1-94
-  - tests/e2e/export-autosocial.spec.ts:1-88
+  - tests/e2e/export-autosocial.spec.ts:1-69
   - tests/e2e/planner-photos.spec.ts:1-92
   - tests/e2e/seo-match.spec.ts:1-44
   - tests/e2e/settings-hub.spec.ts:1-104
-  - tests/e2e/sidebar-navigation.spec.ts:1-103
+  - tests/e2e/sidebar-navigation.spec.ts:1-97
   - tests/server/ai-adapters.test.ts:1-193
   - tests/server/ai-routes.test.ts:1-124
   - tests/server/ai-seo-persistence.test.ts:1-129
@@ -21,8 +21,7 @@ covers:
   - tests/server/ai-settings.test.ts:1-102
   - tests/server/ai-tenant-photos-time.test.ts:1-163
   - tests/server/auth-api.test.ts:1-117
-  - tests/server/autosocial-queue.test.ts:1-162
-  - tests/server/canva-export.test.ts:1-135
+  - tests/server/autosocial-queue.test.ts:1-170
   - tests/server/companies-api.test.ts:1-125
   - tests/server/companies-photos.test.ts:1-150
   - tests/server/db-client.test.ts:1-46
@@ -40,6 +39,7 @@ covers:
   - tests/server/migrations-seed.test.ts:1-43
   - tests/server/multi-tenant-atomic-isolation.test.ts:1-304
   - tests/server/photos-api.test.ts:1-142
+  - tests/server/post-formats.test.ts:1-56
   - tests/server/schedules-add-posts.test.ts:1-131
   - tests/server/schedules-api.test.ts:1-129
   - tests/server/schedules-posts-slides.test.ts:1-224
@@ -58,11 +58,11 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 
 ### `tests/e2e/ai-generation.spec.ts` (lines 1-191)
 
-### `tests/e2e/companies.spec.ts` (lines 1-101)
+### `tests/e2e/companies.spec.ts` (lines 1-100)
 
 ### `tests/e2e/design-studio.spec.ts` (lines 1-94)
 
-### `tests/e2e/export-autosocial.spec.ts` (lines 1-88)
+### `tests/e2e/export-autosocial.spec.ts` (lines 1-69)
 
 ### `tests/e2e/planner-photos.spec.ts` (lines 1-92)
 
@@ -70,7 +70,7 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 
 ### `tests/e2e/settings-hub.spec.ts` (lines 1-104)
 
-### `tests/e2e/sidebar-navigation.spec.ts` (lines 1-103)
+### `tests/e2e/sidebar-navigation.spec.ts` (lines 1-97)
 
 ### `tests/server/ai-adapters.test.ts` (lines 1-193)
 
@@ -89,9 +89,7 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 
 ### `tests/server/auth-api.test.ts` (lines 1-117)
 
-### `tests/server/autosocial-queue.test.ts` (lines 1-162)
-
-### `tests/server/canva-export.test.ts` (lines 1-135)
+### `tests/server/autosocial-queue.test.ts` (lines 1-170)
 
 ### `tests/server/companies-api.test.ts` (lines 1-125)
 
@@ -120,6 +118,8 @@ Covers ACID database invariants, REST endpoints, AI adapters, Canva CSV export, 
 ### `tests/server/multi-tenant-atomic-isolation.test.ts` (lines 1-304)
 
 ### `tests/server/photos-api.test.ts` (lines 1-142)
+
+### `tests/server/post-formats.test.ts` (lines 1-56)
 
 ### `tests/server/schedules-add-posts.test.ts` (lines 1-131)
 

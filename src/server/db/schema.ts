@@ -30,7 +30,7 @@ export const dayOfWeekSchema = z.enum(DAYS_OF_WEEK);
 export const POST_STATUSES = [
   "draft",
   "ai_generated",
-  "ready_canva",
+  "ready_design",
   "queued",
   "posted",
 ] as const;

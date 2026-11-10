@@ -2,27 +2,23 @@
 node: client-ui
 title: "React 19 + Tailwind v4 + shadcn/ui Frontend Portal"
 covers:
-  - src/client/App.tsx:1-323
-  - src/client/App.tsx:38-276 # function DashboardContent
+  - src/client/App.tsx:1-317
+  - src/client/App.tsx:37-270 # function DashboardContent
   - src/client/components/AISettingsModal.tsx:1-468
   - src/client/components/AISettingsModal.tsx:26-29 # interface AISettingsModalProps
   - src/client/components/AISettingsModal.tsx:31-36 # const PROVIDER_OPTIONS
   - src/client/components/AISettingsModal.tsx:77-467 # function AISettingsModal
-  - src/client/components/CanvaExportTab.tsx:1-321
-  - src/client/components/CanvaExportTab.tsx:20-22 # interface CanvaExportTabProps
-  - src/client/components/CanvaExportTab.tsx:24-30 # function getMonday
-  - src/client/components/CanvaExportTab.tsx:32-320 # function CanvaExportTab
-  - src/client/components/CompanyModal.tsx:1-348
+  - src/client/components/CompanyModal.tsx:1-338
   - src/client/components/CompanyModal.tsx:16-20 # interface CompanyModalProps
   - src/client/components/CompanyModal.tsx:22-36 # const defaultForm
-  - src/client/components/CompanyModal.tsx:38-347 # function CompanyModal
+  - src/client/components/CompanyModal.tsx:38-337 # function CompanyModal
   - src/client/components/CompanySwitcher.tsx:1-147
   - src/client/components/CompanySwitcher.tsx:16-18 # interface CompanySwitcherProps
   - src/client/components/CompanySwitcher.tsx:20-146 # function CompanySwitcher
-  - src/client/components/CompanyTab.tsx:1-843
+  - src/client/components/CompanyTab.tsx:1-829
   - src/client/components/CompanyTab.tsx:29-48 # function companyToFormData
   - src/client/components/CompanyTab.tsx:50-51 # const COLOR_PRESETS
-  - src/client/components/CompanyTab.tsx:57-842 # function CompanyTab
+  - src/client/components/CompanyTab.tsx:57-828 # function CompanyTab
   - src/client/components/DesignStudioModal.tsx:1-657
   - src/client/components/DesignStudioModal.tsx:19-23 # type StudioTemplateId
   - src/client/components/DesignStudioModal.tsx:25-31 # type StudioImageProvider
@@ -32,8 +28,8 @@ covers:
   - src/client/components/DesignStudioModal.tsx:78-82 # const IMAGE_PROVIDER_OPTIONS
   - src/client/components/DesignStudioModal.tsx:115-149 # function wrapCanvasLines
   - src/client/components/DesignStudioModal.tsx:151-656 # function DesignStudioModal
-  - src/client/components/DesignStudioTab.tsx:1-1547
-  - src/client/components/DesignStudioTab.tsx:43-47 # interface DesignStudioTabProps
+  - src/client/components/DesignStudioTab.tsx:1-1357
+  - src/client/components/DesignStudioTab.tsx:44-47 # interface DesignStudioTabProps
   - src/client/components/DesignStudioTab.tsx:49-53 # const TEMPLATE_OPTIONS
   - src/client/components/DesignStudioTab.tsx:76-80 # const IMAGE_PROVIDER_OPTIONS
   - src/client/components/DesignStudioTab.tsx:98-106 # const EDITORIAL_CATEGORIES
@@ -41,20 +37,19 @@ covers:
   - src/client/components/DesignStudioTab.tsx:110-118 # const DAYS_OF_WEEK
   - src/client/components/DesignStudioTab.tsx:120-128 # const DAY_LABELS
   - src/client/components/DesignStudioTab.tsx:130-136 # function getMonday
-  - src/client/components/DesignStudioTab.tsx:138-163 # function wrapCanvasLines
-  - src/client/components/DesignStudioTab.tsx:165-1546 # function DesignStudioTab
+  - src/client/components/DesignStudioTab.tsx:138-1356 # function DesignStudioTab
   - src/client/components/LoginScreen.tsx:1-145
   - src/client/components/LoginScreen.tsx:8-10 # interface LoginScreenProps
   - src/client/components/LoginScreen.tsx:12-144 # function LoginScreen
   - src/client/components/PhotoBank.tsx:1-295
   - src/client/components/PhotoBank.tsx:11-11 # const CATEGORIES
   - src/client/components/PhotoBank.tsx:13-294 # function PhotoBank
-  - src/client/components/PublicationQueue.tsx:1-460
+  - src/client/components/PublicationQueue.tsx:1-391
   - src/client/components/PublicationQueue.tsx:20-28 # const DAY_LABELS
   - src/client/components/PublicationQueue.tsx:30-30 # const DEFAULT_STATUS
   - src/client/components/PublicationQueue.tsx:32-38 # const STATUS_CONFIG
   - src/client/components/PublicationQueue.tsx:40-46 # function getMonday
-  - src/client/components/PublicationQueue.tsx:48-459 # function PublicationQueue
+  - src/client/components/PublicationQueue.tsx:48-390 # function PublicationQueue
   - src/client/components/SeoChecklist.tsx:1-58
   - src/client/components/SeoChecklist.tsx:4-9 # interface SeoChecklistProps
   - src/client/components/SeoChecklist.tsx:15-57 # function SeoChecklist
@@ -65,13 +60,13 @@ covers:
   - src/client/components/SettingsHub.tsx:93-97 # const IMAGE_PROVIDER_OPTIONS
   - src/client/components/SettingsHub.tsx:120-121 # const TEMPLATE_OPTIONS
   - src/client/components/SettingsHub.tsx:127-846 # function SettingsHub
-  - src/client/components/SidebarNavigation.tsx:1-248
+  - src/client/components/SidebarNavigation.tsx:1-240
   - src/client/components/SidebarNavigation.tsx:18-18 # type NavTabId
   - src/client/components/SidebarNavigation.tsx:20-27 # interface NavItem
   - src/client/components/SidebarNavigation.tsx:29-32 # interface NavGroup
-  - src/client/components/SidebarNavigation.tsx:34-61 # const NAV_GROUPS
-  - src/client/components/SidebarNavigation.tsx:103-110 # interface SidebarNavigationProps
-  - src/client/components/SidebarNavigation.tsx:112-247 # function SidebarNavigation
+  - src/client/components/SidebarNavigation.tsx:34-53 # const NAV_GROUPS
+  - src/client/components/SidebarNavigation.tsx:95-102 # interface SidebarNavigationProps
+  - src/client/components/SidebarNavigation.tsx:104-239 # function SidebarNavigation
   - src/client/components/SlidePreview.tsx:1-159
   - src/client/components/SlidePreview.tsx:6-18 # interface SlidePreviewProps
   - src/client/components/SlidePreview.tsx:20-158 # function SlidePreview
@@ -138,6 +133,10 @@ covers:
   - src/client/context/CompanyContext.tsx:15-15 # const CompanyContext
   - src/client/context/CompanyContext.tsx:17-132 # function CompanyProvider
   - src/client/context/CompanyContext.tsx:134-140 # function useCompany
+  - src/client/hooks/useOpenDesignCanvas.ts:1-224
+  - src/client/hooks/useOpenDesignCanvas.ts:7-32 # function wrapCanvasLines
+  - src/client/hooks/useOpenDesignCanvas.ts:34-43 # interface UseOpenDesignCanvasParams
+  - src/client/hooks/useOpenDesignCanvas.ts:45-223 # function useOpenDesignCanvas
   - src/client/hooks/useWeekSchedule.ts:1-130
   - src/client/hooks/useWeekSchedule.ts:9-15 # function getMonday
   - src/client/hooks/useWeekSchedule.ts:17-129 # function useWeekSchedule
@@ -170,32 +169,27 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 
 ## Covered Files & Symbols
 
-### `src/client/App.tsx` (lines 1-323)
-- `DashboardContent` (function) → `src/client/App.tsx:38-276`
+### `src/client/App.tsx` (lines 1-317)
+- `DashboardContent` (function) → `src/client/App.tsx:37-270`
 
 ### `src/client/components/AISettingsModal.tsx` (lines 1-468)
 - `AISettingsModalProps` (interface) → `src/client/components/AISettingsModal.tsx:26-29`
 - `PROVIDER_OPTIONS` (const) → `src/client/components/AISettingsModal.tsx:31-36`
 - `AISettingsModal` (function) → `src/client/components/AISettingsModal.tsx:77-467`
 
-### `src/client/components/CanvaExportTab.tsx` (lines 1-321)
-- `CanvaExportTabProps` (interface) → `src/client/components/CanvaExportTab.tsx:20-22`
-- `getMonday` (function) → `src/client/components/CanvaExportTab.tsx:24-30`
-- `CanvaExportTab` (function) → `src/client/components/CanvaExportTab.tsx:32-320`
-
-### `src/client/components/CompanyModal.tsx` (lines 1-348)
+### `src/client/components/CompanyModal.tsx` (lines 1-338)
 - `CompanyModalProps` (interface) → `src/client/components/CompanyModal.tsx:16-20`
 - `defaultForm` (const) → `src/client/components/CompanyModal.tsx:22-36`
-- `CompanyModal` (function) → `src/client/components/CompanyModal.tsx:38-347`
+- `CompanyModal` (function) → `src/client/components/CompanyModal.tsx:38-337`
 
 ### `src/client/components/CompanySwitcher.tsx` (lines 1-147)
 - `CompanySwitcherProps` (interface) → `src/client/components/CompanySwitcher.tsx:16-18`
 - `CompanySwitcher` (function) → `src/client/components/CompanySwitcher.tsx:20-146`
 
-### `src/client/components/CompanyTab.tsx` (lines 1-843)
+### `src/client/components/CompanyTab.tsx` (lines 1-829)
 - `companyToFormData` (function) → `src/client/components/CompanyTab.tsx:29-48`
 - `COLOR_PRESETS` (const) → `src/client/components/CompanyTab.tsx:50-51`
-- `CompanyTab` (function) → `src/client/components/CompanyTab.tsx:57-842`
+- `CompanyTab` (function) → `src/client/components/CompanyTab.tsx:57-828`
 
 ### `src/client/components/DesignStudioModal.tsx` (lines 1-657)
 - `StudioTemplateId` (type) → `src/client/components/DesignStudioModal.tsx:19-23`
@@ -207,8 +201,8 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `wrapCanvasLines` (function) → `src/client/components/DesignStudioModal.tsx:115-149`
 - `DesignStudioModal` (function) → `src/client/components/DesignStudioModal.tsx:151-656`
 
-### `src/client/components/DesignStudioTab.tsx` (lines 1-1547)
-- `DesignStudioTabProps` (interface) → `src/client/components/DesignStudioTab.tsx:43-47`
+### `src/client/components/DesignStudioTab.tsx` (lines 1-1357)
+- `DesignStudioTabProps` (interface) → `src/client/components/DesignStudioTab.tsx:44-47`
 - `TEMPLATE_OPTIONS` (const) → `src/client/components/DesignStudioTab.tsx:49-53`
 - `IMAGE_PROVIDER_OPTIONS` (const) → `src/client/components/DesignStudioTab.tsx:76-80`
 - `EDITORIAL_CATEGORIES` (const) → `src/client/components/DesignStudioTab.tsx:98-106`
@@ -216,8 +210,7 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `DAYS_OF_WEEK` (const) → `src/client/components/DesignStudioTab.tsx:110-118`
 - `DAY_LABELS` (const) → `src/client/components/DesignStudioTab.tsx:120-128`
 - `getMonday` (function) → `src/client/components/DesignStudioTab.tsx:130-136`
-- `wrapCanvasLines` (function) → `src/client/components/DesignStudioTab.tsx:138-163`
-- `DesignStudioTab` (function) → `src/client/components/DesignStudioTab.tsx:165-1546`
+- `DesignStudioTab` (function) → `src/client/components/DesignStudioTab.tsx:138-1356`
 
 ### `src/client/components/LoginScreen.tsx` (lines 1-145)
 - `LoginScreenProps` (interface) → `src/client/components/LoginScreen.tsx:8-10`
@@ -227,12 +220,12 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `CATEGORIES` (const) → `src/client/components/PhotoBank.tsx:11-11`
 - `PhotoBank` (function) → `src/client/components/PhotoBank.tsx:13-294`
 
-### `src/client/components/PublicationQueue.tsx` (lines 1-460)
+### `src/client/components/PublicationQueue.tsx` (lines 1-391)
 - `DAY_LABELS` (const) → `src/client/components/PublicationQueue.tsx:20-28`
 - `DEFAULT_STATUS` (const) → `src/client/components/PublicationQueue.tsx:30-30`
 - `STATUS_CONFIG` (const) → `src/client/components/PublicationQueue.tsx:32-38`
 - `getMonday` (function) → `src/client/components/PublicationQueue.tsx:40-46`
-- `PublicationQueue` (function) → `src/client/components/PublicationQueue.tsx:48-459`
+- `PublicationQueue` (function) → `src/client/components/PublicationQueue.tsx:48-390`
 
 ### `src/client/components/SeoChecklist.tsx` (lines 1-58)
 - `SeoChecklistProps` (interface) → `src/client/components/SeoChecklist.tsx:4-9`
@@ -246,13 +239,13 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `TEMPLATE_OPTIONS` (const) → `src/client/components/SettingsHub.tsx:120-121`
 - `SettingsHub` (function) → `src/client/components/SettingsHub.tsx:127-846`
 
-### `src/client/components/SidebarNavigation.tsx` (lines 1-248)
+### `src/client/components/SidebarNavigation.tsx` (lines 1-240)
 - `NavTabId` (type) → `src/client/components/SidebarNavigation.tsx:18-18`
 - `NavItem` (interface) → `src/client/components/SidebarNavigation.tsx:20-27`
 - `NavGroup` (interface) → `src/client/components/SidebarNavigation.tsx:29-32`
-- `NAV_GROUPS` (const) → `src/client/components/SidebarNavigation.tsx:34-61`
-- `SidebarNavigationProps` (interface) → `src/client/components/SidebarNavigation.tsx:103-110`
-- `SidebarNavigation` (function) → `src/client/components/SidebarNavigation.tsx:112-247`
+- `NAV_GROUPS` (const) → `src/client/components/SidebarNavigation.tsx:34-53`
+- `SidebarNavigationProps` (interface) → `src/client/components/SidebarNavigation.tsx:95-102`
+- `SidebarNavigation` (function) → `src/client/components/SidebarNavigation.tsx:104-239`
 
 ### `src/client/components/SlidePreview.tsx` (lines 1-159)
 - `SlidePreviewProps` (interface) → `src/client/components/SlidePreview.tsx:6-18`
@@ -330,6 +323,11 @@ Provides the multi-company dashboard, CompanyContext state, Brand Kit modal, Pho
 - `CompanyContext` (const) → `src/client/context/CompanyContext.tsx:15-15`
 - `CompanyProvider` (function) → `src/client/context/CompanyContext.tsx:17-132`
 - `useCompany` (function) → `src/client/context/CompanyContext.tsx:134-140`
+
+### `src/client/hooks/useOpenDesignCanvas.ts` (lines 1-224)
+- `wrapCanvasLines` (function) → `src/client/hooks/useOpenDesignCanvas.ts:7-32`
+- `UseOpenDesignCanvasParams` (interface) → `src/client/hooks/useOpenDesignCanvas.ts:34-43`
+- `useOpenDesignCanvas` (function) → `src/client/hooks/useOpenDesignCanvas.ts:45-223`
 
 ### `src/client/hooks/useWeekSchedule.ts` (lines 1-130)
 - `getMonday` (function) → `src/client/hooks/useWeekSchedule.ts:9-15`

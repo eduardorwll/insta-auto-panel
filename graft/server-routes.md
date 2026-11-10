@@ -18,8 +18,8 @@ covers:
   - src/server/routes/design.ts:1-252
   - src/server/routes/design.ts:22-22 # const RENDERS_DIR
   - src/server/routes/design.ts:24-251 # function handleDesignRoutes
-  - src/server/routes/export.ts:1-92
-  - src/server/routes/export.ts:8-91 # function handleExportRoutes
+  - src/server/routes/export.ts:1-63
+  - src/server/routes/export.ts:7-62 # function handleExportRoutes
   - src/server/routes/photos.ts:1-160
   - src/server/routes/photos.ts:7-159 # function handlePhotosRoutes
   - src/server/routes/schedules.ts:1-167
@@ -61,8 +61,8 @@ Handles HTTP REST endpoints for multi-tenant companies, photo bank uploads, week
 - `RENDERS_DIR` (const) → `src/server/routes/design.ts:22-22`
 - `handleDesignRoutes` (function) → `src/server/routes/design.ts:24-251`
 
-### `src/server/routes/export.ts` (lines 1-92)
-- `handleExportRoutes` (function) → `src/server/routes/export.ts:8-91`
+### `src/server/routes/export.ts` (lines 1-63)
+- `handleExportRoutes` (function) → `src/server/routes/export.ts:7-62`
 
 ### `src/server/routes/photos.ts` (lines 1-160)
 - `handlePhotosRoutes` (function) → `src/server/routes/photos.ts:7-159`

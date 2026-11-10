@@ -5,7 +5,6 @@ import { CompanyModal } from "@/client/components/CompanyModal";
 import { PhotoBank } from "@/client/components/PhotoBank";
 import { WeekPlanner } from "@/client/components/WeekPlanner";
 import { DesignStudioTab } from "@/client/components/DesignStudioTab";
-import { CanvaExportTab } from "@/client/components/CanvaExportTab";
 import { AISettingsModal } from "@/client/components/AISettingsModal";
 import { PublicationQueue } from "@/client/components/PublicationQueue";
 import { SettingsHub } from "@/client/components/SettingsHub";
@@ -191,12 +190,7 @@ function DashboardContent({ onLockSession }: { onLockSession: () => void }) {
                 <DesignStudioTab
                   selectedDayIndex={selectedStudioDay}
                   onSelectDayIndex={setSelectedStudioDay}
-                  onSwitchToCanva={() => setCurrentTab("canva")}
                 />
-              </TabsContent>
-
-              <TabsContent value="canva" className="mt-0 focus-visible:outline-none">
-                <CanvaExportTab onSwitchToStudio={() => setCurrentTab("studio")} />
               </TabsContent>
 
               <TabsContent value="photos" className="mt-0 focus-visible:outline-none">

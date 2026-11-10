@@ -33,20 +33,20 @@
 
 ---
 
-## 🧹 Etapa de Desenvolvimento 2 — Marco M9: Remoção Completa do Canva, Abstração Multi-Formato (Feed + Stories) & Modularização do Studio
+## ✅ Etapa de Desenvolvimento 2 — Marco M9: Remoção Completa do Canva, Abstração Multi-Formato (Feed + Stories) & Modularização do Studio [CONCLUÍDO]
 
 *Objetivo: Retirar 100% da integração legada com o Canva, preparar o contrato agnóstico de formato (`FormatSpec` para Carrosséis e futuros Stories) e quebrar o componente monolítico `DesignStudioTab.tsx` (`ENG-03`).*
 
-- [ ] **Ticket M9-T1 (TDD & Safe-Refactor — Remoção do Canva no Backend e Banco):**
-  - Remover [`src/server/services/export/canva.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/export/canva.ts), remover a rota `GET /api/export/canva` em [`src/server/routes/export.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/export.ts) e atualizar testes correspondentes.
-  - Migrar o status `"ready_canva"` para `"ready_design"` no schema e banco SQLite.
-- [ ] **Ticket M9-T2 (UI Craft — Remoção do Canva no Frontend):**
-  - Remover [`src/client/components/CanvaExportTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/CanvaExportTab.tsx), retirar o item `"canva"` de [`SidebarNavigation.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/SidebarNavigation.tsx) e [`App.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/App.tsx), e limpar campos `canvaTemplateId` dos formulários de empresa.
-- [ ] **Ticket M9-T3 (TDD — Abstração Multi-Formato `PostFormatRegistry` para Carrosséis e Stories):**
-  - Criar `src/shared/post-formats.ts` definindo `FormatSpec` (`carousel_feed` 4:5, `carousel_square` 1:1 e `story_vertical` 9:16 com `safeZones` de topo/base) e desacoplar as dimensões fixas de [`template-engine.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/design/template-engine.ts), deixando a arquitetura pronta para plugar o módulo de Stories.
-- [ ] **Ticket M9-T4 (Safe-Refactor — Extração de `useOpenDesignCanvas.ts`):**
-  - Extrair a lógica imperativa de desenho em Canvas 2D (`drawTypographyLayers` e `wrapCanvasLines`) de [`DesignStudioTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/DesignStudioTab.tsx) para `src/client/hooks/useOpenDesignCanvas.ts`, preservando 100% do comportamento visual.
-- [ ] 🛑 **Checkpoint HITL do Marco M9:** Apresentar evidências e aguardar sua aprovação antes de iniciar o M10.
+- [x] **Ticket M9-T1 (TDD & Safe-Refactor — Remoção do Canva no Backend e Banco):**
+  - Removidos `src/server/services/export/canva.ts` e `tests/server/canva-export.test.ts`; removida a rota `GET /api/export/canva` em [`src/server/routes/export.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/export.ts#L1-L61) e validado retorno `404` em [`tests/server/autosocial-queue.test.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/tests/server/autosocial-queue.test.ts#L162-L168).
+  - Migrado o status `"ready_canva"` para `"ready_design"` em [`src/server/db/schema.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/db/schema.ts#L30-L38), [`src/server/db/client.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/db/client.ts#L54), [`src/server/routes/schedules.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/schedules.ts#L28) e [`src/server/routes/design.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/design.ts#L219-L224).
+- [x] **Ticket M9-T2 (UI Craft — Remoção do Canva no Frontend):**
+  - Removido `src/client/components/CanvaExportTab.tsx`, retirado o item `"canva"` de [`src/client/components/SidebarNavigation.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/SidebarNavigation.tsx#L18-L55) e [`src/client/App.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/App.tsx#L189-L196), removido o card de CSV do Canva de [`src/client/components/PublicationQueue.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/PublicationQueue.tsx#L205-L210) e limpos os campos `Canva Template ID` de [`src/client/components/CompanyModal.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/CompanyModal.tsx#L295-L320) e [`src/client/components/CompanyTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/CompanyTab.tsx#L510-L522).
+- [x] **Ticket M9-T3 (TDD — Abstração Multi-Formato `PostFormatRegistry` para Carrosséis e Stories):**
+  - Criado [`src/shared/post-formats.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/shared/post-formats.ts) definindo `FormatSpec` (`carousel_feed` 4:5 `1080×1350`, `carousel_square` 1:1 `1080×1080` e `story_vertical` 9:16 `1080×1920` com `safeZones` de topo/base) e desacopladas as dimensões fixas de [`src/server/services/design/template-engine.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/design/template-engine.ts#L82-L220), validado pela suíte [`tests/server/post-formats.test.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/tests/server/post-formats.test.ts).
+- [x] **Ticket M9-T4 (Safe-Refactor — Extração de `useOpenDesignCanvas.ts`):**
+  - Extraída a lógica imperativa de desenho em Canvas 2D (`useOpenDesignCanvas` e `wrapCanvasLines`) de [`src/client/components/DesignStudioTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/DesignStudioTab.tsx#L450-L460) para [`src/client/hooks/useOpenDesignCanvas.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/hooks/useOpenDesignCanvas.ts), reduzindo `DesignStudioTab.tsx` em ~190 linhas e preservando 100% do comportamento visual.
+- [x] 🛑 **Checkpoint HITL do Marco M9:** Evidências e registro de modificações apresentados abaixo. **Aguardando sua confirmação explícita antes de iniciar a Etapa 3 (Marco M10).**
 
 ---
 

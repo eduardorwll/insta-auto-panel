@@ -34,12 +34,11 @@ test.describe("M7.2 E2E: Barra Lateral Recolhível (Sidebar Navigation) & Ausên
     await expect(page.getByText("Automação Social")).toBeVisible();
     await expect(page.getByText("Sistema & Ajustes")).toBeVisible();
 
-    // 2. Validar abas e badges de modo
+    // 2. Validar abas e badges de modo (Zero Canva)
     await expect(page.getByRole("tab", { name: /Calendário Semanal/i })).toBeVisible();
-    await expect(page.getByRole("tab", { name: /Studio Visual 4:5/i })).toBeVisible();
+    await expect(page.getByRole("tab", { name: /Studio Visual OpenDesign/i })).toBeVisible();
     await expect(page.getByText("100% IA").first()).toBeVisible();
-    await expect(page.getByRole("tab", { name: /Exportar Canva Pro/i })).toBeVisible();
-    await expect(page.getByText("CSV").first()).toBeVisible();
+    await expect(page.getByRole("tab", { name: /Exportar Canva Pro/i })).toHaveCount(0);
 
     // 3. Testar botão de recolher barra lateral
     const collapseBtn = page.getByRole("button", { name: /Recolher Barra Lateral/i });
@@ -66,11 +65,6 @@ test.describe("M7.2 E2E: Barra Lateral Recolhível (Sidebar Navigation) & Ausên
     const buttonBox = await saveStudioPrefBtn.boundingBox();
     expect(buttonBox).not.toBeNull();
     expect(buttonBox!.width).toBeGreaterThan(120);
-
-    // 5. Navegar para "Exportar Canva Pro"
-    const canvaTab = page.getByRole("tab", { name: /Exportar Canva Pro/i });
-    await canvaTab.click();
-    await expect(page.getByText(/Modo com Canva \(Exportação em Lote CSV\)/i)).toBeVisible();
 
     // 6. Navegar para "Fotos Base da Marca"
     const photosTab = page.getByRole("tab", { name: /Fotos Base da Marca/i });

@@ -2,13 +2,13 @@
 node: server-db
 title: "Database Layer (SQLite WAL + Drizzle Schema & Migrations)"
 covers:
-  - src/server/db/client.ts:1-110
+  - src/server/db/client.ts:1-111
   - src/server/db/client.ts:8-11 # interface DatabaseConnection
-  - src/server/db/client.ts:20-78 # function createDatabaseConnection
-  - src/server/db/client.ts:83-88 # function createTestDb
-  - src/server/db/client.ts:92-97 # function getDatabase
-  - src/server/db/client.ts:99-103 # const db
-  - src/server/db/client.ts:105-109 # const sqlite
+  - src/server/db/client.ts:20-79 # function createDatabaseConnection
+  - src/server/db/client.ts:84-89 # function createTestDb
+  - src/server/db/client.ts:93-98 # function getDatabase
+  - src/server/db/client.ts:100-104 # const db
+  - src/server/db/client.ts:106-110 # const sqlite
   - src/server/db/migrate.ts:1-22
   - src/server/db/migrate.ts:5-8 # function runMigrations
   - src/server/db/sanitize.ts:1-78
@@ -63,13 +63,13 @@ Manages ACID persistence in SQLite with WAL mode, schema definitions (companies,
 
 ## Covered Files & Symbols
 
-### `src/server/db/client.ts` (lines 1-110)
+### `src/server/db/client.ts` (lines 1-111)
 - `DatabaseConnection` (interface) → `src/server/db/client.ts:8-11`
-- `createDatabaseConnection` (function) → `src/server/db/client.ts:20-78`
-- `createTestDb` (function) → `src/server/db/client.ts:83-88`
-- `getDatabase` (function) → `src/server/db/client.ts:92-97`
-- `db` (const) → `src/server/db/client.ts:99-103`
-- `sqlite` (const) → `src/server/db/client.ts:105-109`
+- `createDatabaseConnection` (function) → `src/server/db/client.ts:20-79`
+- `createTestDb` (function) → `src/server/db/client.ts:84-89`
+- `getDatabase` (function) → `src/server/db/client.ts:93-98`
+- `db` (const) → `src/server/db/client.ts:100-104`
+- `sqlite` (const) → `src/server/db/client.ts:106-110`
 
 ### `src/server/db/migrate.ts` (lines 1-22)
 - `runMigrations` (function) → `src/server/db/migrate.ts:5-8`

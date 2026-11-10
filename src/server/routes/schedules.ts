@@ -25,7 +25,7 @@ const postUpdateSchema = z.object({
   theme: z.string().min(1).optional(),
   category: z.string().min(1).optional(),
   slideCount: z.number().int().min(3).max(10).optional(),
-  status: z.enum(["draft", "ai_generated", "ready_canva", "queued", "posted"]).optional(),
+  status: z.enum(["draft", "ai_generated", "ready_design", "queued", "posted"]).optional(),
   caption: z.string().optional().nullable(),
   altText: z.string().optional().nullable(),
   scheduledTime: z.string().optional().nullable(),

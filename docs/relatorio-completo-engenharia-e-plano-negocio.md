@@ -318,3 +318,24 @@ flowchart TD
    - `bun run typecheck` (`tsc --noEmit`): **0 erros**.
    - `taste-skill lint`: **0 FAIL**.
    - `vite build`: **Sucesso (223ms)**.
+
+### ✅ Etapa 2 (Marco M9): Remoção Completa do Canva, Abstração Multi-Formato (Feed + Stories) & Modularização do Studio — CONCLUÍDA
+
+1. **Arquivos Removidos (Zero Canva):**
+   - `src/server/services/export/canva.ts`
+   - `src/client/components/CanvaExportTab.tsx`
+   - `tests/server/canva-export.test.ts`
+2. **Arquivos Criados:**
+   - [`src/shared/post-formats.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/shared/post-formats.ts): Registro `POST_FORMATS` e helper `getFormatSpec()` com especificações para `carousel_feed` (`1080×1350px` 4:5), `carousel_square` (`1080×1080px` 1:1) e `story_vertical` (`1080×1920px` 9:16 com `safeZones` superior de `250px` e inferior de `340px`).
+   - [`src/client/hooks/useOpenDesignCanvas.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/hooks/useOpenDesignCanvas.ts): Hook customizado que encapsula o motor de renderização HTML5 Canvas 2D e `wrapCanvasLines`, desacoplando `DesignStudioTab.tsx` (`ENG-03`).
+   - [`tests/server/post-formats.test.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/tests/server/post-formats.test.ts): Suíte TDD validando `PostFormatRegistry` e a renderização SVG multi-formato (`1080×1350` e `1080×1920`).
+3. **Arquivos Modificados:**
+   - [`src/server/routes/export.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/export.ts): Removida rota `GET /api/export/canva` (validado retorno `404` em [`tests/server/autosocial-queue.test.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/tests/server/autosocial-queue.test.ts#L162-L168)).
+   - [`src/server/db/schema.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/db/schema.ts), [`src/server/db/client.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/db/client.ts), [`src/server/routes/schedules.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/schedules.ts), [`src/server/routes/design.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/routes/design.ts): Migrado status `"ready_canva"` para `"ready_design"`.
+   - [`src/server/services/design/template-engine.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/design/template-engine.ts): Desacoplado de `1080×1350` fixo usando `getFormatSpec(fields.formatId)`.
+   - [`src/client/components/SidebarNavigation.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/SidebarNavigation.tsx), [`src/client/App.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/App.tsx), [`src/client/components/PublicationQueue.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/PublicationQueue.tsx), [`src/client/components/WeekPlanner.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/WeekPlanner.tsx), [`src/client/hooks/useWeekSchedule.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/hooks/useWeekSchedule.ts), [`src/client/components/CompanyModal.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/CompanyModal.tsx), [`src/client/components/CompanyTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/CompanyTab.tsx), [`src/client/components/DesignStudioTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/DesignStudioTab.tsx): Limpeza integral da UI/fluxos do Canva e integração do hook `useOpenDesignCanvas`.
+4. **Validação Executada:**
+   - `bun test`: **98 pass, 0 fail** (27 arquivos de teste, 501 `expect()` calls).
+   - `bun run typecheck` (`tsc --noEmit`): **0 erros**.
+   - `taste-skill lint`: **0 FAIL** (e redução de warnings de 79 para 75).
+   - `vite build`: **Sucesso (220ms)**.

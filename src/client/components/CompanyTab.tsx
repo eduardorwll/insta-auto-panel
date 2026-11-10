@@ -517,20 +517,6 @@ export function CompanyTab() {
                 />
               </div>
             </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="company-canva-id" className="text-xs text-slate-300 flex items-center gap-1.5">
-                <FileSpreadsheet className="h-3.5 w-3.5 text-sky-400" />
-                <span>Canva Template ID (Bulk Create CSV)</span>
-              </Label>
-              <Input
-                id="company-canva-id"
-                value={formData.canvaTemplateId || ""}
-                onChange={(e) => handleChange("canvaTemplateId", e.target.value)}
-                placeholder="CANVA-CORP-4X5-V1"
-                className="bg-slate-950 text-slate-100 border-slate-700 text-xs h-9 font-mono uppercase"
-              />
-            </div>
           </Card>
 
           {/* Card 4: Instagram SEO & Otimização do Perfil (Framework MATCH) */}

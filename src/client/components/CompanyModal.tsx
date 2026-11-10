@@ -292,9 +292,9 @@ export function CompanyModal({ isOpen, onClose, companyToEdit }: CompanyModalPro
             </div>
           </div>
 
-          {/* Seção 3: Canais de Conversão & Canva */}
+          {/* Seção 3: Canais de Conversão */}
           <div className="space-y-4 pt-2 border-t border-slate-800">
-            <h4 className="text-xs font-semibold text-slate-300">Conversão e Integrações</h4>
+            <h4 className="text-xs font-semibold text-slate-300">Canais de Conversão</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <Label htmlFor="company-whatsapp">WhatsApp (com DDI/DDD)</Label>
@@ -315,16 +315,6 @@ export function CompanyModal({ isOpen, onClose, companyToEdit }: CompanyModalPro
                   placeholder="https://suaempresa.com.br"
                 />
               </div>
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="company-canva-id">Canva Template ID (Bulk Create)</Label>
-              <Input
-                id="company-canva-id"
-                value={formData.canvaTemplateId || ""}
-                onChange={(e) => handleChange("canvaTemplateId", e.target.value)}
-                placeholder="Ex: DAGF-7281ab (ID do template mestre de carrossel)"
-              />
             </div>
           </div>
 

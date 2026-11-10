@@ -72,7 +72,7 @@ export function useWeekSchedule(activeCompany: Company | null) {
   // Contadores e métricas do pipeline semanal
   const totalCount = posts.length;
   const readyCount = posts.filter(
-    (p) => p.status === "ready_canva" || p.status === "ai_generated"
+    (p) => p.status === "ready_design" || p.status === "ai_generated"
   ).length;
   const queuedCount = posts.filter((p) => p.status === "queued" || p.status === "posted").length;
   const draftCount = posts.filter((p) => !p.status || p.status === "draft").length;

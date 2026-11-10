@@ -65,17 +65,17 @@ covers:
   - src/server/services/design/image-provider.ts:322-343 # class OpenAIImageProvider
   - src/server/services/design/image-provider.ts:345-369 # class ComfyUILocalProvider
   - src/server/services/design/image-provider.ts:371-390 # class ImageProviderFactory
-  - src/server/services/design/template-engine.ts:1-322
-  - src/server/services/design/template-engine.ts:4-11 # interface OpenDesignBrandKit
-  - src/server/services/design/template-engine.ts:13-23 # interface OpenDesignSlideFields
-  - src/server/services/design/template-engine.ts:25-32 # function escapeXml
-  - src/server/services/design/template-engine.ts:38-75 # function wrapEditorialLines
-  - src/server/services/design/template-engine.ts:81-216 # function renderOpenDesignSlideSvg
-  - src/server/services/design/template-engine.ts:221-231 # const CRC_TABLE
-  - src/server/services/design/template-engine.ts:233-241 # function crc32
-  - src/server/services/design/template-engine.ts:243-251 # function makePngChunk
-  - src/server/services/design/template-engine.ts:253-259 # function hexToRgb
-  - src/server/services/design/template-engine.ts:266-321 # function renderSlidePngBuffer
+  - src/server/services/design/template-engine.ts:1-333
+  - src/server/services/design/template-engine.ts:5-12 # interface OpenDesignBrandKit
+  - src/server/services/design/template-engine.ts:14-25 # interface OpenDesignSlideFields
+  - src/server/services/design/template-engine.ts:27-34 # function escapeXml
+  - src/server/services/design/template-engine.ts:40-77 # function wrapEditorialLines
+  - src/server/services/design/template-engine.ts:83-227 # function renderOpenDesignSlideSvg
+  - src/server/services/design/template-engine.ts:232-242 # const CRC_TABLE
+  - src/server/services/design/template-engine.ts:244-252 # function crc32
+  - src/server/services/design/template-engine.ts:254-262 # function makePngChunk
+  - src/server/services/design/template-engine.ts:264-270 # function hexToRgb
+  - src/server/services/design/template-engine.ts:277-332 # function renderSlidePngBuffer
   - src/server/services/export/autosocial.ts:1-168
   - src/server/services/export/autosocial.ts:13-13 # const BASE_QUEUE_DIR
   - src/server/services/export/autosocial.ts:14-14 # const UPLOADS_DIR
@@ -86,9 +86,6 @@ covers:
   - src/server/services/export/autosocial.ts:41-121 # function enqueuePostForAutoSocial
   - src/server/services/export/autosocial.ts:123-143 # function enqueueScheduleForAutoSocial
   - src/server/services/export/autosocial.ts:145-167 # function getAutoSocialQueueStatus
-  - src/server/services/export/canva.ts:1-122
-  - src/server/services/export/canva.ts:11-18 # function escapeCsvCell
-  - src/server/services/export/canva.ts:20-121 # function generateCanvaCsv
   - src/server/services/instagram/cookies.ts:1-128
   - src/server/services/instagram/cookies.ts:1-10 # interface CookieEntry
   - src/server/services/instagram/cookies.ts:12-17 # interface ParseInstagramCookiesInputParams
@@ -187,17 +184,17 @@ Implements the Agnostic AI Adapter Pattern (ML Studio API, Gemini, OpenAI, Claud
 - `ComfyUILocalProvider` (class) → `src/server/services/design/image-provider.ts:345-369`
 - `ImageProviderFactory` (class) → `src/server/services/design/image-provider.ts:371-390`
 
-### `src/server/services/design/template-engine.ts` (lines 1-322)
-- `OpenDesignBrandKit` (interface) → `src/server/services/design/template-engine.ts:4-11`
-- `OpenDesignSlideFields` (interface) → `src/server/services/design/template-engine.ts:13-23`
-- `escapeXml` (function) → `src/server/services/design/template-engine.ts:25-32`
-- `wrapEditorialLines` (function) → `src/server/services/design/template-engine.ts:38-75`
-- `renderOpenDesignSlideSvg` (function) → `src/server/services/design/template-engine.ts:81-216`
-- `CRC_TABLE` (const) → `src/server/services/design/template-engine.ts:221-231`
-- `crc32` (function) → `src/server/services/design/template-engine.ts:233-241`
-- `makePngChunk` (function) → `src/server/services/design/template-engine.ts:243-251`
-- `hexToRgb` (function) → `src/server/services/design/template-engine.ts:253-259`
-- `renderSlidePngBuffer` (function) → `src/server/services/design/template-engine.ts:266-321`
+### `src/server/services/design/template-engine.ts` (lines 1-333)
+- `OpenDesignBrandKit` (interface) → `src/server/services/design/template-engine.ts:5-12`
+- `OpenDesignSlideFields` (interface) → `src/server/services/design/template-engine.ts:14-25`
+- `escapeXml` (function) → `src/server/services/design/template-engine.ts:27-34`
+- `wrapEditorialLines` (function) → `src/server/services/design/template-engine.ts:40-77`
+- `renderOpenDesignSlideSvg` (function) → `src/server/services/design/template-engine.ts:83-227`
+- `CRC_TABLE` (const) → `src/server/services/design/template-engine.ts:232-242`
+- `crc32` (function) → `src/server/services/design/template-engine.ts:244-252`
+- `makePngChunk` (function) → `src/server/services/design/template-engine.ts:254-262`
+- `hexToRgb` (function) → `src/server/services/design/template-engine.ts:264-270`
+- `renderSlidePngBuffer` (function) → `src/server/services/design/template-engine.ts:277-332`
 
 ### `src/server/services/export/autosocial.ts` (lines 1-168)
 - `BASE_QUEUE_DIR` (const) → `src/server/services/export/autosocial.ts:13-13`
@@ -209,10 +206,6 @@ Implements the Agnostic AI Adapter Pattern (ML Studio API, Gemini, OpenAI, Claud
 - `enqueuePostForAutoSocial` (function) → `src/server/services/export/autosocial.ts:41-121`
 - `enqueueScheduleForAutoSocial` (function) → `src/server/services/export/autosocial.ts:123-143`
 - `getAutoSocialQueueStatus` (function) → `src/server/services/export/autosocial.ts:145-167`
-
-### `src/server/services/export/canva.ts` (lines 1-122)
-- `escapeCsvCell` (function) → `src/server/services/export/canva.ts:11-18`
-- `generateCanvaCsv` (function) → `src/server/services/export/canva.ts:20-121`
 
 ### `src/server/services/instagram/cookies.ts` (lines 1-128)
 - `CookieEntry` (interface) → `src/server/services/instagram/cookies.ts:1-10`

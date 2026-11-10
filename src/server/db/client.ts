@@ -51,6 +51,7 @@ export function createDatabaseConnection(
       "ALTER TABLE companies ADD COLUMN seo_display_name text;",
       "ALTER TABLE companies ADD COLUMN bio_text text;",
       "ALTER TABLE companies ADD COLUMN target_keywords text;",
+      "UPDATE posts SET status = 'ready_design' WHERE status = 'ready_canva';",
       `CREATE TABLE IF NOT EXISTS company_settings (
         company_id text PRIMARY KEY NOT NULL,
         instagram_session_id text,

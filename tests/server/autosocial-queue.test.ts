@@ -75,7 +75,7 @@ describe("Motor de Publicação Autônoma AutoSocial (Filesystem Queue)", () => 
       slideCount: 3,
       selectedPhotoIds: JSON.stringify([photoId]),
       caption: "Aprenda a cuidar da sua pele antes de dormir! #skincare",
-      status: "ready_canva",
+      status: "ready_design",
     });
 
     postId2 = `post_${schedId}_terca`;
@@ -157,5 +157,13 @@ describe("Motor de Publicação Autônoma AutoSocial (Filesystem Queue)", () => 
     const json = await res.json();
     expect(json.success).toBe(true);
     expect(json.data.pendingCount).toBeGreaterThanOrEqual(2);
+  });
+
+  it("M9-T1: GET /api/export/canva deve retornar 404 após descontinuação completa do Canva", async () => {
+    const req = new Request(
+      `http://localhost:${server.port}/api/export/canva?scheduleId=${schedId}&companyId=${companyId}`
+    );
+    const res = await server.fetch(req);
+    expect(res.status).toBe(404);
   });
 });

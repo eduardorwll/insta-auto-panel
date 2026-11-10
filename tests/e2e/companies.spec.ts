@@ -70,7 +70,6 @@ test.describe("M2 E2E: Navegação, Company Switcher e Cadastro de Empresa", () 
     await page.getByLabel(/Nicho de Mercado/i).fill("Odontologia Estética");
     await page.getByLabel(/Tom de Voz/i).fill("Especialista e Acolhedor");
     await page.getByLabel(/WhatsApp/i).fill("5511999998888");
-    await page.getByLabel(/Canva Template ID/i).fill("CANVA-ALPHA-E2E");
 
     // 7. Submeter o cadastro
     await page.getByRole("button", { name: /Cadastrar Empresa/i }).click();

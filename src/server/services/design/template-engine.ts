@@ -1,5 +1,6 @@
 import zlib from "node:zlib";
 import type { DesignTemplateId } from "../../db/schema";
+import { getFormatSpec, type PostFormatId } from "../../../shared/post-formats";
 
 export interface OpenDesignBrandKit {
   companyName: string;
@@ -12,6 +13,7 @@ export interface OpenDesignBrandKit {
 
 export interface OpenDesignSlideFields {
   templateId: DesignTemplateId;
+  formatId?: PostFormatId;
   slideNumber: number;
   totalSlides: number;
   headline: string;
@@ -75,12 +77,16 @@ export function wrapEditorialLines(
 }
 
 /**
- * Renderiza uma lâmina 4:5 (1080x1350) determinística inspirada no OpenDesign Template Fields API,
- * calibrada no modo Impeccable Persuade + Taste-Skill Anti-Slop.
+ * Renderiza uma lâmina determinística agnóstica de formato (4:5 Feed, 1:1 Square ou 9:16 Stories)
+ * inspirada no OpenDesign Template Fields API, calibrada no modo Impeccable Persuade + Taste-Skill Anti-Slop.
  */
 export function renderOpenDesignSlideSvg(fields: OpenDesignSlideFields): string {
-  const width = 1080;
-  const height = 1350;
+  const format = getFormatSpec(fields.formatId);
+  const width = format.width;
+  const height = format.height;
+  const isStory = format.id === "story_vertical";
+  const topSafe = isStory ? format.safeZones.top : 76;
+  const bottomSafe = isStory ? height - format.safeZones.bottom : height - 78;
   const slideBadge = `${String(fields.slideNumber).padStart(2, "0")} / ${String(
     fields.totalSlides
   ).padStart(2, "0")}`;
@@ -128,11 +134,16 @@ export function renderOpenDesignSlideSvg(fields: OpenDesignSlideFields): string 
         }"/>`
     : "";
 
-  const headlineStartY = fields.templateId === "split-photo" ? 670 : 390;
+  const headlineStartY =
+    fields.templateId === "split-photo"
+      ? topSafe + 594
+      : topSafe + 314;
   const adjustedBodyStartY =
     fields.templateId === "split-photo"
-      ? 690 + headlineLines.length * 68
-      : bodyStartY;
+      ? headlineStartY + 20 + headlineLines.length * 68
+      : headlineStartY + 80 + headlineLines.length * 74;
+
+  const ctaY = bottomSafe - 152;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <defs>
@@ -154,13 +165,13 @@ export function renderOpenDesignSlideSvg(fields: OpenDesignSlideFields): string 
   ${bgImageLayer}
 
   <!-- Top Editorial Header (Impeccable Persuade Hierarchy) -->
-  <rect x="96" y="76" width="888" height="4" fill="url(#accentBar)" rx="2"/>
-  <text x="96" y="128" fill="${escapeXml(
+  <rect x="96" y="${topSafe}" width="888" height="4" fill="url(#accentBar)" rx="2"/>
+  <text x="96" y="${topSafe + 52}" fill="${escapeXml(
     textPrimary
   )}" font-family="Inter, system-ui, sans-serif" font-size="26" font-weight="700" letter-spacing="0.5">
     ${escapeXml(fields.brandKit.companyName)}
   </text>
-  <text x="984" y="128" text-anchor="end" fill="${escapeXml(
+  <text x="984" y="${topSafe + 52}" text-anchor="end" fill="${escapeXml(
     primary
   )}" font-family="JetBrains Mono, monospace" font-size="24" font-weight="700" style="font-variant-numeric: tabular-nums;">
     ${escapeXml(slideBadge)}
@@ -197,21 +208,21 @@ export function renderOpenDesignSlideSvg(fields: OpenDesignSlideFields): string 
   <!-- Bottom CTA & Handle Bar -->
   ${
     ctaLine
-      ? `<rect x="96" y="1120" width="888" height="84" rx="18" fill="${escapeXml(
+      ? `<rect x="96" y="${ctaY}" width="888" height="84" rx="18" fill="${escapeXml(
           primary
         )}"/>
-  <text x="540" y="1172" text-anchor="middle" fill="#FFFFFF" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700">
+  <text x="540" y="${ctaY + 52}" text-anchor="middle" fill="#FFFFFF" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700">
     ${escapeXml(ctaLine)}
   </text>`
       : ""
   }
 
-  <text x="96" y="1272" fill="${escapeXml(
+  <text x="96" y="${bottomSafe}" fill="${escapeXml(
     textSecondary
   )}" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600">
     ${escapeXml(fields.brandKit.instagramHandle)}
   </text>
-  <circle cx="968" cy="1264" r="14" fill="${escapeXml(accent)}"/>
+  <circle cx="968" cy="${bottomSafe - 8}" r="14" fill="${escapeXml(accent)}"/>
 </svg>`;
 }
 
