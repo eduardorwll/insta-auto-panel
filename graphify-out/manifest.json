@@ -792,15 +792,15 @@
     "semantic_hash": ""
   },
   "docs/relatorio-completo-engenharia-e-plano-negocio.md": {
-    "mtime": 1794352890.3769302,
-    "seen": 1794352892.5154586,
-    "ast_hash": "65f0b1521088c73e00adfa0968041a99",
+    "mtime": 1794353892.440858,
+    "seen": 1794353894.6429026,
+    "ast_hash": "a1159424e495bd0de715b41e05f7a11b",
     "semantic_hash": ""
   },
   "docs/checklist-desenvolvimento-marcos-m8-a-m11.md": {
-    "mtime": 1794352890.37593,
-    "seen": 1794352892.5154574,
-    "ast_hash": "b53aa1de249b5ab30a67d01ac49ec5d9",
+    "mtime": 1794353892.440858,
+    "seen": 1794353894.6429007,
+    "ast_hash": "aeb317a4ec88f176de145939b01903a0",
     "semantic_hash": ""
   },
   "src/client/hooks/useOpenDesignCanvas.ts": {

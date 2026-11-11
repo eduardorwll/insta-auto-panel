@@ -112,6 +112,30 @@ Este arquivo define as diretrizes operacionais inegociáveis para o **Lead Archi
 - **Transparência de Prompt (`Prompt Inspector`) & Quotas de API:** O painel deve oferecer **Preview Editável do Prompt** (mostrando os dados da empresa e o *Style Blueprint* injetados tanto para a API de imagem quanto para o motor OpenDesign antes do gasto de tokens) e respeitar os limites explícitos de uso/orçamento configurados na interface.
 - **Segurança de Home Server:** Todas as rotas protegidas devem exigir autenticação local (`Bun.password` + cookie `HttpOnly`), sanitizar credenciais em respostas de leitura/escrita (`GET`/`PUT`) e validar URLs de saída contra SSRF na rede local.
 
+### 2.10. Diretriz Mandatória de Máquinas de Estado Explícitas & Prevenção de Problemas Arquiteturais "Invisíveis"
+- **Documento Mestre de Referência:** [docs/guia-arquitetura-invisivel-e-maquinas-de-estado.md](./docs/guia-arquitetura-invisivel-e-maquinas-de-estado.md).
+- **Proibição de Máquinas de Estado Implícitas (*Boolean Soup* & Strings Soltas):**
+  - Nenhum componente React ou serviço backend pode controlar fluxos multi-etapa usando múltiplos booleans concorrentes (`isLoading`, `isSaving`, `isRendering`, `isGeneratingAI`). Utilize uniões discriminadas e máquinas de estado finitas explícitas (`src/shared/state-machines/`).
+  - Toda mutação de `posts.status` ou `company_settings.instagramSessionStatus` deve passar pelas funções canônicas de transição com validação de pré-condições (*guards*), nunca por atribuição arbitrária de strings.
+- **Invariantes Obrigatórias de Dados, Tempo e Concorrência:**
+  1. **Transações ACID (`db.transaction()`):** Mutações que tocam múltiplas tabelas ou múltiplas linhas (`posts` + `post_slides`) devem executar dentro de uma transação atômica, removendo lâminas excedentes (`slideNumber > slideCount`) quando a contagem diminuir.
+  2. **Sincronia e Idempotência Banco ↔ Disco:** O enfileiramento no AutoSocial deve ser idempotente por `postId` e reconciliar os diretórios físicos (`pending/`, `published/`, `failed/`) com o SQLite; exclusões (`DELETE`) devem limpar arquivos órfãos em disco.
+  3. **Chave Natural `(postId, slideNumber)` e Escopo Composto:** Atualizações de lâminas nunca devem depender apenas de IDs temporários do cliente (`temp_slide_...`), devendo filtrar sempre por `postId` / `companyId`.
+  4. **Datas Locais Sem Desvio UTC (`src/shared/calendar-dates.ts`):** É proibido misturar `getDate()` local com `toISOString()` UTC para calcular datas `YYYY-MM-DD` de início de semana (`getMonday`).
+  5. **Coleções em Memória Limitadas (`Bounded Maps`):** Todo rate-limiter ou cache em memória deve possuir limite máximo de entradas (`MAX_ENTRIES`) e expurgo de chaves expiradas.
+
+### 2.10. Diretriz Mandatória de Máquinas de Estado Explícitas & Prevenção de Problemas Arquiteturais "Invisíveis"
+- **Documento Mestre de Referência:** [docs/guia-arquitetura-invisivel-e-maquinas-de-estado.md](./docs/guia-arquitetura-invisivel-e-maquinas-de-estado.md).
+- **Proibição de Máquinas de Estado Implícitas (*Boolean Soup* & Strings Soltas):**
+  - Nenhum componente React ou serviço backend pode controlar fluxos multi-etapa usando múltiplos booleans concorrentes (`isLoading`, `isSaving`, `isRendering`, `isGeneratingAI`). Utilize uniões discriminadas e máquinas de estado finitas explícitas (`src/shared/state-machines/`).
+  - Toda mutação de `posts.status` ou `company_settings.instagramSessionStatus` deve passar pelas funções canônicas de transição com validação de pré-condições (*guards*), nunca por atribuição arbitrária de strings.
+- **Invariantes Obrigatórias de Dados, Tempo e Concorrência:**
+  1. **Transações ACID (`db.transaction()`):** Mutações que tocam múltiplas tabelas ou múltiplas linhas (`posts` + `post_slides`) devem executar dentro de uma transação atômica, removendo lâminas excedentes (`slideNumber > slideCount`) quando a contagem diminuir.
+  2. **Sincronia e Idempotência Banco ↔ Disco:** O enfileiramento no AutoSocial deve ser idempotente por `postId` e reconciliar os diretórios físicos (`pending/`, `published/`, `failed/`) com o SQLite; exclusões (`DELETE`) devem limpar arquivos órfãos em disco.
+  3. **Chave Natural `(postId, slideNumber)` e Escopo Composto:** Atualizações de lâminas nunca devem depender apenas de IDs temporários do cliente (`temp_slide_...`), devendo filtrar sempre por `postId` / `companyId`.
+  4. **Datas Locais Sem Desvio UTC (`src/shared/calendar-dates.ts`):** É proibido misturar `getDate()` local com `toISOString()` UTC para calcular datas `YYYY-MM-DD` de início de semana (`getMonday`).
+  5. **Coleções em Memória Limitadas (`Bounded Maps`):** Todo rate-limiter ou cache em memória deve possuir limite máximo de entradas (`MAX_ENTRIES`) e expurgo de chaves expiradas.
+
 ---
 
 ## 3. Herança das Regras do Sandbox (`~/Sandbox/.agents/rules/`)
