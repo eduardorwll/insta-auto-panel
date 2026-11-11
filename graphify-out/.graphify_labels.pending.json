@@ -15,7 +15,7 @@
   "13": "dependencies",
   "14": "session.ts",
   "15": "scripts",
-  "16": "App.tsx",
+  "16": "lucide-react",
   "17": "seo-quality.ts",
   "18": "template-engine.ts",
   "19": "Covered Files & Symbols",
@@ -29,7 +29,7 @@
   "27": "🛠️ Execução e Testes",
   "28": "App.tsx",
   "29": "SettingsHub.tsx",
-  "30": "DesignStudioModal.tsx",
+  "30": "Button",
   "31": "1. Arquitetura e Stack Obrigatória",
   "32": "prowl",
   "33": "vite-env.d.ts",
@@ -47,10 +47,5 @@
   "45": "Prowl project context",
   "46": "Prowl project map",
   "47": "Social Panel (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente",
-  "48": "useStudioWorkflowMachine.ts",
-  "49": "2. Regras Operacionais Mandatórias do Repositório",
-  "50": "Social Panel (`insta-auto-panel`) — Contrato Local de Engenharia Multiagente",
-  "51": "FormatSpec",
-  "52": "📈 Seção 6: Plano de Negócio, Economia Unitária e Roadmap Daqui Para Frente",
-  "53": "SeoChecklist.tsx"
+  "48": "useStudioWorkflowMachine.ts"
 }

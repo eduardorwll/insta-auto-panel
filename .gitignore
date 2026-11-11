@@ -83,11 +83,8 @@ Thumbs.db
 .prowl-setup.lock
 # /prowl-agent: derived state
 
-# Archify transient receipts & local engineering/planning docs
+# Archify transient receipts & generated graph files
 docs/*.finalize*.json
 docs/*.browser-check.json
 docs/*.delivery.json
-docs/*.md
-docs/checklist-desenvolvimento-marcos-m8-a-m11.md
-docs/relatorio-completo-engenharia-e-plano-negocio.md
-docs/guia-arquitetura-invisivel-e-maquinas-de-estado.md
+docs/workspace-graph.jsonl
