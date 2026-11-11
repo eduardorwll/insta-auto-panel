@@ -384,21 +384,21 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1794358024.9449387,
-    "seen": 1794358181.1911974,
-    "ast_hash": "da9fc20a507e756b946c3ecde5ee5354",
+    "mtime": 1794358759.0849414,
+    "seen": 1794358879.9849553,
+    "ast_hash": "5c27369b226fcf2be8a6cfe52224e767",
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1794358024.9449387,
-    "seen": 1794358181.191199,
-    "ast_hash": "da9fc20a507e756b946c3ecde5ee5354",
+    "mtime": 1794358759.0849414,
+    "seen": 1794358879.9849565,
+    "ast_hash": "5c27369b226fcf2be8a6cfe52224e767",
     "semantic_hash": ""
   },
   "GEMINI.md": {
-    "mtime": 1794358024.9449387,
-    "seen": 1794358181.1912003,
-    "ast_hash": "da9fc20a507e756b946c3ecde5ee5354",
+    "mtime": 1794358759.0849414,
+    "seen": 1794358879.9849575,
+    "ast_hash": "5c27369b226fcf2be8a6cfe52224e767",
     "semantic_hash": ""
   },
   "README.md": {
@@ -411,18 +411,6 @@
     "mtime": 1793329008.4820163,
     "seen": 1793329403.6341348,
     "ast_hash": "9ac489bbf5d91357bcd0a5b04b3753be",
-    "semantic_hash": ""
-  },
-  "plano-fluxo-desenvolvimento-e-testes-vite.md": {
-    "mtime": 1793307133.0543725,
-    "seen": 1793307134.9428027,
-    "ast_hash": "01336a34b2a6c0d3392d412ddf585e21",
-    "semantic_hash": ""
-  },
-  "requisitos-planejamento-automacao-instagram.md": {
-    "mtime": 1793291329.4609537,
-    "seen": 1793298581.3426716,
-    "ast_hash": "2fbb58b89968909dd0c07ba545939074",
     "semantic_hash": ""
   },
   "tests/fixtures/test-avatar.png": {
@@ -915,6 +903,102 @@
     "mtime": 1794357698.919509,
     "seen": 1794357884.9784324,
     "ast_hash": "10af581af190f058772677f4da12173a",
+    "semantic_hash": ""
+  },
+  "_tools/index.py": {
+    "mtime": 1794358656.7795362,
+    "seen": 1794358879.9848273,
+    "ast_hash": "c6b838463b40b872f4a244136bc89904",
+    "semantic_hash": ""
+  },
+  "_tools/links.py": {
+    "mtime": 1794358656.7795362,
+    "seen": 1794358879.9848294,
+    "ast_hash": "4f4dbfcfd430ee92c926bef99eb37def",
+    "semantic_hash": ""
+  },
+  "_tools/quotes.py": {
+    "mtime": 1794358656.7795362,
+    "seen": 1794358879.9848304,
+    "ast_hash": "b1ce13c6216077c9beeb84bb3af7a0fd",
+    "semantic_hash": ""
+  },
+  "_tools/viz.py": {
+    "mtime": 1794358656.7795362,
+    "seen": 1794358879.9848316,
+    "ast_hash": "0414ce5319f4add0900ff33399f33c34",
+    "semantic_hash": ""
+  },
+  "docs/CONTEXT.md": {
+    "mtime": 1794358723.5524113,
+    "seen": 1794358879.9849737,
+    "ast_hash": "b094accc2b17a35e29c145094f836364",
+    "semantic_hash": ""
+  },
+  "docs/architecture/invisiveis-e-maquinas-de-estado.md": {
+    "mtime": 1794358779.900838,
+    "seen": 1794358879.984976,
+    "ast_hash": "97e3654493e730ea00d1cfb705d9d6b8",
+    "semantic_hash": ""
+  },
+  "docs/guides/estudo-arquitetura-invisivel.md": {
+    "mtime": 1794358792.5164511,
+    "seen": 1794358879.9849772,
+    "ast_hash": "df1aae90b9883cb1f4fb35fc370efa56",
+    "semantic_hash": ""
+  },
+  "docs/plans/checklist-marcos-m8-a-m15.md": {
+    "mtime": 1794358677.584432,
+    "seen": 1794358879.9849782,
+    "ast_hash": "6a0c59fa75f73648c22f070e68a1a5f3",
+    "semantic_hash": ""
+  },
+  "docs/plans/fluxo-desenvolvimento-e-testes.md": {
+    "mtime": 1794358677.584432,
+    "seen": 1794358879.984979,
+    "ast_hash": "01336a34b2a6c0d3392d412ddf585e21",
+    "semantic_hash": ""
+  },
+  "docs/specs/relatorio-engenharia-negocio.md": {
+    "mtime": 1794358677.585432,
+    "seen": 1794358879.9849799,
+    "ast_hash": "a1159424e495bd0de715b41e05f7a11b",
+    "semantic_hash": ""
+  },
+  "docs/specs/requisitos-planejamento.md": {
+    "mtime": 1794358677.583432,
+    "seen": 1794358879.9849808,
+    "ast_hash": "2fbb58b89968909dd0c07ba545939074",
+    "semantic_hash": ""
+  },
+  "docs/standards/instagram-seo.md": {
+    "mtime": 1794358704.7035997,
+    "seen": 1794358879.9849815,
+    "ast_hash": "73268ca77fcc0ca3037e91001bb173e1",
+    "semantic_hash": ""
+  },
+  "docs/standards/multi-agent-contracts.md": {
+    "mtime": 1794358715.0030432,
+    "seen": 1794358879.9849825,
+    "ast_hash": "fcfefa6888a712e2e14341d3a0e1a11f",
+    "semantic_hash": ""
+  },
+  "docs/standards/tdd-refactoring.md": {
+    "mtime": 1794358695.1381876,
+    "seen": 1794358879.9849832,
+    "ast_hash": "23ea5ca85fc331ecd3a4e3ae99f566eb",
+    "semantic_hash": ""
+  },
+  "docs/standards/ui-ux-craft.md": {
+    "mtime": 1794358686.4408133,
+    "seen": 1794358879.9849842,
+    "ast_hash": "9af865ee6c6d0390f2701e9de353d6a6",
+    "semantic_hash": ""
+  },
+  "docs/workspace-graph.html": {
+    "mtime": 1794358815.3701487,
+    "seen": 1794358879.984985,
+    "ast_hash": "697fdb5c9a939abca118d7d89b1c4d7e",
     "semantic_hash": ""
   }
 }
