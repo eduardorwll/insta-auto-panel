@@ -1,5 +1,6 @@
-import { and, asc, eq } from "drizzle-orm";
+import { and, asc, eq, gt, sql } from "drizzle-orm";
 import { db } from "../../db/client";
+import { assertPostTransition } from "../../../shared/state-machines/post-lifecycle.machine";
 import { post_slides, posts, weekly_schedules, type PostStatus } from "../../db/schema";
 
 export const DAYS_OF_WEEK = [
@@ -52,14 +53,77 @@ export interface UpdatePostParams {
   scheduledTime?: string;
   selectedPhotoIds?: string[];
   slideCount?: number;
+  slides?: UpdateSlideItem[];
 }
 
 export interface UpdateSlideItem {
-  id: string;
+  id?: string;
+  slideNumber?: number;
   title?: string;
   bodyText?: string;
   ctaText?: string | null;
   assignedPhotoId?: string | null;
+}
+
+
+type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0];
+
+function defaultSlideValues(postId: string, i: number, count: number) {
+  return {
+    id: `slide_${postId}_${i}`,
+    postId,
+    slideNumber: i,
+    title: i === 1 ? "Capa / Gancho" : i === count ? "Chamada para Ação" : `Slide ${i}`,
+    bodyText: i === 1 ? "Texto provocativo do gancho" : `Desenvolvimento do passo ${i - 1}`,
+    ctaText: i === count ? "Envie uma mensagem no Direct ou acesse o link na bio!" : null,
+  };
+}
+
+/** Remove lâminas excedentes (slideNumber > slideCount) — invariante de poda. */
+export function pruneExcessSlides(tx: Tx, postId: string, slideCount: number): void {
+  tx.delete(post_slides)
+    .where(and(eq(post_slides.postId, postId), gt(post_slides.slideNumber, slideCount)))
+    .run();
+}
+
+/** Recalcula photo_assets.timesUsed a partir das lâminas (fonte de verdade). */
+export function recalculatePhotoTimesUsed(companyId: string): void {
+  db.run(sql`UPDATE photo_assets SET times_used = (
+       SELECT COUNT(*) FROM post_slides WHERE post_slides.assigned_photo_id = photo_assets.id
+     ) WHERE company_id = ${companyId}`);
+}
+
+function applySlideUpdates(tx: Tx, postId: string, items: UpdateSlideItem[]): void {
+  for (const item of items) {
+    const values = {
+      title: item.title,
+      bodyText: item.bodyText,
+      ctaText: item.ctaText,
+      assignedPhotoId: item.assignedPhotoId || null,
+    };
+    // Chave natural (postId, slideNumber) tem prioridade: ids temporários (temp_slide_*) nunca casam.
+    const isTemp = !item.id || item.id.startsWith("temp_slide_");
+    if (!isTemp) {
+      const owned = tx
+        .select({ id: post_slides.id })
+        .from(post_slides)
+        .where(and(eq(post_slides.id, item.id!), eq(post_slides.postId, postId)))
+        .get();
+      if (owned) {
+        tx.update(post_slides)
+          .set(values)
+          .where(and(eq(post_slides.id, item.id!), eq(post_slides.postId, postId)))
+          .run();
+        continue;
+      }
+    }
+    if (item.slideNumber !== undefined) {
+      tx.update(post_slides)
+        .set(values)
+        .where(and(eq(post_slides.postId, postId), eq(post_slides.slideNumber, item.slideNumber)))
+        .run();
+    }
+  }
 }
 
 /**
@@ -81,37 +145,35 @@ export async function getOrCreateWeeklySchedule(
 
   if (!schedule) {
     const scheduleId = `sched_${companyId}_${weekStartDate.replace(/-/g, "")}`;
-    await db.insert(weekly_schedules).values({
-      id: scheduleId,
-      companyId,
-      weekStartDate,
-    });
+    // Transação ACID + onConflictDoNothing: requisições concorrentes (TOCTOU) convergem para o mesmo cronograma.
+    db.transaction((tx) => {
+      tx.insert(weekly_schedules)
+        .values({ id: scheduleId, companyId, weekStartDate })
+        .onConflictDoNothing()
+        .run();
 
-    for (const day of DAYS_OF_WEEK) {
-      const postId = `post_${scheduleId}_${day}`;
-      await db.insert(posts).values({
-        id: postId,
-        scheduleId,
-        companyId,
-        dayOfWeek: day,
-        theme: "Tema a definir",
-        category: "Dica Prática",
-        slideCount: 5,
-        status: "draft",
-        scheduledTime: "09:00",
-      });
+      for (const day of DAYS_OF_WEEK) {
+        const postId = `post_${scheduleId}_${day}`;
+        tx.insert(posts)
+          .values({
+            id: postId,
+            scheduleId,
+            companyId,
+            dayOfWeek: day,
+            theme: "Tema a definir",
+            category: "Dica Prática",
+            slideCount: 5,
+            status: "draft",
+            scheduledTime: "09:00",
+          })
+          .onConflictDoNothing()
+          .run();
 
-      for (let i = 1; i <= 5; i++) {
-        await db.insert(post_slides).values({
-          id: `slide_${postId}_${i}`,
-          postId,
-          slideNumber: i,
-          title: i === 1 ? "Capa / Gancho" : i === 5 ? "Chamada para Ação" : `Slide ${i}`,
-          bodyText: i === 1 ? "Texto provocativo do gancho" : `Desenvolvimento do passo ${i - 1}`,
-          ctaText: i === 5 ? "Envie uma mensagem no Direct ou acesse o link na bio!" : null,
-        });
+        for (let i = 1; i <= 5; i++) {
+          tx.insert(post_slides).values(defaultSlideValues(postId, i, 5)).onConflictDoNothing().run();
+        }
       }
-    }
+    });
 
     const [created] = await db
       .select()
@@ -139,16 +201,11 @@ export async function getOrCreateWeeklySchedule(
 
       if (slides.length === 0) {
         const count = p.slideCount || 5;
-        for (let i = 1; i <= count; i++) {
-          await db.insert(post_slides).values({
-            id: `slide_${p.id}_${i}`,
-            postId: p.id,
-            slideNumber: i,
-            title: i === 1 ? "Capa / Gancho" : i === count ? "Chamada para Ação" : `Slide ${i}`,
-            bodyText: i === 1 ? "Texto provocativo do gancho" : `Desenvolvimento do passo ${i - 1}`,
-            ctaText: i === count ? "Envie uma mensagem no Direct ou acesse o link na bio!" : null,
-          });
-        }
+        db.transaction((tx) => {
+          for (let i = 1; i <= count; i++) {
+            tx.insert(post_slides).values(defaultSlideValues(p.id, i, count)).onConflictDoNothing().run();
+          }
+        });
         slides = await db
           .select()
           .from(post_slides)
@@ -186,7 +243,9 @@ export async function updatePostWithSlides(
   const updateValues: Partial<typeof posts.$inferInsert> = {};
   if (params.theme !== undefined) updateValues.theme = params.theme;
   if (params.category !== undefined) updateValues.category = params.category;
-  if (params.status !== undefined) updateValues.status = params.status;
+  if (params.status !== undefined) {
+    updateValues.status = assertPostTransition(existingPost.status, params.status);
+  }
   if (params.caption !== undefined) updateValues.caption = params.caption;
   if (params.altText !== undefined) updateValues.altText = params.altText;
   if (params.scheduledTime !== undefined) updateValues.scheduledTime = params.scheduledTime;
@@ -194,38 +253,42 @@ export async function updatePostWithSlides(
     updateValues.selectedPhotoIds = JSON.stringify(params.selectedPhotoIds);
   }
 
-  if (params.slideCount !== undefined && params.slideCount !== existingPost.slideCount) {
-    updateValues.slideCount = params.slideCount;
-
-    const currentSlides = await db
-      .select()
-      .from(post_slides)
-      .where(eq(post_slides.postId, postId))
-      .orderBy(asc(post_slides.slideNumber));
-
-    if (params.slideCount > currentSlides.length) {
-      for (let i = currentSlides.length + 1; i <= params.slideCount; i++) {
-        await db.insert(post_slides).values({
-          id: `slide_${postId}_${i}_${Date.now()}`,
-          postId,
-          slideNumber: i,
-          title: i === params.slideCount ? "Chamada para Ação" : `Slide ${i}`,
-          bodyText: `Conteúdo da lâmina ${i}`,
-          ctaText: i === params.slideCount ? "Envie uma mensagem no Direct ou acesse o link na bio!" : null,
-        });
+  // Post + lâminas mudam atomicamente: ou tudo ou nada.
+  db.transaction((tx) => {
+    if (params.slideCount !== undefined && params.slideCount !== existingPost.slideCount) {
+      updateValues.slideCount = params.slideCount;
+      const count = params.slideCount;
+      const current = tx
+        .select()
+        .from(post_slides)
+        .where(eq(post_slides.postId, postId))
+        .orderBy(asc(post_slides.slideNumber))
+        .all();
+      const have = new Set(current.map((c) => c.slideNumber));
+      for (let i = 1; i <= count; i++) {
+        if (have.has(i)) continue;
+        tx.insert(post_slides)
+          .values({
+            id: `slide_${postId}_${i}_${Date.now()}`,
+            postId,
+            slideNumber: i,
+            title: i === count ? "Chamada para Ação" : `Slide ${i}`,
+            bodyText: `Conteúdo da lâmina ${i}`,
+            ctaText: i === count ? "Envie uma mensagem no Direct ou acesse o link na bio!" : null,
+          })
+          .run();
       }
-    } else if (params.slideCount < currentSlides.length) {
-      for (const s of currentSlides) {
-        if (s.slideNumber > params.slideCount) {
-          await db.delete(post_slides).where(eq(post_slides.id, s.id));
-        }
-      }
+      pruneExcessSlides(tx, postId, count);
     }
-  }
 
-  if (Object.keys(updateValues).length > 0) {
-    await db.update(posts).set(updateValues).where(eq(posts.id, postId));
-  }
+    if (Object.keys(updateValues).length > 0) {
+      tx.update(posts).set(updateValues).where(eq(posts.id, postId)).run();
+    }
+    if (params.slides?.length) {
+      applySlideUpdates(tx, postId, params.slides);
+    }
+  });
+  if (params.slides?.length) recalculatePhotoTimesUsed(existingPost.companyId);
 
   const [updatedPost] = await db.select().from(posts).where(eq(posts.id, postId));
   if (!updatedPost) return null;
@@ -261,20 +324,9 @@ export async function updatePostSlidesContent(
   postId: string,
   slidesList: UpdateSlideItem[]
 ) {
-  for (const item of slidesList) {
-    if (item.id) {
-      await db
-        .update(post_slides)
-        .set({
-          title: item.title,
-          bodyText: item.bodyText,
-          ctaText: item.ctaText,
-          assignedPhotoId: item.assignedPhotoId || null,
-        })
-        .where(eq(post_slides.id, item.id));
-    }
-  }
-
+  db.transaction((tx) => applySlideUpdates(tx, postId, slidesList));
+  const [post] = await db.select().from(posts).where(eq(posts.id, postId));
+  if (post) recalculatePhotoTimesUsed(post.companyId);
   return getPostSlides(postId);
 }
 
@@ -287,29 +339,25 @@ export async function createSchedulePost(
   const slideCount = params.slideCount || 5;
   const postId = `post_${params.scheduleId}_${params.dayOfWeek}_${Date.now()}`;
 
-  await db.insert(posts).values({
-    id: postId,
-    scheduleId: params.scheduleId,
-    companyId: params.companyId,
-    dayOfWeek: params.dayOfWeek,
-    theme: params.theme || "Tema a definir",
-    category: params.category || "Dica Prática",
-    slideCount,
-    status: "draft",
-    scheduledTime: params.scheduledTime || "09:00",
-    caption: params.caption || null,
+  db.transaction((tx) => {
+    tx.insert(posts)
+      .values({
+        id: postId,
+        scheduleId: params.scheduleId,
+        companyId: params.companyId,
+        dayOfWeek: params.dayOfWeek,
+        theme: params.theme || "Tema a definir",
+        category: params.category || "Dica Prática",
+        slideCount,
+        status: "draft",
+        scheduledTime: params.scheduledTime || "09:00",
+        caption: params.caption || null,
+      })
+      .run();
+    for (let i = 1; i <= slideCount; i++) {
+      tx.insert(post_slides).values(defaultSlideValues(postId, i, slideCount)).run();
+    }
   });
-
-  for (let i = 1; i <= slideCount; i++) {
-    await db.insert(post_slides).values({
-      id: `slide_${postId}_${i}`,
-      postId,
-      slideNumber: i,
-      title: i === 1 ? "Capa / Gancho" : i === slideCount ? "Chamada para Ação" : `Slide ${i}`,
-      bodyText: i === 1 ? "Texto provocativo do gancho" : `Desenvolvimento do passo ${i - 1}`,
-      ctaText: i === slideCount ? "Envie uma mensagem no Direct ou acesse o link na bio!" : null,
-    });
-  }
 
   const [createdPost] = await db.select().from(posts).where(eq(posts.id, postId));
   if (!createdPost) {
@@ -331,7 +379,10 @@ export async function deleteSchedulePost(postId: string): Promise<boolean> {
   const [existing] = await db.select().from(posts).where(eq(posts.id, postId));
   if (!existing) return false;
 
-  await db.delete(post_slides).where(eq(post_slides.postId, postId));
-  await db.delete(posts).where(eq(posts.id, postId));
+  db.transaction((tx) => {
+    tx.delete(post_slides).where(eq(post_slides.postId, postId)).run();
+    tx.delete(posts).where(eq(posts.id, postId)).run();
+  });
+  recalculatePhotoTimesUsed(existing.companyId);
   return true;
 }

@@ -1,5 +1,5 @@
 import { db } from "../db/client";
-import { photo_assets, companies, photoCategorySchema } from "../db/schema";
+import { photo_assets, posts, companies, photoCategorySchema } from "../db/schema";
 import { eq, and, desc } from "drizzle-orm";
 import path from "path";
 import { unlinkSync, existsSync } from "fs";
@@ -151,7 +151,25 @@ export async function handlePhotosRoutes(req: Request, url: URL): Promise<Respon
     }
 
     // Excluir registro no banco
-    await db.delete(photo_assets).where(eq(photo_assets.id, photoId));
+    // Transação: remove a foto e limpa referências pendentes em posts.selectedPhotoIds
+    db.transaction((tx) => {
+      const companyPosts = tx.select().from(posts).where(eq(posts.companyId, photo.companyId)).all();
+      for (const p of companyPosts) {
+        if (!p.selectedPhotoIds) continue;
+        let ids: string[] = [];
+        try {
+          ids = JSON.parse(p.selectedPhotoIds) as string[];
+        } catch {
+          continue;
+        }
+        if (!ids.includes(photoId)) continue;
+        tx.update(posts)
+          .set({ selectedPhotoIds: JSON.stringify(ids.filter((x) => x !== photoId)) })
+          .where(eq(posts.id, p.id))
+          .run();
+      }
+      tx.delete(photo_assets).where(eq(photo_assets.id, photoId)).run();
+    });
     return Response.json({ success: true, message: "Foto excluída com sucesso" });
   }
 

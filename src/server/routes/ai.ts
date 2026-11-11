@@ -22,7 +22,8 @@ import {
   resolvePostStyleBlueprint,
 } from "../services/design/blueprint-extractor";
 import { auditPost } from "../../shared/seo-quality";
-import { eq, asc } from "drizzle-orm";
+import { eq, asc, and } from "drizzle-orm";
+import { pruneExcessSlides, recalculatePhotoTimesUsed } from "../services/schedules/schedule-service";
 import { z } from "zod";
 
 export async function handleAIRoutes(req: Request, url: URL): Promise<Response | null> {
@@ -430,55 +431,62 @@ export async function handleAIRoutes(req: Request, url: URL): Promise<Response |
         postUpdates.category = generated.suggestedCategory;
       }
 
-      await db
-        .update(posts)
-        .set(postUpdates)
-        .where(eq(posts.id, postId));
-
-      // Atualizar ou criar lâminas
-      const currentSlides = await db
-        .select()
-        .from(post_slides)
-        .where(eq(post_slides.postId, postId))
-        .orderBy(asc(post_slides.slideNumber));
-
+      // Post + lâminas atualizados atomicamente; lâminas excedentes são podadas.
       const validPhotoIds = new Set(companyPhotos.map((p) => p.id));
+      postUpdates.slideCount = targetSlideCount;
 
-      for (const genSlide of generated.slides) {
-        const assignedPhoto = genSlide.suggestedPhotoId && validPhotoIds.has(genSlide.suggestedPhotoId)
-          ? genSlide.suggestedPhotoId
-          : null;
+      db.transaction((tx) => {
+        tx.update(posts).set(postUpdates).where(eq(posts.id, postId)).run();
 
-        const slideImagePrompt =
-          genSlide.slideNumber === 1 && generated.suggestedImagePrompt
-            ? generated.suggestedImagePrompt
-            : undefined;
+        const currentSlides = tx
+          .select()
+          .from(post_slides)
+          .where(eq(post_slides.postId, postId))
+          .orderBy(asc(post_slides.slideNumber))
+          .all();
 
-        const existingSlide = currentSlides.find((s) => s.slideNumber === genSlide.slideNumber);
-        if (existingSlide) {
-          await db
-            .update(post_slides)
-            .set({
-              title: genSlide.title,
-              bodyText: genSlide.bodyText,
-              ctaText: genSlide.ctaText || null,
-              ...(assignedPhoto ? { assignedPhotoId: assignedPhoto } : {}),
-              ...(slideImagePrompt ? { imagePrompt: slideImagePrompt } : {}),
-            })
-            .where(eq(post_slides.id, existingSlide.id));
-        } else {
-          await db.insert(post_slides).values({
-            id: `slide_${postId}_${genSlide.slideNumber}_${Date.now()}`,
-            postId,
-            slideNumber: genSlide.slideNumber,
-            title: genSlide.title,
-            bodyText: genSlide.bodyText,
-            ctaText: genSlide.ctaText || null,
-            assignedPhotoId: assignedPhoto,
-            imagePrompt: slideImagePrompt || null,
-          });
+        for (const genSlide of generated.slides) {
+          if (genSlide.slideNumber > targetSlideCount) continue;
+          const assignedPhoto =
+            genSlide.suggestedPhotoId && validPhotoIds.has(genSlide.suggestedPhotoId)
+              ? genSlide.suggestedPhotoId
+              : null;
+
+          const slideImagePrompt =
+            genSlide.slideNumber === 1 && generated.suggestedImagePrompt
+              ? generated.suggestedImagePrompt
+              : undefined;
+
+          const existingSlide = currentSlides.find((s) => s.slideNumber === genSlide.slideNumber);
+          if (existingSlide) {
+            tx.update(post_slides)
+              .set({
+                title: genSlide.title,
+                bodyText: genSlide.bodyText,
+                ctaText: genSlide.ctaText || null,
+                ...(assignedPhoto ? { assignedPhotoId: assignedPhoto } : {}),
+                ...(slideImagePrompt ? { imagePrompt: slideImagePrompt } : {}),
+              })
+              .where(and(eq(post_slides.id, existingSlide.id), eq(post_slides.postId, postId)))
+              .run();
+          } else {
+            tx.insert(post_slides)
+              .values({
+                id: `slide_${postId}_${genSlide.slideNumber}_${Date.now()}`,
+                postId,
+                slideNumber: genSlide.slideNumber,
+                title: genSlide.title,
+                bodyText: genSlide.bodyText,
+                ctaText: genSlide.ctaText || null,
+                assignedPhotoId: assignedPhoto,
+                imagePrompt: slideImagePrompt || null,
+              })
+              .run();
+          }
         }
-      }
+        pruneExcessSlides(tx, postId, targetSlideCount);
+      });
+      recalculatePhotoTimesUsed(company.id);
 
       const [updatedPost] = await db.select().from(posts).where(eq(posts.id, postId));
       const slides = await db

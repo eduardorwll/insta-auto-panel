@@ -385,18 +385,19 @@ export function DesignStudioTab({
           caption: activePost.caption,
           altText: activePost.altText,
           scheduledTime: activePost.scheduledTime || "09:00",
+          // Salvamento atômico post + lâminas (chave natural postId + slideNumber)
+          slides: activePost.slides.map((s) => ({
+            id: s.id,
+            slideNumber: s.slideNumber,
+            title: s.title ?? undefined,
+            bodyText: s.bodyText ?? undefined,
+            ctaText: s.ctaText ?? null,
+            assignedPhotoId: s.assignedPhotoId ?? null,
+          })),
         }),
       });
       const postJson = await postRes.json();
       if (!postJson.success) throw new Error(postJson.error || "Erro ao salvar post");
-
-      const slidesRes = await fetch(`/api/posts/${activePost.id}/slides`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slides: activePost.slides }),
-      });
-      const slidesJson = await slidesRes.json();
-      if (!slidesJson.success) throw new Error(slidesJson.error || "Erro ao salvar lâminas");
 
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3000);

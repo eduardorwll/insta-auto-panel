@@ -34,6 +34,18 @@ const postUpdateSchema = z.object({
   altText: z.string().optional().nullable(),
   scheduledTime: z.string().optional().nullable(),
   selectedPhotoIds: z.array(z.string()).optional().nullable(),
+  slides: z
+    .array(
+      z.object({
+        id: z.string().optional(),
+        slideNumber: z.number().int().min(1).max(10).optional(),
+        title: z.string().optional(),
+        bodyText: z.string().optional(),
+        ctaText: z.string().nullable().optional(),
+        assignedPhotoId: z.string().nullable().optional(),
+      })
+    )
+    .optional(),
 });
 
 export async function handleSchedulesRoutes(req: Request, url: URL): Promise<Response | null> {
@@ -80,6 +92,7 @@ export async function handleSchedulesRoutes(req: Request, url: URL): Promise<Res
         scheduledTime: parsed.scheduledTime ?? undefined,
         selectedPhotoIds: parsed.selectedPhotoIds ?? undefined,
         slideCount: parsed.slideCount,
+        slides: parsed.slides,
       });
 
       if (!updated) {
@@ -98,6 +111,9 @@ export async function handleSchedulesRoutes(req: Request, url: URL): Promise<Res
         );
       }
       const message = err instanceof Error ? err.message : "Erro interno";
+      if (message.startsWith("Transição de status inválida")) {
+        return Response.json({ success: false, error: message }, { status: 409 });
+      }
       return Response.json({ success: false, error: message }, { status: 500 });
     }
   }

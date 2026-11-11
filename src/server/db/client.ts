@@ -107,7 +107,13 @@ export function createDatabaseConnection(
     ]) {
       try {
         sqlite.run(alterSql);
-      } catch {}
+      } catch (err) {
+        // Idempotência esperada (coluna/tabela já existe); qualquer outro erro SQL é relevante e deve aparecer.
+        const msg = err instanceof Error ? err.message : String(err);
+        if (!/duplicate column name|already exists|no such table|no such column/i.test(msg)) {
+          console.error(`[db] migração inesperada falhou: ${alterSql.slice(0, 60)} -> ${msg}`);
+        }
+      }
     }
   }
 
