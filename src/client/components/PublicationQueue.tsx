@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getMondayLocal } from "@/shared/calendar-dates";
+import { useWeek } from "@/client/context/WeekContext";
 import { useCompany } from "@/client/context/CompanyContext";
 import type { AutoSocialQueueStatus } from "@/client/types/publication";
 import type { Post } from "@/client/types/schedule";
@@ -38,13 +38,9 @@ const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   published: { label: "Publicado no Instagram", color: "bg-emerald-950/60 text-emerald-300 border-emerald-800" },
 };
 
-function getMonday(d = new Date()): string {
-  return getMondayLocal(d);
-}
-
 export function PublicationQueue() {
   const { activeCompany } = useCompany();
-  const [weekStartDate] = useState<string>(getMonday());
+  const { weekStartDate } = useWeek();
   const [posts, setPosts] = useState<Post[]>([]);
   const [scheduleId, setScheduleId] = useState<string>("");
   const [queueStatus, setQueueStatus] = useState<AutoSocialQueueStatus>({

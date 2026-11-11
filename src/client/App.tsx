@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
+import { authBootReducer, type AuthBootState } from "@/shared/state-machines/auth-boot.machine";
+import { WeekProvider } from "@/client/context/WeekContext";
 import { CompanyProvider, useCompany } from "@/client/context/CompanyContext";
 import { CompanySwitcher } from "@/client/components/CompanySwitcher";
 import { CompanyModal } from "@/client/components/CompanyModal";
@@ -270,47 +272,53 @@ function DashboardContent({ onLockSession }: { onLockSession: () => void }) {
 }
 
 export default function App() {
-  const [isLocked, setIsLocked] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem("social_panel_locked") === "1";
-    } catch {
-      return false;
-    }
-  });
+  const [authState, dispatchAuth] = useReducer(authBootReducer, "bootstrapping" as AuthBootState);
 
   useEffect(() => {
+    let cancelled = false;
     fetch("/api/auth/me")
       .then((res) => res.json())
       .then((body: { data?: { authenticated?: boolean; authRequired?: boolean } }) => {
-        if (body.data?.authRequired && !body.data?.authenticated) {
-          setIsLocked(true);
-        }
+        if (cancelled) return;
+        dispatchAuth({
+          type: "ME_RESOLVED",
+          authRequired: Boolean(body.data?.authRequired),
+          authenticated: Boolean(body.data?.authenticated),
+        });
       })
-      .catch(() => {});
+      .catch(() => {
+        if (!cancelled) dispatchAuth({ type: "ME_FAILED" });
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const handleLockSession = async () => {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
-      localStorage.setItem("social_panel_locked", "1");
     } catch {}
-    setIsLocked(true);
+    dispatchAuth({ type: "LOCK" });
   };
+  const handleUnlockSession = () => dispatchAuth({ type: "LOGIN_SUCCESS" });
 
-  const handleUnlockSession = () => {
-    try {
-      localStorage.removeItem("social_panel_locked");
-    } catch {}
-    setIsLocked(false);
-  };
+  if (authState === "bootstrapping") {
+    return (
+      <div className="flex h-screen items-center justify-center bg-slate-950">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500"></div>
+      </div>
+    );
+  }
 
-  if (isLocked) {
+  if (authState === "unauthenticated") {
     return <LoginScreen onLoginSuccess={handleUnlockSession} />;
   }
 
   return (
     <CompanyProvider>
-      <DashboardContent onLockSession={handleLockSession} />
+      <WeekProvider>
+        <DashboardContent onLockSession={handleLockSession} />
+      </WeekProvider>
     </CompanyProvider>
   );
 }

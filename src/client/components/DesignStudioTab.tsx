@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { getMondayLocal } from "@/shared/calendar-dates";
+import { useWeek } from "@/client/context/WeekContext";
+import { useStudioWorkflowMachine } from "@/client/hooks/useStudioWorkflowMachine";
 import { useCompany } from "@/client/context/CompanyContext";
 import type { Post, PostSlide, DayOfWeek } from "@/client/types/schedule";
 import type { PhotoAsset } from "@/client/types/photo";
@@ -130,16 +131,13 @@ const DAY_LABELS: Record<string, string> = {
   domingo: "Domingo",
 };
 
-function getMonday(d = new Date()): string {
-  return getMondayLocal(d);
-}
-
 export function DesignStudioTab({
   selectedDayIndex: externalDayIndex,
   onSelectDayIndex,
 }: DesignStudioTabProps) {
   const { activeCompany } = useCompany();
-  const [weekStartDate] = useState<string>(getMonday());
+  const { weekStartDate } = useWeek();
+  const savedSnapshots = useRef<Record<string, string>>({});
   const [scheduleId, setScheduleId] = useState<string | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [localDayIndex, setLocalDayIndex] = useState(0);
@@ -155,11 +153,17 @@ export function DesignStudioTab({
   const [aiBackgroundDataUrl, setAiBackgroundDataUrl] = useState<string | null>(null);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [photos, setPhotos] = useState<PhotoAsset[]>([]);
-  const [isRendering, setIsRendering] = useState(false);
-  const [isGeneratingBg, setIsGeneratingBg] = useState(false);
-  const [isGeneratingAI, setIsGeneratingAI] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [saveSuccess, setSaveSuccess] = useState(false);
+  const studio = useStudioWorkflowMachine();
+  const {
+    isRendering,
+    isGeneratingBg,
+    isGeneratingAI,
+    isSaving,
+    saveSuccess,
+    isAddingPost,
+    isDeletingPost,
+  } = studio;
+  const BUSY_MSG = "Aguarde a operação em andamento terminar.";
   const [copiedCaption, setCopiedCaption] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [renderedUrls, setRenderedUrls] = useState<string[]>([]);
@@ -167,13 +171,11 @@ export function DesignStudioTab({
 
   // Estados do Modal "Adicionar Post"
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isAddingPost, setIsAddingPost] = useState(false);
   const [newPostDay, setNewPostDay] = useState<DayOfWeek>("segunda");
   const [newPostTime, setNewPostTime] = useState("18:30");
   const [newPostCategory, setNewPostCategory] = useState("Dica Prática");
   const [newPostTheme, setNewPostTheme] = useState("");
   const [newPostSlideCount, setNewPostSlideCount] = useState(5);
-  const [isDeletingPost, setIsDeletingPost] = useState(false);
   const [isInspectorOpen, setIsInspectorOpen] = useState(false);
 
   // Carregar cronograma da semana
@@ -187,6 +189,9 @@ export function DesignStudioTab({
       if (json.success && json.data) {
         setScheduleId(json.data.schedule?.id || null);
         setPosts(json.data.posts || []);
+        for (const p of (json.data.posts || []) as Post[]) {
+          savedSnapshots.current[p.id] = JSON.stringify(p);
+        }
       }
     } catch (err) {
       console.error("Erro ao carregar cronograma no Studio:", err);
@@ -204,7 +209,10 @@ export function DesignStudioTab({
       targetScheduleId = `sched_${activeCompany.id}_${weekStartDate.replace(/-/g, "")}`;
     }
 
-    setIsAddingPost(true);
+    if (!studio.tryStart("adding_post", scheduleId)) {
+      setStatusMessage(BUSY_MSG);
+      return;
+    }
     setStatusMessage(null);
     try {
       const res = await fetch("/api/posts", {
@@ -249,7 +257,7 @@ export function DesignStudioTab({
       const msg = err instanceof Error ? err.message : "Erro ao adicionar post";
       setStatusMessage(`Erro: ${msg}`);
     } finally {
-      setIsAddingPost(false);
+      studio.finish("adding_post");
     }
   };
 
@@ -260,7 +268,10 @@ export function DesignStudioTab({
       return;
     }
 
-    setIsDeletingPost(true);
+    if (!studio.tryStart("deleting_post", activePost.id)) {
+      setStatusMessage(BUSY_MSG);
+      return;
+    }
     setStatusMessage(null);
     try {
       const res = await fetch(`/api/posts/${activePost.id}`, { method: "DELETE" });
@@ -282,7 +293,7 @@ export function DesignStudioTab({
       const msg = err instanceof Error ? err.message : "Erro ao excluir post";
       setStatusMessage(`Erro: ${msg}`);
     } finally {
-      setIsDeletingPost(false);
+      studio.finish("deleting_post");
     }
   };
 
@@ -306,6 +317,23 @@ export function DesignStudioTab({
   }, [activeCompany?.id, weekStartDate]);
 
   const activePost = posts[selectedDayIndex];
+  const activePostIdRef = useRef<string | null>(null);
+  activePostIdRef.current = activePost?.id ?? null;
+  const isDirty = Boolean(
+    activePost &&
+      savedSnapshots.current[activePost.id] !== undefined &&
+      savedSnapshots.current[activePost.id] !== JSON.stringify(activePost)
+  );
+
+  useEffect(() => {
+    if (!isDirty) return;
+    const warn = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+    };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [isDirty]);
+
   const slides = activePost?.slides || [];
   const currentSlide = slides[activeSlideIndex] || slides[0];
 
@@ -371,8 +399,12 @@ export function DesignStudioTab({
   // Salvar post e lâminas
   const handleSavePost = async () => {
     if (!activePost) return;
-    setIsSaving(true);
-    setSaveSuccess(false);
+    if (!studio.tryStart("saving", activePost.id)) {
+      setStatusMessage(BUSY_MSG);
+      return;
+    }
+    const savedPostId = activePost.id;
+    let saveOk = false;
     try {
       const postRes = await fetch(`/api/posts/${activePost.id}`, {
         method: "PUT",
@@ -399,21 +431,25 @@ export function DesignStudioTab({
       const postJson = await postRes.json();
       if (!postJson.success) throw new Error(postJson.error || "Erro ao salvar post");
 
-      setSaveSuccess(true);
-      setTimeout(() => setSaveSuccess(false), 3000);
+      saveOk = true;
+      savedSnapshots.current[savedPostId] = JSON.stringify(activePost);
       setStatusMessage("Post e lâminas salvos com sucesso!");
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Erro ao salvar";
       setStatusMessage(`Erro: ${msg}`);
     } finally {
-      setIsSaving(false);
+      studio.finish("saving", saveOk);
     }
   };
 
   // Geração completa com IA (multi-tenant com acervo de fotos da empresa)
   const handleGenerateAI = async (customPromptOverride?: string) => {
     if (!activePost) return;
-    setIsGeneratingAI(true);
+    if (!studio.tryStart("generating_ai", activePost.id)) {
+      setStatusMessage(BUSY_MSG);
+      return;
+    }
+    const startedPostId = activePost.id;
     setStatusMessage(null);
     try {
       const res = await fetch("/api/ai/generate-post", {
@@ -434,10 +470,10 @@ export function DesignStudioTab({
       }
 
       const updatedPost: Post = json.data;
-      const updatedPosts = [...posts];
-      updatedPosts[selectedDayIndex] = updatedPost;
-      setPosts(updatedPosts);
-      if (json.data.suggestedImagePrompt) {
+      // Resposta vinculada ao postId de origem: nunca sobrescreve outro post se o dia mudou no meio do voo.
+      setPosts((prev) => prev.map((p) => (p.id === updatedPost.id ? updatedPost : p)));
+      savedSnapshots.current[updatedPost.id] = JSON.stringify(updatedPost);
+      if (json.data.suggestedImagePrompt && activePostIdRef.current === startedPostId) {
         setImagePrompt(json.data.suggestedImagePrompt);
       }
       setStatusMessage("Post otimizado com IA (Instagram SEO MATCH)! Legenda Search-First, Alt Text e background sugerido.");
@@ -445,7 +481,7 @@ export function DesignStudioTab({
       const msg = err instanceof Error ? err.message : "Erro na geração";
       setStatusMessage(`Erro: ${msg}`);
     } finally {
-      setIsGeneratingAI(false);
+      studio.finish("generating_ai");
     }
   };
 
@@ -463,7 +499,11 @@ export function DesignStudioTab({
   // Gerar fundo com IA variável
   const handleGenerateAiBackground = async () => {
     if (!imagePrompt.trim()) return;
-    setIsGeneratingBg(true);
+    if (!studio.tryStart("generating_bg", activePost?.id ?? null)) {
+      setStatusMessage(BUSY_MSG);
+      return;
+    }
+    const bgPostId = activePost?.id ?? null;
     setStatusMessage(null);
     try {
       const res = await fetch("/api/design/generate-background", {
@@ -484,7 +524,7 @@ export function DesignStudioTab({
         throw new Error(json.error || "Falha ao gerar background com IA");
       }
 
-      setAiBackgroundDataUrl(json.imageUrl);
+      if (activePostIdRef.current === bgPostId) setAiBackgroundDataUrl(json.imageUrl);
       setStatusMessage(
         `Background IA (${json.provider}) aplicado · Custo estimado: $${(json.costEstimateUsd || 0).toFixed(
           3
@@ -500,14 +540,18 @@ export function DesignStudioTab({
       const msg = err instanceof Error ? err.message : "Erro ao gerar background";
       setStatusMessage(`Erro: ${msg}`);
     } finally {
-      setIsGeneratingBg(false);
+      studio.finish("generating_bg");
     }
   };
 
   // Renderizar PNGs e enviar para o AutoSocial
   const handleRenderCarousel = async (enqueueDirectly: boolean) => {
     if (!activePost || !activeCompany) return;
-    setIsRendering(true);
+    if (!studio.tryStart("rendering", activePost.id)) {
+      setStatusMessage(BUSY_MSG);
+      return;
+    }
+    const renderPostId = activePost.id;
     setStatusMessage(null);
     try {
       const res = await fetch("/api/design/render-post", {
@@ -529,7 +573,7 @@ export function DesignStudioTab({
       const slidesUrls = json.renderedSlides
         ? json.renderedSlides.map((s: { renderedImageUrl: string }) => s.renderedImageUrl)
         : json.renderedUrls || [];
-      setRenderedUrls(slidesUrls);
+      if (activePostIdRef.current === renderPostId) setRenderedUrls(slidesUrls);
       const count = json.renderedCount || slidesUrls.length;
       if (enqueueDirectly) {
         setStatusMessage(
@@ -544,7 +588,7 @@ export function DesignStudioTab({
       const msg = err instanceof Error ? err.message : "Erro na renderização";
       setStatusMessage(`Erro: ${msg}`);
     } finally {
-      setIsRendering(false);
+      studio.finish("rendering");
     }
   };
 
@@ -980,11 +1024,16 @@ export function DesignStudioTab({
             <div className="flex items-center justify-between pt-2">
               <div className="text-xs text-slate-400">
                 {activePost?.caption ? `${activePost.caption.length} caracteres` : "Sem legenda"}
+                {isDirty && (
+                  <span className="ml-2 text-amber-300" data-ui="dirty-indicator">
+                    · Alterações não salvas
+                  </span>
+                )}
               </div>
               <Button
                 type="button"
                 onClick={handleSavePost}
-                disabled={isSaving || !activePost}
+                disabled={studio.isBusy || !activePost}
                 className="gap-2 bg-teal-500 hover:bg-teal-400 text-slate-950 font-semibold cursor-pointer active:scale-95"
               >
                 {isSaving ? (

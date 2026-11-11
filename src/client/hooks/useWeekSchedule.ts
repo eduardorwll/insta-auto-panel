@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import type { Post } from "../types/schedule";
 import type { PhotoAsset } from "../types/photo";
 import type { Company } from "../types/company";
-import { getMondayLocal, addDaysLocal } from "@/shared/calendar-dates";
+import { getMondayLocal } from "@/shared/calendar-dates";
+import { useWeek } from "@/client/context/WeekContext";
 import { isPublishedStatus } from "@/shared/state-machines/post-lifecycle.machine";
 
 /** Segunda-feira local (YYYY-MM-DD). Delegado a calendar-dates (sem desvio UTC). */
@@ -11,7 +12,7 @@ export function getMonday(d = new Date()): string {
 }
 
 export function useWeekSchedule(activeCompany: Company | null) {
-  const [weekStartDate, setWeekStartDate] = useState<string>(getMonday());
+  const { weekStartDate, setWeekStartDate, prevWeek, nextWeek, currentWeek } = useWeek();
   const [posts, setPosts] = useState<Post[]>([]);
   const [selectedDayIndex, setSelectedDayIndex] = useState(0);
   const [activeSlideNumber, setActiveSlideNumber] = useState(1);
@@ -72,15 +73,6 @@ export function useWeekSchedule(activeCompany: Company | null) {
   ).length;
   const queuedCount = posts.filter((p) => p.status === "queued" || isPublishedStatus(p.status)).length;
   const draftCount = posts.filter((p) => !p.status || p.status === "draft").length;
-
-  // Navegação de semana
-  const prevWeek = () => setWeekStartDate(addDaysLocal(weekStartDate || getMonday(), -7));
-
-  const nextWeek = () => setWeekStartDate(addDaysLocal(weekStartDate || getMonday(), 7));
-
-  const currentWeek = () => {
-    setWeekStartDate(getMonday());
-  };
 
   const activeSlide = activePost?.slides.find((s) => s.slideNumber === activeSlideNumber);
   const assignedPhoto = photos.find(

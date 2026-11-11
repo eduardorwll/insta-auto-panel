@@ -30,7 +30,7 @@ test.describe("E2E: Instagram SEO 2026 (Framework MATCH) e Campos da Marca", () 
     await expect(page.getByText("Bio Indexável do Perfil")).toBeVisible();
 
     // 5. Navega para a aba 'Studio Visual 4:5'
-    await page.getByRole("tab", { name: /Studio Visual 4:5/i }).click();
+    await page.getByRole("tab", { name: /Studio Visual OpenDesign/i }).click();
 
     // 6. Verifica a presença do card de legenda e checklist MATCH
     await expect(page.getByText("4. Legenda do Post no Instagram")).toBeVisible();
