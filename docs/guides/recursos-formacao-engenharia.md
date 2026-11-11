@@ -1,12 +1,41 @@
 # Guia de Formação em Engenharia de Software & Recursos Essenciais
 
-> **Objetivo:** Roteiro prático e aprofundado para elevar sua visão arquitetural, qualidade de código e robustez de sistemas em produção, fundamentado em 7 obras seminais da computação moderna com conexões diretas aos desafios reais do nosso projeto ([`insta-auto-panel`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel)).
+> **Objetivo:** Roteiro prático, metodológico e aprofundado para elevar sua visão arquitetural, qualidade de código, resiliência em produção e maturidade de carreira de Júnior para Sênior/Staff, fundamentado nas obras de maior autoridade da computação com conexões diretas aos desafios reais da nossa base de código ([`insta-auto-panel`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel)).
 
 ---
 
-## 1. Os 7 Livros Fundamentais
+## 1. Obras Fundamentais & Análise Crítica
 
-### 1.1. Domain Modeling Made Functional
+### 1.1. A Philosophy of Software Design
+*A Guide to Managing Complexity in Software*  
+**Autor:** John Ousterhout | **Editora:** Yaknyam Press
+
+#### Resumo do Conteúdo em Bullet Points
+* **A Natureza da Complexidade:** Complexidade é definida por dois sintomas: *Change Amplification* (uma mudança simples exige alterações em múltiplos arquivos) e *Cognitive Load* (quantidade de contexto mental necessária para alterar uma linha de código com segurança).
+* **Módulos Profundos vs. Módulos Rasos (*Deep vs. Shallow Modules*):** As melhores abstrações possuem interfaces simples e estreitas que escondem implementações ricas e complexas. Abstrações rasas apenas adicionam indireção inútil.
+* **Princípio "Define Errors Out of Existence":** Em vez de sobrecarregar a API com exceções e verificações defensivas, projete a operação de modo que o caso limite tenha uma semântica natural óbvia (ex.: deletar algo inexistente é um *no-op*, e não uma exceção fatal).
+* **Vazamento de Conhecimento e Acoplamento Temporal:** Quando duas rotinas compartilham um detalhe de implementação não documentado ou exigem ser chamadas em uma ordem estrita sem que a API imponha essa ordem.
+* **Comentários de Alto Valor:** Escrever documentação focada no *porquê* das decisões e nas invariantes que não podem ser inferidas diretamente pelo código.
+
+#### O que você aprende ao ler
+* A projetar APIs internas e interfaces de serviço onde é fácil fazer o certo e quase impossível errar.
+* A reconhecer quando uma refatoração está de fato simplificando a arquitetura ou apenas espalhando a complexidade pela base de código.
+* Como reduzir o custo de manutenção futura diminuindo o número de suposições implícitas entre módulos.
+
+#### A Lente Mental & Conexão com o Código do Projeto
+* **Lente Mental:** *"Vazamento de Conhecimento, Acoplamento Temporal e 'Design Errors Out of Existence'"*. Se para salvar um post o cliente precisa orquestrar duas chamadas consecutivas respeitando uma ordem estrita e gerenciando identificadores temporários, a API do backend falhou em ser um módulo profundo.
+* **O que torna visível no nosso código:**
+  * O acoplamento temporal em que o frontend precisa chamar `PUT /api/posts/:id` e imediatamente depois `PUT /api/posts/:id/slides` em [`DesignStudioTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/DesignStudioTab.tsx#L377-L398), gerando perda de dados com identificadores temporários (`temp_slide_...`).
+  * A triplicação de utilitários de data (como `getMonday()`) espalhados sem um módulo claro de domínio.
+  * A triplicação de definições de schema SQLite entre seeds, migrations e queries manuais.
+
+#### Como Ler este Livro
+* **Formato:** **Capa a Capa (Leitura Linear Rápida)**.
+* **Por onde começar:** Livro curto (~170 páginas). Leia linearmente do Capítulo 1 ao 21. Pode ser lido integralmente em um fim de semana e causa impacto imediato na qualidade do código que você escreve no dia a dia.
+
+---
+
+### 1.2. Domain Modeling Made Functional
 *Tackle Software Complexity with Domain-Driven Design and F#*  
 **Autor:** Scott Wlaschin | **Editora:** The Pragmatic Bookshelf
 
@@ -38,7 +67,7 @@
 
 ---
 
-### 1.2. Constructing the User Interface with Statecharts
+### 1.3. Constructing the User Interface with Statecharts
 **Autor:** Ian Horrocks | **Editora:** Addison-Wesley
 
 #### Resumo do Conteúdo em Bullet Points
@@ -64,11 +93,11 @@
 * **Por onde começar:**
   1. *Capítulos 1 a 4:* Leitura obrigatória e linear. Apresenta os problemas dos métodos convencionais de desenvolvimento de UI e introduz a notação formal de Harel.
   2. *Capítulos 5 a 8:* O método de engenharia passo a passo para construir a especificação da UI.
-  3. *Capítulos posteriores:* Estudos de caso (implementados originalmente em linguagens legadas como C++/MFC); leia superficialmente apenas para absorver a transição do diagrama para o código.
+  3. *Capítulos posteriores:* Estudos de caso históricos; leia para absorver a transição do diagrama para a implementação de software.
 
 ---
 
-### 1.3. Designing Data-Intensive Applications (DDIA)
+### 1.4. Designing Data-Intensive Applications (DDIA)
 **Autor:** Martin Kleppmann | **Editora:** O'Reilly Media
 
 #### Resumo do Conteúdo em Bullet Points
@@ -102,36 +131,39 @@
 
 ---
 
-### 1.4. A Philosophy of Software Design
-**Autor:** John Ousterhout | **Editora:** Yaknyam Press
+### 1.5. System Design Workbook
+*Práticas e Padrões para Sistemas Distribuídos e de Missão Crítica*  
+**Autor:** Matheus Fidelis | **Publicação:** Leanpub / Clube de Autores / Edição Independente
 
 #### Resumo do Conteúdo em Bullet Points
-* **A Natureza da Complexidade:** Complexidade é definida por dois sintomas: *Change Amplification* (uma mudança simples exige alterações em múltiplos arquivos) e *Cognitive Load* (quantidade de contexto mental necessária para alterar uma linha de código com segurança).
-* **Módulos Profundos vs. Módulos Rasos (*Deep vs. Shallow Modules*):** As melhores abstrações possuem interfaces simples e estreitas que escondem implementações ricas e complexas. Abstrações rasas apenas adicionam indireção inútil.
-* **Princípio "Define Errors Out of Existence":** Em vez de sobrecarregar a API com exceções e verificações defensivas, projete a operação de modo que o caso limite tenha uma semântica natural óbvia (ex.: deletar algo inexistente é um *no-op*, e não uma exceção fatal).
-* **Vazamento de Conhecimento e Acoplamento Temporal:** Quando duas rotinas compartilham um detalhe de implementação não documentado ou exigem ser chamadas em uma ordem estrita sem que a API imponha essa ordem.
-* **Comentários de Alto Valor:** Escrever documentação focada no *porquê* das decisões e nas invariantes que não podem ser inferidas diretamente pelo código.
+* **Framework Prático de System Design:** Como estruturar a resolução de problemas de arquitetura aberta: levantamento de requisitos funcionais vs. não-funcionais, definição de SLAs/SLOs e cálculo de capacidade (*back-of-the-envelope calculations*).
+* **Padrões de Resiliência Distribuída:** Implementação pragmática de *Circuit Breaker*, *Rate Limiting* (Token Bucket, Leaky Bucket, Sliding Window), *Bulkheads*, *Retries* com recuo exponencial e *Jitter*, e arquiteturas baseadas em células (*Cell-based*).
+* **Estratégias de Cache & Consistência:** Cache-Aside, Write-Through, Write-Behind, invalidação, e prevenção de fenômenos destrutivos como *Thundering Herd* e *Cache Stampede*.
+* **Desacoplamento Assíncrono com Mensageria:** Uso de filas e tópicos (RabbitMQ, SQS, Kafka), estratégias de reprocessamento, *Dead Letter Queues* (DLQ) e garantia de idempotência no consumo.
+* **Estudos de Caso Mão na Massa:** Exercícios resolvidos passo a passo de sistemas reais (geradores de relatórios pesados, filas de upload e transcodificação de mídia, feeds de alta frequência).
 
 #### O que você aprende ao ler
-* A projetar APIs internas e interfaces de serviço onde é fácil fazer o certo e quase impossível errar.
-* A reconhecer quando uma refatoração está de fato simplificando a arquitetura ou apenas espalhando a complexidade pela base de código.
-* Como reduzir o custo de manutenção futura diminuindo o número de suposições implícitas entre módulos.
+* A conduzir discussões técnicas e entrevistas de System Design com um roteiro claro, sem hesitar diante de cenários ambíguos.
+* Como justificar tecnicamente cada tecnologia na arquitetura com base em cálculos de throughput, taxa de escrita/leitura e custos de infraestrutura, abandonando escolhas por modismo.
+* A construir sistemas distribuídos que sobrevivem a oscilações violentas de tráfego sem derrubar a base de dados central.
 
 #### A Lente Mental & Conexão com o Código do Projeto
-* **Lente Mental:** *"Vazamento de Conhecimento, Acoplamento Temporal e 'Design Errors Out of Existence'"*. Se para salvar um post o cliente precisa orquestrar duas chamadas consecutivas respeitando uma ordem estrita e gerenciando identificadores temporários, a API do backend falhou em ser um módulo profundo.
+* **Lente Mental:** *"Desenho de Capacidade, Desacoplamento Assíncrono e Resiliência Deliberada"*. Quando um serviço precisa renderizar lâminas gráficas pesadas em PNG e enfileirar para o Instagram, processar isso de forma síncrona dentro da requisição do usuário cria gargalos graves de CPU e bloqueio de I/O.
 * **O que torna visível no nosso código:**
-  * O acoplamento temporal em que o frontend precisa chamar `PUT /api/posts/:id` e imediatamente depois `PUT /api/posts/:id/slides` em [`DesignStudioTab.tsx`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/client/components/DesignStudioTab.tsx#L377-L398), gerando perda de dados com identificadores temporários (`temp_slide_...`).
-  * A triplicação de utilitários de data (como `getMonday()`) espalhados sem um módulo claro de domínio.
-  * A triplicação de definições de schema SQLite entre seeds, migrations e queries manuais.
+  * A exportação e renderização do AutoSocial rodando no mesmo processo da API web sem uma fila assíncrona dedicada com limitação de concorrência ou DLQ ([`autosocial.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/export/autosocial.ts#L41-L167)).
+  * O controle de requisições de IA em [`quota-guard.ts`](file:///home/eduardorwll/Projects/Sandbox/src/insta-auto-panel/src/server/services/ai/quota-guard.ts#L13) necessitando de formalização via algoritmos padronizados de *Token Bucket* ou *Sliding Window*.
+  * A ausência de um ciclo de retenção e armazenamento estruturado (*storage tiering*) para imagens geradas em `data/renders/`.
 
 #### Como Ler este Livro
-* **Formato:** **Capa a Capa (Leitura Rápida e Direta)**.
+* **Formato:** **Workbook / Livro de Exercícios Práticos**.
 * **Por onde começar:**
-  * Livro curto (~170 páginas). Leia linearmente do Capítulo 1 ao 21. Pode ser lido integralmente em um fim de semana e causa impacto imediato na qualidade do código que você escreve na segunda-feira seguinte.
+  1. *Capítulos de Framework & Estimativa:* Leia como calcular volumetria e restrições de latência antes de desenhar blocos.
+  2. *Capítulos de Padrões de Resiliência:* Estude as receitas de Circuit Breakers, Rate Limiters e Filas.
+  3. *Estudos de Caso:* Tente resolver o diagrama de cada exercício em uma folha em branco antes de conferir a solução e os trade-offs analisados pelo autor.
 
 ---
 
-### 1.5. Release It! Design and Deploy Production-Ready Software (2ª Edição)
+### 1.6. Release It! Design and Deploy Production-Ready Software (2ª Edição)
 **Autor:** Michael T. Nygard | **Editora:** The Pragmatic Bookshelf
 
 #### Resumo do Conteúdo em Bullet Points
@@ -162,7 +194,7 @@
 
 ---
 
-### 1.6. Secure by Design
+### 1.7. Secure by Design
 **Autores:** Dan Bergh Johnsson, Daniel Deogun & Daniel Sawano | **Editora:** Manning
 
 #### Resumo do Conteúdo em Bullet Points
@@ -192,7 +224,7 @@
 
 ---
 
-### 1.7. Software Architecture: The Hard Parts
+### 1.8. Software Architecture: The Hard Parts
 *Modern Input for Objective Decisions*  
 **Autores:** Neal Ford, Mark Richards, Pramod Sadalage & Zhamak Dehghani | **Editora:** O'Reilly Media
 
@@ -223,18 +255,53 @@
 
 ---
 
-## 2. Roteiro de Leitura Recomendado
+### 1.9. The Software Engineer's Guidebook
+*Navigating Senior, Tech Lead, and Staff Engineer Positions at Tech Companies and Startups*  
+**Autor:** Gergely Orosz | **Publicação:** Orosz Solutions / Independent
 
-Para maximizar a absorção prática e colher benefícios imediatos no desenvolvimento diário, siga esta ordem de leitura:
+#### Resumo do Conteúdo em Bullet Points
+* **O Mapa da Carreira de Engenharia:** Expectativas formais, competências comportamentais e responsabilidades técnicas em cada degrau: Júnior, Pleno, Sênior, Tech Lead e Staff/Principal Engineer.
+* **Execução em Nível Sênior (*Getting Things Done*):** Como desmembrar épicos ambíguos em entregas pequenas, iterativas e seguras; como gerenciar escopo, riscos técnicos e prazos com previsibilidade.
+* **Comunicação Técnica de Alto Impacto:** Redação de *Design Documents*, RFCs (*Request for Comments*) e revisões de código aprofundadas que educam o time em vez de travar o fluxo.
+* **Liderança Técnica Pragmática (*The Pragmatic Tech Lead*):** Como liderar sem autoridade formal, blindar o time contra distrações, conduzir reuniões produtivas e alinhar débitos técnicos com gerentes de produto (*Product Managers*).
+* **Entendimento do Negócio (*Business Acumen*):** Como relacionar escolhas de engenharia a métricas de negócio (conversão, custo operacional, retenção de clientes e velocidade de entrega).
+
+#### O que você aprende ao ler
+* A chave exata da maturidade profissional: o que transforma um desenvolvedor focado apenas em sintaxe em um engenheiro sênior autônomo, confiável e com visão holística do produto.
+* Como escrever especificações técnicas claras que alinham múltiplos desenvolvedores e agentes autônomos antes de qualquer linha de código ser escrita.
+* Como assumir a postura de liderança técnica em projetos complexos, navegando por concessões de prazo sem sacrificar a qualidade fundamental do software.
+
+#### A Lente Mental & Conexão com o Código do Projeto
+* **Lente Mental:** *"Maturidade de Entrega, Autonomia em Ambientes Ambíguos e Impacto Multiplicador"*. A maturidade de um engenheiro transparece na estrutura do repositório, na previsibilidade das fases de entrega e na documentação viva que permite a qualquer engenheiro (ou agente) operar sem atrito.
+* **O que torna visível no nosso código:**
+  * O planejamento incremental que adotamos com as Fases I e II (marcos M8 a M15 do `insta-auto-panel`), executando grandes refatorações com suítes de testes automatizados passando em 100% dos passos.
+  * A formalização do repositório no modelo ICM (*Interpretable Context Methodology*), organizando estantes limpas em `docs/` e catálogos enxutos que reduzem a carga cognitiva do time.
+  * A necessidade de transformar decisões críticas de design visual e persistência em ADRs documentadas.
+
+#### Como Ler este Livro
+* **Formato:** **Guia de Carreira & Manual Modular de Consulta**.
+* **Por onde começar:**
+  1. *Parte 3 (The Well-Rounded Senior Engineer):* **Comece diretamente aqui!** Capítulos 11 a 15 definem o que significa operar como Sênior: execução técnica, colaboração, testes e arquitetura.
+  2. *Parte 2 (The Competent Software Developer):* Leia os capítulos 7 a 10 para calibrar seus hábitos diários de produtividade, ferramentas e código limpo.
+  3. *Parte 4 (The Pragmatic Tech Lead):* Consulte quando estiver planejando projetos de ponta a ponta, gerenciando dependências ou coordenando entregas com outras áreas.
+  4. *Partes 1 e 5:* Consulte para planejamento de carreira, avaliações de desempenho (*performance reviews*) e impacto em nível Staff.
+
+---
+
+## 2. Roteiro Integrado de Leitura (Da Sintaxe à Arquitetura & Liderança)
+
+Este fluxo foi desenhado para criar uma transição fluida: primeiro a clareza do código local, depois a modelagem de domínio, em seguida a interface gráfica, avançando para concorrência de dados, sistemas distribuídos, estabilidade de produção, segurança arquitetural e, finalmente, liderança técnica sênior:
 
 ```mermaid
 flowchart TD
-    A["1. A Philosophy of Software Design<br/>(Leitura rápida • Fim de semana • Impacto diário)"] --> B["2. Domain Modeling Made Functional<br/>(Fundação conceitual • Tipos como regras)"]
-    B --> C["3. Constructing UI with Statecharts<br/>(Fim do espaguete de eventos e telas frágeis)"]
-    C --> D["4. Designing Data-Intensive Applications<br/>(Capítulo 7 primeiro • Integridade e Concorrência)"]
-    D --> E["5. Release It! (2ª Edição)<br/>(Ceticismo operacional • Estabilidade em produção)"]
-    E --> F["6. Secure by Design<br/>(Segurança como invariante de domínio)"]
-    F --> G["7. Software Architecture: The Hard Parts<br/>(Visão Staff Engineer • Sagas e Trade-offs)"]
+    A["1. A Philosophy of Software Design<br/>(Código local • Módulos profundos • Fim de semana)"] --> B["2. Domain Modeling Made Functional<br/>(Tipos como regras • Tornar estados ilegais irrepresentáveis)"]
+    B --> C["3. Constructing UI with Statecharts<br/>(Fim do espaguete de eventos • UIs previsíveis)"]
+    C --> D["4. Designing Data-Intensive Applications<br/>(Capítulo 7 primeiro • Transações e Concorrência)"]
+    D --> E["5. System Design Workbook<br/>(Framework prático • Exercícios mão na massa • Filas e Caches)"]
+    E --> F["6. Release It! (2ª Edição)<br/>(Ceticismo operacional • Circuit Breakers • Produção real)"]
+    F --> G["7. Secure by Design<br/>(Segurança no domínio • Eliminação estrutural de IDOR)"]
+    G --> H["8. Software Architecture: The Hard Parts<br/>(Trade-offs • Decomposição • Sagas Transacionais)"]
+    H --> I["9. The Software Engineer's Guidebook<br/>(Maturidade Sênior/Staff • RFCs • Liderança e Negócio)"]
 ```
 
 ---
@@ -250,11 +317,13 @@ flowchart TD
 * [ ] **Transacionalidade Estrita em Dados e Arquivos:** Garantir que todas as operações compostas no banco SQLite ocorram sob blocos `db.transaction()`, e estruturar rotinas de compensação para mitigar falhas parciais em *dual-writes* com o sistema de arquivos.
 * [ ] **Isolamento de Segurança Multi-Tenant por Construção:** Encapsular o `companyId` nos contratos de repositório e serviços, eliminando a dependência de verificações manuais de autorização nas rotas HTTP.
 * [ ] **Resiliência e Circuit Breakers em APIs Externas:** Implementar mecanismos de timeout, tentativas com recuo exponencial (*exponential backoff*) e degradação graciosa para chamadas aos provedores de IA e geração de imagens.
+* [ ] **Exercícios Práticos de System Design:** Resolver ao menos 3 estudos de caso completos do *System Design Workbook* (ex.: fila de transcodificação de mídia e processador de eventos).
 
 ### 3.3. Longo Prazo (Meses 5 a 12) — *Arquitetura Distribuída, Trade-Offs e Visão de Staff Engineer*
 * [ ] **Domínio de Sagas Transacionais:** Projetar fluxos de longa duração e pipelines assíncronos (como renderização de mídias e publicações automáticas) utilizando o padrão Saga com orquestração clara e ações de compensação.
-* [ ] **Documentação Sistemática de Decisões (ADRs):** Padronizar a criação de *Architecture Decision Records* para cada mudança estrutural na base de código, explicitando trade-offs e alternativas descartadas.
+* [ ] **Documentação Sistemática de Decisões (ADRs e RFCs):** Padronizar a criação de *Architecture Decision Records* e RFCs técnicas antes de qualquer mudança estrutural de grande porte.
 * [ ] **Harmonização de Motores Gráficos e Contratos:** Unificar as regras de geração visual entre o cliente (HTML/Canvas) e o servidor (Node/Bun/Worker), eliminando divergências de fidelidade e acoplamentos semânticos ocultos.
+* [ ] **Postura de Liderança Técnica Multiplicadora:** Aplicar as diretrizes do *The Software Engineer's Guidebook* na gestão de débitos técnicos, mentoria de código e colaboração simbiótica entre agentes autônomos e desenvolvedores.
 
 ---
 
