@@ -124,17 +124,19 @@ Este arquivo define as diretrizes operacionais inegociáveis para o **Lead Archi
   4. **Datas Locais Sem Desvio UTC (`src/shared/calendar-dates.ts`):** É proibido misturar `getDate()` local com `toISOString()` UTC para calcular datas `YYYY-MM-DD` de início de semana (`getMonday`).
   5. **Coleções em Memória Limitadas (`Bounded Maps`):** Todo rate-limiter ou cache em memória deve possuir limite máximo de entradas (`MAX_ENTRIES`) e expurgo de chaves expiradas.
 
-### 2.10. Diretriz Mandatória de Máquinas de Estado Explícitas & Prevenção de Problemas Arquiteturais "Invisíveis"
-- **Documento Mestre de Referência:** [docs/guia-arquitetura-invisivel-e-maquinas-de-estado.md](./docs/guia-arquitetura-invisivel-e-maquinas-de-estado.md).
-- **Proibição de Máquinas de Estado Implícitas (*Boolean Soup* & Strings Soltas):**
-  - Nenhum componente React ou serviço backend pode controlar fluxos multi-etapa usando múltiplos booleans concorrentes (`isLoading`, `isSaving`, `isRendering`, `isGeneratingAI`). Utilize uniões discriminadas e máquinas de estado finitas explícitas (`src/shared/state-machines/`).
-  - Toda mutação de `posts.status` ou `company_settings.instagramSessionStatus` deve passar pelas funções canônicas de transição com validação de pré-condições (*guards*), nunca por atribuição arbitrária de strings.
-- **Invariantes Obrigatórias de Dados, Tempo e Concorrência:**
-  1. **Transações ACID (`db.transaction()`):** Mutações que tocam múltiplas tabelas ou múltiplas linhas (`posts` + `post_slides`) devem executar dentro de uma transação atômica, removendo lâminas excedentes (`slideNumber > slideCount`) quando a contagem diminuir.
-  2. **Sincronia e Idempotência Banco ↔ Disco:** O enfileiramento no AutoSocial deve ser idempotente por `postId` e reconciliar os diretórios físicos (`pending/`, `published/`, `failed/`) com o SQLite; exclusões (`DELETE`) devem limpar arquivos órfãos em disco.
-  3. **Chave Natural `(postId, slideNumber)` e Escopo Composto:** Atualizações de lâminas nunca devem depender apenas de IDs temporários do cliente (`temp_slide_...`), devendo filtrar sempre por `postId` / `companyId`.
-  4. **Datas Locais Sem Desvio UTC (`src/shared/calendar-dates.ts`):** É proibido misturar `getDate()` local com `toISOString()` UTC para calcular datas `YYYY-MM-DD` de início de semana (`getMonday`).
-  5. **Coleções em Memória Limitadas (`Bounded Maps`):** Todo rate-limiter ou cache em memória deve possuir limite máximo de entradas (`MAX_ENTRIES`) e expurgo de chaves expiradas.
+#### 2.10.1. Estado de Implementação das Invariantes (Marcos M12–M15 concluídos — referência para agentes)
+| Invariante | Módulo canônico | Status |
+| :--- | :--- | :--- |
+| Ciclo de vida do post (`draft → ai_generated → ready_design → queued → published \| failed`; `posted` é alias legado) | `src/shared/state-machines/post-lifecycle.machine.ts` (`assertPostTransition`, `normalizePostStatus`) | Aplicado em `PUT /api/posts/:id` (409), `enqueuePostForAutoSocial`, `reconcileAutoSocialQueueWithDb` e `design.ts`. **Pendente:** demais mutações de status que ainda atribuem string direta. |
+| Sessão Instagram (`unconfigured \| active \| expired`) | `instagram-session.machine.ts` | `GET /api/settings` deriva `expired` do `sessionid`. |
+| Boot de autenticação | `auth-boot.machine.ts` + `App.tsx` | Concluído. |
+| Fluxo assíncrono do Studio (1 operação por vez, respostas presas ao `postId`) | `studio-workflow.machine.ts` + `hooks/useStudioWorkflowMachine.ts` | Concluído em `DesignStudioTab`. **Pendente:** *dirty state* em `CompanyTab`, `WeekPlanner`, `SettingsHub`. |
+| Datas locais (`getMondayLocal`, `addDaysLocal`) e semana única | `src/shared/calendar-dates.ts` + `client/context/WeekContext.tsx` | Concluído. |
+| Transações ACID, `onConflictDoNothing`, poda de lâminas, chave `(postId, slideNumber)` | `schedule-service.ts` (`applySlideUpdates`, `pruneExcessSlides`, `recalculatePhotoTimesUsed`) e `ai.ts` | Concluído. |
+| Fila AutoSocial idempotente + reconciliação + limpeza de órfãos | `autosocial.ts` (`queueFileMatchesPost`, `reconcileAutoSocialQueueWithDb`, `removePostDiskArtifacts`, `removeCompanyDiskArtifacts`) | Concluído. `.profiles/<empresa>` **não** é apagado no `DELETE` de empresa (decisão do usuário pendente). |
+| Mapas em memória limitados | `bounded-ttl-map.ts` (`session.ts`, `quota-guard.ts`) | Concluído. |
+| **Lacunas conhecidas** | — | `clientSlidePngs` (preview Canvas ≠ PNG do servidor); modo operacional de IA (`executionMode`, FSM #6); `taste-skill lint`/`graft`/`archify` não rodados em M12–M15; testes M13 escritos após a implementação. |
+| **Armadilhas operacionais** | — | Rodar `bun run build` antes do Playwright (o servidor serve `dist/`); `bun run db:seed` para a empresa Demo Corp; testes com `db` mockado não aceitam `sqlite.run` cru (use `db.run(sql\`...\`)`); `db.transaction` do bun-sqlite é **síncrono** (`.run()/.all()/.get()`, sem `await` dentro). |
 
 ---
 
