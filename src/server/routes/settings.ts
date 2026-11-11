@@ -7,6 +7,10 @@ import {
   imageProviderSchema,
 } from "../db/schema";
 import fs from "node:fs/promises";
+import {
+  evaluateInstagramSessionState,
+  type CookieLike,
+} from "../../shared/state-machines/instagram-session.machine";
 import path from "node:path";
 import { parseInstagramCookiesInput } from "../services/instagram/cookies";
 import {
@@ -51,6 +55,30 @@ async function ensureCompanySettingsRow(companyId: string) {
 
   await db.insert(company_settings).values(defaultRow);
   return defaultRow;
+}
+
+/**
+ * Deriva o estado real da sessão a partir de cookies.json (expiração do sessionid)
+ * e persiste a transição (active -> expired) quando aplicável.
+ */
+async function reconcileSessionStatus(
+  row: NonNullable<Awaited<ReturnType<typeof ensureCompanySettingsRow>>>,
+  companyId: string
+) {
+  if (row.instagramSessionStatus === "unconfigured" || !row.instagramCookiesJson) return row;
+  let cookies: CookieLike[] | null = null;
+  try {
+    cookies = JSON.parse(row.instagramCookiesJson) as CookieLike[];
+  } catch {
+    cookies = null;
+  }
+  const next = evaluateInstagramSessionState(cookies);
+  if (next === row.instagramSessionStatus) return row;
+  await db
+    .update(company_settings)
+    .set({ instagramSessionStatus: next, updatedAt: new Date() })
+    .where(eq(company_settings.companyId, companyId));
+  return { ...row, instagramSessionStatus: next };
 }
 
 const SAFE_COMPANY_ID_REGEX = /^[a-z0-9_-]+$/;
@@ -112,9 +140,10 @@ export async function handleSettingsRoutes(
       );
     }
 
+    const evaluated = await reconcileSessionStatus(row, companyId);
     return Response.json({
       success: true,
-      data: sanitizeCompanySettings(row, companyId),
+      data: sanitizeCompanySettings(evaluated, companyId),
     });
   }
 

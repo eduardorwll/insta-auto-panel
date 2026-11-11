@@ -1,5 +1,6 @@
 import { dayOfWeekSchema } from "../db/schema";
 import { z } from "zod";
+import { POST_STATUSES, normalizePostStatus } from "../../shared/state-machines/post-lifecycle.machine";
 import {
   getOrCreateWeeklySchedule,
   updatePostWithSlides,
@@ -25,7 +26,10 @@ const postUpdateSchema = z.object({
   theme: z.string().min(1).optional(),
   category: z.string().min(1).optional(),
   slideCount: z.number().int().min(3).max(10).optional(),
-  status: z.enum(["draft", "ai_generated", "ready_design", "queued", "posted"]).optional(),
+  status: z
+    .enum([...POST_STATUSES, "posted"])
+    .transform((s) => normalizePostStatus(s))
+    .optional(),
   caption: z.string().optional().nullable(),
   altText: z.string().optional().nullable(),
   scheduledTime: z.string().optional().nullable(),

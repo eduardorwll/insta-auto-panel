@@ -9,15 +9,12 @@ import {
 } from "./schema";
 import { eq } from "drizzle-orm";
 import fs from "fs/promises";
+import { getMondayLocal } from "../../shared/calendar-dates";
 import path from "path";
 
 // Obter a segunda-feira da semana corrente no formato YYYY-MM-DD
 export function getMonday(d = new Date()): string {
-  const date = new Date(d);
-  const day = date.getDay();
-  const diff = date.getDate() - day + (day === 0 ? -6 : 1);
-  date.setDate(diff);
-  return date.toISOString().split("T")[0] || "";
+  return getMondayLocal(d);
 }
 
 export const SEEDED_POSTS_DATA = [

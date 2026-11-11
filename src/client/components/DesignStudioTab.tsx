@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { getMondayLocal } from "@/shared/calendar-dates";
 import { useCompany } from "@/client/context/CompanyContext";
 import type { Post, PostSlide, DayOfWeek } from "@/client/types/schedule";
 import type { PhotoAsset } from "@/client/types/photo";
@@ -130,11 +131,7 @@ const DAY_LABELS: Record<string, string> = {
 };
 
 function getMonday(d = new Date()): string {
-  const date = new Date(d);
-  const day = date.getDay();
-  const diff = date.getDate() - day + (day === 0 ? -6 : 1);
-  date.setDate(diff);
-  return date.toISOString().split("T")[0] || "";
+  return getMondayLocal(d);
 }
 
 export function DesignStudioTab({

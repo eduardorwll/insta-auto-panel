@@ -1,6 +1,7 @@
 import { db, sqlite } from "../../db/client";
 import { api_usage_rules, api_usage_logs } from "../../db/schema";
 import { eq } from "drizzle-orm";
+import { BoundedTtlMap } from "../../../shared/state-machines/bounded-ttl-map";
 
 export type ApiOperationType = "text_generation" | "image_generation" | "vision_blueprint";
 
@@ -22,7 +23,7 @@ export interface ApiUsageSummary {
   budgetUtilizationPercent: number;
 }
 
-const rpmSlidingWindow = new Map<string, number[]>();
+const rpmSlidingWindow = new BoundedTtlMap<number[]>(500, 60_000);
 
 function ensureQuotaTablesExist(): void {
   try {

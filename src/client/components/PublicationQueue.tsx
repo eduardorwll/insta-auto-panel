@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { getMondayLocal } from "@/shared/calendar-dates";
 import { useCompany } from "@/client/context/CompanyContext";
 import type { AutoSocialQueueStatus } from "@/client/types/publication";
 import type { Post } from "@/client/types/schedule";
@@ -34,15 +35,11 @@ const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   ai_generated: { label: "Gerado com IA", color: "bg-teal-950/60 text-teal-300 border-teal-800" },
   ready_design: { label: "Pronto Studio OpenDesign", color: "bg-sky-950/60 text-sky-300 border-sky-800" },
   queued: { label: "Enfileirado AutoSocial", color: "bg-amber-950/60 text-amber-300 border-amber-800" },
-  posted: { label: "Publicado no Instagram", color: "bg-emerald-950/60 text-emerald-300 border-emerald-800" },
+  published: { label: "Publicado no Instagram", color: "bg-emerald-950/60 text-emerald-300 border-emerald-800" },
 };
 
 function getMonday(d = new Date()): string {
-  const date = new Date(d);
-  const day = date.getDay();
-  const diff = date.getDate() - day + (day === 0 ? -6 : 1);
-  date.setDate(diff);
-  return date.toISOString().split("T")[0] || "";
+  return getMondayLocal(d);
 }
 
 export function PublicationQueue() {

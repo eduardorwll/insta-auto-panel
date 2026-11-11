@@ -1,6 +1,7 @@
 import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
 import { relations, sql } from "drizzle-orm";
 import { z } from "zod";
+import { POST_STATUSES, type PostStatus } from "../../shared/state-machines/post-lifecycle.machine";
 
 /**
  * Categorias válidas para fotos do banco isolado por empresa
@@ -27,14 +28,8 @@ export const dayOfWeekSchema = z.enum(DAYS_OF_WEEK);
 /**
  * Status do fluxo editorial do post
  */
-export const POST_STATUSES = [
-  "draft",
-  "ai_generated",
-  "ready_design",
-  "queued",
-  "posted",
-] as const;
-export type PostStatus = (typeof POST_STATUSES)[number];
+export { POST_STATUSES };
+export type { PostStatus };
 export const postStatusSchema = z.enum(POST_STATUSES);
 
 /**

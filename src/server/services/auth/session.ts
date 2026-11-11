@@ -1,4 +1,5 @@
 import { createHmac, timingSafeEqual } from "crypto";
+import { BoundedTtlMap } from "../../../shared/state-machines/bounded-ttl-map";
 
 const SESSION_COOKIE_NAME = "social_panel_session";
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 dias
@@ -10,7 +11,8 @@ interface RateLimitEntry {
   firstFailureAt: number;
 }
 
-const loginAttemptsByIp = new Map<string, RateLimitEntry>();
+const MAX_TRACKED_IPS = 1000;
+const loginAttemptsByIp = new BoundedTtlMap<RateLimitEntry>(MAX_TRACKED_IPS, LOGIN_WINDOW_MS);
 
 const ADMIN_USERNAME = process.env.PANEL_ADMIN_USER || "admin";
 const RAW_ADMIN_PASSWORD = process.env.PANEL_ADMIN_PASSWORD || "admin123";
@@ -54,9 +56,10 @@ export function recordLoginFailure(clientIp: string): void {
   const now = Date.now();
   const entry = loginAttemptsByIp.get(clientIp);
   if (!entry || now - entry.firstFailureAt > LOGIN_WINDOW_MS) {
-    loginAttemptsByIp.set(clientIp, { failures: 1, firstFailureAt: now });
+    loginAttemptsByIp.set(clientIp, { failures: 1, firstFailureAt: now }, now);
   } else {
     entry.failures += 1;
+    loginAttemptsByIp.set(clientIp, entry, entry.firstFailureAt);
   }
 }
 
