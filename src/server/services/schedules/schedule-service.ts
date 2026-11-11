@@ -1,5 +1,6 @@
 import { and, asc, eq, gt, sql } from "drizzle-orm";
 import { db } from "../../db/client";
+import { removePostDiskArtifacts } from "../export/autosocial";
 import { assertPostTransition } from "../../../shared/state-machines/post-lifecycle.machine";
 import { post_slides, posts, weekly_schedules, type PostStatus } from "../../db/schema";
 
@@ -384,5 +385,6 @@ export async function deleteSchedulePost(postId: string): Promise<boolean> {
     tx.delete(posts).where(eq(posts.id, postId)).run();
   });
   recalculatePhotoTimesUsed(existing.companyId);
+  await removePostDiskArtifacts(existing.companyId, postId).catch(() => {});
   return true;
 }

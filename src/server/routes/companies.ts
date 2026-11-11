@@ -1,5 +1,6 @@
 import { db } from "../db/client";
-import { companies, company_post_types, companyInsertSchema } from "../db/schema";
+import { companies, company_post_types, companyInsertSchema, photo_assets } from "../db/schema";
+import { removeCompanyDiskArtifacts } from "../services/export/autosocial";
 import { eq, and, desc } from "drizzle-orm";
 import { z } from "zod";
 import {
@@ -131,7 +132,16 @@ export async function handleCompaniesRoutes(req: Request, url: URL): Promise<Res
         return Response.json({ success: false, error: "Empresa não encontrada" }, { status: 404 });
       }
 
+      const companyPhotos = await db
+        .select({ filename: photo_assets.filename })
+        .from(photo_assets)
+        .where(eq(photo_assets.companyId, companyId));
       await db.delete(companies).where(eq(companies.id, companyId));
+      // Limpa arquivos órfãos em disco (renders, fila AutoSocial, uploads) após o commit no SQLite.
+      await removeCompanyDiskArtifacts(
+        companyId,
+        companyPhotos.map((p) => p.filename)
+      ).catch(() => {});
       return Response.json({ success: true, message: "Empresa excluída com sucesso" });
     }
   }

@@ -122,7 +122,15 @@ export async function handlePhotosRoutes(req: Request, url: URL): Promise<Respon
         timesUsed: 0,
       };
 
-      await db.insert(photo_assets).values(newAsset);
+      try {
+        await db.insert(photo_assets).values(newAsset);
+      } catch (insertErr) {
+        // Rollback compensatório: sem registro no SQLite, o arquivo gravado seria órfão.
+        try {
+          unlinkSync(diskPath);
+        } catch {}
+        throw insertErr;
+      }
       const [created] = await db.select().from(photo_assets).where(eq(photo_assets.id, photoId));
 
       return Response.json({ success: true, data: created }, { status: 201 });

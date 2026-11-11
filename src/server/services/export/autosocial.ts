@@ -9,6 +9,10 @@ import {
 import { eq, inArray, and } from "drizzle-orm";
 import fs from "fs/promises";
 import path from "path";
+import {
+  assertPostTransition,
+  normalizePostStatus,
+} from "../../../shared/state-machines/post-lifecycle.machine";
 
 const BASE_QUEUE_DIR = path.resolve(import.meta.dirname, "../../../../data/autosocial/queue");
 const UPLOADS_DIR = path.resolve(import.meta.dirname, "../../../../data/uploads");
@@ -38,6 +42,88 @@ export async function ensureQueueDirs(companyId: string) {
   return dirs;
 }
 
+function escapeRegExp(v: string): string {
+  return v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Reconhece os arquivos de fila pertencentes a UM post específico.
+ * Formato: `<ts>_<dia>_<postId>` + (`.description` | `_slide_NN.png` | `_N.<ext>`).
+ * Os sufixos fechados evitam colisão entre ids prefixados (post_X vs post_X_1730).
+ */
+export function queueFileMatchesPost(filename: string, postId: string): boolean {
+  const id = escapeRegExp(postId);
+  return new RegExp(
+    `^\\d+_[a-z]+_${id}(\\.description|_slide_\\d+\\.png|_\\d+\\.(png|jpe?g|webp|gif))$`
+  ).test(filename);
+}
+
+async function removePostQueueFiles(dir: string, postId: string): Promise<string[]> {
+  let entries: string[] = [];
+  try {
+    entries = await fs.readdir(dir);
+  } catch {
+    return [];
+  }
+  const removed: string[] = [];
+  for (const f of entries) {
+    if (queueFileMatchesPost(f, postId)) {
+      await fs.rm(path.join(dir, f), { force: true });
+      removed.push(f);
+    }
+  }
+  return removed;
+}
+
+/** Remove artefatos em disco de um post excluído (renders + fila pendente). */
+export async function removePostDiskArtifacts(companyId: string, postId: string): Promise<void> {
+  await fs.rm(path.join(RENDERS_DIR, companyId, postId), { recursive: true, force: true });
+  await removePostQueueFiles(getCompanyQueueDirs(companyId).pending, postId);
+}
+
+/** Remove todos os artefatos em disco de uma empresa excluída (renders, fila, uploads das fotos). */
+export async function removeCompanyDiskArtifacts(
+  companyId: string,
+  photoFilenames: string[]
+): Promise<void> {
+  await fs.rm(path.join(RENDERS_DIR, companyId), { recursive: true, force: true });
+  await fs.rm(path.join(BASE_QUEUE_DIR, companyId), { recursive: true, force: true });
+  for (const f of photoFilenames) {
+    await fs.rm(path.join(UPLOADS_DIR, path.basename(f)), { force: true });
+  }
+}
+
+/**
+ * Reconcilia disco -> SQLite: posts `queued` cujo sidecar migrou para `published/` ou `failed/`
+ * (movido pelo AutoSocial) passam a `published` / `failed` pelas transições canônicas.
+ */
+export async function reconcileAutoSocialQueueWithDb(
+  companyId: string
+): Promise<{ published: number; failed: number }> {
+  const dirs = await ensureQueueDirs(companyId);
+  const [publishedFiles, failedFiles] = await Promise.all([
+    fs.readdir(dirs.published).catch(() => [] as string[]),
+    fs.readdir(dirs.failed).catch(() => [] as string[]),
+  ]);
+  const queued = await db
+    .select()
+    .from(posts)
+    .where(and(eq(posts.companyId, companyId), eq(posts.status, "queued")));
+
+  let published = 0;
+  let failed = 0;
+  for (const post of queued) {
+    if (publishedFiles.some((f) => queueFileMatchesPost(f, post.id))) {
+      await db.update(posts).set({ status: assertPostTransition(post.status, "published") }).where(eq(posts.id, post.id));
+      published++;
+    } else if (failedFiles.some((f) => queueFileMatchesPost(f, post.id))) {
+      await db.update(posts).set({ status: assertPostTransition(post.status, "failed") }).where(eq(posts.id, post.id));
+      failed++;
+    }
+  }
+  return { published, failed };
+}
+
 export async function enqueuePostForAutoSocial(postId: string): Promise<{ success: boolean; files: string[] }> {
   // 1. Buscar post
   const [post] = await db.select().from(posts).where(eq(posts.id, postId));
@@ -45,8 +131,17 @@ export async function enqueuePostForAutoSocial(postId: string): Promise<{ succes
     throw new Error(`Post com ID "${postId}" não encontrado.`);
   }
 
+  // Guard da FSM: published não pode voltar para a fila.
+  assertPostTransition(post.status, "queued");
+
   // 2. Garantir diretórios da fila
   const dirs = await ensureQueueDirs(post.companyId);
+
+  // Idempotência por postId: substitui qualquer enfileiramento anterior (duplo clique não duplica).
+  await removePostQueueFiles(dirs.pending, post.id);
+
+  const createdFiles: string[] = [];
+  try {
 
   // 3. Gerar sidecar .description com metadados de horário programado
   const timestamp = Date.now();
@@ -58,8 +153,7 @@ export async function enqueuePostForAutoSocial(postId: string): Promise<{ succes
   const rawCaption = post.caption || `Post sobre ${post.theme}\n\n#socialpanel #instagram`;
   const captionContent = `${scheduledTimeTag}${altTextTag}${rawCaption}`;
   await Bun.write(descFilePath, captionContent);
-
-  const createdFiles: string[] = [descFilePath];
+  createdFiles.push(descFilePath);
 
   // 4. Copiar lâminas renderizadas pelo Studio OpenDesign (Sem Canva), se existirem
   const postRenderDir = path.join(RENDERS_DIR, post.companyId, post.id);
@@ -111,11 +205,16 @@ export async function enqueuePostForAutoSocial(postId: string): Promise<{ succes
     }
   }
 
-  // 5. Atualizar status do post no SQLite para 'queued'
+  // 6. Atualizar status do post no SQLite para 'queued'
   await db
     .update(posts)
     .set({ status: "queued" })
     .where(eq(posts.id, postId));
+  } catch (err) {
+    // Rollback compensatório: não deixar arquivos órfãos na fila se algo falhar antes do commit no SQLite.
+    await Promise.all(createdFiles.map((f) => fs.rm(f, { force: true })));
+    throw err;
+  }
 
   return { success: true, files: createdFiles };
 }
@@ -132,6 +231,7 @@ export async function enqueueScheduleForAutoSocial(
   let queuedCount = 0;
 
   for (const post of schedulePosts) {
+    if (normalizePostStatus(post.status) === "published") continue;
     const res = await enqueuePostForAutoSocial(post.id);
     if (res.success) {
       queuedCount++;

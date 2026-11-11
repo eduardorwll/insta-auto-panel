@@ -2,6 +2,7 @@ import {
   enqueuePostForAutoSocial,
   enqueueScheduleForAutoSocial,
   getAutoSocialQueueStatus,
+  reconcileAutoSocialQueueWithDb,
 } from "../services/export/autosocial";
 
 export async function handleExportRoutes(req: Request, url: URL): Promise<Response | null> {
@@ -50,6 +51,7 @@ export async function handleExportRoutes(req: Request, url: URL): Promise<Respon
     }
 
     try {
+      await reconcileAutoSocialQueueWithDb(companyId);
       const status = await getAutoSocialQueueStatus(companyId);
       return Response.json({ success: true, data: status });
     } catch (err: unknown) {

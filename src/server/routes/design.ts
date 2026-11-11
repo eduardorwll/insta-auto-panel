@@ -25,6 +25,10 @@ import {
 import { resolvePostStyleBlueprint } from "../services/design/blueprint-extractor";
 import { getFormatSpec, type PostFormatId } from "../../shared/post-formats";
 import fs from "node:fs/promises";
+import {
+  canTransitionPostStatus,
+  normalizePostStatus,
+} from "../../shared/state-machines/post-lifecycle.machine";
 import path from "node:path";
 
 const RENDERS_DIR = path.resolve(import.meta.dirname, "../../../data/renders");
@@ -258,10 +262,13 @@ export async function handleDesignRoutes(
       }
 
       // Atualiza status do post para 'ready_design' (ou 'queued' se enqueueImmediately for true)
-      await db
-        .update(posts)
-        .set({ status: "ready_design" })
-        .where(eq(posts.id, post.id));
+      // Guard da FSM: post já publicado não regride para ready_design.
+      if (canTransitionPostStatus(normalizePostStatus(post.status), "ready_design")) {
+        await db
+          .update(posts)
+          .set({ status: "ready_design" })
+          .where(eq(posts.id, post.id));
+      }
 
       let queuedFiles: string[] = [];
       if (body.enqueueImmediately) {
